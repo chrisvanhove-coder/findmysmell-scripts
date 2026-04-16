@@ -353,7 +353,7 @@ function loadCMSPerfumes() {
       name: nameEl.textContent.trim(),
       brand: brandEl ? brandEl.textContent.trim() : '',
       archetype: archetypeEl.textContent.trim().toUpperCase(),
-      isMain: mainEl ? mainEl.textContent.trim() !== '' && mainEl.textContent.trim() !== 'false' : false,
+      isMain: !!item.querySelector('[data-main]'),
       link: linkEl ? linkEl.textContent.trim() : '',
       img: imgEl ? imgEl.src : ''
     });
