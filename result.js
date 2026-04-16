@@ -18,13 +18,13 @@ const ARCHETYPES = {
     main: {
       name: 'Concrete', house: 'Comme des Garçons',
       desc: 'The decision itself. Sharp, confident, walks with high chin.',
-      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337efd1740fcd5bbd50a_ceo-concrete.svg',
+      img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bc6e8f7937784a40ca93_1.png',
       link: 'https://noseparis.com/en/concrete'
     },
     alts: [
-      { name: 'Legend', house: 'Montblanc', desc: "Doesn't surprise you. Doesn't need to. Shows up, delivers, leaves.", img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337e30938a79acced265_ceo-legend.svg', link: 'https://www.montblanc-bordeaux.fr/products/legend-eau-de-toilette-100-ml' },
-      { name: 'La Panthère Elixir', house: 'Cartier', desc: 'The only one in the room who read the brief and the room.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337ede0331bd113d0851_ceo-panthere.svg', link: 'https://www.parfumdreams.fr/Cartier/Parfums-pour-femmes/La-Panthere/Parfum/index_94265.aspx' },
-      { name: 'Musky Oakmoss', house: 'Dossier', desc: 'Not there yet, but knows exactly what they want.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337ebad24ca1ffee1eb8_ceo-dossier.svg', link: 'https://dossier.eu/fr/products/musky-oakmoss' }
+      { name: 'Legend', house: 'Montblanc', desc: "Doesn't surprise you. Doesn't need to. Shows up, delivers, leaves.", img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bbc57bc50bbad5b648f1_Find%20My%20Smell.png', link: 'https://www.montblanc-bordeaux.fr/products/legend-eau-de-toilette-100-ml' },
+      { name: 'Escentric 05', house: 'Escentric Molecules', desc: 'Fresh and focused like your new business venture.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bc2082301bdff10b4568_2.png', link: 'https://www.escentric.com/en-eu/products/escentric-05-refill-30ml?pr_prod_strat=e5_desc&pr_rec_id=20a11bb7d&pr_rec_pid=4675141795942&pr_ref_pid=4675110207590&pr_seq=uniform' },
+      { name: 'Musky Oakmoss', house: 'Dossier', desc: 'Not there yet, but knows exactly what they want and is going for it.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bc2b6da9778283cf250b_4.png', link: 'https://dossier.eu/fr/products/musky-oakmoss' }
     ],
     ingredients: [
       { name: 'Aldehyde', desc: 'The smell of a clean surface that nobody has touched yet.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69de33b34f4f9a327016d289_aldehyde.jpeg' },
@@ -45,13 +45,13 @@ const ARCHETYPES = {
     main: {
       name: 'Miyako', house: 'Auphorie',
       desc: 'Not for everyone. For the ones who know what wabi-sabi means without googling it.',
-      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/699826c6a65ed022b44b9d61_japan-miyako.svg',
+      img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc6888a1e98af586092c8_japan-miyako.png',
       link: 'https://auphorie.com/products/miyako'
     },
-    alts: [
-      { name: 'Tokyo', house: 'Gallivant', desc: 'Every note in its place. Nothing added. Nothing missing.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/699826c6ee4eaa3203ea1a6a_japan-tokyo.svg', link: 'https://50-ml.fr/gallivant-tokyo-eau-de-parfum' },
-      { name: 'Shiso', house: 'Roger & Gallet', desc: 'Clean like rain on stone. Quiet like a choice already made.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/699826c6d66370bf6587df4f_japan-shiso.svg', link: 'https://fr.roger-gallet.com/p/RG1013011WW/rg1013011ww-shiso-eau-parfumee-bienfaisante-heritage-100-ml' },
-      { name: 'New Zealand', house: 'Demeter', desc: 'Far enough from everything to finally hear yourself.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/699826c6a982da62b728bf9c_japan-newzeland.svg', link: 'https://demeterfragrance.com/products/new-zealand-cologne-spray' }
+  alts: [
+      { name: 'Tokyo', house: 'Gallivant', desc: 'Every note in its place. Nothing added. Nothing missing.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd2c2e7afa045bcf95a91_31.png', link: 'https://50-ml.fr/gallivant-tokyo-eau-de-parfum' },
+      { name: 'Shiso', house: 'Roger & Gallet', desc: 'Clean like rain on stone. Quiet like a choice already made.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd2604905ef7597e42770_28.png', link: 'https://fr.roger-gallet.com/p/RG1013011WW/rg1013011ww-shiso-eau-parfumee-bienfaisante-heritage-100-ml' },
+      { name: 'New Zealand', house: 'Demeter', desc: 'Far enough from everything to finally hear yourself.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd20ab5bab41035b380b7_27.png', link: 'https://demeterfragrance.com/products/new-zealand-cologne-spray' }
     ],
     ingredients: [
       { name: 'Green Tea', desc: 'The smell of water just before it boils. Green, slightly bitter.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69de30219927953e40ece6ff_gree-tea.jpeg' },
@@ -73,14 +73,14 @@ const ARCHETYPES = {
     ],
     main: {
       name: 'Eau Duelle', house: 'Diptyque',
-      desc: 'Stays close without asking permission. Warm without trying to be.',
-      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a3ad178c4e36ba6acc_hug-eau.svg',
+      desc: 'It smells like being welcomed.',
+      img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc44fb8f35b9c43790fd0_hug-eau.png',
       link: 'https://www.diptyqueparis.com/fr_fr/p/eau-de-toilette-eau-duelle-100ml.html'
     },
     alts: [
-      { name: 'You', house: 'Glossier', desc: 'Smells like someone who remembered how you take your coffee.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a35aaaced205ce0602_hug-you.svg', link: 'https://www.glossier.com/fr-fr/products/glossier-you-doux' },
-      { name: 'Pandan', house: 'd.grayi', desc: 'Unfamiliar at first. Then suddenly the only thing that feels right.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a3fb2c757ee1747d21_hug-pandan.svg', link: 'https://stele.nyc/products/d-grayi-pandan-eau-de-parfum' },
-      { name: 'By the Fireplace', house: 'Maison Margiela', desc: 'Nowhere to be. No one to perform for. Just this.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a3ff38fd81a89b68ca_hug-fireplace.svg', link: 'https://www.my-origines.com/fr/by-the-fireplace-59L14132.html' }
+      { name: 'You', house: 'Glossier', desc: 'Smells like someone who remembered how you take your coffee.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcee14281bf63f688fe03_17.png', link: 'https://www.glossier.com/fr-fr/products/glossier-you-doux' },
+      { name: 'Baby Powder', house: 'Demeter', desc: 'Unfamiliar at first. Then suddenly the only thing that feels right.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcf8906d7f036ca2c3e1c_16.png', link: 'https://demeterfragrance.com/products/baby-powder-cologne-spray' },
+      { name: 'By the Fireplace', house: 'Maison Margiela', desc: 'Nowhere to be. No one to perform for. Just this.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcfb56f2a237bf857889b_18.png', link: 'https://www.my-origines.com/fr/by-the-fireplace-59L14132.html' }
     ],
     ingredients: [
       { name: 'Benzoin', desc: 'The smell of warmth without being sweet.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69de3186c6242aa9a1eb533d_benzoin.jpeg' },
@@ -103,13 +103,13 @@ const ARCHETYPES = {
     main: {
       name: 'Coven', house: 'Andrea Maack',
       desc: 'Smells like being outside long enough to forget time. Wet earth. Roots. Cold air on skin.',
-      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595ac9e0cf46d4776711_offgrid-coven.svg',
+img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc4c4c9baefd1bb0ebf81_offgrid-coven.png',
       link: 'https://www.niche-beauty.com/fr-fr/produits/andrea-maack-coven/844-023'
     },
     alts: [
-      { name: 'Baikal Leather Intense', house: 'Nicolaï', desc: 'Cold enough to feel alive. Remote enough to feel free.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595a5893edab85183cc4_offgrid-baikal.svg', link: 'https://nicolaiparis.com/en/products/baikal-leather-intense-1' },
-      { name: 'From the Garden', house: 'Maison Margiela', desc: 'Dirt under the nails. Sun on the neck. Nowhere else to be.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595a98970a95a6a02b43_offgrid-garden.svg', link: 'https://www.my-origines.com/fr/from-the-garden-59L23139.html' },
-      { name: 'Sandflowers', house: 'Montale', desc: 'Wind, salt, nothing on the calendar. Finally.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595ac32ddbbbd0e32361_offgrid-sandflowers.svg', link: 'https://montaleparfums.com/en/marine/70-376-sandflowers-argent.html' }
+      { name: 'Baikal Leather Intense', house: 'Nicolaï', desc: 'Cold enough to feel alive. Remote enough to feel free.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcd7227b99461cba4c136_11.png', link: 'https://nicolaiparis.com/en/products/baikal-leather-intense-1' },
+      { name: 'From the Garden', house: 'Maison Margiela', desc: 'Dirt under the nails. Sun on the neck. Nowhere else to be.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcd4772c26d08b99d8316_10.png', link: 'https://www.my-origines.com/fr/from-the-garden-59L23139.html' },
+      { name: 'Sandflowers', house: 'Montale', desc: 'Wind, salt, nothing on the calendar. Finally.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbce1eb318deb4d73590e9_8.png', link: 'https://montaleparfums.com/en/marine/70-376-sandflowers-argent.html' }
     ],
     ingredients: [
       { name: 'Sage', desc: 'Medicinal, dry, slightly smoke-edged.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69de2d022b8e43123f635fc3_sage.jpeg' },
@@ -133,13 +133,13 @@ const ARCHETYPES = {
     main: {
       name: 'Gris Clair', house: 'Serge Lutens',
       desc: 'Smells like a thought you\'ve been having for years and finally stopped fighting.',
-      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5c6cacbdd277d526dd_outoftime-gris.svg',
+ img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc609137dcd257a6dd5ae_outoftime-gris.png',
       link: 'https://sergelutens.fr/products/gris-clair-eau-de-parfum-spray'
     },
     alts: [
-      { name: 'Bijan', house: 'Bijan', desc: 'From an era when excess was a philosophy. You understand why.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5cfe3abadce72e6658_outoftime-bijan.svg', link: 'https://www.notino.fr/bijan/classic-women-eau-de-toilette-pour-femme/p-66139/' },
-      { name: 'Encre Noire', house: 'Lalique', desc: 'Dark, deliberate, and completely unbothered by your reaction to it.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5c883dbc16a13c922c_outoftime-encre.svg', link: 'https://www.notino.fr/lalique/encre-noire-for-men-eau-de-toilette-pour-homme/p-62724/' },
-      { name: 'Grey Flannel', house: 'Geoffrey Beene', desc: 'Smells like staying in when everyone else went out. And being right about it.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5cace5625cf0282ae2_outoftime-flannel.svg', link: 'https://www.my-origines.com/fr/grey-flannel-09118624.html' }
+      { name: 'Aromatics Elixir', house: 'Clinique', desc: 'From an era when excess was a philosophy. You understand why.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd0a99c6d03bf461752c9_23.png', link: 'https://www.clinique.fr/product/aromatics-elixir-eau-de-parfum-spray?size=45_ml' },
+      { name: 'Encre Noire', house: 'Lalique', desc: 'Dark, deliberate, and completely unbothered by your reaction to it.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd0609c6d03bf461738ee_22.png', link: 'https://www.notino.fr/lalique/encre-noire-for-men-eau-de-toilette-pour-homme/p-62724/' },
+      { name: 'Grey Flannel', house: 'Geoffrey Beene', desc: 'Smells like staying in when everyone else went out. And being right about it.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd01c7659885dec161fb2_21.png', link: 'https://www.my-origines.com/fr/grey-flannel-09118624.html' }
     ],
     ingredients: [
       { name: 'Cashmeran', desc: 'The feeling of fog on your face before you can see through it.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69de2fb2724c92896b765a3a_cashmeran.jpeg' },
@@ -161,13 +161,13 @@ const ARCHETYPES = {
     main: {
       name: 'Solo Vulcan', house: 'Loewe',
       desc: 'Smells like momentum. The kind that doesn\'t need a plan.',
-      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564cad5ce2b482c477798_summer-solo.svg',
+      img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc743841913865b2a9338_summer-solo.png',
       link: 'https://www.perfumesloewe.com/int/en_FR/men/loewe-solo/loewe-solo-vulcan-edp-100ml-LW80620.html'
     },
     alts: [
-      { name: 'Avgoustos', house: 'Parfums de Marly', desc: 'Heat, salt, time slowing down on purpose.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564ca2fba2fa181c1eff3_summer-august.svg', link: 'https://www.korres.fr/products/eau-de-toilette-avgoustos' },
-      { name: 'Bois de Yuzu', house: 'Karl Lagerfeld', desc: 'The night is young and so is the conversation.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564cafb2e087fe6b532a4_summer-yuzu.svg', link: 'https://www.notino.fr/karl-lagerfeld/bois-de-yuzu-eau-de-toilette-pour-homme/p-15791163/' },
-      { name: 'Un Jardin sur le Nil', house: 'Hermès', desc: 'Moves like you do. Light, unhurried, and somehow everywhere at once.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564ca3cc1fa93818116b5_summer-nil.svg', link: 'https://www.hermes.com/fr/fr/product/un-jardin-sur-le-nil-eau-de-toilette-V26993/' }
+      { name: 'Avgoustos', house: 'Parfums de Marly', desc: 'Heat, salt, time slowing down on purpose.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd48441e84e3b0ceb7289_34.png', link: 'https://www.korres.fr/products/eau-de-toilette-avgoustos' },
+      { name: 'Bois de Yuzu', house: 'Karl Lagerfeld', desc: 'The night is young and so is the conversation.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd43a7659885dec179a63_33.png', link: 'https://www.notino.fr/karl-lagerfeld/bois-de-yuzu-eau-de-toilette-pour-homme/p-15791163/' },
+      { name: 'Un Jardin sur le Nil', house: 'Hermès', desc: 'Moves like you do. Light, unhurried, and somehow everywhere at once.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd4b7d360f752977ab6c9_35.png', link: 'https://www.hermes.com/fr/fr/product/un-jardin-sur-le-nil-eau-de-toilette-V26993/' }
     ],
     ingredients: [
       { name: 'Tiare', desc: 'A white flower in warm wind. Slightly sweet and fresh.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69de2c69a711f8da204008c8_tiare.jpeg' },
@@ -190,13 +190,13 @@ const ARCHETYPES = {
     main: {
       name: 'Black Tea', house: 'Jil Sander',
       desc: 'Smells like the conversation you didn\'t want to end.',
-      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567233c9199821e9d3cde_therapist-blacktea.svg',
+      img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc802f2d99f701a1415fd_therapist-blacktea.png',
       link: 'https://www.jilsander.com/fr-fr/jil-sander-black-tea-100-ml/J65YX0006JFR001998.html'
     },
     alts: [
-      { name: 'Geranio Imperiale', house: 'Culti Milano', desc: 'Sharp enough to notice everything. Composed enough not to mention most of it.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567232ed10e7c843ea892_therapist-geranio.svg', link: 'https://www.notino.fr/culti/geranio-imperiale-aquae-di-profumo-eau-de-toilette-mixte/' },
-      { name: 'La Divina Commedia', house: 'Histoires de Parfums', desc: 'Knows exactly where it ends. That\'s what makes it safe to be around.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567230adc26811e032b8b_therapist-divina.svg', link: 'https://www.notino.fr/histoires-de-parfums/1472-eau-de-parfum-mixte/p-16349773/' },
-      { name: '702', house: 'Bon Parfumeur', desc: 'Smells like someone who already thought of everything so you don\'t have to.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a56723ace5625cf02a382f_therapist-encens.svg', link: 'https://www.bonparfumeur.com/fr/products/702-incense-lavender-and-cashmere-wood' }
+      { name: 'Geranio Imperiale', house: 'Culti Milano', desc: 'Sharp enough to notice everything. Composed enough not to mention most of it.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd3d5e80c9c7c162eedbe_44.png', link: 'https://www.notino.fr/culti/geranio-imperiale-aquae-di-profumo-eau-de-toilette-mixte/' },
+      { name: '1472 La Divina Commedia', house: 'Histoires de Parfums', desc: 'Knows exactly where it ends. That\'s what makes it safe to be around.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd3679c6d03bf4618308b_41.png', link: 'https://www.notino.fr/histoires-de-parfums/1472-eau-de-parfum-mixte/p-16349773/' },
+      { name: '702', house: 'Bon Parfumeur', desc: 'Smells like someone who already thought of everything so you don\'t have to.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd3a1d34b8acd99b18bb2_42.png', link: 'https://www.bonparfumeur.com/fr/products/702-incense-lavender-and-cashmere-wood' }
     ],
     ingredients: [
       { name: 'Oud', desc: 'A very old library smell. Dense and resinous.', img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69de2b6e8dd04e0a79035d92_oud.jpeg' },
@@ -206,7 +206,7 @@ const ARCHETYPES = {
   }
 };
 
-// ============================================================
+/ ============================================================
 // SECTION 1B — PAGE BUILDER
 // ============================================================
 
@@ -215,7 +215,6 @@ function buildBlock(key, arch) {
   if (!block) return;
   [...block.children].forEach(c => c.style.display = 'none');
 
-  // ZONE 1 — Hero
   const z1 = document.createElement('div');
   z1.className = 'fms-zone fms-z1';
   z1.innerHTML = `
@@ -292,6 +291,7 @@ function buildBlock(key, arch) {
   `;
   block.appendChild(z4);
 
+
   // ZONE 5 — Share
   const z5 = document.createElement('div');
   z5.className = 'fms-zone fms-z5';
@@ -309,7 +309,7 @@ function buildBlock(key, arch) {
   `;
   block.appendChild(z5);
 
-  const SITE_URL = 'https://www.findmysmell.com';
+const SITE_URL = 'https://www.findmysmell.com';
   const shareText = arch.you + ' ' + arch.identity + '\n' + arch.descriptor + '\n\nDiscover your scent archetype → ' + SITE_URL;
   const canvas = z5.querySelector('#fms-card-canvas');
 
@@ -345,9 +345,9 @@ function loadCMSPerfumes() {
     const nameEl = item.querySelector('[data-name]');
     const brandEl = item.querySelector('[data-brand]');
     const archetypeEl = item.querySelector('[data-archetype]');
-    const mainEl = item.querySelector('[data-main]');
     const linkEl = item.querySelector('[data-link]');
     const imgEl = item.querySelector('[data-img]');
+    const descEl = item.querySelector('[data-desc]');
     if (!nameEl || !archetypeEl) return;
     perfumes.push({
       name: nameEl.textContent.trim(),
@@ -355,12 +355,13 @@ function loadCMSPerfumes() {
       archetype: archetypeEl.textContent.trim().toUpperCase(),
       isMain: !!item.querySelector('[data-main]'),
       link: linkEl ? linkEl.textContent.trim() : '',
-      img: imgEl ? imgEl.src : ''
+      img: imgEl ? imgEl.src : '',
+      desc: descEl ? descEl.textContent.trim() : ''
     });
   });
 
   if (!perfumes.length) return;
-
+  
   const byArchetype = {};
   perfumes.forEach(function(p) {
     if (!byArchetype[p.archetype]) byArchetype[p.archetype] = { main: null, alts: [] };
@@ -376,16 +377,16 @@ function loadCMSPerfumes() {
       ARCHETYPES[key].main.house = data.main.brand;
       ARCHETYPES[key].main.link = data.main.link;
       ARCHETYPES[key].main.img = data.main.img;
+      if (data.main.desc) ARCHETYPES[key].main.desc = data.main.desc;
     }
     if (data.alts.length) {
       ARCHETYPES[key].alts = data.alts.map(function(a) {
-        const existing = ARCHETYPES[key].alts.find(function(o) { return o.name === a.name; });
         return {
           name: a.name,
           house: a.brand,
           link: a.link,
           img: a.img,
-          desc: existing ? existing.desc : ''
+          desc: a.desc
         };
       });
     }
