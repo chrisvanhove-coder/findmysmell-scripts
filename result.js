@@ -18,7 +18,7 @@ const ARCHETYPES = {
     main: {
       name: 'Concrete', house: 'Comme des Garçons',
       desc: 'The decision itself. Sharp, confident, walks with high chin.',
-      img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bc6e8f7937784a40ca93_1.png',
+      img: 'https://res.cloudinary.com/dcefrxxav/image/upload/v1776354725/1_mpedvv.png',
       link: 'https://noseparis.com/en/concrete'
     },
     alts: [
