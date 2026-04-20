@@ -358,8 +358,6 @@ const perfumeData = {
   img: imgEl ? imgEl.src : '',
   desc: descEl ? descEl.textContent.trim() : ''
 };
-if (perfumeData.name === 'Escentric 05') console.log('PUSHED:', JSON.stringify(perfumeData));
-perfumes.push(perfumeData);
   });
 
   if (!perfumes.length) return;
