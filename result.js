@@ -349,15 +349,17 @@ function loadCMSPerfumes() {
     const imgEl = item.querySelector('[data-img]');
     const descEl = item.querySelector('[data-desc]');
     if (!nameEl || !archetypeEl) return;
-    perfumes.push({
-      name: nameEl.textContent.trim(),
-      brand: brandEl ? brandEl.textContent.trim() : '',
-      archetype: archetypeEl.textContent.trim().toUpperCase(),
-      isMain: !!item.querySelector('[data-main]'),
-      link: linkEl ? linkEl.textContent.trim() : '',
-      img: imgEl ? imgEl.src : '',
-      desc: descEl ? descEl.textContent.trim() : ''
-    });
+const perfumeData = {
+  name: nameEl.textContent.trim(),
+  brand: brandEl ? brandEl.textContent.trim() : '',
+  archetype: archetypeEl.textContent.trim().toUpperCase(),
+  isMain: !!item.querySelector('[data-main]'),
+  link: linkEl ? linkEl.textContent.trim() : '',
+  img: imgEl ? imgEl.src : '',
+  desc: descEl ? descEl.textContent.trim() : ''
+};
+if (perfumeData.name === 'Escentric 05') console.log('PUSHED:', JSON.stringify(perfumeData));
+perfumes.push(perfumeData);
   });
 
   if (!perfumes.length) return;
