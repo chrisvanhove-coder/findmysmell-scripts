@@ -405,9 +405,9 @@ function init() {
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => setTimeout(init, 300));
+  document.addEventListener('DOMContentLoaded', () => setTimeout(init, 1000));
 } else {
-  setTimeout(init, 300);
+  setTimeout(init, 1000);
 }
 
 })();
