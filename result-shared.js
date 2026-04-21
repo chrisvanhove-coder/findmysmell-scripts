@@ -34,7 +34,7 @@ var FMS_ARCHETYPES = {
     text:     '#fdf0e8'
   },
   'OFFGRID': {
-    headline: 'YOU ARE SECRETLY\nPLANNING TO DISAPPEAR.',
+    headline: 'YOU ARE\nSECRETLY PLANNING\nTO DISAPPEAR.',
     tagline:  'Raw. Grounded. Present.',
     desc:     "You don't fantasise about escape. You prepare for it. You prefer movement over conversation. Silence over explanations. You don't need comfort. You need space.",
     perfume:  'Coven — Andrea Maack',
