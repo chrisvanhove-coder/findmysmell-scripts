@@ -17,8 +17,8 @@ var FMS_ARCHETYPES = {
     headline: 'YOU ARE\nINSISTENTLY \nCALM.',
     tagline:  'Minimal. Intentional. Above the noise.',
     desc:     "You speak less. You choose better. You move with intention. Calm, because you don't need to prove anything.",
-    perfume:  'Miyako — Auphorie',
-    img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/699826c6a65ed022b44b9d61_japan-miyako.svg',
+    perfume:  'Dirty Hinoki — Heretic Parfum',
+    img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png',
     bg:       '#cac88f',
     accent:   '#5d663c',
     text:     '#000000'
