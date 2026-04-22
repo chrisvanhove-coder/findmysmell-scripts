@@ -43,10 +43,10 @@ const ARCHETYPES = {
       "Your scent is the same: clean, minimal, and says nothing unnecessary."
     ],
     main: {
-      name: 'Miyako', house: 'Auphorie',
+      name: 'Dirty Hinoki', house: 'Heretic Parfum',
       desc: 'Not for everyone. For the ones who know what wabi-sabi means without googling it.',
-      img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc6888a1e98af586092c8_japan-miyako.png',
-      link: 'https://auphorie.com/products/miyako'
+      img: 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png',
+      link: 'https://hereticparfum.com/products/dirty-hinoki?variant=39270055346240'
     },
   alts: [
       { name: 'Tokyo', house: 'Gallivant', desc: 'Every note in its place. Nothing added. Nothing missing.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd2c2e7afa045bcf95a91_31.png', link: 'https://50-ml.fr/gallivant-tokyo-eau-de-parfum' },
