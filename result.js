@@ -125,7 +125,7 @@ img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc4c4c9baef
       "You have a favourite kind of fog.",
       "You romanticise rain. You've described your ideal Friday night as \u201chonestly, just staying in.\u201d",
       "You're not antisocial. You're selective. You're more comfortable in almost-dark than in bright.",
-      "You're atmospheric. You don't follow trends. You follow moods.,
+      "You're atmospheric. You don't follow trends. You follow moods.",
       "People call you mysterious mostly because you don't explain yourself, and you find that explanation unnecessary.",
       "People find you interesting in a way they can't explain. That's because you're not trying to be interesting. You're just somewhere else.",
       "Your scent is mineral, dark and hidden. Smoke, shadow and something you can't quite name."
