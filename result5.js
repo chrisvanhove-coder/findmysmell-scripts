@@ -475,6 +475,56 @@ function injectModalStyles() {
     '  white-space: pre-line;',
     '  margin: 0;',
     '}',
+    '.fms-z1 {',
+    '  display: flex;',
+    '  gap: 60px;',
+    '  padding: 60px 0 80px;',
+    '  align-items: flex-start;',
+    '}',
+    '.fms-z1-left {',
+    '  flex: 1;',
+    '  min-width: 0;',
+    '}',
+    '.fms-z1-right {',
+    '  flex: 1;',
+    '  min-width: 0;',
+    '  min-height: 320px;',
+    '  background: rgba(0,0,0,0.04);',
+    '  border-radius: 2px;',
+    '  display: flex;',
+    '  align-items: center;',
+    '  justify-content: center;',
+    '}',
+    '.fms-z1-video-placeholder {',
+    '  font-size: 11px;',
+    '  letter-spacing: 0.12em;',
+    '  text-transform: uppercase;',
+    '  opacity: 0.25;',
+    '}',
+    '.fms-z1-title {',
+    '  font-size: clamp(22px, 3vw, 40px);',
+    '  font-weight: 700;',
+    '  letter-spacing: 0.06em;',
+    '  text-transform: uppercase;',
+    '  color: #8B3A22;',
+    '  line-height: 1;',
+    '  margin: 0 0 16px;',
+    '}',
+    '.fms-z1-rule {',
+    '  border: none;',
+    '  border-top: 1px solid currentColor;',
+    '  opacity: 0.2;',
+    '  margin: 0 0 32px;',
+    '}',
+    '.fms-z1-desc p {',
+    '  margin: 0 0 1.4em;',
+    '  line-height: 1.7;',
+    '}',
+    '.fms-z1-desc p:last-child { margin-bottom: 0; }',
+    '@media (max-width: 700px) {',
+    '  .fms-z1 { flex-direction: column; gap: 32px; }',
+    '  .fms-z1-right { min-height: 200px; width: 100%; }',
+    '}',
     '.fms-z2-title {',
     '  font-size: 11px;',
     '  font-weight: 400;',
@@ -486,23 +536,38 @@ function injectModalStyles() {
     '  border-bottom: 1px solid currentColor;',
     '  opacity: 0.5;',
     '}',
+    '.fms-ingredient-item {',
+    '  display: flex;',
+    '  flex-direction: column;',
+    '  align-items: center;',
+    '}',
+    '.fms-ingredient-body {',
+    '  display: flex;',
+    '  flex-direction: column;',
+    '  flex: 1;',
+    '  width: 100%;',
+    '}',
+    '.fms-ingredient-desc {',
+    '  flex: 1;',
+    '}',
     '.fms-ingredient-readmore {',
     '  display: inline-block;',
-    '  margin-top: 10px;',
+    '  margin-top: auto;',
+    '  padding-top: 12px;',
     '  font-size: 11px;',
     '  letter-spacing: 0.08em;',
     '  text-transform: uppercase;',
-    '  color: rgba(255,255,255,0.38);',
+    '  color: #1a1a1a;',
     '  background: none;',
     '  border: none;',
-    '  border-bottom: 1px solid rgba(255,255,255,0.18);',
-    '  padding: 0 0 1px;',
+    '  border-bottom: 1px solid #1a1a1a;',
+    '  padding-bottom: 1px;',
     '  cursor: pointer;',
-    '  transition: color 0.2s, border-color 0.2s;',
+    '  transition: opacity 0.2s;',
+    '  align-self: center;',
     '}',
     '.fms-ingredient-readmore:hover {',
-    '  color: rgba(255,255,255,0.75);',
-    '  border-color: rgba(255,255,255,0.45);',
+    '  opacity: 0.5;',
     '}'
   ].join('\n');
   document.head.appendChild(style);
@@ -561,6 +626,21 @@ function buildBlock(key, arch) {
   [...block.children].forEach(c => c.style.display = 'none');
 
 
+
+  // ZONE 1 — Hero: title + text left, video right
+  const z1 = document.createElement('div');
+  z1.className = 'fms-zone fms-z1';
+  z1.innerHTML = '<div class="fms-z1-left">' +
+    '<div class="fms-z1-title">Your Scent Personality</div>' +
+    '<hr class="fms-z1-rule">' +
+    '<div class="fms-z1-desc">' +
+    arch.desc.map(function(p) { return '<p>' + p + '</p>'; }).join('') +
+    '</div></div>' +
+    '<div class="fms-z1-right">' +
+    '<span class="fms-z1-video-placeholder">video coming soon</span>' +
+    '</div>';
+  block.appendChild(z1);
+
   // ZONE 2 — Description + Ingredients
   const z2 = document.createElement('div');
   z2.className = 'fms-zone fms-z2';
@@ -582,11 +662,7 @@ function buildBlock(key, arch) {
       '</div>';
   }
 
-  z2.innerHTML = '<div class="fms-z2-title">YOUR SCENT PERSONALITY</div>' +
-    '<div class="fms-z2-text">' +
-    arch.desc.map(function(p) { return '<p>' + p + '</p>'; }).join('') +
-    '</div>' +
-    ingredientsHTML +
+  z2.innerHTML = ingredientsHTML +
     '<div class="fms-z3-label">your scent</div>';
   block.appendChild(z2);
 
