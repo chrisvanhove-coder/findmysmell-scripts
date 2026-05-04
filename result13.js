@@ -833,8 +833,8 @@ function buildBlock(key, arch) {
 
     fetch(APPS_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, winner: winner, scores: scores, page_url: window.location.href })
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'payload=' + encodeURIComponent(JSON.stringify({ email: email, winner: winner, scores: scores, page_url: window.location.href }))
     })
     .then(function(r) { return r.text(); })
     .then(function(t) {
