@@ -1,5 +1,5 @@
 // ============================================================
-// SECTION 1 — ARCHETYPES DATA + PAGE BUILDER 
+// SECTION 1 — ARCHETYPES DATA + PAGE BUILDER
 // ============================================================
 
 (function() {
@@ -476,12 +476,15 @@ function injectModalStyles() {
     '  margin: 0;',
     '}',
     '.fms-z2-title {',
-    '  font-size: clamp(36px, 6vw, 80px);',
-    '  font-weight: 900;',
-    '  letter-spacing: 0.04em;',
+    '  font-size: 11px;',
+    '  font-weight: 400;',
+    '  letter-spacing: 0.18em;',
     '  text-transform: uppercase;',
     '  line-height: 1;',
-    '  margin: 0 0 32px;',
+    '  margin: 0 0 16px;',
+    '  padding-bottom: 16px;',
+    '  border-bottom: 1px solid currentColor;',
+    '  opacity: 0.5;',
     '}',
     '.fms-ingredient-readmore {',
     '  display: inline-block;',
