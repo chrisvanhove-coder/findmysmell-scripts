@@ -776,6 +776,19 @@ function buildBlock(key, arch) {
     '<div class="fms-z5-card-label">03 — Ingredients</div>' +
     '<button class="fms-z5-btn" id="fms-b3-' + key + '">\uD83D\uDCF7 Save</button>' +
     '</div>' +
+    '</div>' +
+    '<div class="fms-z5-email" id="fms-email-' + key + '">' +
+    '<div class="fms-z5-email-title">Get your full result by email</div>' +
+    '<div class="fms-z5-email-sub">Your archetype, all 5 ingredients explained, and your scent recommendations — in your inbox.</div>' +
+    '<div class="fms-z5-email-row">' +
+    '<input class="fms-z5-email-input" id="fms-ei-' + key + '" type="email" placeholder="your@email.com">' +
+    '<button class="fms-z5-email-send" id="fms-es-' + key + '">Send my result</button>' +
+    '</div>' +
+    '<div class="fms-z5-email-consent">' +
+    '<input type="checkbox" id="fms-ec-' + key + '">' +
+    '<label class="fms-z5-email-consent-label" for="fms-ec-' + key + '">I agree to receive my quiz result by email. One email only, no marketing. <a href="/privacy-policy" target="_blank">Privacy policy</a>.</label>' +
+    '</div>' +
+    '<div class="fms-z5-email-msg" id="fms-em-' + key + '"></div>' +
     '</div>';
   block.appendChild(z5);
 
