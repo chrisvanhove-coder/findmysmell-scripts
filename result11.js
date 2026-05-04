@@ -532,6 +532,94 @@ function injectModalStyles() {
     '@media (max-width: 600px) {',
     '  .fms-z5-cards { flex-direction: column; }',
     '}',
+    '.fms-z5-email {',
+    '  margin-top: 40px;',
+    '  padding: 32px;',
+    '  background: #1a1a1a;',
+    '  border-radius: 4px;',
+    '}',
+    '.fms-z5-email-title {',
+    '  font-size: 18px;',
+    '  font-weight: 700;',
+    '  color: #fff;',
+    '  letter-spacing: 0.03em;',
+    '  text-transform: uppercase;',
+    '  margin-bottom: 6px;',
+    '}',
+    '.fms-z5-email-sub {',
+    '  font-size: 13px;',
+    '  color: rgba(255,255,255,0.45);',
+    '  margin-bottom: 20px;',
+    '  font-style: italic;',
+    '}',
+    '.fms-z5-email-row {',
+    '  display: flex;',
+    '  gap: 12px;',
+    '  margin-bottom: 16px;',
+    '}',
+    '.fms-z5-email-input {',
+    '  flex: 1;',
+    '  padding: 14px 18px;',
+    '  font-size: 16px;',
+    '  border: 1px solid rgba(255,255,255,0.15);',
+    '  border-radius: 3px;',
+    '  background: rgba(255,255,255,0.07);',
+    '  color: #fff;',
+    '  outline: none;',
+    '  font-family: inherit;',
+    '  transition: border-color 0.2s;',
+    '}',
+    '.fms-z5-email-input::placeholder { color: rgba(255,255,255,0.3); }',
+    '.fms-z5-email-input:focus { border-color: rgba(255,255,255,0.4); }',
+    '.fms-z5-email-send {',
+    '  padding: 14px 28px;',
+    '  background: #fff;',
+    '  color: #1a1a1a;',
+    '  border: none;',
+    '  border-radius: 3px;',
+    '  font-size: 13px;',
+    '  font-weight: 700;',
+    '  letter-spacing: 0.08em;',
+    '  text-transform: uppercase;',
+    '  cursor: pointer;',
+    '  white-space: nowrap;',
+    '  transition: opacity 0.2s;',
+    '  font-family: inherit;',
+    '}',
+    '.fms-z5-email-send:hover { opacity: 0.85; }',
+    '.fms-z5-email-send:disabled { opacity: 0.4; cursor: default; }',
+    '.fms-z5-email-consent {',
+    '  display: flex;',
+    '  align-items: flex-start;',
+    '  gap: 10px;',
+    '  margin-bottom: 14px;',
+    '}',
+    '.fms-z5-email-consent input[type=checkbox] {',
+    '  margin-top: 3px;',
+    '  width: 16px;',
+    '  height: 16px;',
+    '  flex-shrink: 0;',
+    '  cursor: pointer;',
+    '  accent-color: #fff;',
+    '}',
+    '.fms-z5-email-consent-label {',
+    '  font-size: 12px;',
+    '  color: rgba(255,255,255,0.4);',
+    '  line-height: 1.5;',
+    '}',
+    '.fms-z5-email-consent-label a { color: rgba(255,255,255,0.55); }',
+    '.fms-z5-email-msg {',
+    '  font-size: 13px;',
+    '  color: rgba(255,255,255,0.6);',
+    '  margin-top: 8px;',
+    '  min-height: 20px;',
+    '}',
+    '.fms-z5-email-msg.success { color: #7ec87e; }',
+    '.fms-z5-email-msg.error { color: #e07070; }',
+    '@media (max-width: 500px) {',
+    '  .fms-z5-email-row { flex-direction: column; }',
+    '  .fms-z5-email { padding: 24px 20px; }',
+    '}',
     '.fms-ingredient-readmore {',
     '  display: inline-block;',
     '  margin-top: auto;',
@@ -701,6 +789,57 @@ function buildBlock(key, arch) {
   if (typeof fmsInitCarousel === 'function') {
     fmsInitCarousel(c1, c2, c3, b1, b2, b3);
   }
+
+  // Email wiring
+  var emailInput   = z5.querySelector('#fms-ei-' + key);
+  var emailSend    = z5.querySelector('#fms-es-' + key);
+  var emailConsent = z5.querySelector('#fms-ec-' + key);
+  var emailMsg     = z5.querySelector('#fms-em-' + key);
+  var APPS_URL     = 'https://script.google.com/macros/s/AKfycbzX_iZnTevFLG5GgComLwfFJoC4Dp_HaPRcmcmAVszBR_wWrpmlGSlbpYcdNo-6L-NK/exec';
+
+  emailSend.addEventListener('click', function() {
+    var email = emailInput.value.trim();
+    if (!email || !email.includes('@')) {
+      emailMsg.textContent = 'Please enter a valid email address.';
+      emailMsg.className = 'fms-z5-email-msg error';
+      return;
+    }
+    if (!emailConsent.checked) {
+      emailMsg.textContent = 'Please check the consent box to continue.';
+      emailMsg.className = 'fms-z5-email-msg error';
+      return;
+    }
+    emailSend.disabled = true;
+    emailSend.textContent = 'Sending…';
+    emailMsg.textContent = '';
+    emailMsg.className = 'fms-z5-email-msg';
+
+    var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase();
+    var scores = {};
+    try { scores = JSON.parse(localStorage.getItem('quiz_scores') || '{}'); } catch(e2) {}
+
+    fetch(APPS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, winner: winner, scores: scores, page_url: window.location.href })
+    })
+    .then(function(r) { return r.text(); })
+    .then(function(t) {
+      if (t === 'ok' || t.indexOf('ok') > -1) {
+        emailMsg.textContent = 'Done! Check your inbox in a few minutes.';
+        emailMsg.className = 'fms-z5-email-msg success';
+        emailSend.textContent = 'Sent ✓';
+      } else {
+        throw new Error(t);
+      }
+    })
+    .catch(function() {
+      emailMsg.textContent = 'Something went wrong. Please try again.';
+      emailMsg.className = 'fms-z5-email-msg error';
+      emailSend.disabled = false;
+      emailSend.textContent = 'Send my result';
+    });
+  });
 
 
 }
