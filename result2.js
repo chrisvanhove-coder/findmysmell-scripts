@@ -1,5 +1,5 @@
 // ============================================================
-// SECTION 1 — ARCHETYPES DATA + PAGE BUILDER
+// SECTION 1 — ARCHETYPES DATA + PAGE BUILDER 
 // ============================================================
 
 (function() {
