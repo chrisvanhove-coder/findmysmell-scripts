@@ -206,8 +206,10 @@ function fmsDrawCircleImg(ctx, img, cx, cy, r, alpha) {
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, Math.PI * 2);
   ctx.clip();
-  var scale = Math.max((r * 2) / img.naturalWidth, (r * 2) / img.naturalHeight);
-  var dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
+  var nw = img.naturalWidth || img.width || r * 2;
+  var nh = img.naturalHeight || img.height || r * 2;
+  var scale = Math.max((r * 2) / nw, (r * 2) / nh);
+  var dw = nw * scale, dh = nh * scale;
   ctx.drawImage(img, cx - dw / 2, cy - dh / 2, dw, dh);
   ctx.restore();
 }
@@ -217,8 +219,10 @@ function fmsDrawBottleImg(ctx, img, x, y, w, h, alpha) {
   if (!img) return;
   ctx.save();
   ctx.globalAlpha = alpha || 0.92;
-  var scale = Math.min(w / img.naturalWidth, h / img.naturalHeight, 1);
-  var dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
+  var nw = img.naturalWidth || img.width || w;
+  var nh = img.naturalHeight || img.height || h;
+  var scale = Math.min(w / nw, h / nh);
+  var dw = nw * scale, dh = nh * scale;
   var dx = x + (w - dw) / 2, dy = y + (h - dh) / 2;
   ctx.drawImage(img, dx, dy, dw, dh);
   ctx.restore();
@@ -284,8 +288,10 @@ function fmsDrawCard(canvas, callback) {
   imgEl.onload = function() {
     var imgAreaTop = ly + 20, imgAreaBot = S - 210;
     var imgAreaH = imgAreaBot - imgAreaTop, imgAreaW = W;
-    var scale = Math.min(imgAreaW / imgEl.naturalWidth, imgAreaH / imgEl.naturalHeight, 1);
-    var dw = imgEl.naturalWidth * scale, dh = imgEl.naturalHeight * scale;
+    var nw = imgEl.naturalWidth || imgEl.width || imgAreaW;
+    var nh = imgEl.naturalHeight || imgEl.height || imgAreaH;
+    var scale = Math.min(imgAreaW / nw, imgAreaH / nh);
+    var dw = nw * scale, dh = nh * scale;
     var dx = PAD + (imgAreaW - dw) / 2, dy = imgAreaTop + (imgAreaH - dh) / 2;
     ctx.globalAlpha = 0.88;
     ctx.drawImage(imgEl, dx, dy, dw, dh);
@@ -490,36 +496,41 @@ function fmsDrawCard3(canvas, callback) {
 }
 
 // ============================================================
-// SECTION 7E — CAROUSEL DOWNLOAD (all 3 cards)
+// SECTION 7E — CAROUSEL INIT (draw all 3, individual saves)
 // ============================================================
 
-function fmsDownloadCarousel() {
+// Called from result.js after building z5 for a specific archetype.
+// c1/c2/c3 are the actual canvas elements on the page.
+// b1/b2/b3 are the corresponding save buttons.
+function fmsInitCarousel(c1, c2, c3, b1, b2, b3) {
   var k = fmsGetKey() || 'result';
   var label = k.toLowerCase();
 
-  var c1 = document.createElement('canvas');
-  var c2 = document.createElement('canvas');
-  var c3 = document.createElement('canvas');
+  function bindSave(canvas, btn, filename) {
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      btn.textContent = 'Saving…';
+      btn.disabled = true;
+      fmsDownloadCard(canvas, filename);
+      setTimeout(function() {
+        btn.textContent = '📷 Save';
+        btn.disabled = false;
+      }, 1200);
+    });
+  }
 
-  var btn = document.getElementById('fms-btn-instagram');
-  if (btn) { btn.textContent = 'Saving 1/3…'; btn.disabled = true; }
+  bindSave(c1, b1, 'findmysmell-' + label + '-1-identity.png');
+  bindSave(c2, b2, 'findmysmell-' + label + '-2-scent.png');
+  bindSave(c3, b3, 'findmysmell-' + label + '-3-ingredients.png');
 
-  fmsDrawCard(c1, function() {
-    fmsDownloadCard(c1, 'findmysmell-' + label + '-1-identity.png');
-    if (btn) btn.textContent = 'Saving 2/3…';
-    setTimeout(function() {
+  // Draw all 3 in background after a short delay
+  setTimeout(function() {
+    fmsDrawCard(c1, function() {
       fmsDrawCard2(c2, function() {
-        fmsDownloadCard(c2, 'findmysmell-' + label + '-2-scent.png');
-        if (btn) btn.textContent = 'Saving 3/3…';
-        setTimeout(function() {
-          fmsDrawCard3(c3, function() {
-            fmsDownloadCard(c3, 'findmysmell-' + label + '-3-ingredients.png');
-            if (btn) { btn.textContent = '📷 Save'; btn.disabled = false; }
-          });
-        }, 500);
+        fmsDrawCard3(c3, null);
       });
-    }, 500);
-  });
+    });
+  }, 800);
 }
 
 // ============================================================
