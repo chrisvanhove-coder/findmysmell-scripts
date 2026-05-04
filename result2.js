@@ -475,6 +475,14 @@ function injectModalStyles() {
     '  white-space: pre-line;',
     '  margin: 0;',
     '}',
+    '.fms-z2-title {',
+    '  font-size: clamp(36px, 6vw, 80px);',
+    '  font-weight: 900;',
+    '  letter-spacing: 0.04em;',
+    '  text-transform: uppercase;',
+    '  line-height: 1;',
+    '  margin: 0 0 32px;',
+    '}',
     '.fms-ingredient-readmore {',
     '  display: inline-block;',
     '  margin-top: 10px;',
@@ -549,18 +557,6 @@ function buildBlock(key, arch) {
   if (!block) return;
   [...block.children].forEach(c => c.style.display = 'none');
 
-  const z1 = document.createElement('div');
-  z1.className = 'fms-zone fms-z1';
-  z1.innerHTML = '<span class="fms-z1-eyebrow">your scent archetype</span>' +
-    '<div class="fms-z1-bottle-wrap">' +
-    '<img class="fms-z1-bottle" src="' + arch.main.img + '" alt="' + arch.main.name + '" crossorigin="anonymous">' +
-    '</div>' +
-    '<div class="fms-z1-text">' +
-    '<span class="fms-z1-you">' + arch.you + '</span>' +
-    '<span class="fms-z1-identity">' + arch.identity + '</span>' +
-    '<span class="fms-z1-descriptor">' + arch.descriptor + '</span>' +
-    '</div>';
-  block.appendChild(z1);
 
   // ZONE 2 — Description + Ingredients
   const z2 = document.createElement('div');
@@ -583,7 +579,7 @@ function buildBlock(key, arch) {
       '</div>';
   }
 
-  z2.innerHTML = '<span class="fms-z2-eyebrow">who you are</span>' +
+  z2.innerHTML = '<div class="fms-z2-title">YOUR SCENT PERSONALITY</div>' +
     '<div class="fms-z2-text">' +
     arch.desc.map(function(p) { return '<p>' + p + '</p>'; }).join('') +
     '</div>' +
