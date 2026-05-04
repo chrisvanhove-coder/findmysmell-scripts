@@ -660,7 +660,8 @@ function buildBlock(key, arch) {
   const canvas = z5.querySelector('#fms-card-canvas');
 
   z5.querySelector('#fms-btn-instagram').addEventListener('click', function() {
-    if (typeof fmsDrawCard === 'function') fmsDrawCard(canvas, function() { fmsDownloadCard(canvas); });
+    if (typeof fmsDownloadCarousel === 'function') { fmsDownloadCarousel(); }
+    else if (typeof fmsDrawCard === 'function') { fmsDrawCard(canvas, function() { fmsDownloadCard(canvas); }); }
   });
   z5.querySelector('#fms-btn-whatsapp').addEventListener('click', function() {
     window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
@@ -761,5 +762,7 @@ if (document.readyState === 'loading') {
 } else {
   setTimeout(init, 1000);
 }
+
+  window.FMS_FULL_ARCH = ARCHETYPES;
 
 })();
