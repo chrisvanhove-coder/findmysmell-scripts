@@ -315,7 +315,7 @@ function fmsDrawCard2(canvas, callback) {
   var alts = fullArch && fullArch.alts ? fullArch.alts : [];
   var mainImg = arch.img;
   var altImgs = alts.map(function(a) { return a.img || ''; });
-  var allSrcs = [mainImg].concat(altImgs).filter(Boolean);
+  var allSrcs = altImgs.filter(Boolean);
 
   fmsLoadImages(allSrcs, function(images) {
     var S = 1200;
@@ -330,58 +330,8 @@ function fmsDrawCard2(canvas, callback) {
     ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.55;
     ctx.fillText('YOUR SCENT  ·  02 / 03', PAD, 136); ctx.globalAlpha = 1;
 
-    // Layout: left text column (55%), right bottle image (45%)
-    var colSplit = 640;
-    var textW = colSplit - PAD - 40;
-    var imgX = colSplit, imgW = S - PAD - colSplit, imgH = 420;
-
-    // Main bottle image — right column, top area
-    fmsDrawBottleImg(ctx, images[mainImg], imgX, 110, imgW, imgH, 0.92);
-
-    // Perfume name + house — left column
-    var parts = arch.perfume.split(' — ');
-    var perfName = parts[0] || arch.perfume;
-    var perfHouse = parts[1] || '';
-
-    ctx.font = '900 68px Arial Black,Arial,sans-serif';
-    ctx.fillStyle = arch.text; ctx.globalAlpha = 0.96;
-    // wrap name if needed
-    var nameY = 210;
-    if (ctx.measureText(perfName.toUpperCase()).width > textW) {
-      var words = perfName.toUpperCase().split(' '), ln = '';
-      words.forEach(function(w) {
-        var t = (ln + ' ' + w).trim();
-        if (ctx.measureText(t).width > textW && ln) {
-          ctx.fillText(ln, PAD, nameY); ln = w; nameY += 76;
-        } else { ln = t; }
-      });
-      ctx.fillText(ln, PAD, nameY); nameY += 76;
-    } else {
-      ctx.fillText(perfName.toUpperCase(), PAD, nameY); nameY += 76;
-    }
-    ctx.globalAlpha = 1;
-
-    ctx.font = '400 30px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.7;
-    ctx.fillText(perfHouse, PAD, nameY + 4); ctx.globalAlpha = 1;
-
-    var mainDesc = fullArch && fullArch.main && fullArch.main.desc ? fullArch.main.desc : '';
-    ctx.font = '400 26px Georgia,serif';
-    ctx.fillStyle = arch.text; ctx.globalAlpha = 0.55;
-    fmsWrapText(ctx, mainDesc, PAD, nameY + 52, textW, 40);
-    ctx.globalAlpha = 1;
-
-    // Divider
-    var divY = 550;
-    fmsDrawFullRule(ctx, arch, S, PAD, divY);
-
-    // "ALSO CONSIDER"
-    ctx.font = '400 22px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.55;
-    ctx.fillText('ALSO CONSIDER', PAD, divY + 42); ctx.globalAlpha = 1;
-
     // Alternatives — each row: circle image left, name+house+desc right
-    var altAreaTop = divY + 70;
+    var altAreaTop = 160;
     var altAreaBot = S - 110;
     var altSlot = Math.floor((altAreaBot - altAreaTop) / Math.max(alts.length, 1));
     var circR = Math.min(48, Math.floor(altSlot / 2) - 4);
