@@ -838,7 +838,8 @@ function buildBlock(key, arch) {
     })
     .then(function(r) { return r.text(); })
     .then(function(t) {
-      if (t === 'ok' || t.indexOf('ok') > -1) {
+      console.log('Email endpoint response:', t);
+      if (t && t.indexOf('error') === -1) {
         emailMsg.textContent = 'Done! Check your inbox in a few minutes.';
         emailMsg.className = 'fms-z5-email-msg success';
         emailSend.textContent = 'Sent ✓';
