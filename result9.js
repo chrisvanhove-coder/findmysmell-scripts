@@ -688,16 +688,8 @@ function buildBlock(key, arch) {
     '<div class="fms-z5-card-label">03 — Ingredients</div>' +
     '<button class="fms-z5-btn" id="fms-b3-' + key + '">\uD83D\uDCF7 Save</button>' +
     '</div>' +
-    '</div>' +
-    '<div class="fms-z5-btns">' +
-    '<button class="fms-z5-btn" id="fms-wa-' + key + '">\uD83D\uDCAC WhatsApp</button>' +
-    '<button class="fms-z5-btn" id="fms-tg-' + key + '">\u2708 Telegram</button>' +
-    '<button class="fms-z5-btn" id="fms-cp-' + key + '">\u29c9 Copy link</button>' +
     '</div>';
   block.appendChild(z5);
-
-  var SITE_URL = 'https://www.findmysmell.com';
-  var shareText = arch.you + ' ' + arch.identity + '\n' + arch.descriptor + '\n\nDiscover your scent archetype \u2192 ' + SITE_URL;
 
   var c1 = z5.querySelector('#fms-c1-' + key);
   var c2 = z5.querySelector('#fms-c2-' + key);
@@ -710,18 +702,7 @@ function buildBlock(key, arch) {
     fmsInitCarousel(c1, c2, c3, b1, b2, b3);
   }
 
-  z5.querySelector('#fms-wa-' + key).addEventListener('click', function() {
-    window.open('https://wa.me/?text=' + encodeURIComponent(shareText), '_blank');
-  });
-  z5.querySelector('#fms-tg-' + key).addEventListener('click', function() {
-    window.open('https://t.me/share/url?url=' + encodeURIComponent(SITE_URL) + '&text=' + encodeURIComponent(shareText), '_blank');
-  });
-  var cpBtn = z5.querySelector('#fms-cp-' + key);
-  cpBtn.addEventListener('click', function() {
-    navigator.clipboard && navigator.clipboard.writeText(SITE_URL);
-    cpBtn.textContent = 'Copied!';
-    setTimeout(function() { cpBtn.textContent = '\u29c9 Copy link'; }, 2000);
-  });
+
 }
 
 // ============================================================
