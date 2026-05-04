@@ -475,66 +475,20 @@ function injectModalStyles() {
     '  white-space: pre-line;',
     '  margin: 0;',
     '}',
-    '.fms-z1 {',
-    '  display: flex;',
-    '  gap: 60px;',
-    '  padding: 60px 0 80px;',
-    '  align-items: flex-start;',
-    '}',
-    '.fms-z1-left {',
-    '  flex: 1;',
-    '  min-width: 0;',
-    '}',
-    '.fms-z1-right {',
-    '  flex: 1;',
-    '  min-width: 0;',
-    '  min-height: 320px;',
-    '  background: rgba(0,0,0,0.04);',
-    '  border-radius: 2px;',
-    '  display: flex;',
-    '  align-items: center;',
-    '  justify-content: center;',
-    '}',
-    '.fms-z1-video-placeholder {',
-    '  font-size: 11px;',
-    '  letter-spacing: 0.12em;',
-    '  text-transform: uppercase;',
-    '  opacity: 0.25;',
-    '}',
-    '.fms-z1-title {',
-    '  font-size: clamp(22px, 3vw, 40px);',
+    '.fms-z2-title {',
+    '  font-size: clamp(22px, 3.5vw, 44px);',
     '  font-weight: 700;',
-    '  letter-spacing: 0.06em;',
+    '  letter-spacing: 0.04em;',
     '  text-transform: uppercase;',
-    '  color: #8B3A22;',
     '  line-height: 1;',
     '  margin: 0 0 16px;',
+    '  color: #8B3A22;',
     '}',
     '.fms-z1-rule {',
     '  border: none;',
-    '  border-top: 1px solid currentColor;',
-    '  opacity: 0.2;',
+    '  border-top: 1px solid #1a1a1a;',
+    '  opacity: 0.15;',
     '  margin: 0 0 32px;',
-    '}',
-    '.fms-z1-desc p {',
-    '  margin: 0 0 1.4em;',
-    '  line-height: 1.7;',
-    '}',
-    '.fms-z1-desc p:last-child { margin-bottom: 0; }',
-    '@media (max-width: 700px) {',
-    '  .fms-z1 { flex-direction: column; gap: 32px; }',
-    '  .fms-z1-right { min-height: 200px; width: 100%; }',
-    '}',
-    '.fms-z2-title {',
-    '  font-size: 11px;',
-    '  font-weight: 400;',
-    '  letter-spacing: 0.18em;',
-    '  text-transform: uppercase;',
-    '  line-height: 1;',
-    '  margin: 0 0 16px;',
-    '  padding-bottom: 16px;',
-    '  border-bottom: 1px solid currentColor;',
-    '  opacity: 0.5;',
     '}',
     '.fms-ingredient-item {',
     '  display: flex;',
@@ -627,20 +581,6 @@ function buildBlock(key, arch) {
 
 
 
-  // ZONE 1 — Hero: title + text left, video right
-  const z1 = document.createElement('div');
-  z1.className = 'fms-zone fms-z1';
-  z1.innerHTML = '<div class="fms-z1-left">' +
-    '<div class="fms-z1-title">Your Scent Personality</div>' +
-    '<hr class="fms-z1-rule">' +
-    '<div class="fms-z1-desc">' +
-    arch.desc.map(function(p) { return '<p>' + p + '</p>'; }).join('') +
-    '</div></div>' +
-    '<div class="fms-z1-right">' +
-    '<span class="fms-z1-video-placeholder">video coming soon</span>' +
-    '</div>';
-  block.appendChild(z1);
-
   // ZONE 2 — Description + Ingredients
   const z2 = document.createElement('div');
   z2.className = 'fms-zone fms-z2';
@@ -662,7 +602,12 @@ function buildBlock(key, arch) {
       '</div>';
   }
 
-  z2.innerHTML = ingredientsHTML +
+  z2.innerHTML = '<div class="fms-z2-title">YOUR SCENT PERSONALITY</div>' +
+    '<hr class="fms-z1-rule">' +
+    '<div class="fms-z2-text">' +
+    arch.desc.map(function(p) { return '<p>' + p + '</p>'; }).join('') +
+    '</div>' +
+    ingredientsHTML +
     '<div class="fms-z3-label">your scent</div>';
   block.appendChild(z2);
 
