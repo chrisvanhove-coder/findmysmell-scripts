@@ -729,21 +729,22 @@ function buildBlock(key, arch) {
   }
 
   var ac = FMS_ARCH_COLORS[key] || { zoneBg: 'transparent', titleColor: '#8B3A22', textColor: '#2a2a2a', ruleColor: '#2a2a2a' };
+
+  // ZONE 2a — Description only (gets archetype background)
+  var z2a = document.createElement('div');
+  z2a.className = 'fms-zone fms-z2a';
   if (ac.zoneBg !== 'transparent') {
-    z2.style.background = ac.zoneBg;
-    z2.style.padding = '40px';
-    z2.style.width = '100vw';
-    z2.style.position = 'relative';
-    z2.style.left = '50%';
-    z2.style.transform = 'translateX(-50%)';
-    z2.style.boxSizing = 'border-box';
+    z2a.style.cssText = 'background:' + ac.zoneBg + ';margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%);padding:48px calc(50vw - 50%);box-sizing:border-box;';
   }
-  z2.innerHTML = '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">YOUR SCENT PERSONALITY</div>' +
+  z2a.innerHTML = '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">YOUR SCENT PERSONALITY</div>' +
     '<hr class="fms-z1-rule" style="border-color:' + ac.ruleColor + ';opacity:0.3;">' +
     '<div class="fms-z2-text">' +
     arch.desc.map(function(p) { return '<p style="color:' + ac.textColor + ';">' + p + '</p>'; }).join('') +
-    '</div>' +
-    ingredientsHTML +
+    '</div>';
+  block.appendChild(z2a);
+
+  // ZONE 2b — Ingredients (always on page background)
+  z2.innerHTML = ingredientsHTML +
     '<div class="fms-z3-label">your scent</div>';
   block.appendChild(z2);
 
