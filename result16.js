@@ -395,6 +395,17 @@ const ARCHETYPES = {
   }
 };
 
+
+var FMS_ARCH_COLORS = {
+  CEO:       { zoneBg: 'transparent', titleColor: '#a43f35', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
+  JAPAN:     { zoneBg: 'transparent', titleColor: '#5f7d8e', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
+  HUG:       { zoneBg: '#b8a66a',     titleColor: '#7e3d30', textColor: '#1a1a1a', ruleColor: '#7e3d30' },
+  OFFGRID:   { zoneBg: 'transparent', titleColor: '#3c5d45', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
+  OUTOFTIME: { zoneBg: '#303437',     titleColor: '#604c65', textColor: '#ffffff', ruleColor: 'rgba(255,255,255,0.3)' },
+  SUMMER:    { zoneBg: 'transparent', titleColor: '#a43f35', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
+  THERAPIST: { zoneBg: '#074d82',     titleColor: '#ffffff', textColor: '#ffffff', ruleColor: 'rgba(255,255,255,0.3)' }
+};
+
 // ============================================================
 // SECTION 1A — INGREDIENT MODAL
 // ============================================================
@@ -482,7 +493,6 @@ function injectModalStyles() {
     '  text-transform: uppercase;',
     '  line-height: 1;',
     '  margin: 0 0 16px;',
-    '  color: #8B3A22;',
     '}',
     '.fms-z1-rule {',
     '  border: none;',
@@ -535,7 +545,7 @@ function injectModalStyles() {
     '.fms-z5-email {',
     '  margin-top: 40px;',
     '  padding: 32px;',
-    '  background: rgba(0,0,0,0.55);',
+    '  background: #1a1a1a;',
     '  border-radius: 4px;',
     '}',
     '.fms-z5-email-title {',
@@ -718,7 +728,7 @@ function buildBlock(key, arch) {
       '</div>';
   }
 
-  z2.innerHTML = '<div class="fms-z2-title">YOUR SCENT PERSONALITY</div>' +
+  z2.innerHTML = '<div class="fms-z2-title" style="color:' + (FMS_ARCH_COLORS[key] || '#8B3A22') + '">YOUR SCENT PERSONALITY</div>' +
     '<hr class="fms-z1-rule">' +
     '<div class="fms-z2-text">' +
     arch.desc.map(function(p) { return '<p>' + p + '</p>'; }).join('') +
@@ -838,7 +848,7 @@ function buildBlock(key, arch) {
     })
     .then(function(r) { return r.text(); })
     .then(function(t) {
-      console.log('Email endpoint response:', t);
+      console.log('Response:', t);
       if (t && t.indexOf('error') === -1) {
         emailMsg.textContent = 'Done! Check your inbox in a few minutes.';
         emailMsg.className = 'fms-z5-email-msg success';
@@ -847,7 +857,8 @@ function buildBlock(key, arch) {
         throw new Error(t);
       }
     })
-    .catch(function() {
+    .catch(function(err) {
+      console.log('Error:', err);
       emailMsg.textContent = 'Something went wrong. Please try again.';
       emailMsg.className = 'fms-z5-email-msg error';
       emailSend.disabled = false;
