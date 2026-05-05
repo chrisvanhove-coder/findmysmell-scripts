@@ -734,7 +734,7 @@ function buildBlock(key, arch) {
   var z2a = document.createElement('div');
   z2a.className = 'fms-zone fms-z2a';
   if (ac.zoneBg !== 'transparent') {
-    z2a.style.cssText = 'background:' + ac.zoneBg + ';margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%);padding:48px calc(50vw - 50% + 10%);box-sizing:border-box;';
+    z2a.style.cssText = 'background:' + ac.zoneBg + ';margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%);margin-top:5vh;padding:48px calc(50vw - 50% + 10%);box-sizing:border-box;';
   }
   z2a.innerHTML = '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">YOUR SCENT PERSONALITY</div>' +
     '<hr class="fms-z1-rule" style="border-color:' + ac.ruleColor + ';opacity:0.3;">' +
