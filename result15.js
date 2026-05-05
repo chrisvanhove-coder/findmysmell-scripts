@@ -535,7 +535,7 @@ function injectModalStyles() {
     '.fms-z5-email {',
     '  margin-top: 40px;',
     '  padding: 32px;',
-    '  background: #1a1a1a;',
+    '  background: rgba(0,0,0,0.55);',
     '  border-radius: 4px;',
     '}',
     '.fms-z5-email-title {',
