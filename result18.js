@@ -729,13 +729,18 @@ function buildBlock(key, arch) {
   }
 
   var ac = FMS_ARCH_COLORS[key] || { zoneBg: 'transparent', titleColor: '#8B3A22', textColor: '#2a2a2a', ruleColor: '#2a2a2a' };
-  var z2BgStyle = ac.zoneBg !== 'transparent' ? 'style="background:' + ac.zoneBg + ';padding:40px;margin:-20px -20px 20px;border-radius:4px;"' : '';
-  z2.innerHTML = '<div class="fms-z2-header" ' + z2BgStyle + '>' +
-    '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">YOUR SCENT PERSONALITY</div>' +
+  if (ac.zoneBg !== 'transparent') {
+    z2.style.background = ac.zoneBg;
+    z2.style.marginLeft = '-40px';
+    z2.style.marginRight = '-40px';
+    z2.style.paddingLeft = '40px';
+    z2.style.paddingRight = '40px';
+  }
+  z2.innerHTML = '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">YOUR SCENT PERSONALITY</div>' +
     '<hr class="fms-z1-rule" style="border-color:' + ac.ruleColor + ';opacity:0.3;">' +
     '<div class="fms-z2-text">' +
     arch.desc.map(function(p) { return '<p style="color:' + ac.textColor + ';">' + p + '</p>'; }).join('') +
-    '</div></div>' +
+    '</div>' +
     ingredientsHTML +
     '<div class="fms-z3-label">your scent</div>';
   block.appendChild(z2);
