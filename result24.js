@@ -400,7 +400,7 @@ var FMS_ARCH_COLORS = {
   CEO:       { zoneBg: 'transparent', titleColor: '#a43f35', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
   JAPAN:     { zoneBg: 'transparent', titleColor: '#5f7d8e', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
   HUG:       { zoneBg: '#b8a66a',     titleColor: '#7e3d30', textColor: '#1a1a1a', ruleColor: '#7e3d30' },
-  OFFGRID:   { zoneBg: 'transparent', titleColor: '#3c5d45', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
+  OFFGRID:   { zoneBg: '#3c5d45',     titleColor: '#ffffff', textColor: '#e8f0e0', ruleColor: 'rgba(255,255,255,0.3)' },
   OUTOFTIME: { zoneBg: '#303437',     titleColor: '#604c65', textColor: '#ffffff', ruleColor: 'rgba(255,255,255,0.3)' },
   SUMMER:    { zoneBg: 'transparent', titleColor: '#a43f35', textColor: '#2a2a2a', ruleColor: '#2a2a2a' },
   THERAPIST: { zoneBg: '#074d82',     titleColor: '#ffffff', textColor: '#ffffff', ruleColor: 'rgba(255,255,255,0.3)' }
@@ -733,8 +733,11 @@ function buildBlock(key, arch) {
   // ZONE 2a — Description only (gets archetype background)
   var z2a = document.createElement('div');
   z2a.className = 'fms-zone fms-z2a';
+  z2a.style.marginTop = '5vh';
+  z2a.style.paddingLeft = '10%';
+  z2a.style.paddingRight = '10%';
   if (ac.zoneBg !== 'transparent') {
-    z2a.style.cssText = 'background:' + ac.zoneBg + ';margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%);margin-top:5vh;padding:48px calc(50vw - 50% + 10%);box-sizing:border-box;';
+    z2a.style.cssText = 'background:' + ac.zoneBg + ';margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%);margin-top:5vh;padding:60px calc(50vw - 50% + 10%) 48px;box-sizing:border-box;';
   }
   z2a.innerHTML = '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">YOUR SCENT PERSONALITY</div>' +
     '<hr class="fms-z1-rule" style="border-color:' + ac.ruleColor + ';opacity:0.3;">' +
