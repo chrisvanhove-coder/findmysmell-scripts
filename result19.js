@@ -731,10 +731,12 @@ function buildBlock(key, arch) {
   var ac = FMS_ARCH_COLORS[key] || { zoneBg: 'transparent', titleColor: '#8B3A22', textColor: '#2a2a2a', ruleColor: '#2a2a2a' };
   if (ac.zoneBg !== 'transparent') {
     z2.style.background = ac.zoneBg;
-    z2.style.marginLeft = '-40px';
-    z2.style.marginRight = '-40px';
-    z2.style.paddingLeft = '40px';
-    z2.style.paddingRight = '40px';
+    z2.style.padding = '40px';
+    z2.style.width = '100vw';
+    z2.style.position = 'relative';
+    z2.style.left = '50%';
+    z2.style.transform = 'translateX(-50%)';
+    z2.style.boxSizing = 'border-box';
   }
   z2.innerHTML = '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">YOUR SCENT PERSONALITY</div>' +
     '<hr class="fms-z1-rule" style="border-color:' + ac.ruleColor + ';opacity:0.3;">' +
