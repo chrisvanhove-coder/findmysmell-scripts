@@ -851,15 +851,17 @@ function buildBlock(key, arch) {
     emailMsg.textContent = '';
     emailMsg.className = 'fms-z5-email-msg';
 
-    var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase();
-    var scores = {};
-    try { scores = JSON.parse(localStorage.getItem('quiz_scores') || '{}'); } catch(e2) {}
+var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase();
+var scores = {};
+try { scores = JSON.parse(localStorage.getItem('quiz_scores') || '{}'); } catch(e2) {}
+var answers = sessionStorage.getItem('quiz_answers') || localStorage.getItem('quiz_answers') || '';
 
-    fetch(APPS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'payload=' + encodeURIComponent(JSON.stringify({ email: email, winner: winner, scores: scores, page_url: window.location.href }))
-    })
+fetch(APPS_URL, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  body: 'payload=' + encodeURIComponent(JSON.stringify({ email: email, winner: winner, scores: scores, answers: answers, page_url: window.location.href }))
+})
+    
     .then(function(r) { return r.text(); })
     .then(function(t) {
       console.log('Response:', t);
