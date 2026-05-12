@@ -859,7 +859,7 @@ var answers = sessionStorage.getItem('quiz_answers') || localStorage.getItem('qu
 fetch(APPS_URL, {
   method: 'POST',
   headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  body: 'payload=' + encodeURIComponent(JSON.stringify({ email: email, winner: winner, scores: scores, answers: answers, page_url: window.location.href }))
+  body: 'payload=' + encodeURIComponent(JSON.stringify({ email: email, winner: winner, scores: scores, answers: answers, open_answer: open_answer, page_url: window.location.href }))
 })
     
     .then(function(r) { return r.text(); })
