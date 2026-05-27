@@ -855,6 +855,7 @@ var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('qui
 var scores = {};
 try { scores = JSON.parse(localStorage.getItem('quiz_scores') || '{}'); } catch(e2) {}
 var answers = sessionStorage.getItem('quiz_answers') || localStorage.getItem('quiz_answers') || '';
+var open_answer = sessionStorage.getItem('quiz_open') || localStorage.getItem('quiz_open') || ''; // ← this line
 
 fetch(APPS_URL, {
   method: 'POST',
