@@ -500,20 +500,30 @@ function injectModalStyles() {
     '  opacity: 0.15;',
     '  margin: 0 0 32px;',
     '}',
-    '.fms-ingredient-item {',
-    '  display: flex;',
-    '  flex-direction: column;',
-    '  align-items: center;',
-    '}',
-    '.fms-ingredient-body {',
-    '  display: flex;',
-    '  flex-direction: column;',
-    '  flex: 1;',
-    '  width: 100%;',
-    '}',
-    '.fms-ingredient-desc {',
-    '  flex: 1;',
-    '}',
+'.fms-ingredient-item {',
+'  display: flex;',
+'  flex-direction: row;',
+'  align-items: center;',
+'  gap: 20px;',
+'  padding: 8px 0;',
+'}',
+'.fms-ingredient-img {',
+'  order: 2;',
+'  flex-shrink: 0;',
+'  width: 72px;',
+'  height: 72px;',
+'  border-radius: 50%;',
+'  object-fit: cover;',
+'}',
+'.fms-ingredient-body {',
+'  order: 1;',
+'  display: flex;',
+'  flex-direction: column;',
+'  flex: 1;',
+'}',
+'.fms-ingredient-desc {',
+'  flex: 1;',
+'}',
     '.fms-z5-cards {',
     '  display: flex;',
     '  gap: 16px;',
@@ -781,52 +791,24 @@ function buildBlock(key, arch) {
   block.appendChild(z4);
 
   // ZONE 5 — Share
-  const z5 = document.createElement('div');
-  z5.className = 'fms-zone fms-z5';
-  z5.innerHTML = '<span class="fms-z5-label">share your result</span>' +
-    '<div class="fms-z5-cards">' +
-    '<div class="fms-z5-card-wrap">' +
-    '<canvas class="fms-z5-card-canvas" id="fms-c1-' + key + '" width="1200" height="1200"></canvas>' +
-    '<div class="fms-z5-card-label">01 — Identity</div>' +
-    '<button class="fms-z5-btn" id="fms-b1-' + key + '">\uD83D\uDCF7 Save</button>' +
-    '</div>' +
-    '<div class="fms-z5-card-wrap">' +
-    '<canvas class="fms-z5-card-canvas" id="fms-c2-' + key + '" width="1200" height="1200"></canvas>' +
-    '<div class="fms-z5-card-label">02 — Your scent</div>' +
-    '<button class="fms-z5-btn" id="fms-b2-' + key + '">\uD83D\uDCF7 Save</button>' +
-    '</div>' +
-    '<div class="fms-z5-card-wrap">' +
-    '<canvas class="fms-z5-card-canvas" id="fms-c3-' + key + '" width="1200" height="1200"></canvas>' +
-    '<div class="fms-z5-card-label">03 — Ingredients</div>' +
-    '<button class="fms-z5-btn" id="fms-b3-' + key + '">\uD83D\uDCF7 Save</button>' +
-    '</div>' +
-    '</div>' +
-    '<div class="fms-z5-email" id="fms-email-' + key + '">' +
-    '<div class="fms-z5-email-title">Get your full result by email</div>' +
-    '<div class="fms-z5-email-sub">Your archetype, all 5 ingredients explained, and your scent recommendations — in your inbox.</div>' +
-    '<div class="fms-z5-email-row">' +
-    '<input class="fms-z5-email-input" id="fms-ei-' + key + '" type="email" placeholder="your@email.com">' +
-    '<button class="fms-z5-email-send" id="fms-es-' + key + '">Send my result</button>' +
-    '</div>' +
-    '<div class="fms-z5-email-consent">' +
-    '<input type="checkbox" id="fms-ec-' + key + '">' +
-    '<label class="fms-z5-email-consent-label" for="fms-ec-' + key + '">I agree to receive my quiz result by email. One email only, no marketing. <a href="/privacy-policy" target="_blank">Privacy policy</a>.</label>' +
-    '</div>' +
-    '<div class="fms-z5-email-msg" id="fms-em-' + key + '"></div>' +
-    '</div>';
-  block.appendChild(z5);
+const z5 = document.createElement('div');
+z5.className = 'fms-zone fms-z5';
+z5.innerHTML = '<div class="fms-z5-email" id="fms-email-' + key + '">' +
+  '<div class="fms-z5-email-title">Get your full result by email</div>' +
+  '<div class="fms-z5-email-sub">Your archetype, all 5 ingredients explained, and your scent recommendations — in your inbox.</div>' +
+  '<div class="fms-z5-email-row">' +
+  '<input class="fms-z5-email-input" id="fms-ei-' + key + '" type="email" placeholder="your@email.com">' +
+  '<button class="fms-z5-email-send" id="fms-es-' + key + '">Send my result</button>' +
+  '</div>' +
+  '<div class="fms-z5-email-consent">' +
+  '<input type="checkbox" id="fms-ec-' + key + '">' +
+  '<label class="fms-z5-email-consent-label" for="fms-ec-' + key + '">I agree to receive my quiz result by email. One email only, no marketing. <a href="/privacy-policy" target="_blank">Privacy policy</a>.</label>' +
+  '</div>' +
+  '<div class="fms-z5-email-msg" id="fms-em-' + key + '"></div>' +
+  '</div>';
+block.appendChild(z5);
 
-  var c1 = z5.querySelector('#fms-c1-' + key);
-  var c2 = z5.querySelector('#fms-c2-' + key);
-  var c3 = z5.querySelector('#fms-c3-' + key);
-  var b1 = z5.querySelector('#fms-b1-' + key);
-  var b2 = z5.querySelector('#fms-b2-' + key);
-  var b3 = z5.querySelector('#fms-b3-' + key);
-
-  if (typeof fmsInitCarousel === 'function') {
-    fmsInitCarousel(c1, c2, c3, b1, b2, b3);
-  }
-
+ 
   // Email wiring
   var emailInput   = z5.querySelector('#fms-ei-' + key);
   var emailSend    = z5.querySelector('#fms-es-' + key);
