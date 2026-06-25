@@ -685,7 +685,7 @@ function buildModal() {
   const overlay = document.createElement('div');
   overlay.id = 'fms-modal-overlay';
   overlay.innerHTML = '<div id="fms-modal-box">' +
-    '<button id="fms-modal-close" aria-label="Close">\u2715</button>' +
+    '<button id="fms-modal-close" aria-label="Fermer">\u2715</button>' +
     '<img id="fms-modal-img" src="" alt="">' +
     '<div id="fms-modal-body">' +
     '<div id="fms-modal-name"></div>' +
@@ -745,11 +745,11 @@ function buildBlock(key, arch) {
         '<div class="fms-ingredient-body">' +
         '<div class="fms-ingredient-name">' + ing.name + '</div>' +
         '<div class="fms-ingredient-desc">' + ing.desc + '</div>' +
-        '<button class="fms-ingredient-readmore" data-archetype="' + key + '" data-index="' + idx + '">Read more</button>' +
+        '<button class="fms-ingredient-readmore" data-archetype="' + key + '" data-index="' + idx + '">En savoir plus</button>' +
         '</div></div>';
     }).join('');
     ingredientsHTML = '<div class="fms-ingredients">' +
-      '<span class="fms-ingredients-label">ingredients worth discovering</span>' +
+      '<span class="fms-ingredients-label">ingrédients qui méritent d\'être découverts</span>' +
       '<div class="fms-ingredients-list">' + itemsHTML + '</div>' +
       '</div>';
   }
@@ -774,7 +774,7 @@ function buildBlock(key, arch) {
 
   // ZONE 2b — Ingredients (always on page background)
   z2.innerHTML = ingredientsHTML +
-    '<div class="fms-z3-label">your scent</div>';
+    '<div class="fms-z3-label">votre parfum</div>';
   block.appendChild(z2);
 
   // ZONE 3 — Main perfume
@@ -784,7 +784,7 @@ function buildBlock(key, arch) {
     '<div class="fms-z3-name">' + arch.main.name + '</div>' +
     '<div class="fms-z3-house">' + arch.main.house + '</div>' +
     '<div class="fms-z3-desc">' + arch.main.desc + '</div>' +
-    '<a class="fms-z3-cta" href="' + arch.main.link + '" target="_blank" rel="noopener">discover \u2192</a>';
+    '<a class="fms-z3-cta" href="' + arch.main.link + '" target="_blank" rel="noopener">découvrir \u2192</a>';
   block.appendChild(z3);
 
   // ZONE 4 — Alternatives
@@ -798,11 +798,11 @@ function buildBlock(key, arch) {
       '<div class="fms-z4-house">' + a.house + '</div>' +
       '<div class="fms-z4-tagline">' + a.desc + '</div>' +
       '</div>' +
-      '<a class="fms-z4-discover" href="' + a.link + '" target="_blank" rel="noopener">discover \u2192</a>' +
+      '<a class="fms-z4-discover" href="' + a.link + '" target="_blank" rel="noopener">découvrir \u2192</a>' +
       '</div>';
   }).join('');
-  z4.innerHTML = '<span class="fms-z4-label">also consider</span>' +
-    '<span class="fms-z4-sublabel">same energy, under 100\u20ac</span>' +
+  z4.innerHTML = '<span class="fms-z4-label">à considérer également</span>' +
+    '<span class="fms-z4-sublabel">même énergie, moins de 100\u20ac</span>' +
     '<div class="fms-z4-list">' + altsHTML + '</div>';
   block.appendChild(z4);
 
@@ -845,7 +845,7 @@ block.appendChild(z5);
       return;
     }
     emailSend.disabled = true;
-    emailSend.textContent = 'Sending…';
+    emailSend.textContent = 'Envoi en cours…';
     emailMsg.textContent = '';
     emailMsg.className = 'fms-z5-email-msg';
 
