@@ -929,7 +929,7 @@ function loadCMSPerfumes() {
       ARCHETYPES[key].main.house = data.main.brand;
       ARCHETYPES[key].main.link = data.main.link;
       ARCHETYPES[key].main.img = data.main.img;
-      if (data.main.desc) ARCHETYPES[key].main.desc = data.main.desc;
+   // if (data.main.desc) ARCHETYPES[key].main.desc = data.main.desc;
     }
     if (data.alts.length) {
       ARCHETYPES[key].alts = data.alts.map(function(a) {
