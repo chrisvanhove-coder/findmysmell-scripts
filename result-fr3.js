@@ -931,11 +931,11 @@ function loadCMSPerfumes() {
       ARCHETYPES[key].main.img = data.main.img;
    // if (data.main.desc) ARCHETYPES[key].main.desc = data.main.desc;
     }
-    if (data.alts.length) {
-      ARCHETYPES[key].alts = data.alts.map(function(a) {
-        return { name: a.name, house: a.brand, link: a.link, img: a.img, desc: a.desc };
-      });
-    }
+   // if (data.alts.length) {
+//   ARCHETYPES[key].alts = data.alts.map(function(a) {
+//     return { name: a.name, house: a.brand, link: a.link, img: a.img, desc: a.desc };
+//   });
+// }
   });
 }
 
