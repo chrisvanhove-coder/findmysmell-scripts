@@ -5,8 +5,7 @@
 var FMS_ARCHETYPES = {
   'CEO': {
     headline: 'THIS IS WHAT A\nDECISION \nSMELLS LIKE.',
-    tagline:  'Clean. Architectural. Focused.',
-    desc:     "You don't need another recommendation. You need something that works. No coziness. No backstory. No \u201chow does this make you feel?\u201d",
+    desc:     "You replied to that email in 4 minutes and you're calling it work-life balance.",
     perfume:  'Concrete — Comme des Garçons',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337efd1740fcd5bbd50a_ceo-concrete.svg',
     bg:       '#a43f35',
@@ -15,8 +14,7 @@ var FMS_ARCHETYPES = {
   },
   'JAPAN': {
     headline: 'YOU ARE\nINSISTENTLY \nCALM.',
-    tagline:  'Minimal. Intentional. Above the noise.',
-    desc:     "You speak less. You choose better. You move with intention. Calm, because you don't need to prove anything.",
+    desc:      "You said five words in that meeting. Everyone's still quoting you.",
     perfume:  'Dirty Hinoki — Heretic Parfum',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png',
     bg:       '#cac88f',
@@ -25,8 +23,7 @@ var FMS_ARCHETYPES = {
   },
   'HUG': {
     headline: 'YOU ARE\nA HUG.',
-    tagline:  'Open. Present. Quietly reassuring.',
-    desc:     "You listen without fixing. You stay without judging. Warmth, for you, isn't performance.",
+    desc:     "Someone is mid-breakdown right now and texting you instead of their therapist.",
     perfume:  'Eau Duelle — Diptyque',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a3ad178c4e36ba6acc_hug-eau.svg',
     bg:       '#7e3d30',
@@ -35,8 +32,7 @@ var FMS_ARCHETYPES = {
   },
   'OFFGRID': {
     headline: 'YOU ARE\nSECRETLY PLANNING\nTO DISAPPEAR.',
-    tagline:  'Raw. Grounded. Present.',
-    desc:     "You don't fantasise about escape. You prepare for it. You prefer movement over conversation. Silence over explanations. You don't need comfort. You need space.",
+    desc:      "Your phone is at 12% and you're somehow relieved about it.",
     perfume:  'Coven — Andrea Maack',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595ac9e0cf46d4776711_offgrid-coven.svg',
     bg:       '#363636',
@@ -45,8 +41,7 @@ var FMS_ARCHETYPES = {
   },
   'OUTOFTIME': {
     headline: 'YOU ARE\nCHRONICALLY \nELSEWHERE.',
-    tagline:  'Introverted. Mysterious. Entirely your own.',
-    desc:     "You're not behind the world. You're slightly aside from it. You let things reveal themselves.",
+    desc:     "You've read the message. You have no plans to respond. The universe approves this.",
     perfume:  'Gris Clair — Serge Lutens',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5c6cacbdd277d526dd_outoftime-gris.svg',
     bg:       '#604c65',
@@ -55,8 +50,7 @@ var FMS_ARCHETYPES = {
   },
   'SUMMER': {
     headline: 'YOU ARE\nPATHOLOGICALLY \nCHILL.',
-    tagline:  'Light. Moving. Confident.',
-    desc:     "You move easily between people, plans, and situations. You trust the process and you keep things light.",
+    desc:      "You missed the flight and somehow made it the best part of the trip.",
     perfume:  'Solo Vulcan — Loewe',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564cad5ce2b482c477798_summer-solo.svg',
     bg:       '#a43f35',
@@ -65,8 +59,7 @@ var FMS_ARCHETYPES = {
   },
   'THERAPIST': {
     headline: 'YOU ARE \nDANGEROUSLY\nEMPATHETIC.',
-    tagline:  'Present. Intentional. Selective.',
-    desc:     "You understand people quickly — because you notice what actually matters. You're not for everyone. And you're not trying to be.",
+    desc:      "Someone's whole week made sense after just five minutes talking with you.",
     perfume:  'Black Tea — Jil Sander',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567233c9199821e9d3cde_therapist-blacktea.svg',
     bg:       '#8f9a54',
