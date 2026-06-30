@@ -809,7 +809,12 @@ function buildBlock(key, arch) {
   // ZONE 5 — Share
 const z5 = document.createElement('div');
 z5.className = 'fms-zone fms-z5';
-z5.innerHTML = '<div class="fms-z5-email" id="fms-email-' + key + '">' +
+z5.innerHTML =
+  '<div class="fms-z5-share">' +
+  '<canvas class="fms-z5-card-canvas" id="fms-card-' + key + '"></canvas>' +
+  '<button class="fms-z5-card-save" id="fms-save-' + key + '">📷 Save & share</button>' +
+  '</div>' +
+  '<div class="fms-z5-email" id="fms-email-' + key + '">' +
 '<div class="fms-z5-email-title">Want to keep this?</div>' +
 '<div class="fms-z5-email-sub">Your full archetype. The ingredients that chose you. One email, nothing else.</div>' +
   '<div class="fms-z5-email-row">' +
@@ -830,6 +835,9 @@ block.appendChild(z5);
   var emailSend    = z5.querySelector('#fms-es-' + key);
   var emailConsent = z5.querySelector('#fms-ec-' + key);
   var emailMsg     = z5.querySelector('#fms-em-' + key);
+  var shareCanvas = z5.querySelector('#fms-card-' + key);
+var shareSaveBtn = z5.querySelector('#fms-save-' + key);
+if (shareCanvas) fmsInitShareCard(shareCanvas, shareSaveBtn);
   var APPS_URL     = 'https://script.google.com/macros/s/AKfycbzX_iZnTevFLG5GgComLwfFJoC4Dp_HaPRcmcmAVszBR_wWrpmlGSlbpYcdNo-6L-NK/exec';
 
   emailSend.addEventListener('click', function() {
