@@ -87,38 +87,27 @@ var FMS_TAG_LINES = {
 };
 
 // ------------------------------------------------------------
-// Particle theme per archetype — controls ambient particle look
-// ------------------------------------------------------------
-var FMS_PARTICLE_THEMES = {
-  CEO:        { type: 'frost',  color: '255,255,255', density: 40, speed: 0.15 },
-  JAPAN:      { type: 'dust',   color: '255,255,255', density: 25, speed: 0.08 },
-  HUG:        { type: 'warm',   color: '255,220,180', density: 30, speed: 0.10 },
-  OFFGRID:    { type: 'smoke',  color: '255,255,255', density: 35, speed: 0.12 },
-  OUTOFTIME:  { type: 'smoke',  color: '220,220,235', density: 45, speed: 0.07 },
-  SUMMER:     { type: 'sparkle',color: '255,250,220', density: 35, speed: 0.18 },
-  THERAPIST:  { type: 'dust',   color: '255,255,255', density: 28, speed: 0.09 }
-};
-
-// ------------------------------------------------------------
-// Card layout constants — tweak spacing here without touching draw logic
+// Card layout constants — 4:5 ratio (1080x1350)
 // ------------------------------------------------------------
 var FMS_CARD_LAYOUT = {
   W: 1080,
-  H: 1920,
+  H: 1350,
   PAD: 72,
-  bottleOffsetX: 220,   // distance from right edge
-  bottleCy: 220,
-  bottleZoneR: 200,
-  bottleDrawW: 220,
-  bottleDrawH: 280,
-  bottleAlpha: 0.7,
-  punchY: 420,
-  punchFontSize: 56,
-  punchLineHeight: 66,
-  headlineFontSize: 34,
-  headlineLineHeight: 40,
-  tagFontSize: 28,
-  footerBottomOffset: 60
+  punchY: 130,
+  punchFontSize: 58,
+  punchLineHeight: 68,
+  bottleW: 320,
+  bottleH: 400,
+  bottleGapAfterPunch: 50,
+  bottleGapAfterBottle: 40,
+  perfumeFontSize: 36,
+  headlineGapAfterPerfume: 50,
+  headlineFontSize: 30,
+  headlineLineHeight: 36,
+  tagGapAfterHeadline: 36,
+  tagFontSize: 26,
+  footerFontSize: 32,
+  footerBottomOffset: 64
 };
 
 // ------------------------------------------------------------
@@ -177,6 +166,25 @@ function fmsWrapText(ctx, text, x, y, maxW, lineH) {
   return ly + lineH;
 }
 
+// Centered version of fmsWrapText — returns the Y position after the last line
+function fmsWrapTextCentered(ctx, text, cx, y, maxW, lineH) {
+  var words = text.split(' '), line = '', ly = y;
+  var lines = [];
+  words.forEach(function(w) {
+    var t = (line + ' ' + w).trim();
+    if (ctx.measureText(t).width > maxW && line) {
+      lines.push(line);
+      line = w;
+    } else { line = t; }
+  });
+  if (line) lines.push(line);
+  lines.forEach(function(l) {
+    ctx.fillText(l, cx, ly);
+    ly += lineH;
+  });
+  return ly - lineH;
+}
+
 function fmsLoadImages(sources, callback) {
   var images = {};
   var total = sources.length;
@@ -226,59 +234,12 @@ function fmsDrawBottleImg(ctx, img, x, y, w, h, alpha) {
   ctx.restore();
 }
 
-function fmsDrawParticles(ctx, theme, cx, cy, radius) {
-  var n = theme.density;
-  for (var i = 0; i < n; i++) {
-    var seed = i * 137.5; // golden angle distribution
-    var angle = (seed % 360) * Math.PI / 180;
-    var dist = radius * (0.3 + (i % 7) / 7 * 0.9);
-    var px = cx + Math.cos(angle) * dist + (Math.sin(i * 12.9) * 30);
-    var py = cy + Math.sin(angle) * dist * 1.3 + (Math.cos(i * 7.3) * 40);
-
-    var size = theme.type === 'smoke' ? (8 + (i % 5) * 6) :
-               theme.type === 'sparkle' ? (1.5 + (i % 3)) :
-               theme.type === 'frost' ? (2 + (i % 4) * 1.5) :
-               (1 + (i % 3) * 1.2);
-
-    var alpha = theme.type === 'smoke' ? (0.04 + (i % 4) * 0.02) :
-                theme.type === 'sparkle' ? (0.5 + (i % 3) * 0.15) :
-                (0.15 + (i % 5) * 0.06);
-
-    ctx.beginPath();
-    if (theme.type === 'sparkle') {
-      ctx.save();
-      ctx.translate(px, py);
-      ctx.rotate(seed);
-      ctx.moveTo(0, -size * 2); ctx.lineTo(size * 0.5, -size * 0.5);
-      ctx.lineTo(size * 2, 0); ctx.lineTo(size * 0.5, size * 0.5);
-      ctx.lineTo(0, size * 2); ctx.lineTo(-size * 0.5, size * 0.5);
-      ctx.lineTo(-size * 2, 0); ctx.lineTo(-size * 0.5, -size * 0.5);
-      ctx.closePath();
-      ctx.restore();
-    } else {
-      ctx.arc(px, py, size, 0, Math.PI * 2);
-    }
-    ctx.fillStyle = 'rgba(' + theme.color + ',' + alpha + ')';
-    ctx.fill();
-  }
-}
-
-function fmsDrawGlow(ctx, cx, cy, r, color) {
-  var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-  grad.addColorStop(0, 'rgba(' + color + ',0.22)');
-  grad.addColorStop(0.5, 'rgba(' + color + ',0.08)');
-  grad.addColorStop(1, 'rgba(' + color + ',0)');
-  ctx.fillStyle = grad;
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.fill();
-}
-
 // ------------------------------------------------------------
-// Main share card draw function
-// Layout order: bottle (small, side, background) → punchline
-// (hero) → rule → headline (secondary) → tag-a-friend → perfume
-// name/brand → footer
+// Main share card draw function — 4:5 ratio
+// Layout order (top to bottom): punchline (hero) → bottle
+// (medium, centered, clean — no particles/dust) → perfume name
+// → headline → tag line (italic) → website link (bottom right,
+// large + visible)
 // ------------------------------------------------------------
 function fmsDrawShareCard(canvas, callback) {
   var arch = fmsGetArch();
@@ -296,10 +257,10 @@ function fmsDrawShareCard(canvas, callback) {
   ctx.fillStyle = arch.bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Subtle grain
+  // Subtle grain (fine page texture, not particles)
   ctx.save();
   ctx.globalCompositeOperation = 'overlay';
-  ctx.globalAlpha = 0.06;
+  ctx.globalAlpha = 0.05;
   for (var gy = 0; gy < H; gy += 3) {
     for (var gx = 0; gx < W; gx += 3) {
       var gv = Math.floor(Math.random() * 255);
@@ -309,73 +270,58 @@ function fmsDrawShareCard(canvas, callback) {
   }
   ctx.restore();
 
-  // Bottle zone — small, off to the side, drawn first as background detail
-  var theme = FMS_PARTICLE_THEMES[k] || FMS_PARTICLE_THEMES.CEO;
-  var bottleCx = W - L.bottleOffsetX;
-  var bottleCy = L.bottleCy;
-  fmsDrawGlow(ctx, bottleCx, bottleCy, L.bottleZoneR, theme.color);
-  fmsDrawParticles(ctx, theme, bottleCx, bottleCy, L.bottleZoneR);
+  // 1. PUNCHLINE — hero text, top of card
+  ctx.font = '900 ' + L.punchFontSize + 'px Arial Black,Arial,sans-serif';
+  ctx.fillStyle = arch.text;
+  ctx.globalAlpha = 0.98;
+  ctx.textAlign = 'left';
+  var punchEndY = fmsWrapText(ctx, arch.desc, PAD, L.punchY, W - PAD * 2, L.punchLineHeight);
+  ctx.globalAlpha = 1;
 
-  function drawTextAndRest() {
-    fmsDrawParticles(ctx, theme, bottleCx, bottleCy, L.bottleZoneR * 0.6);
+  function finishCard() {
+    var cursorY = punchEndY + L.bottleGapAfterPunch + L.bottleH;
 
-    // PUNCHLINE — hero text
-    ctx.font = '900 ' + L.punchFontSize + 'px Arial Black,Arial,sans-serif';
+    // 3. Perfume name + brand — directly below bottle
+    var perfumeParts = arch.perfume.split(' \u2014 ');
+    cursorY += L.bottleGapAfterBottle;
+    ctx.font = '700 ' + L.perfumeFontSize + 'px Arial Black,Arial,sans-serif';
     ctx.fillStyle = arch.text;
-    ctx.globalAlpha = 0.98;
-    var ly = fmsWrapText(ctx, arch.desc, PAD, L.punchY, W - PAD * 2, L.punchLineHeight);
+    ctx.globalAlpha = 0.95;
+    ctx.textAlign = 'center';
+    ctx.fillText(perfumeParts[0] || '', W / 2, cursorY);
     ctx.globalAlpha = 1;
 
-    // Small rule
-    var ruleY = ly + 30;
-    ctx.beginPath();
-    ctx.moveTo(PAD, ruleY); ctx.lineTo(PAD + 90, ruleY);
-    ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.85; ctx.lineWidth = 3;
-    ctx.stroke(); ctx.globalAlpha = 1;
+    cursorY += 40;
+    ctx.font = '400 22px Inconsolata,monospace';
+    ctx.fillStyle = arch.accent;
+    ctx.globalAlpha = 0.65;
+    ctx.fillText(perfumeParts[1] || '', W / 2, cursorY);
+    ctx.globalAlpha = 1;
 
-    // Headline — secondary
-    var hlLines = arch.headline.split('\n');
+    // 4. Headline — below perfume name
+    cursorY += L.headlineGapAfterPerfume;
     ctx.font = '700 ' + L.headlineFontSize + 'px Inconsolata,monospace';
     ctx.fillStyle = arch.accent;
-    ctx.globalAlpha = 0.85;
-    var hlY = ruleY + 56;
-    hlLines.forEach(function(line) {
-      ctx.fillText(line, PAD, hlY);
-      hlY += L.headlineLineHeight;
-    });
+    ctx.globalAlpha = 0.8;
+    cursorY = fmsWrapTextCentered(ctx, arch.headline.split('\n').join(' '), W / 2, cursorY, W - PAD * 2, L.headlineLineHeight);
     ctx.globalAlpha = 1;
 
-    // Tag-a-friend line
-    var tagY = hlY + 70;
+    // 5. Tag-a-friend line (italic)
+    cursorY += L.tagGapAfterHeadline;
     ctx.font = 'italic 400 ' + L.tagFontSize + 'px Georgia,serif';
     ctx.fillStyle = arch.text;
-    ctx.globalAlpha = 0.55;
-    ctx.fillText(FMS_TAG_LINES[k] || '', PAD, tagY);
+    ctx.globalAlpha = 0.6;
+    ctx.fillText(FMS_TAG_LINES[k] || '', W / 2, cursorY);
     ctx.globalAlpha = 1;
+    ctx.textAlign = 'left';
 
-    // Perfume name + brand
-    var perfY = H - 220;
-    ctx.beginPath();
-    ctx.moveTo(PAD, perfY - 24); ctx.lineTo(W - PAD, perfY - 24);
-    ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 1;
-    ctx.stroke(); ctx.globalAlpha = 1;
-
-    var perfumeParts = arch.perfume.split(' \u2014 ');
-    ctx.font = '700 40px Arial Black,Arial,sans-serif';
-    ctx.fillStyle = arch.text; ctx.globalAlpha = 0.95;
-    ctx.fillText(perfumeParts[0] || '', PAD, perfY + 12);
+    // 6. Website link — bottom right, large and visible (drives traffic)
+    ctx.font = '700 ' + L.footerFontSize + 'px Inconsolata,monospace';
+    ctx.fillStyle = arch.text;
     ctx.globalAlpha = 1;
-
-    ctx.font = '400 22px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.65;
-    ctx.fillText(perfumeParts[1] || '', PAD, perfY + 46);
-    ctx.globalAlpha = 1;
-
-    // Footer URL — small bottom spacing
-    ctx.font = '400 22px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.42;
-    ctx.fillText('findmysmell.com  \u00b7  perfume personality test', PAD, H - L.footerBottomOffset);
-    ctx.globalAlpha = 1;
+    ctx.textAlign = 'right';
+    ctx.fillText('findmysmell.com', W - PAD, H - L.footerBottomOffset);
+    ctx.textAlign = 'left';
 
     if (callback) callback();
   }
@@ -384,18 +330,18 @@ function fmsDrawShareCard(canvas, callback) {
   var imgEl = new Image();
   imgEl.crossOrigin = 'anonymous';
   imgEl.onload = function() {
-    var bw = L.bottleDrawW, bh = L.bottleDrawH;
-    var nw = imgEl.naturalWidth || imgEl.width || bw;
-    var nh = imgEl.naturalHeight || imgEl.height || bh;
-    var scale = Math.min(bw / nw, bh / nh);
+    var bottleCx = W / 2;
+    var bottleTop = punchEndY + L.bottleGapAfterPunch;
+    var nw = imgEl.naturalWidth || imgEl.width || L.bottleW;
+    var nh = imgEl.naturalHeight || imgEl.height || L.bottleH;
+    var scale = Math.min(L.bottleW / nw, L.bottleH / nh);
     var dw = nw * scale, dh = nh * scale;
-    var dx = bottleCx - dw / 2, dy = bottleCy - dh / 2;
-    ctx.globalAlpha = L.bottleAlpha;
-    ctx.drawImage(imgEl, dx, dy, dw, dh);
+    var dx = bottleCx - dw / 2, dy = bottleTop + (L.bottleH - dh) / 2;
     ctx.globalAlpha = 1;
-    drawTextAndRest();
+    ctx.drawImage(imgEl, dx, dy, dw, dh);
+    finishCard();
   };
-  imgEl.onerror = drawTextAndRest;
+  imgEl.onerror = finishCard;
   imgEl.src = imgSrc;
 }
 
@@ -477,8 +423,8 @@ function injectSharePopupStyles() {
     '}',
     '#fms-share-popup-canvas {',
     '  width: 100%;',
-    '  max-width: 240px;',
-    '  aspect-ratio: 9 / 16;',
+    '  max-width: 260px;',
+    '  aspect-ratio: 4 / 5;',
     '  display: block;',
     '  margin: 0 auto 20px;',
     '  border-radius: 8px;',
