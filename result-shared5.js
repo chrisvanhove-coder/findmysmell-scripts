@@ -229,258 +229,227 @@ function fmsDrawBottleImg(ctx, img, x, y, w, h, alpha) {
 }
 
 // ============================================================
-// SECTION 7B — CARD 1: IDENTITY
+// NEW SECTION 7 — UNIFIED SHARE CARD (replaces Card 1/2/3)
+// Works for EN/FR/RU automatically — pulls text from FMS_ARCHETYPES
+// which already has headline/tagline/scene per language.
 // ============================================================
 
-function fmsDrawCard(canvas, callback) {
+// Particle theme per archetype — maps to the mood of each scene.
+// Each theme defines how ambient particles drift around the bottle.
+var FMS_PARTICLE_THEMES = {
+  CEO:        { type: 'frost',  color: '255,255,255', density: 40, speed: 0.15 },
+  JAPAN:      { type: 'dust',   color: '255,255,255', density: 25, speed: 0.08 },
+  HUG:        { type: 'warm',   color: '255,220,180', density: 30, speed: 0.10 },
+  OFFGRID:    { type: 'smoke',  color: '255,255,255', density: 35, speed: 0.12 },
+  OUTOFTIME:  { type: 'smoke',  color: '220,220,235', density: 45, speed: 0.07 },
+  SUMMER:     { type: 'sparkle',color: '255,250,220', density: 35, speed: 0.18 },
+  THERAPIST:  { type: 'dust',   color: '255,255,255', density: 28, speed: 0.09 }
+};
+
+// Draws ambient particles (dust/smoke/frost/sparkle) around a center point
+function fmsDrawParticles(ctx, theme, cx, cy, radius, S) {
+  var n = theme.density;
+  for (var i = 0; i < n; i++) {
+    var seed = i * 137.5; // golden angle distribution
+    var angle = (seed % 360) * Math.PI / 180;
+    var dist = radius * (0.3 + (i % 7) / 7 * 0.9);
+    var px = cx + Math.cos(angle) * dist + (Math.sin(i * 12.9) * 30);
+    var py = cy + Math.sin(angle) * dist * 1.3 + (Math.cos(i * 7.3) * 40);
+
+    var size = theme.type === 'smoke' ? (8 + (i % 5) * 6) :
+               theme.type === 'sparkle' ? (1.5 + (i % 3)) :
+               theme.type === 'frost' ? (2 + (i % 4) * 1.5) :
+               (1 + (i % 3) * 1.2);
+
+    var alpha = theme.type === 'smoke' ? (0.04 + (i % 4) * 0.02) :
+                theme.type === 'sparkle' ? (0.5 + (i % 3) * 0.15) :
+                (0.15 + (i % 5) * 0.06);
+
+    ctx.beginPath();
+    if (theme.type === 'sparkle') {
+      // small 4-point star
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(seed);
+      ctx.moveTo(0, -size * 2); ctx.lineTo(size * 0.5, -size * 0.5);
+      ctx.lineTo(size * 2, 0); ctx.lineTo(size * 0.5, size * 0.5);
+      ctx.lineTo(0, size * 2); ctx.lineTo(-size * 0.5, size * 0.5);
+      ctx.lineTo(-size * 2, 0); ctx.lineTo(-size * 0.5, -size * 0.5);
+      ctx.closePath();
+      ctx.restore();
+    } else {
+      ctx.arc(px, py, size, 0, Math.PI * 2);
+    }
+    ctx.fillStyle = 'rgba(' + theme.color + ',' + alpha + ')';
+    ctx.fill();
+  }
+}
+
+// Soft radial glow behind the bottle
+function fmsDrawGlow(ctx, cx, cy, r, color) {
+  var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+  grad.addColorStop(0, 'rgba(' + color + ',0.22)');
+  grad.addColorStop(0.5, 'rgba(' + color + ',0.08)');
+  grad.addColorStop(1, 'rgba(' + color + ',0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function fmsDrawShareCard(canvas, callback) {
   var arch = fmsGetArch();
+  var k = fmsGetKey();
+  var fullArch = window.FMS_FULL_ARCH && k ? window.FMS_FULL_ARCH[k] : null;
   if (!arch) { if (callback) callback(); return; }
 
-  var S = 1200;
-  canvas.width = canvas.height = S;
+  var W = 1080, H = 1920;
+  canvas.width = W;
+  canvas.height = H;
   var ctx = canvas.getContext('2d');
-  var PAD = 80, W = S - PAD * 2;
+  var PAD = 72;
 
-  fmsDrawBase(ctx, arch, S, PAD);
+  // 1. Solid background fill
+  ctx.fillStyle = arch.bg;
+  ctx.fillRect(0, 0, W, H);
 
-  var hlLines = arch.headline.split('\n');
-  var hlSize = 86;
-  ctx.font = '900 ' + hlSize + 'px Arial Black,Arial,sans-serif';
-  ctx.fillStyle = arch.text;
-  ctx.globalAlpha = 0.96;
-  var hlY = 190;
-  hlLines.forEach(function(line) { ctx.fillText(line, PAD, hlY); hlY += hlSize + 10; });
+  // 2. Subtle grain
+  ctx.save();
+  ctx.globalCompositeOperation = 'overlay';
+  ctx.globalAlpha = 0.06;
+  for (var gy = 0; gy < H; gy += 3) {
+    for (var gx = 0; gx < W; gx += 3) {
+      var gv = Math.floor(Math.random() * 255);
+      ctx.fillStyle = 'rgb(' + gv + ',' + gv + ',' + gv + ')';
+      ctx.fillRect(gx, gy, 3, 3);
+    }
+  }
+  ctx.restore();
+
+  // 3. Top brand label
+  ctx.font = '400 22px Inconsolata,monospace';
+  ctx.fillStyle = arch.accent;
+  ctx.globalAlpha = 0.5;
+  ctx.fillText('FIND MY SMELL', PAD, 70);
   ctx.globalAlpha = 1;
 
-  var ruleY = hlY + 10;
-  ctx.beginPath(); ctx.moveTo(PAD, ruleY); ctx.lineTo(PAD + 120, ruleY);
-  ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.9; ctx.lineWidth = 3;
-  ctx.stroke(); ctx.globalAlpha = 1;
+  // 4. Bottle zone with glow + particles (top third)
+  var bottleCx = W / 2;
+  var bottleCy = 480;
+  var bottleZoneR = 380;
 
-  ctx.font = '400 36px Inconsolata,monospace';
-  ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.85;
-  ctx.fillText(arch.tagline, PAD, ruleY + 56); ctx.globalAlpha = 1;
+  var theme = FMS_PARTICLE_THEMES[k] || FMS_PARTICLE_THEMES.CEO;
+  fmsDrawGlow(ctx, bottleCx, bottleCy, bottleZoneR, theme.color);
+  fmsDrawParticles(ctx, theme, bottleCx, bottleCy, bottleZoneR, W);
 
-  var descY = ruleY + 110;
-  ctx.font = '400 30px Georgia,serif';
-  ctx.fillStyle = arch.text; ctx.globalAlpha = 0.58;
-  var ly = fmsWrapText(ctx, arch.desc, PAD, descY, W - 20, 46);
-  ctx.globalAlpha = 1;
+  function drawBottleAndRest() {
+    fmsDrawParticles(ctx, theme, bottleCx, bottleCy, bottleZoneR * 0.6, W); // foreground layer
 
-  function finishCard() {
-    var perfY = S - 170;
-    fmsDrawFullRule(ctx, arch, S, PAD, perfY - 20);
+    // 5. Headline below bottle zone
+    var hlLines = arch.headline.split('\n');
+    var hlSize = 68;
+    ctx.font = '900 ' + hlSize + 'px Arial Black,Arial,sans-serif';
+    ctx.fillStyle = arch.text;
+    ctx.globalAlpha = 0.97;
+    var hlY = 880;
+    hlLines.forEach(function(line) {
+      ctx.fillText(line, PAD, hlY);
+      hlY += hlSize + 6;
+    });
+    ctx.globalAlpha = 1;
 
+    // 6. Small rule + tagline
+    var ruleY = hlY + 14;
+    ctx.beginPath();
+    ctx.moveTo(PAD, ruleY); ctx.lineTo(PAD + 100, ruleY);
+    ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.85; ctx.lineWidth = 3;
+    ctx.stroke(); ctx.globalAlpha = 1;
+
+    ctx.font = '400 32px Inconsolata,monospace';
+    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.85;
+    ctx.fillText(arch.tagline, PAD, ruleY + 50);
+    ctx.globalAlpha = 1;
+
+    // 7. Scene quote (italic, wrapped)
+    var sceneText = (fullArch && fullArch.scene) ? fullArch.scene : '';
+    if (sceneText) {
+      var quoteY = ruleY + 110;
+      ctx.font = 'italic 400 30px Georgia,serif';
+      ctx.fillStyle = arch.text;
+      ctx.globalAlpha = 0.55;
+      var quoted = '\u201C' + sceneText + '\u201D';
+      var ly = fmsWrapText(ctx, quoted, PAD, quoteY, W - PAD * 2, 44);
+      ctx.globalAlpha = 1;
+    }
+
+    // 8. Bottom rule + perfume name
+    var perfY = H - 150;
+    ctx.beginPath();
+    ctx.moveTo(PAD, perfY - 24); ctx.lineTo(W - PAD, perfY - 24);
+    ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 1;
+    ctx.stroke(); ctx.globalAlpha = 1;
+
+    ctx.font = '700 46px Arial Black,Arial,sans-serif';
+    ctx.fillStyle = arch.text; ctx.globalAlpha = 0.95;
+    ctx.fillText(arch.main.split(' \u2014 ')[0] || '', PAD, perfY + 14);
+    ctx.globalAlpha = 1;
+
+    ctx.font = '400 24px Inconsolata,monospace';
+    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.65;
+    ctx.fillText((fullArch && fullArch.main && fullArch.main.house) || '', PAD, perfY + 52);
+    ctx.globalAlpha = 1;
+
+    // 9. Footer URL
     ctx.font = '400 22px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.55;
-    ctx.fillText('RECOMMENDED SCENT', PAD, perfY + 6); ctx.globalAlpha = 1;
+    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.42;
+    ctx.fillText('findmysmell.com', PAD, H - 50);
+    ctx.globalAlpha = 1;
 
-    ctx.font = '500 38px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.92;
-    ctx.fillText(arch.perfume, PAD, perfY + 52); ctx.globalAlpha = 1;
-
-    fmsDrawFooter(ctx, arch, S, PAD);
     if (callback) callback();
   }
 
+  var imgSrc = (fullArch && fullArch.main && fullArch.main.img) ? fullArch.main.img : arch.img;
   var imgEl = new Image();
   imgEl.crossOrigin = 'anonymous';
   imgEl.onload = function() {
-    var imgAreaTop = ly + 20, imgAreaBot = S - 210;
-    var imgAreaH = imgAreaBot - imgAreaTop, imgAreaW = W;
-    var nw = imgEl.naturalWidth || imgEl.width || imgAreaW;
-    var nh = imgEl.naturalHeight || imgEl.height || imgAreaH;
-    var scale = Math.min(imgAreaW / nw, imgAreaH / nh);
+    var bw = 480, bh = 620;
+    var nw = imgEl.naturalWidth || imgEl.width || bw;
+    var nh = imgEl.naturalHeight || imgEl.height || bh;
+    var scale = Math.min(bw / nw, bh / nh);
     var dw = nw * scale, dh = nh * scale;
-    var dx = PAD + (imgAreaW - dw) / 2, dy = imgAreaTop + (imgAreaH - dh) / 2;
-    ctx.globalAlpha = 0.88;
+    var dx = bottleCx - dw / 2, dy = bottleCy - dh / 2;
+    ctx.globalAlpha = 0.95;
     ctx.drawImage(imgEl, dx, dy, dw, dh);
     ctx.globalAlpha = 1;
-    finishCard();
+    drawBottleAndRest();
   };
-  imgEl.onerror = function() { finishCard(); };
-  imgEl.src = arch.img;
+  imgEl.onerror = drawBottleAndRest;
+  imgEl.src = imgSrc;
 }
 
 // ============================================================
-// SECTION 7C — CARD 2: YOUR SCENT (main bottle + alternatives)
+// NEW SECTION 7E — SINGLE CARD INIT (replaces fmsInitCarousel)
 // ============================================================
 
-function fmsDrawCard2(canvas, callback) {
-  var arch = fmsGetArch();
-  var k = fmsGetKey();
-  var fullArch = window.FMS_FULL_ARCH && k ? window.FMS_FULL_ARCH[k] : null;
-  if (!arch) { if (callback) callback(); return; }
-
-  var alts = fullArch && fullArch.alts ? fullArch.alts : [];
-  var mainImg = arch.img;
-  var altImgs = alts.map(function(a) { return a.img || ''; });
-  var allSrcs = altImgs.filter(Boolean);
-
-  fmsLoadImages(allSrcs, function(images) {
-    var S = 1200;
-    canvas.width = canvas.height = S;
-    var ctx = canvas.getContext('2d');
-    var PAD = 80;
-
-    fmsDrawBase(ctx, arch, S, PAD);
-
-    // Card label
-    ctx.font = '400 22px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.55;
-    ctx.fillText('YOUR SCENT  ·  02 / 03', PAD, 136); ctx.globalAlpha = 1;
-
-    // Alternatives — each row: circle image left, name+house+desc right
-    var altAreaTop = 160;
-    var altAreaBot = S - 110;
-    var altSlot = Math.floor((altAreaBot - altAreaTop) / Math.max(alts.length, 1));
-    var circR = Math.min(48, Math.floor(altSlot / 2) - 4);
-    var textStartX = PAD + circR * 2 + 24;
-
-    alts.forEach(function(alt, i) {
-      var rowMidY = altAreaTop + i * altSlot + altSlot / 2;
-
-      // Separator (not before first)
-      if (i > 0) {
-        ctx.beginPath();
-        ctx.moveTo(PAD, altAreaTop + i * altSlot);
-        ctx.lineTo(S - PAD, altAreaTop + i * altSlot);
-        ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
-        ctx.stroke(); ctx.globalAlpha = 1;
-      }
-
-      // Circle bottle image
-      fmsDrawCircleImg(ctx, images[alt.img], PAD + circR, rowMidY, circR, 0.90);
-
-      // Alt name
-      ctx.font = '700 32px Arial Black,Arial,sans-serif';
-      ctx.fillStyle = arch.text; ctx.globalAlpha = 0.92;
-      ctx.fillText((alt.name + '  ·  ' + alt.house).toUpperCase(), textStartX, rowMidY - 10);
-      ctx.globalAlpha = 1;
-
-      // Alt desc
-      ctx.font = '400 24px Georgia,serif';
-      ctx.fillStyle = arch.text; ctx.globalAlpha = 0.50;
-      ctx.fillText(alt.desc, textStartX, rowMidY + 30);
-      ctx.globalAlpha = 1;
-    });
-
-    fmsDrawFooter(ctx, arch, S, PAD);
-    if (callback) callback();
-  });
-}
-
-// ============================================================
-// SECTION 7D — CARD 3: INGREDIENTS
-// ============================================================
-
-function fmsDrawCard3(canvas, callback) {
-  var arch = fmsGetArch();
-  var k = fmsGetKey();
-  var fullArch = window.FMS_FULL_ARCH && k ? window.FMS_FULL_ARCH[k] : null;
-  if (!arch) { if (callback) callback(); return; }
-
-  var ings = fullArch && fullArch.ingredients ? fullArch.ingredients : [];
-  var imgSrcs = ings.map(function(i) { return i.img || ''; }).filter(Boolean);
-
-  fmsLoadImages(imgSrcs, function(images) {
-    var S = 1200;
-    canvas.width = canvas.height = S;
-    var ctx = canvas.getContext('2d');
-    var PAD = 80;
-
-    fmsDrawBase(ctx, arch, S, PAD);
-
-    // Card label
-    ctx.font = '400 22px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.55;
-    ctx.fillText('INGREDIENTS WORTH DISCOVERING  ·  03 / 03', PAD, 136); ctx.globalAlpha = 1;
-
-    fmsDrawFullRule(ctx, arch, S, PAD, 154);
-
-    // 5 ingredient rows
-    var areaTop = 160;
-    var areaBot = S - 110;
-    var slot = Math.floor((areaBot - areaTop) / Math.max(ings.length, 1));
-    var circR = Math.min(62, Math.floor(slot / 2) - 8);
-    var textX = PAD + circR * 2 + 32;
-    var textW = S - PAD - textX;
-
-    ings.forEach(function(ing, i) {
-      var rowTop = areaTop + i * slot;
-      var rowMidY = rowTop + slot / 2;
-
-      // Separator (not before first)
-      if (i > 0) {
-        ctx.beginPath();
-        ctx.moveTo(PAD, rowTop);
-        ctx.lineTo(S - PAD, rowTop);
-        ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.12; ctx.lineWidth = 1;
-        ctx.stroke(); ctx.globalAlpha = 1;
-      }
-
-      // Circle ingredient image
-      fmsDrawCircleImg(ctx, images[ing.img], PAD + circR, rowMidY, circR, 0.92);
-
-      // Ingredient name
-      ctx.font = '900 50px Arial Black,Arial,sans-serif';
-      ctx.fillStyle = arch.text; ctx.globalAlpha = 0.94;
-      ctx.fillText(ing.name.toUpperCase(), textX, rowMidY - 6);
-      ctx.globalAlpha = 1;
-
-      // Short phrase
-      ctx.font = 'italic 400 26px Georgia,serif';
-      ctx.fillStyle = arch.text; ctx.globalAlpha = 0.52;
-      // Truncate if too wide
-      var phrase = ing.desc;
-      while (ctx.measureText(phrase).width > textW && phrase.length > 10) {
-        phrase = phrase.slice(0, -4) + '…';
-      }
-      ctx.fillText(phrase, textX, rowMidY + 36);
-      ctx.globalAlpha = 1;
-    });
-
-    fmsDrawFooter(ctx, arch, S, PAD);
-    if (callback) callback();
-  });
-}
-
-// ============================================================
-// SECTION 7E — CAROUSEL INIT (draw all 3, individual saves)
-// ============================================================
-
-// Called from result.js after building z5 for a specific archetype.
-// c1/c2/c3 are the actual canvas elements on the page.
-// b1/b2/b3 are the corresponding save buttons.
-function fmsInitCarousel(c1, c2, c3, b1, b2, b3) {
+function fmsInitShareCard(canvas, saveBtn) {
   var k = fmsGetKey() || 'result';
   var label = k.toLowerCase();
 
-  function bindSave(canvas, btn, filename) {
-    if (!btn) return;
-    btn.addEventListener('click', function() {
-      btn.textContent = 'Saving…';
-      btn.disabled = true;
-      fmsDownloadCard(canvas, filename);
+  if (saveBtn) {
+    saveBtn.addEventListener('click', function() {
+      saveBtn.textContent = 'Saving…';
+      saveBtn.disabled = true;
+      fmsDownloadCard(canvas, 'findmysmell-' + label + '.png');
       setTimeout(function() {
-        btn.textContent = '📷 Save';
-        btn.disabled = false;
+        saveBtn.textContent = '\uD83D\uDCF7 Save';
+        saveBtn.disabled = false;
       }, 1200);
     });
   }
 
-  bindSave(c1, b1, 'findmysmell-' + label + '-1-identity.png');
-  bindSave(c2, b2, 'findmysmell-' + label + '-2-scent.png');
-  bindSave(c3, b3, 'findmysmell-' + label + '-3-ingredients.png');
-
-  // Draw all 3 in background after a short delay
   setTimeout(function() {
-    fmsDrawCard(c1, function() {
-      fmsDrawCard2(c2, function() {
-        fmsDrawCard3(c3, null);
-      });
-    });
-  }, 800);
+    fmsDrawShareCard(canvas, null);
+  }, 600);
 }
 
 // ============================================================
