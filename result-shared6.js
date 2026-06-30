@@ -229,13 +229,12 @@ function fmsDrawBottleImg(ctx, img, x, y, w, h, alpha) {
 }
 
 // ============================================================
-// NEW SECTION 7 — UNIFIED SHARE CARD (replaces Card 1/2/3)
+// SECTION 7 — UNIFIED SHARE CARD (replaces old Card 1/2/3)
 // Works for EN/FR/RU automatically — pulls text from FMS_ARCHETYPES
 // which already has headline/tagline/scene per language.
 // ============================================================
 
 // Particle theme per archetype — maps to the mood of each scene.
-// Each theme defines how ambient particles drift around the bottle.
 var FMS_PARTICLE_THEMES = {
   CEO:        { type: 'frost',  color: '255,255,255', density: 40, speed: 0.15 },
   JAPAN:      { type: 'dust',   color: '255,255,255', density: 25, speed: 0.08 },
@@ -428,7 +427,7 @@ function fmsDrawShareCard(canvas, callback) {
 }
 
 // ============================================================
-// NEW SECTION 7E — SINGLE CARD INIT (replaces fmsInitCarousel)
+// SECTION 7E — SINGLE CARD INIT (replaces old fmsInitCarousel)
 // ============================================================
 
 function fmsInitShareCard(canvas, saveBtn) {
@@ -451,6 +450,177 @@ function fmsInitShareCard(canvas, saveBtn) {
     fmsDrawShareCard(canvas, null);
   }, 600);
 }
+
+// ============================================================
+// SECTION 7F — SHARE POPUP (styles + build + scroll trigger)
+// ============================================================
+
+function injectSharePopupStyles() {
+  if (document.getElementById('fms-share-popup-styles')) return;
+  var style = document.createElement('style');
+  style.id = 'fms-share-popup-styles';
+  style.textContent = [
+    '.fms-z5-share {',
+    '  margin-bottom: 32px;',
+    '  display: flex;',
+    '  flex-direction: column;',
+    '  align-items: center;',
+    '  gap: 16px;',
+    '}',
+    '.fms-z5-card-canvas {',
+    '  width: 100%;',
+    '  max-width: 360px;',
+    '  aspect-ratio: 9 / 16;',
+    '  display: block;',
+    '  border-radius: 8px;',
+    '  background: rgba(0,0,0,0.06);',
+    '}',
+    '.fms-z5-card-save {',
+    '  padding: 14px 28px;',
+    '  background: #fff;',
+    '  color: #1a1a1a;',
+    '  border: none;',
+    '  border-radius: 3px;',
+    '  font-size: 13px;',
+    '  font-weight: 700;',
+    '  letter-spacing: 0.08em;',
+    '  text-transform: uppercase;',
+    '  cursor: pointer;',
+    '  white-space: nowrap;',
+    '  transition: opacity 0.2s;',
+    '  font-family: inherit;',
+    '}',
+    '.fms-z5-card-save:hover { opacity: 0.85; }',
+    '.fms-z5-card-save:disabled { opacity: 0.4; cursor: default; }',
+    '#fms-share-popup-overlay {',
+    '  display: none;',
+    '  position: fixed;',
+    '  inset: 0;',
+    '  z-index: 9998;',
+    '  background: rgba(0,0,0,0.7);',
+    '  backdrop-filter: blur(6px);',
+    '  -webkit-backdrop-filter: blur(6px);',
+    '  align-items: center;',
+    '  justify-content: center;',
+    '  padding: 24px;',
+    '  box-sizing: border-box;',
+    '}',
+    '#fms-share-popup-overlay.fms-popup-open { display: flex; }',
+    '#fms-share-popup-box {',
+    '  background: rgba(20,20,20,0.92);',
+    '  border: 1px solid rgba(255,255,255,0.1);',
+    '  border-radius: 12px;',
+    '  max-width: 420px;',
+    '  width: 100%;',
+    '  padding: 32px 28px 28px;',
+    '  text-align: center;',
+    '  position: relative;',
+    '}',
+    '#fms-share-popup-close {',
+    '  position: absolute;',
+    '  top: 14px;',
+    '  right: 16px;',
+    '  background: none;',
+    '  border: none;',
+    '  color: rgba(255,255,255,0.5);',
+    '  font-size: 22px;',
+    '  line-height: 1;',
+    '  cursor: pointer;',
+    '  padding: 4px;',
+    '}',
+    '#fms-share-popup-title {',
+    '  font-family: HIGHCRUISER, "Arial Black", Arial, sans-serif;',
+    '  font-size: 26px;',
+    '  color: #fff;',
+    '  letter-spacing: 0.04em;',
+    '  text-transform: uppercase;',
+    '  margin-bottom: 20px;',
+    '}',
+    '#fms-share-popup-canvas {',
+    '  width: 100%;',
+    '  max-width: 240px;',
+    '  aspect-ratio: 9 / 16;',
+    '  display: block;',
+    '  margin: 0 auto 20px;',
+    '  border-radius: 8px;',
+    '  background: rgba(0,0,0,0.06);',
+    '}',
+    '#fms-share-popup-save {',
+    '  padding: 14px 28px;',
+    '  background: #fff;',
+    '  color: #1a1a1a;',
+    '  border: none;',
+    '  border-radius: 3px;',
+    '  font-size: 13px;',
+    '  font-weight: 700;',
+    '  letter-spacing: 0.08em;',
+    '  text-transform: uppercase;',
+    '  cursor: pointer;',
+    '  width: 100%;',
+    '  transition: opacity 0.2s;',
+    '  font-family: inherit;',
+    '}',
+    '#fms-share-popup-save:hover { opacity: 0.85; }'
+  ].join('\n');
+  document.head.appendChild(style);
+}
+
+function fmsBuildSharePopup() {
+  injectSharePopupStyles();
+  if (document.getElementById('fms-share-popup-overlay')) return;
+
+  var overlay = document.createElement('div');
+  overlay.id = 'fms-share-popup-overlay';
+  overlay.innerHTML =
+    '<div id="fms-share-popup-box">' +
+      '<button id="fms-share-popup-close" aria-label="Close">\u2715</button>' +
+      '<div id="fms-share-popup-title">Share your scent</div>' +
+      '<canvas id="fms-share-popup-canvas"></canvas>' +
+      '<button id="fms-share-popup-save">\uD83D\uDCF7 Save & share</button>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) fmsCloseSharePopup();
+  });
+  document.getElementById('fms-share-popup-close').addEventListener('click', fmsCloseSharePopup);
+
+  var canvas = document.getElementById('fms-share-popup-canvas');
+  var saveBtn = document.getElementById('fms-share-popup-save');
+  fmsInitShareCard(canvas, saveBtn);
+}
+
+function fmsCloseSharePopup() {
+  var overlay = document.getElementById('fms-share-popup-overlay');
+  if (overlay) overlay.classList.remove('fms-popup-open');
+}
+
+function fmsShowSharePopup() {
+  var overlay = document.getElementById('fms-share-popup-overlay');
+  if (overlay) overlay.classList.add('fms-popup-open');
+}
+
+// Scroll-to-bottom trigger — shows popup once per session when user
+// reaches the end of the result page.
+(function() {
+  var shown = false;
+  function checkScrollEnd() {
+    if (shown) return;
+    if (sessionStorage.getItem('fms_share_popup_shown') === '1') { shown = true; return; }
+    var scrollBottom = window.innerHeight + window.scrollY;
+    var pageHeight = document.documentElement.scrollHeight;
+    if (scrollBottom >= pageHeight - 80) {
+      var winner = sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result');
+      if (!winner) return;
+      shown = true;
+      sessionStorage.setItem('fms_share_popup_shown', '1');
+      fmsBuildSharePopup();
+      setTimeout(fmsShowSharePopup, 300);
+      window.removeEventListener('scroll', checkScrollEnd);
+    }
+  }
+  window.addEventListener('scroll', checkScrollEnd, { passive: true });
+})();
 
 // ============================================================
 // SECTION 8 — GRAIN ANIMATION
