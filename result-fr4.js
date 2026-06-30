@@ -582,7 +582,7 @@ function injectModalStyles() {
 '}',
 '.fms-z5-email-sub {',
 '  font-family: Inconsolata, monospace;',
-'  font-size: 13px;',
+'  font-size: 35px;',
 '  color: rgba(255,255,255,0.5);',
 '  margin-bottom: 24px;',
 '  letter-spacing: 0.04em;',
