@@ -1,7 +1,12 @@
 // ============================================================
-// SECTION 3 — FMS_ARCHETYPES (share card data)
+// ============================================================
+//   DATA / TEXT — everything editable lives here
+// ============================================================
 // ============================================================
 
+// ------------------------------------------------------------
+// Archetype content: headline, punchline (desc), perfume, colors
+// ------------------------------------------------------------
 var FMS_ARCHETYPES = {
   'CEO': {
     headline: 'THIS IS WHAT A\nDECISION \nSMELLS LIKE.',
@@ -14,7 +19,7 @@ var FMS_ARCHETYPES = {
   },
   'JAPAN': {
     headline: 'YOU ARE\nINSISTENTLY \nCALM.',
-    desc:      "You said five words in that meeting. Everyone's still quoting you.",
+    desc:     "You said five words in that meeting. Everyone's still quoting you.",
     perfume:  'Dirty Hinoki — Heretic Parfum',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png',
     bg:       '#cac88f',
@@ -32,7 +37,7 @@ var FMS_ARCHETYPES = {
   },
   'OFFGRID': {
     headline: 'YOU ARE\nSECRETLY PLANNING\nTO DISAPPEAR.',
-    desc:      "Your phone is at 12% and you're somehow relieved about it.",
+    desc:     "Your phone is at 12% and you're somehow relieved about it.",
     perfume:  'Coven — Andrea Maack',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595ac9e0cf46d4776711_offgrid-coven.svg',
     bg:       '#363636',
@@ -50,7 +55,7 @@ var FMS_ARCHETYPES = {
   },
   'SUMMER': {
     headline: 'YOU ARE\nPATHOLOGICALLY \nCHILL.',
-    desc:      "You missed the flight and somehow made it the best part of the trip.",
+    desc:     "You missed the flight and somehow made it the best part of the trip.",
     perfume:  'Solo Vulcan — Loewe',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564cad5ce2b482c477798_summer-solo.svg',
     bg:       '#a43f35',
@@ -59,7 +64,7 @@ var FMS_ARCHETYPES = {
   },
   'THERAPIST': {
     headline: 'YOU ARE \nDANGEROUSLY\nEMPATHETIC.',
-    desc:      "Someone's whole week made sense after just five minutes talking with you.",
+    desc:     "Someone's whole week made sense after just five minutes talking with you.",
     perfume:  'Black Tea — Jil Sander',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567233c9199821e9d3cde_therapist-blacktea.svg',
     bg:       '#8f9a54',
@@ -68,10 +73,74 @@ var FMS_ARCHETYPES = {
   }
 };
 
+// ------------------------------------------------------------
+// Tag-a-friend lines (one per archetype)
+// ------------------------------------------------------------
+var FMS_TAG_LINES = {
+  CEO:        'tag the friend who has a system for everything',
+  JAPAN:      'tag the friend who never panics, ever',
+  HUG:        'tag the friend everyone calls at 2am',
+  OFFGRID:    "tag the friend who'd disappear into the woods without telling anyone",
+  OUTOFTIME:  'tag the friend who is always somewhere else in their head',
+  SUMMER:     'tag the friend who makes any plan better just by showing up',
+  THERAPIST:  'tag the friend who somehow already knows what is wrong'
+};
+
+// ------------------------------------------------------------
+// Particle theme per archetype — controls ambient particle look
+// ------------------------------------------------------------
+var FMS_PARTICLE_THEMES = {
+  CEO:        { type: 'frost',  color: '255,255,255', density: 40, speed: 0.15 },
+  JAPAN:      { type: 'dust',   color: '255,255,255', density: 25, speed: 0.08 },
+  HUG:        { type: 'warm',   color: '255,220,180', density: 30, speed: 0.10 },
+  OFFGRID:    { type: 'smoke',  color: '255,255,255', density: 35, speed: 0.12 },
+  OUTOFTIME:  { type: 'smoke',  color: '220,220,235', density: 45, speed: 0.07 },
+  SUMMER:     { type: 'sparkle',color: '255,250,220', density: 35, speed: 0.18 },
+  THERAPIST:  { type: 'dust',   color: '255,255,255', density: 28, speed: 0.09 }
+};
+
+// ------------------------------------------------------------
+// Card layout constants — tweak spacing here without touching draw logic
+// ------------------------------------------------------------
+var FMS_CARD_LAYOUT = {
+  W: 1080,
+  H: 1920,
+  PAD: 72,
+  bottleOffsetX: 220,   // distance from right edge
+  bottleCy: 220,
+  bottleZoneR: 200,
+  bottleDrawW: 220,
+  bottleDrawH: 280,
+  bottleAlpha: 0.7,
+  punchY: 420,
+  punchFontSize: 56,
+  punchLineHeight: 66,
+  headlineFontSize: 34,
+  headlineLineHeight: 40,
+  tagFontSize: 28,
+  footerBottomOffset: 60
+};
+
+// ------------------------------------------------------------
+// Share popup UI text
+// ------------------------------------------------------------
+var FMS_POPUP_TEXT = {
+  title: 'Share your scent',
+  saveBtn: '\uD83D\uDCF7 Save & share',
+  saveBtnSaving: 'Saving…',
+  saveBtnDefault: '\uD83D\uDCF7 Save'
+};
+
+
 // ============================================================
-// SECTION 6 — HELPER FUNCTIONS
+// ============================================================
+//   FUNCTIONS — drawing, init, popup logic
+// ============================================================
 // ============================================================
 
+// ------------------------------------------------------------
+// Core lookups
+// ------------------------------------------------------------
 function fmsGetKey() {
   return (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase() || null;
 }
@@ -82,7 +151,7 @@ function fmsGetArch() {
 function fmsShareText() {
   var a = fmsGetArch();
   var url = 'https://www.findmysmell.com/result';
-  return a ? a.headline.replace('\n', ' ') + '\n' + a.tagline + '\n\nDiscover your scent archetype → ' + url : url;
+  return a ? a.headline.replace('\n', ' ') + '\n\n' + a.desc + '\n\nDiscover your scent archetype → ' + url : url;
 }
 function fmsDownloadCard(canvas, filename) {
   var k = fmsGetKey() || 'result';
@@ -92,70 +161,9 @@ function fmsDownloadCard(canvas, filename) {
   a.click();
 }
 
-// ============================================================
-// SECTION 7A — SHARED DRAW HELPERS
-// ============================================================
-
-function fmsDrawBase(ctx, arch, S, PAD) {
-  ctx.fillStyle = arch.bg;
-  ctx.fillRect(0, 0, S, S);
-
-  ctx.save();
-  ctx.globalCompositeOperation = 'overlay';
-  ctx.globalAlpha = 0.08;
-  for (var gy = 0; gy < S; gy += 2) {
-    for (var gx = 0; gx < S; gx += 2) {
-      var gv = Math.floor(Math.random() * 255);
-      ctx.fillStyle = 'rgb(' + gv + ',' + gv + ',' + gv + ')';
-      ctx.fillRect(gx, gy, 2, 2);
-    }
-  }
-  ctx.restore();
-
-  ctx.font = '400 26px Inconsolata,monospace';
-  ctx.fillStyle = arch.accent;
-  ctx.globalAlpha = 0.55;
-  ctx.fillText('FIND MY SMELL  ·  Perfume Personality Quiz', PAD, 78);
-  ctx.globalAlpha = 1;
-
-  ctx.beginPath();
-  ctx.moveTo(PAD, 96);
-  ctx.lineTo(S - PAD, 96);
-  ctx.strokeStyle = arch.accent;
-  ctx.globalAlpha = 0.2;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  ctx.globalAlpha = 1;
-}
-
-function fmsDrawFooter(ctx, arch, S, PAD) {
-  ctx.beginPath();
-  ctx.moveTo(PAD, S - 90);
-  ctx.lineTo(S - PAD, S - 90);
-  ctx.strokeStyle = arch.accent;
-  ctx.globalAlpha = 0.2;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  ctx.globalAlpha = 1;
-
-  ctx.font = '400 22px Inconsolata,monospace';
-  ctx.fillStyle = arch.accent;
-  ctx.globalAlpha = 0.42;
-  ctx.fillText(' find yours now on  ·  findmysmell.com ', PAD, S - 44);
-  ctx.globalAlpha = 1;
-}
-
-function fmsDrawFullRule(ctx, arch, S, PAD, y) {
-  ctx.beginPath();
-  ctx.moveTo(PAD, y);
-  ctx.lineTo(S - PAD, y);
-  ctx.strokeStyle = arch.accent;
-  ctx.globalAlpha = 0.2;
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  ctx.globalAlpha = 1;
-}
-
+// ------------------------------------------------------------
+// Shared draw helpers
+// ------------------------------------------------------------
 function fmsWrapText(ctx, text, x, y, maxW, lineH) {
   var words = text.split(' '), line = '', ly = y;
   words.forEach(function(w) {
@@ -169,7 +177,6 @@ function fmsWrapText(ctx, text, x, y, maxW, lineH) {
   return ly + lineH;
 }
 
-// Load multiple images in parallel, returns map of src -> Image (or null on error)
 function fmsLoadImages(sources, callback) {
   var images = {};
   var total = sources.length;
@@ -191,7 +198,6 @@ function fmsLoadImages(sources, callback) {
   });
 }
 
-// Draw an image clipped to a circle
 function fmsDrawCircleImg(ctx, img, cx, cy, r, alpha) {
   if (!img) return;
   ctx.save();
@@ -207,7 +213,6 @@ function fmsDrawCircleImg(ctx, img, cx, cy, r, alpha) {
   ctx.restore();
 }
 
-// Draw a bottle image fitted into a rect
 function fmsDrawBottleImg(ctx, img, x, y, w, h, alpha) {
   if (!img) return;
   ctx.save();
@@ -221,25 +226,7 @@ function fmsDrawBottleImg(ctx, img, x, y, w, h, alpha) {
   ctx.restore();
 }
 
-// ============================================================
-// SECTION 7 — UNIFIED SHARE CARD (replaces old Card 1/2/3)
-// Works for EN/FR/RU automatically — pulls text from FMS_ARCHETYPES
-// which already has headline/tagline/scene per language.
-// ============================================================
-
-// Particle theme per archetype — maps to the mood of each scene.
-var FMS_PARTICLE_THEMES = {
-  CEO:        { type: 'frost',  color: '255,255,255', density: 40, speed: 0.15 },
-  JAPAN:      { type: 'dust',   color: '255,255,255', density: 25, speed: 0.08 },
-  HUG:        { type: 'warm',   color: '255,220,180', density: 30, speed: 0.10 },
-  OFFGRID:    { type: 'smoke',  color: '255,255,255', density: 35, speed: 0.12 },
-  OUTOFTIME:  { type: 'smoke',  color: '220,220,235', density: 45, speed: 0.07 },
-  SUMMER:     { type: 'sparkle',color: '255,250,220', density: 35, speed: 0.18 },
-  THERAPIST:  { type: 'dust',   color: '255,255,255', density: 28, speed: 0.09 }
-};
-
-// Draws ambient particles (dust/smoke/frost/sparkle) around a center point
-function fmsDrawParticles(ctx, theme, cx, cy, radius, S) {
+function fmsDrawParticles(ctx, theme, cx, cy, radius) {
   var n = theme.density;
   for (var i = 0; i < n; i++) {
     var seed = i * 137.5; // golden angle distribution
@@ -259,7 +246,6 @@ function fmsDrawParticles(ctx, theme, cx, cy, radius, S) {
 
     ctx.beginPath();
     if (theme.type === 'sparkle') {
-      // small 4-point star
       ctx.save();
       ctx.translate(px, py);
       ctx.rotate(seed);
@@ -277,7 +263,6 @@ function fmsDrawParticles(ctx, theme, cx, cy, radius, S) {
   }
 }
 
-// Soft radial glow behind the bottle
 function fmsDrawGlow(ctx, cx, cy, r, color) {
   var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
   grad.addColorStop(0, 'rgba(' + color + ',0.22)');
@@ -289,23 +274,29 @@ function fmsDrawGlow(ctx, cx, cy, r, color) {
   ctx.fill();
 }
 
+// ------------------------------------------------------------
+// Main share card draw function
+// Layout order: bottle (small, side, background) → punchline
+// (hero) → rule → headline (secondary) → tag-a-friend → perfume
+// name/brand → footer
+// ------------------------------------------------------------
 function fmsDrawShareCard(canvas, callback) {
   var arch = fmsGetArch();
   var k = fmsGetKey();
   var fullArch = window.FMS_FULL_ARCH && k ? window.FMS_FULL_ARCH[k] : null;
   if (!arch) { if (callback) callback(); return; }
 
-  var W = 1080, H = 1920;
+  var L = FMS_CARD_LAYOUT;
+  var W = L.W, H = L.H, PAD = L.PAD;
   canvas.width = W;
   canvas.height = H;
   var ctx = canvas.getContext('2d');
-  var PAD = 72;
 
-  // 1. Solid background fill
+  // Background fill
   ctx.fillStyle = arch.bg;
   ctx.fillRect(0, 0, W, H);
 
-  // 2. Subtle grain
+  // Subtle grain
   ctx.save();
   ctx.globalCompositeOperation = 'overlay';
   ctx.globalAlpha = 0.06;
@@ -318,68 +309,72 @@ function fmsDrawShareCard(canvas, callback) {
   }
   ctx.restore();
 
-  // 3. Top brand label
-  ctx.font = '400 22px Inconsolata,monospace';
-  ctx.fillStyle = arch.accent;
-  ctx.globalAlpha = 0.5;
-  ctx.fillText('FIND MY SMELL', PAD, 70);
-  ctx.globalAlpha = 1;
-
-  // 4. Headline (top, above bottle)
-  var hlLines = arch.headline.split('\n');
-  var hlSize = 60;
-  ctx.font = '900 ' + hlSize + 'px Arial Black,Arial,sans-serif';
-  ctx.fillStyle = arch.text;
-  ctx.globalAlpha = 0.97;
-  var hlY = 160;
-  hlLines.forEach(function(line) {
-    ctx.fillText(line, PAD, hlY);
-    hlY += hlSize + 4;
-  });
-  ctx.globalAlpha = 1;
-
-  // 5. Bottle zone with glow + particles
-  var bottleCx = W / 2;
-  var bottleCy = hlY + 290;
-  var bottleZoneR = 360;
-
+  // Bottle zone — small, off to the side, drawn first as background detail
   var theme = FMS_PARTICLE_THEMES[k] || FMS_PARTICLE_THEMES.CEO;
-  fmsDrawGlow(ctx, bottleCx, bottleCy, bottleZoneR, theme.color);
-  fmsDrawParticles(ctx, theme, bottleCx, bottleCy, bottleZoneR, W);
+  var bottleCx = W - L.bottleOffsetX;
+  var bottleCy = L.bottleCy;
+  fmsDrawGlow(ctx, bottleCx, bottleCy, L.bottleZoneR, theme.color);
+  fmsDrawParticles(ctx, theme, bottleCx, bottleCy, L.bottleZoneR);
 
-  function drawBottleAndRest() {
-    fmsDrawParticles(ctx, theme, bottleCx, bottleCy, bottleZoneR * 0.6, W); // foreground layer
+  function drawTextAndRest() {
+    fmsDrawParticles(ctx, theme, bottleCx, bottleCy, L.bottleZoneR * 0.6);
 
-    // 6. Punchline summary (from arch.desc), wrapped, sits below bottle
-    var punchY = bottleCy + bottleZoneR * 0.62 + 90;
-    ctx.font = '400 34px Georgia,serif';
+    // PUNCHLINE — hero text
+    ctx.font = '900 ' + L.punchFontSize + 'px Arial Black,Arial,sans-serif';
     ctx.fillStyle = arch.text;
-    ctx.globalAlpha = 0.85;
-    var ly = fmsWrapText(ctx, arch.desc, PAD, punchY, W - PAD * 2, 48);
+    ctx.globalAlpha = 0.98;
+    var ly = fmsWrapText(ctx, arch.desc, PAD, L.punchY, W - PAD * 2, L.punchLineHeight);
     ctx.globalAlpha = 1;
 
-    // 7. Bottom rule + perfume name
-    var perfY = H - 150;
+    // Small rule
+    var ruleY = ly + 30;
+    ctx.beginPath();
+    ctx.moveTo(PAD, ruleY); ctx.lineTo(PAD + 90, ruleY);
+    ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.85; ctx.lineWidth = 3;
+    ctx.stroke(); ctx.globalAlpha = 1;
+
+    // Headline — secondary
+    var hlLines = arch.headline.split('\n');
+    ctx.font = '700 ' + L.headlineFontSize + 'px Inconsolata,monospace';
+    ctx.fillStyle = arch.accent;
+    ctx.globalAlpha = 0.85;
+    var hlY = ruleY + 56;
+    hlLines.forEach(function(line) {
+      ctx.fillText(line, PAD, hlY);
+      hlY += L.headlineLineHeight;
+    });
+    ctx.globalAlpha = 1;
+
+    // Tag-a-friend line
+    var tagY = hlY + 70;
+    ctx.font = 'italic 400 ' + L.tagFontSize + 'px Georgia,serif';
+    ctx.fillStyle = arch.text;
+    ctx.globalAlpha = 0.55;
+    ctx.fillText(FMS_TAG_LINES[k] || '', PAD, tagY);
+    ctx.globalAlpha = 1;
+
+    // Perfume name + brand
+    var perfY = H - 220;
     ctx.beginPath();
     ctx.moveTo(PAD, perfY - 24); ctx.lineTo(W - PAD, perfY - 24);
     ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 1;
     ctx.stroke(); ctx.globalAlpha = 1;
 
     var perfumeParts = arch.perfume.split(' \u2014 ');
-    ctx.font = '700 46px Arial Black,Arial,sans-serif';
+    ctx.font = '700 40px Arial Black,Arial,sans-serif';
     ctx.fillStyle = arch.text; ctx.globalAlpha = 0.95;
-    ctx.fillText(perfumeParts[0] || '', PAD, perfY + 14);
+    ctx.fillText(perfumeParts[0] || '', PAD, perfY + 12);
     ctx.globalAlpha = 1;
 
-    ctx.font = '400 24px Inconsolata,monospace';
+    ctx.font = '400 22px Inconsolata,monospace';
     ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.65;
-    ctx.fillText(perfumeParts[1] || '', PAD, perfY + 52);
+    ctx.fillText(perfumeParts[1] || '', PAD, perfY + 46);
     ctx.globalAlpha = 1;
 
-    // 8. Footer URL
+    // Footer URL — small bottom spacing
     ctx.font = '400 22px Inconsolata,monospace';
     ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.42;
-    ctx.fillText('findmysmell.com  \u00b7  perfume personality test', PAD, H - 50);
+    ctx.fillText('findmysmell.com  \u00b7  perfume personality test', PAD, H - L.footerBottomOffset);
     ctx.globalAlpha = 1;
 
     if (callback) callback();
@@ -389,36 +384,35 @@ function fmsDrawShareCard(canvas, callback) {
   var imgEl = new Image();
   imgEl.crossOrigin = 'anonymous';
   imgEl.onload = function() {
-    var bw = 440, bh = 560;
+    var bw = L.bottleDrawW, bh = L.bottleDrawH;
     var nw = imgEl.naturalWidth || imgEl.width || bw;
     var nh = imgEl.naturalHeight || imgEl.height || bh;
     var scale = Math.min(bw / nw, bh / nh);
     var dw = nw * scale, dh = nh * scale;
     var dx = bottleCx - dw / 2, dy = bottleCy - dh / 2;
-    ctx.globalAlpha = 0.95;
+    ctx.globalAlpha = L.bottleAlpha;
     ctx.drawImage(imgEl, dx, dy, dw, dh);
     ctx.globalAlpha = 1;
-    drawBottleAndRest();
+    drawTextAndRest();
   };
-  imgEl.onerror = drawBottleAndRest;
+  imgEl.onerror = drawTextAndRest;
   imgEl.src = imgSrc;
 }
 
-// ============================================================
-// SECTION 7E — SINGLE CARD INIT (replaces old fmsInitCarousel)
-// ============================================================
-
+// ------------------------------------------------------------
+// Card init — wires the save button + draws after a short delay
+// ------------------------------------------------------------
 function fmsInitShareCard(canvas, saveBtn) {
   var k = fmsGetKey() || 'result';
   var label = k.toLowerCase();
 
   if (saveBtn) {
     saveBtn.addEventListener('click', function() {
-      saveBtn.textContent = 'Saving…';
+      saveBtn.textContent = FMS_POPUP_TEXT.saveBtnSaving;
       saveBtn.disabled = true;
       fmsDownloadCard(canvas, 'findmysmell-' + label + '.png');
       setTimeout(function() {
-        saveBtn.textContent = '\uD83D\uDCF7 Save';
+        saveBtn.textContent = FMS_POPUP_TEXT.saveBtnDefault;
         saveBtn.disabled = false;
       }, 1200);
     });
@@ -429,47 +423,14 @@ function fmsInitShareCard(canvas, saveBtn) {
   }, 600);
 }
 
-// ============================================================
-// SECTION 7F — SHARE POPUP (styles + build + scroll trigger)
-// ============================================================
-
+// ------------------------------------------------------------
+// Share popup — styles, build, open/close, scroll trigger
+// ------------------------------------------------------------
 function injectSharePopupStyles() {
   if (document.getElementById('fms-share-popup-styles')) return;
   var style = document.createElement('style');
   style.id = 'fms-share-popup-styles';
   style.textContent = [
-    '.fms-z5-share {',
-    '  margin-bottom: 32px;',
-    '  display: flex;',
-    '  flex-direction: column;',
-    '  align-items: center;',
-    '  gap: 16px;',
-    '}',
-    '.fms-z5-card-canvas {',
-    '  width: 100%;',
-    '  max-width: 360px;',
-    '  aspect-ratio: 9 / 16;',
-    '  display: block;',
-    '  border-radius: 8px;',
-    '  background: rgba(0,0,0,0.06);',
-    '}',
-    '.fms-z5-card-save {',
-    '  padding: 14px 28px;',
-    '  background: #fff;',
-    '  color: #1a1a1a;',
-    '  border: none;',
-    '  border-radius: 3px;',
-    '  font-size: 13px;',
-    '  font-weight: 700;',
-    '  letter-spacing: 0.08em;',
-    '  text-transform: uppercase;',
-    '  cursor: pointer;',
-    '  white-space: nowrap;',
-    '  transition: opacity 0.2s;',
-    '  font-family: inherit;',
-    '}',
-    '.fms-z5-card-save:hover { opacity: 0.85; }',
-    '.fms-z5-card-save:disabled { opacity: 0.4; cursor: default; }',
     '#fms-share-popup-overlay {',
     '  display: none;',
     '  position: fixed;',
@@ -552,9 +513,9 @@ function fmsBuildSharePopup() {
   overlay.innerHTML =
     '<div id="fms-share-popup-box">' +
       '<button id="fms-share-popup-close" aria-label="Close">\u2715</button>' +
-      '<div id="fms-share-popup-title">Share your scent</div>' +
+      '<div id="fms-share-popup-title">' + FMS_POPUP_TEXT.title + '</div>' +
       '<canvas id="fms-share-popup-canvas"></canvas>' +
-      '<button id="fms-share-popup-save">\uD83D\uDCF7 Save & share</button>' +
+      '<button id="fms-share-popup-save">' + FMS_POPUP_TEXT.saveBtn + '</button>' +
     '</div>';
   document.body.appendChild(overlay);
 
@@ -578,8 +539,7 @@ function fmsShowSharePopup() {
   if (overlay) overlay.classList.add('fms-popup-open');
 }
 
-// Scroll-to-bottom trigger — shows popup once per session when user
-// reaches the end of the result page.
+// Scroll-to-bottom trigger — shows popup once per session
 (function() {
   var shown = false;
   function checkScrollEnd() {
@@ -600,10 +560,9 @@ function fmsShowSharePopup() {
   window.addEventListener('scroll', checkScrollEnd, { passive: true });
 })();
 
-// ============================================================
-// SECTION 8 — GRAIN ANIMATION
-// ============================================================
-
+// ------------------------------------------------------------
+// Background grain animation (page-wide canvas, separate from card)
+// ------------------------------------------------------------
 (function() {
   var grain = document.getElementById('fms-grain');
   if (grain) {
