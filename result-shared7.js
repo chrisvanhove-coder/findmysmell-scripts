@@ -332,10 +332,23 @@ function fmsDrawShareCard(canvas, callback) {
   ctx.fillText('FIND MY SMELL', PAD, 70);
   ctx.globalAlpha = 1;
 
-  // 4. Bottle zone with glow + particles (top third)
+  // 4. Headline (top, above bottle)
+  var hlLines = arch.headline.split('\n');
+  var hlSize = 60;
+  ctx.font = '900 ' + hlSize + 'px Arial Black,Arial,sans-serif';
+  ctx.fillStyle = arch.text;
+  ctx.globalAlpha = 0.97;
+  var hlY = 160;
+  hlLines.forEach(function(line) {
+    ctx.fillText(line, PAD, hlY);
+    hlY += hlSize + 4;
+  });
+  ctx.globalAlpha = 1;
+
+  // 5. Bottle zone with glow + particles
   var bottleCx = W / 2;
-  var bottleCy = 480;
-  var bottleZoneR = 380;
+  var bottleCy = hlY + 290;
+  var bottleZoneR = 360;
 
   var theme = FMS_PARTICLE_THEMES[k] || FMS_PARTICLE_THEMES.CEO;
   fmsDrawGlow(ctx, bottleCx, bottleCy, bottleZoneR, theme.color);
@@ -344,64 +357,36 @@ function fmsDrawShareCard(canvas, callback) {
   function drawBottleAndRest() {
     fmsDrawParticles(ctx, theme, bottleCx, bottleCy, bottleZoneR * 0.6, W); // foreground layer
 
-    // 5. Headline below bottle zone
-    var hlLines = arch.headline.split('\n');
-    var hlSize = 68;
-    ctx.font = '900 ' + hlSize + 'px Arial Black,Arial,sans-serif';
+    // 6. Punchline summary (from arch.desc), wrapped, sits below bottle
+    var punchY = bottleCy + bottleZoneR * 0.62 + 90;
+    ctx.font = '400 34px Georgia,serif';
     ctx.fillStyle = arch.text;
-    ctx.globalAlpha = 0.97;
-    var hlY = 880;
-    hlLines.forEach(function(line) {
-      ctx.fillText(line, PAD, hlY);
-      hlY += hlSize + 6;
-    });
+    ctx.globalAlpha = 0.85;
+    var ly = fmsWrapText(ctx, arch.desc, PAD, punchY, W - PAD * 2, 48);
     ctx.globalAlpha = 1;
 
-    // 6. Small rule + tagline
-    var ruleY = hlY + 14;
-    ctx.beginPath();
-    ctx.moveTo(PAD, ruleY); ctx.lineTo(PAD + 100, ruleY);
-    ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.85; ctx.lineWidth = 3;
-    ctx.stroke(); ctx.globalAlpha = 1;
-
-    ctx.font = '400 32px Inconsolata,monospace';
-    ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.85;
-    ctx.fillText(arch.tagline, PAD, ruleY + 50);
-    ctx.globalAlpha = 1;
-
-    // 7. Scene quote (italic, wrapped)
-    var sceneText = (fullArch && fullArch.scene) ? fullArch.scene : '';
-    if (sceneText) {
-      var quoteY = ruleY + 110;
-      ctx.font = 'italic 400 30px Georgia,serif';
-      ctx.fillStyle = arch.text;
-      ctx.globalAlpha = 0.55;
-      var quoted = '\u201C' + sceneText + '\u201D';
-      var ly = fmsWrapText(ctx, quoted, PAD, quoteY, W - PAD * 2, 44);
-      ctx.globalAlpha = 1;
-    }
-
-    // 8. Bottom rule + perfume name
+    // 7. Bottom rule + perfume name
     var perfY = H - 150;
     ctx.beginPath();
     ctx.moveTo(PAD, perfY - 24); ctx.lineTo(W - PAD, perfY - 24);
     ctx.strokeStyle = arch.accent; ctx.globalAlpha = 0.2; ctx.lineWidth = 1;
     ctx.stroke(); ctx.globalAlpha = 1;
 
+    var perfumeParts = arch.perfume.split(' \u2014 ');
     ctx.font = '700 46px Arial Black,Arial,sans-serif';
     ctx.fillStyle = arch.text; ctx.globalAlpha = 0.95;
-    ctx.fillText(arch.main.split(' \u2014 ')[0] || '', PAD, perfY + 14);
+    ctx.fillText(perfumeParts[0] || '', PAD, perfY + 14);
     ctx.globalAlpha = 1;
 
     ctx.font = '400 24px Inconsolata,monospace';
     ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.65;
-    ctx.fillText((fullArch && fullArch.main && fullArch.main.house) || '', PAD, perfY + 52);
+    ctx.fillText(perfumeParts[1] || '', PAD, perfY + 52);
     ctx.globalAlpha = 1;
 
-    // 9. Footer URL
+    // 8. Footer URL
     ctx.font = '400 22px Inconsolata,monospace';
     ctx.fillStyle = arch.accent; ctx.globalAlpha = 0.42;
-    ctx.fillText('findmysmell.com', PAD, H - 50);
+    ctx.fillText('findmysmell.com  \u00b7  perfume personality test', PAD, H - 50);
     ctx.globalAlpha = 1;
 
     if (callback) callback();
@@ -411,7 +396,7 @@ function fmsDrawShareCard(canvas, callback) {
   var imgEl = new Image();
   imgEl.crossOrigin = 'anonymous';
   imgEl.onload = function() {
-    var bw = 480, bh = 620;
+    var bw = 440, bh = 560;
     var nw = imgEl.naturalWidth || imgEl.width || bw;
     var nh = imgEl.naturalHeight || imgEl.height || bh;
     var scale = Math.min(bw / nw, bh / nh);
