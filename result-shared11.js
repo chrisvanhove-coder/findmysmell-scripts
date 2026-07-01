@@ -322,14 +322,6 @@ function fmsDrawShareCard(canvas, callback) {
     ctx.fillText('findmysmell.com', W - PAD, bottomY);
     ctx.textAlign = 'left';
 
-    // 6. Website link — bottom right, large and visible (drives traffic)
-    ctx.font = '700 ' + L.footerFontSize + 'px Inconsolata,monospace';
-    ctx.fillStyle = arch.text;
-    ctx.globalAlpha = 1;
-    ctx.textAlign = 'right';
-    ctx.fillText('findmysmell.com', W - PAD, H - L.footerBottomOffset);
-    ctx.textAlign = 'left';
-
     if (callback) callback();
   }
 
