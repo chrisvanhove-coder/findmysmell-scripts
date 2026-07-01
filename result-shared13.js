@@ -4,58 +4,113 @@
 // ============================================================
 // ============================================================
 
+// ------------------------------------------------------------
+// Punchline typography — each archetype has manually sized lines
+// for a poster/editorial effect. Each entry: [text, fontSize]
+// ------------------------------------------------------------
+var FMS_PUNCH_LINES = {
+  CEO: [
+    ["You replied to that email", 38],
+    ["in 4 minutes", 58],
+    ["and", 80],
+    ["you're calling it", 38],
+    ["work-life balance.", 52]
+  ],
+  JAPAN: [
+    ["You said", 42],
+    ["five words", 80],
+    ["in that meeting.", 36],
+    ["Everyone's still", 36],
+    ["quoting you.", 64]
+  ],
+  HUG: [
+    ["Someone is", 42],
+    ["mid-breakdown", 56],
+    ["right now", 48],
+    ["and texting you", 34],
+    ["instead of their therapist.", 36]
+  ],
+  OFFGRID: [
+    ["Your phone is at", 38],
+    ["12%", 90],
+    ["and you're", 36],
+    ["somehow relieved", 52],
+    ["about it.", 42]
+  ],
+  OUTOFTIME: [
+    ["You've read", 44],
+    ["the message.", 62],
+    ["You have no plans to respond.", 32],
+    ["The universe", 48],
+    ["approves this.", 56]
+  ],
+  SUMMER: [
+    ["You missed", 44],
+    ["the flight", 72],
+    ["and somehow made it", 32],
+    ["the best part", 52],
+    ["of the trip.", 64]
+  ],
+  THERAPIST: [
+    ["Someone's whole week", 34],
+    ["made sense", 64],
+    ["after just", 42],
+    ["five minutes", 68],
+    ["talking with you.", 36]
+  ]
+};
+
+// ------------------------------------------------------------
+// Archetype: headline, perfume name, colors, bottle image
+// ------------------------------------------------------------
 var FMS_ARCHETYPES = {
   'CEO': {
     headline: 'THIS IS WHAT A DECISION SMELLS LIKE.',
-    desc:     "You replied to that email in 4 minutes and you're calling it work-life balance.",
     perfume:  'Concrete — Comme des Garçons',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337efd1740fcd5bbd50a_ceo-concrete.svg',
     bg:       '#a43f35', accent: '#000000', text: '#f8f8f8'
   },
   'JAPAN': {
     headline: 'YOU ARE INSISTENTLY CALM.',
-    desc:     "You said five words in that meeting. Everyone's still quoting you.",
     perfume:  'Dirty Hinoki — Heretic Parfum',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png',
     bg:       '#cac88f', accent: '#5d663c', text: '#000000'
   },
   'HUG': {
     headline: 'YOU ARE A HUG.',
-    desc:     "Someone is mid-breakdown right now and texting you instead of their therapist.",
     perfume:  'Eau Duelle — Diptyque',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a3ad178c4e36ba6acc_hug-eau.svg',
     bg:       '#7e3d30', accent: '#f0c8a8', text: '#fdf0e8'
   },
   'OFFGRID': {
     headline: 'YOU ARE SECRETLY PLANNING TO DISAPPEAR.',
-    desc:     "Your phone is at 12% and you're somehow relieved about it.",
     perfume:  'Coven — Andrea Maack',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595ac9e0cf46d4776711_offgrid-coven.svg',
     bg:       '#363636', accent: '#ffffff', text: '#e8f0e0'
   },
   'OUTOFTIME': {
     headline: 'YOU ARE CHRONICALLY ELSEWHERE.',
-    desc:     "You've read the message. You have no plans to respond. The universe approves this.",
     perfume:  'Gris Clair — Serge Lutens',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5c6cacbdd277d526dd_outoftime-gris.svg',
     bg:       '#604c65', accent: '#dfdfdb', text: '#f5eefa'
   },
   'SUMMER': {
     headline: 'YOU ARE PATHOLOGICALLY CHILL.',
-    desc:     "You missed the flight and somehow made it the best part of the trip.",
     perfume:  'Solo Vulcan — Loewe',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564cad5ce2b482c477798_summer-solo.svg',
     bg:       '#a43f35', accent: '#cac88f', text: '#f6f6e9'
   },
   'THERAPIST': {
     headline: 'YOU ARE DANGEROUSLY EMPATHETIC.',
-    desc:     "Someone's whole week made sense after just five minutes talking with you.",
     perfume:  'Black Tea — Jil Sander',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567233c9199821e9d3cde_therapist-blacktea.svg',
     bg:       '#8f9a54', accent: '#1e2208', text: '#f0f0e0'
   }
 };
 
+// ------------------------------------------------------------
+// Tag-a-friend lines
+// ------------------------------------------------------------
 var FMS_TAG_LINES = {
   CEO:        '@tag the friend who has a system for everything',
   JAPAN:      '@tag the friend who never panics, ever',
@@ -67,41 +122,30 @@ var FMS_TAG_LINES = {
 };
 
 // ------------------------------------------------------------
-// Card layout — ALL Y POSITIONS ARE FIXED so every archetype
-// looks identical regardless of text length.
+// Card layout — fixed Y zones
 // ------------------------------------------------------------
 var FMS_CARD_LAYOUT = {
   W: 1080,
   H: 1350,
-  PAD: 72,
-
-  // Punchline — fixed zone, top of card
-  punchY: 100,
-  punchH: 380,        // max height reserved for punchline block
-  punchFontSize: 52,
-  punchLineHeight: 62,
-
-  // Bottle — fixed position, always same spot
-  bottleY: 510,       // fixed top Y of bottle zone
+  PAD: 60,
+  punchStartY: 90,
+  punchLineGap: 12,      // extra gap between punchline rows
+  bottleZoneTop: 620,    // fixed top of bottle area
   bottleW: 280,
-  bottleH: 340,
-
-  // Perfume name — fixed Y
-  perfumeNameY: 900,
-  perfumeFontSize: 34,
-  perfumeBrandY: 946,
-
-  // Headline — fixed Y
-  headlineY: 1020,
-  headlineFontSize: 28,
-  headlineLineHeight: 34,
-
-  // Bottom row — fixed Y
-  footerY: 1286,
-  tagFontSize: 24,
-  footerFontSize: 30
+  bottleH: 300,
+  perfumeNameY: 990,
+  perfumeFontSize: 30,
+  perfumeBrandY: 1030,
+  headlineY: 1090,
+  headlineFontSize: 24,
+  footerY: 1290,
+  tagFontSize: 22,
+  footerFontSize: 28
 };
 
+// ------------------------------------------------------------
+// Popup text
+// ------------------------------------------------------------
 var FMS_POPUP_TEXT = {
   title: 'Share your scent',
   saveBtn: '\uD83D\uDCF7 Save & share',
@@ -123,11 +167,6 @@ function fmsGetArch() {
   var k = fmsGetKey();
   return k ? FMS_ARCHETYPES[k] || null : null;
 }
-function fmsShareText() {
-  var a = fmsGetArch();
-  var url = 'https://www.findmysmell.com/result';
-  return a ? a.desc + '\n\nDiscover your scent archetype \u2192 ' + url : url;
-}
 function fmsDownloadCard(canvas, filename) {
   var k = fmsGetKey() || 'result';
   var a = document.createElement('a');
@@ -136,51 +175,8 @@ function fmsDownloadCard(canvas, filename) {
   a.click();
 }
 
-// Wrap text left-aligned, returns Y after last line
-function fmsWrapText(ctx, text, x, y, maxW, lineH) {
-  var words = text.split(' '), line = '', ly = y;
-  words.forEach(function(w) {
-    var t = (line + ' ' + w).trim();
-    if (ctx.measureText(t).width > maxW && line) {
-      ctx.fillText(line, x, ly);
-      line = w; ly += lineH;
-    } else { line = t; }
-  });
-  if (line) ctx.fillText(line, x, ly);
-  return ly + lineH;
-}
-
-// Wrap text right-aligned
-function fmsWrapTextRight(ctx, text, x, y, maxW, lineH) {
-  var words = text.split(' '), line = '', ly = y;
-  words.forEach(function(w) {
-    var t = (line + ' ' + w).trim();
-    if (ctx.measureText(t).width > maxW && line) {
-      ctx.fillText(line, x, ly);
-      line = w; ly += lineH;
-    } else { line = t; }
-  });
-  if (line) ctx.fillText(line, x, ly);
-  return ly + lineH;
-}
-
-function fmsLoadImages(sources, callback) {
-  var images = {};
-  var total = sources.length;
-  if (total === 0) { callback(images); return; }
-  var loaded = 0;
-  sources.forEach(function(src) {
-    if (!src) { images[src] = null; loaded++; if (loaded === total) callback(images); return; }
-    var img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = function() { images[src] = img; loaded++; if (loaded === total) callback(images); };
-    img.onerror = function() { images[src] = null; loaded++; if (loaded === total) callback(images); };
-    img.src = src;
-  });
-}
-
 // ------------------------------------------------------------
-// Main draw — ALL positions fixed, consistent across archetypes
+// Main draw function
 // ------------------------------------------------------------
 function fmsDrawShareCard(canvas, callback) {
   var arch = fmsGetArch();
@@ -211,15 +207,22 @@ function fmsDrawShareCard(canvas, callback) {
   }
   ctx.restore();
 
-  // 1. PUNCHLINE — left aligned, fixed zone, Impact font
-  ctx.font = L.punchFontSize + 'px Impact,"Arial Black",Arial,sans-serif';
-  ctx.fillStyle = arch.text;
-  ctx.globalAlpha = 1;
+  // 1. PUNCHLINE — typographic, each line individually sized
+  var lines = FMS_PUNCH_LINES[k] || [];
+  var curY = L.punchStartY;
   ctx.textAlign = 'left';
-  fmsWrapText(ctx, arch.desc, PAD, L.punchY, W - PAD * 2, L.punchLineHeight);
+  ctx.globalAlpha = 1;
+  lines.forEach(function(line) {
+    var txt = line[0];
+    var size = line[1];
+    ctx.font = size + 'px Impact,"Arial Black",Arial,sans-serif';
+    ctx.fillStyle = arch.text;
+    ctx.fillText(txt, PAD, curY + size);
+    curY += size + L.punchLineGap;
+  });
 
   function finishCard() {
-    // 3. Perfume name — fixed Y, right aligned
+    // 3. Perfume name — right aligned
     var perfumeParts = arch.perfume.split(' \u2014 ');
     ctx.font = '700 ' + L.perfumeFontSize + 'px Arial Black,Arial,sans-serif';
     ctx.fillStyle = arch.text;
@@ -229,19 +232,19 @@ function fmsDrawShareCard(canvas, callback) {
 
     ctx.font = '400 20px Inconsolata,monospace';
     ctx.fillStyle = arch.accent;
-    ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.75;
     ctx.fillText(perfumeParts[1] || '', W - PAD, L.perfumeBrandY);
     ctx.globalAlpha = 1;
 
-    // 4. Headline — fixed Y, right aligned
+    // 4. Headline — right aligned
     ctx.font = '700 ' + L.headlineFontSize + 'px Inconsolata,monospace';
     ctx.fillStyle = arch.accent;
     ctx.globalAlpha = 0.85;
     ctx.textAlign = 'right';
-    fmsWrapTextRight(ctx, arch.headline, W - PAD, L.headlineY, W - PAD * 2, L.headlineLineHeight);
+    ctx.fillText(arch.headline, W - PAD, L.headlineY);
     ctx.globalAlpha = 1;
 
-    // 5. Bottom row — @tag left, findmysmell.com right, same Y
+    // 5. Footer — @tag left, findmysmell.com right
     ctx.font = 'italic 400 ' + L.tagFontSize + 'px Georgia,serif';
     ctx.fillStyle = arch.text;
     ctx.globalAlpha = 0.6;
@@ -258,7 +261,7 @@ function fmsDrawShareCard(canvas, callback) {
     if (callback) callback();
   }
 
-  // 2. BOTTLE — fixed position, centered horizontally
+  // 2. Bottle — fixed zone, centered
   var imgSrc = (fullArch && fullArch.main && fullArch.main.img) ? fullArch.main.img : arch.img;
   var imgEl = new Image();
   imgEl.crossOrigin = 'anonymous';
@@ -269,7 +272,7 @@ function fmsDrawShareCard(canvas, callback) {
     var scale = Math.min(L.bottleW / nw, L.bottleH / nh);
     var dw = nw * scale, dh = nh * scale;
     var dx = bottleCx - dw / 2;
-    var dy = L.bottleY + (L.bottleH - dh) / 2;
+    var dy = L.bottleZoneTop + (L.bottleH - dh) / 2;
     ctx.globalAlpha = 1;
     ctx.drawImage(imgEl, dx, dy, dw, dh);
     finishCard();
@@ -278,6 +281,9 @@ function fmsDrawShareCard(canvas, callback) {
   imgEl.src = imgSrc;
 }
 
+// ------------------------------------------------------------
+// Card init
+// ------------------------------------------------------------
 function fmsInitShareCard(canvas, saveBtn) {
   var k = fmsGetKey() || 'result';
   var label = k.toLowerCase();
@@ -295,6 +301,9 @@ function fmsInitShareCard(canvas, saveBtn) {
   setTimeout(function() { fmsDrawShareCard(canvas, null); }, 600);
 }
 
+// ------------------------------------------------------------
+// Popup
+// ------------------------------------------------------------
 function injectSharePopupStyles() {
   if (document.getElementById('fms-share-popup-styles')) return;
   var style = document.createElement('style');
@@ -370,6 +379,7 @@ function fmsShowSharePopup() {
   if (overlay) overlay.classList.add('fms-popup-open');
 }
 
+// Scroll trigger
 (function() {
   var shown = false;
   function checkScrollEnd() {
@@ -390,6 +400,7 @@ function fmsShowSharePopup() {
   window.addEventListener('scroll', checkScrollEnd, { passive: true });
 })();
 
+// Grain animation
 (function() {
   var grain = document.getElementById('fms-grain');
   if (grain) {
