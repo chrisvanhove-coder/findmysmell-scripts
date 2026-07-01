@@ -4,113 +4,103 @@
 // ============================================================
 // ============================================================
 
-// ------------------------------------------------------------
-// Punchline typography — each archetype has manually sized lines
-// for a poster/editorial effect. Each entry: [text, fontSize]
-// ------------------------------------------------------------
 var FMS_PUNCH_LINES = {
   CEO: [
-    ["You replied to that email", 38],
-    ["in 4 minutes", 58],
-    ["and", 80],
-    ["you're calling it", 38],
-    ["work-life balance.", 52]
+    ["You replied to that email", 44],
+    ["in 4 minutes", 62],
+    ["and", 100],
+    ["you're calling it", 40],
+    ["work-life balance.", 56]
   ],
   JAPAN: [
-    ["You said", 42],
-    ["five words", 80],
-    ["in that meeting.", 36],
-    ["Everyone's still", 36],
-    ["quoting you.", 64]
+    ["You said", 46],
+    ["five words", 90],
+    ["in that meeting.", 38],
+    ["Everyone's still", 38],
+    ["quoting you.", 68]
   ],
   HUG: [
-    ["Someone is", 42],
-    ["mid-breakdown", 56],
-    ["right now", 48],
-    ["and texting you", 34],
-    ["instead of their therapist.", 36]
+    ["Someone is", 46],
+    ["mid-breakdown", 62],
+    ["right now", 52],
+    ["and texting you", 36],
+    ["instead of their therapist.", 38]
   ],
   OFFGRID: [
-    ["Your phone is at", 38],
-    ["12%", 90],
-    ["and you're", 36],
-    ["somehow relieved", 52],
-    ["about it.", 42]
+    ["Your phone is at", 40],
+    ["12%", 110],
+    ["and you're", 38],
+    ["somehow relieved", 56],
+    ["about it.", 46]
   ],
   OUTOFTIME: [
-    ["You've read", 44],
-    ["the message.", 62],
-    ["You have no plans to respond.", 32],
-    ["The universe", 48],
-    ["approves this.", 56]
+    ["You've read", 48],
+    ["the message.", 68],
+    ["You have no plans to respond.", 34],
+    ["The universe", 52],
+    ["approves this.", 60]
   ],
   SUMMER: [
-    ["You missed", 44],
-    ["the flight", 72],
-    ["and somehow made it", 32],
-    ["the best part", 52],
-    ["of the trip.", 64]
+    ["You missed", 48],
+    ["the flight", 80],
+    ["and somehow made it", 34],
+    ["the best part", 56],
+    ["of the trip.", 68]
   ],
   THERAPIST: [
-    ["Someone's whole week", 34],
-    ["made sense", 64],
-    ["after just", 42],
-    ["five minutes", 68],
-    ["talking with you.", 36]
+    ["Someone's whole week", 36],
+    ["made sense", 68],
+    ["after just", 46],
+    ["five minutes", 72],
+    ["talking with you.", 38]
   ]
 };
 
-// ------------------------------------------------------------
-// Archetype: headline, perfume name, colors, bottle image
-// ------------------------------------------------------------
 var FMS_ARCHETYPES = {
   'CEO': {
     headline: 'THIS IS WHAT A DECISION SMELLS LIKE.',
     perfume:  'Concrete — Comme des Garçons',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337efd1740fcd5bbd50a_ceo-concrete.svg',
-    bg:       '#a43f35', accent: '#000000', text: '#f8f8f8'
+    bg: '#a43f35', accent: '#000000', text: '#f8f8f8'
   },
   'JAPAN': {
     headline: 'YOU ARE INSISTENTLY CALM.',
     perfume:  'Dirty Hinoki — Heretic Parfum',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png',
-    bg:       '#cac88f', accent: '#5d663c', text: '#000000'
+    bg: '#cac88f', accent: '#5d663c', text: '#000000'
   },
   'HUG': {
     headline: 'YOU ARE A HUG.',
     perfume:  'Eau Duelle — Diptyque',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a3ad178c4e36ba6acc_hug-eau.svg',
-    bg:       '#7e3d30', accent: '#f0c8a8', text: '#fdf0e8'
+    bg: '#7e3d30', accent: '#f0c8a8', text: '#fdf0e8'
   },
   'OFFGRID': {
     headline: 'YOU ARE SECRETLY PLANNING TO DISAPPEAR.',
     perfume:  'Coven — Andrea Maack',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595ac9e0cf46d4776711_offgrid-coven.svg',
-    bg:       '#363636', accent: '#ffffff', text: '#e8f0e0'
+    bg: '#363636', accent: '#ffffff', text: '#e8f0e0'
   },
   'OUTOFTIME': {
     headline: 'YOU ARE CHRONICALLY ELSEWHERE.',
     perfume:  'Gris Clair — Serge Lutens',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5c6cacbdd277d526dd_outoftime-gris.svg',
-    bg:       '#604c65', accent: '#dfdfdb', text: '#f5eefa'
+    bg: '#604c65', accent: '#dfdfdb', text: '#f5eefa'
   },
   'SUMMER': {
     headline: 'YOU ARE PATHOLOGICALLY CHILL.',
     perfume:  'Solo Vulcan — Loewe',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564cad5ce2b482c477798_summer-solo.svg',
-    bg:       '#a43f35', accent: '#cac88f', text: '#f6f6e9'
+    bg: '#a43f35', accent: '#cac88f', text: '#f6f6e9'
   },
   'THERAPIST': {
     headline: 'YOU ARE DANGEROUSLY EMPATHETIC.',
     perfume:  'Black Tea — Jil Sander',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567233c9199821e9d3cde_therapist-blacktea.svg',
-    bg:       '#8f9a54', accent: '#1e2208', text: '#f0f0e0'
+    bg: '#8f9a54', accent: '#1e2208', text: '#f0f0e0'
   }
 };
 
-// ------------------------------------------------------------
-// Tag-a-friend lines
-// ------------------------------------------------------------
 var FMS_TAG_LINES = {
   CEO:        '@tag the friend who has a system for everything',
   JAPAN:      '@tag the friend who never panics, ever',
@@ -121,31 +111,25 @@ var FMS_TAG_LINES = {
   THERAPIST:  '@tag the friend who somehow already knows what is wrong'
 };
 
-// ------------------------------------------------------------
-// Card layout — fixed Y zones
-// ------------------------------------------------------------
 var FMS_CARD_LAYOUT = {
   W: 1080,
   H: 1350,
   PAD: 60,
-  punchStartY: 90,
-  punchLineGap: 12,      // extra gap between punchline rows
-  bottleZoneTop: 620,    // fixed top of bottle area
-  bottleW: 280,
-  bottleH: 300,
-  perfumeNameY: 990,
+  punchStartY: 80,
+  punchLineGap: 8,
+  bottleZoneTop: 430,
+  bottleW: 320,
+  bottleH: 380,
+  perfumeNameY: 900,
   perfumeFontSize: 30,
-  perfumeBrandY: 1030,
-  headlineY: 1090,
+  perfumeBrandY: 940,
+  headlineY: 995,
   headlineFontSize: 24,
-  footerY: 1290,
+  footerY: 1286,
   tagFontSize: 22,
   footerFontSize: 28
 };
 
-// ------------------------------------------------------------
-// Popup text
-// ------------------------------------------------------------
 var FMS_POPUP_TEXT = {
   title: 'Share your scent',
   saveBtn: '\uD83D\uDCF7 Save & share',
@@ -175,9 +159,6 @@ function fmsDownloadCard(canvas, filename) {
   a.click();
 }
 
-// ------------------------------------------------------------
-// Main draw function
-// ------------------------------------------------------------
 function fmsDrawShareCard(canvas, callback) {
   var arch = fmsGetArch();
   var k = fmsGetKey();
@@ -281,9 +262,6 @@ function fmsDrawShareCard(canvas, callback) {
   imgEl.src = imgSrc;
 }
 
-// ------------------------------------------------------------
-// Card init
-// ------------------------------------------------------------
 function fmsInitShareCard(canvas, saveBtn) {
   var k = fmsGetKey() || 'result';
   var label = k.toLowerCase();
@@ -301,9 +279,6 @@ function fmsInitShareCard(canvas, saveBtn) {
   setTimeout(function() { fmsDrawShareCard(canvas, null); }, 600);
 }
 
-// ------------------------------------------------------------
-// Popup
-// ------------------------------------------------------------
 function injectSharePopupStyles() {
   if (document.getElementById('fms-share-popup-styles')) return;
   var style = document.createElement('style');
@@ -379,7 +354,6 @@ function fmsShowSharePopup() {
   if (overlay) overlay.classList.add('fms-popup-open');
 }
 
-// Scroll trigger
 (function() {
   var shown = false;
   function checkScrollEnd() {
@@ -400,7 +374,6 @@ function fmsShowSharePopup() {
   window.addEventListener('scroll', checkScrollEnd, { passive: true });
 })();
 
-// Grain animation
 (function() {
   var grain = document.getElementById('fms-grain');
   if (grain) {
