@@ -77,13 +77,13 @@ var FMS_ARCHETYPES = {
 // Tag-a-friend lines (one per archetype)
 // ------------------------------------------------------------
 var FMS_TAG_LINES = {
-  CEO:        'tag the friend who has a system for everything',
-  JAPAN:      'tag the friend who never panics, ever',
-  HUG:        'tag the friend everyone calls at 2am',
-  OFFGRID:    "tag the friend who'd disappear into the woods without telling anyone",
-  OUTOFTIME:  'tag the friend who is always somewhere else in their head',
-  SUMMER:     'tag the friend who makes any plan better just by showing up',
-  THERAPIST:  'tag the friend who somehow already knows what is wrong'
+  CEO:        '@tag the friend who has a system for everything',
+  JAPAN:      '@tag the friend who never panics, ever',
+  HUG:        '@tag the friend everyone calls at 2am',
+  OFFGRID:    "@tag the friend who'd disappear into the woods without telling anyone",
+  OUTOFTIME:  '@tag the friend who is always somewhere else in their head',
+  SUMMER:     '@tag the friend who makes any plan better just by showing up',
+  THERAPIST:  '@tag the friend who somehow already knows the solution to everything'
 };
 
 // ------------------------------------------------------------
@@ -101,7 +101,7 @@ var FMS_CARD_LAYOUT = {
   bottleGapAfterPunch: 50,
   bottleGapAfterBottle: 40,
   perfumeFontSize: 36,
-  headlineGapAfterPerfume: 50,
+  headlineGapAfterPerfume: 90,
   headlineFontSize: 30,
   headlineLineHeight: 36,
   tagGapAfterHeadline: 36,
@@ -306,13 +306,20 @@ function fmsDrawShareCard(canvas, callback) {
     cursorY = fmsWrapTextCentered(ctx, arch.headline.split('\n').join(' '), W / 2, cursorY, W - PAD * 2, L.headlineLineHeight);
     ctx.globalAlpha = 1;
 
-    // 5. Tag-a-friend line (italic)
-    cursorY += L.tagGapAfterHeadline;
+    // 5. Bottom row: @tag left, findmysmell.com right
+    var bottomY = H - L.footerBottomOffset;
     ctx.font = 'italic 400 ' + L.tagFontSize + 'px Georgia,serif';
     ctx.fillStyle = arch.text;
     ctx.globalAlpha = 0.6;
-    ctx.fillText(FMS_TAG_LINES[k] || '', W / 2, cursorY);
+    ctx.textAlign = 'left';
+    ctx.fillText(FMS_TAG_LINES[k] || '', PAD, bottomY);
     ctx.globalAlpha = 1;
+
+    ctx.font = '700 ' + L.footerFontSize + 'px Inconsolata,monospace';
+    ctx.fillStyle = arch.text;
+    ctx.globalAlpha = 1;
+    ctx.textAlign = 'right';
+    ctx.fillText('findmysmell.com', W - PAD, bottomY);
     ctx.textAlign = 'left';
 
     // 6. Website link — bottom right, large and visible (drives traffic)
