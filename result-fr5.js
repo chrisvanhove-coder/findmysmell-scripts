@@ -830,7 +830,7 @@ block.appendChild(z5);
   var emailSend    = z5.querySelector('#fms-es-' + key);
   var emailConsent = z5.querySelector('#fms-ec-' + key);
   var emailMsg     = z5.querySelector('#fms-em-' + key);
-  var APPS_URL     = 'https://script.google.com/macros/s/AKfycbzX_iZnTevFLG5GgComLwfFJoC4Dp_HaPRcmcmAVszBR_wWrpmlGSlbpYcdNo-6L-NK/exec';
+  var APPS_URL     = 'https://script.google.com/macros/s/AKfycbxLaOnGVCv3P8ge0cKaP59ZdYUcgySLo7CUUhef4eltooQqg59W35MPzZ6CVtsnifA/exec';
 
   emailSend.addEventListener('click', function() {
     var email = emailInput.value.trim();
