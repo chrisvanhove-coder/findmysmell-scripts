@@ -853,12 +853,19 @@ var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('qui
 var scores = {};
 try { scores = JSON.parse(localStorage.getItem('quiz_scores') || '{}'); } catch(e2) {}
 var answers = sessionStorage.getItem('quiz_answers') || localStorage.getItem('quiz_answers') || '';
-var open_answer = sessionStorage.getItem('quiz_open') || localStorage.getItem('quiz_open') || ''; // ← this line
+var open_answer = sessionStorage.getItem('quiz_open') || localStorage.getItem('quiz_open') || '';
+var consent_aggregate = localStorage.getItem('consent_aggregate') === 'true';
+var consent_email = emailConsent.checked;
 
     fetch(APPS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'payload=' + encodeURIComponent(JSON.stringify({ email: email, winner: winner, scores: scores, answers: answers, open_answer: open_answer, page_url: window.location.href }))
+      body: 'payload=' + encodeURIComponent(JSON.stringify({
+        email: email, winner: winner, scores: scores, answers: answers, open_answer: open_answer,
+        page_url: window.location.href,
+        consent_aggregate: consent_aggregate,
+        consent_email: consent_email
+      }))
     })
     .then(function(r) { return r.text(); })
     .then(function(t) {
