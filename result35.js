@@ -422,12 +422,23 @@ function buildBlock(key, arch) {
     var open_answer = sessionStorage.getItem('quiz_open') || localStorage.getItem('quiz_open') || '';
     var consent_aggregate = localStorage.getItem('consent_aggregate') === 'true';
     var consent_email = emailConsent.checked;
+    // Include CMS-matched perfume data for the email template
+    var matchedArch = window.FMS_FULL_ARCH && winner ? window.FMS_FULL_ARCH[winner] : null;
+    var matched_main = null;
+    var matched_alts = null;
+    if (matchedArch && matchedArch.main) {
+      matched_main = { name: matchedArch.main.name, house: matchedArch.main.house, desc: matchedArch.main.desc, link: matchedArch.main.link };
+      if (matchedArch.alts && matchedArch.alts.length) {
+        matched_alts = matchedArch.alts.map(function(a) { return { name: a.name, house: a.house, desc: a.desc, link: a.link }; });
+      }
+    }
     fetch(APPS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: 'payload=' + encodeURIComponent(JSON.stringify({
         email: email, winner: winner, scores: scores, answers: answers, open_answer: open_answer,
-        page_url: window.location.href, consent_aggregate: consent_aggregate, consent_email: consent_email
+        page_url: window.location.href, consent_aggregate: consent_aggregate, consent_email: consent_email,
+        matched_main: matched_main, matched_alts: matched_alts
       }))
     })
     .then(function(r) { return r.text(); })
