@@ -59,43 +59,43 @@ var FMS_PUNCH_LINES = {
 var FMS_ARCHETYPES = {
   'CEO': {
     headline: 'THIS IS WHAT A DECISION SMELLS LIKE.',
-    perfume:  'Concrete — Comme des Garçons',
+    perfume:  'Concrete \u2014 Comme des Gar\u00e7ons',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/6997337efd1740fcd5bbd50a_ceo-concrete.svg',
     bg: '#a43f35', accent: '#000000', text: '#f8f8f8'
   },
   'JAPAN': {
     headline: 'YOU ARE INSISTENTLY CALM.',
-    perfume:  'Dirty Hinoki — Heretic Parfum',
+    perfume:  'Dirty Hinoki \u2014 Heretic Parfum',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png',
     bg: '#cac88f', accent: '#5d663c', text: '#000000'
   },
   'HUG': {
     headline: 'YOU ARE A HUG.',
-    perfume:  'Eau Duelle — Diptyque',
+    perfume:  'Eau Duelle \u2014 Diptyque',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a552a3ad178c4e36ba6acc_hug-eau.svg',
     bg: '#7e3d30', accent: '#f0c8a8', text: '#fdf0e8'
   },
   'OFFGRID': {
     headline: 'YOU ARE SECRETLY PLANNING TO DISAPPEAR.',
-    perfume:  'Coven — Andrea Maack',
+    perfume:  'Coven \u2014 Andrea Maack',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a5595ac9e0cf46d4776711_offgrid-coven.svg',
     bg: '#363636', accent: '#ffffff', text: '#e8f0e0'
   },
   'OUTOFTIME': {
     headline: 'YOU ARE CHRONICALLY ELSEWHERE.',
-    perfume:  'Gris Clair — Serge Lutens',
+    perfume:  'Gris Clair \u2014 Serge Lutens',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a55e5c6cacbdd277d526dd_outoftime-gris.svg',
     bg: '#604c65', accent: '#dfdfdb', text: '#f5eefa'
   },
   'SUMMER': {
     headline: 'YOU ARE PATHOLOGICALLY CHILL.',
-    perfume:  'Solo Vulcan — Loewe',
+    perfume:  'Solo Vulcan \u2014 Loewe',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a564cad5ce2b482c477798_summer-solo.svg',
     bg: '#a43f35', accent: '#cac88f', text: '#f6f6e9'
   },
   'THERAPIST': {
     headline: 'YOU ARE DANGEROUSLY EMPATHETIC.',
-    perfume:  'Black Tea — Jil Sander',
+    perfume:  'Black Tea \u2014 Jil Sander',
     img:      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69a567233c9199821e9d3cde_therapist-blacktea.svg',
     bg: '#8f9a54', accent: '#1e2208', text: '#f0f0e0'
   }
@@ -188,7 +188,7 @@ function fmsDrawShareCard(canvas, callback) {
   }
   ctx.restore();
 
-  // 1. PUNCHLINE — typographic, each line individually sized
+  // 1. PUNCHLINE
   var lines = FMS_PUNCH_LINES[k] || [];
   var curY = L.punchStartY;
   ctx.textAlign = 'left';
@@ -203,21 +203,31 @@ function fmsDrawShareCard(canvas, callback) {
   });
 
   function finishCard() {
-    // 3. Perfume name — right aligned
-    var perfumeParts = arch.perfume.split(' \u2014 ');
+    // 3. Perfume name — RIGHT ALIGNED
+    // ── CHANGED in v15: read from FMS_FULL_ARCH (CMS-matched) first ──
+    var perfumeName, perfumeHouse;
+    if (fullArch && fullArch.main && fullArch.main.name) {
+      perfumeName = fullArch.main.name;
+      perfumeHouse = fullArch.main.house || '';
+    } else {
+      var perfumeParts = arch.perfume.split(' \u2014 ');
+      perfumeName = perfumeParts[0] || '';
+      perfumeHouse = perfumeParts[1] || '';
+    }
+
     ctx.font = '700 ' + L.perfumeFontSize + 'px Arial Black,Arial,sans-serif';
     ctx.fillStyle = arch.text;
     ctx.globalAlpha = 0.95;
     ctx.textAlign = 'right';
-    ctx.fillText(perfumeParts[0] || '', W - PAD, L.perfumeNameY);
+    ctx.fillText(perfumeName, W - PAD, L.perfumeNameY);
 
     ctx.font = '400 20px Inconsolata,monospace';
     ctx.fillStyle = arch.accent;
     ctx.globalAlpha = 0.75;
-    ctx.fillText(perfumeParts[1] || '', W - PAD, L.perfumeBrandY);
+    ctx.fillText(perfumeHouse, W - PAD, L.perfumeBrandY);
     ctx.globalAlpha = 1;
 
-    // 4. Headline — right aligned
+    // 4. Headline
     ctx.font = '700 ' + L.headlineFontSize + 'px Inconsolata,monospace';
     ctx.fillStyle = arch.accent;
     ctx.globalAlpha = 0.85;
@@ -225,7 +235,7 @@ function fmsDrawShareCard(canvas, callback) {
     ctx.fillText(arch.headline, W - PAD, L.headlineY);
     ctx.globalAlpha = 1;
 
-    // 5. Footer — @tag left, findmysmell.com right
+    // 5. Footer
     ctx.font = 'italic 400 ' + L.tagFontSize + 'px Georgia,serif';
     ctx.fillStyle = arch.text;
     ctx.globalAlpha = 0.6;
