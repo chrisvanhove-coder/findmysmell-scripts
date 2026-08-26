@@ -381,7 +381,6 @@ function buildBlock(key, arch) {
   // Header
   var z2Header = '<div class="fms-z2-header">' +
     '<span class="fms-z2-eyebrow" style="color:' + ac.titleColor + ';">Your Scent Personality</span>' +
-    '<div class="fms-z2-title" style="color:' + ac.titleColor + ';">' + key + '</div>' +
     '<hr class="fms-z2-rule">' +
     '</div>';
 
