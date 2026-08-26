@@ -433,14 +433,8 @@ function buildBlock(key, arch) {
       '</div>';
   }
 
-  z2.innerHTML = z2Header + z2Pull + z2Rows + z2Closer + ingredientsHTML;
+  z2.innerHTML = z2Header + z2Pull + z2Rows + z2Closer + ingredientsHTML + '<div class="fms-z3-label">your scent</div>';
   block.appendChild(z2);
-
-  // ═══ YOUR SCENT BRIDGE ═══
-  var bridge = document.createElement('div');
-  bridge.className = 'fms-scent-bridge';
-  bridge.innerHTML = '<div class="fms-scent-bridge-text">YOUR SCENT</div>';
-  block.appendChild(bridge);
 
   // ═══ ZONE 3 — MAIN MATCH ═══
   var z3 = document.createElement('div');
@@ -450,8 +444,7 @@ function buildBlock(key, arch) {
   var mainRaw = !isNaN(arch.main.raw) ? arch.main.raw : 0;
   var mainProj = !isNaN(arch.main.proj) ? arch.main.proj : 1;
 
-  z3.innerHTML = '<div class="fms-z3-spacer"></div>' +
-    '<img class="fms-z3-bottle" src="' + arch.main.img + '" alt="' + arch.main.name + '" crossorigin="anonymous">' +
+  z3.innerHTML = '<img class="fms-z3-bottle" src="' + arch.main.img + '" alt="' + arch.main.name + '" crossorigin="anonymous">' +
     '<div class="fms-z3-name">' + arch.main.name + '</div>' +
     '<div class="fms-z3-house">' + arch.main.house + '</div>' +
     '<p class="fms-z3-experience">' + (arch.main.desc || '') + '</p>' +
