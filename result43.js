@@ -1,5 +1,5 @@
 // ============================================================
-// SECTION 0 â€” S/R/P MATCHING ENGINE (unchanged)
+// SECTION 0 — S/R/P MATCHING ENGINE (unchanged)
 // ============================================================
 
 function getUserSRP() {
@@ -39,12 +39,12 @@ function getUserSRP() {
 }
 
 // ============================================================
-// SECTION 1 â€” ARCHETYPES DATA + PAGE BUILDER
+// SECTION 1 — ARCHETYPES DATA + PAGE BUILDER
 // ============================================================
 
 (function() {
 
-// â”€â”€ Mood images per archetype â”€â”€
+// ── Mood images per archetype ──
 var MOOD_IMAGES = {
   CEO: [
     'https://res.cloudinary.com/dcefrxxav/image/upload/v1787663848/ceo-1_n9ef5x.png',
@@ -83,7 +83,7 @@ var MOOD_IMAGES = {
   ]
 };
 
-// â”€â”€ Vinyl label colors per archetype â”€â”€
+// ── Vinyl label colors per archetype ──
 var VINYL_COLORS = {
   CEO: '#a43f35',
   JAPAN: '#607f90',
@@ -94,14 +94,25 @@ var VINYL_COLORS = {
   THERAPIST: '#074d82'
 };
 
-// â”€â”€ S/R/P to percentage for scale bars â”€â”€
+// ── Music per archetype ──
+var MUSIC_URLS = {
+  CEO: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1787902079/CEO_-_main_choice_2026-08-27T133238_f9p3h9.mp3',
+  HUG: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1787902080/HUG_-_main_choice_2026-08-27T134002_hllndz.mp3',
+  JAPAN: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1787903341/JAPAN_v.1_2026-08-27T134916_auvykb.mp3',
+  SUMMER: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1787903335/SUMMER_v.2_2026-08-28T074622_k3vnwr.mp3',
+  OUTOFTIME: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1787906042/OUTOFTIME_2026-08-28T083105_xdg70h.mp3',
+  THERAPIST: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1787906377/Therapist_v.2_2026-08-28T083741_fxynzb.mp3',
+  OFFGRID: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1787904954/offgrid_v.2_2026-08-28T081023_q1obrj.mp3'
+};
+
+// ── S/R/P to percentage for scale bars ──
 function srpToPercent(value) {
   // 0=0%, 1=33%, 2=66%, 3=100%
   if (isNaN(value)) return 50;
   return Math.round((value / 3) * 100);
 }
 
-// â”€â”€ Scale bar HTML builder â”€â”€
+// ── Scale bar HTML builder ──
 function buildScales(sweet, raw, proj) {
   var scales = [
     { left: 'Fresh', right: 'Sweet', value: srpToPercent(sweet) },
@@ -313,7 +324,7 @@ var FMS_ARCH_COLORS = {
 };
 
 // ============================================================
-// SECTION 1A â€” INGREDIENT MODAL (unchanged)
+// SECTION 1A — INGREDIENT MODAL (unchanged)
 // ============================================================
 
 function injectModalStyles() {
@@ -356,7 +367,7 @@ function closeModal() {
 }
 
 // ============================================================
-// SECTION 1B â€” PAGE BUILDER (REBUILT for new layout)
+// SECTION 1B — PAGE BUILDER (REBUILT for new layout)
 // ============================================================
 
 function buildBlock(key, arch) {
@@ -365,55 +376,50 @@ function buildBlock(key, arch) {
   [...block.children].forEach(function(c) { c.style.display = 'none'; });
 
   var ac = FMS_ARCH_COLORS[key] || { zoneBg: 'transparent', titleColor: '#8B3A22', textColor: '#2a2a2a', ruleColor: '#2a2a2a' };
-  var moodImgs = MOOD_IMAGES[key] || [];
   var vinylColor = VINYL_COLORS[key] || '#7e3d30';
 
-  // â”€â”€ Split desc: first paragraph = pull quote, rest = body rows, last = closer â”€â”€
+  // ── Split desc: first = pull quote (spray), last = closer, middle = body ──
   var descArr = arch.desc.slice();
   var pullQuote = descArr.shift();
   var closerText = descArr.pop();
   var bodyParagraphs = descArr;
 
-  // â•â•â• ZONE 2 â€” PERSONALITY (Option A) â•â•â•
+  // ═══ SPRAY SCREEN ═══
+  var spray = document.createElement('div');
+  spray.className = 'fms-spray-container';
+  spray.setAttribute('data-spray-key', key);
+  spray.style.backgroundColor = 'var(--z2-bg)';
+  spray.innerHTML =
+    '<div class="fms-spray-text-layer">' +
+      '<div class="fms-spray-title">yOur ScenT pErsoNality</div>' +
+      '<div class="fms-spray-pull" style="color:' + ac.titleColor + ';">' + pullQuote + '</div>' +
+    '</div>' +
+    '<canvas class="fms-cover-canvas" data-cover="' + key + '"></canvas>' +
+    '<canvas class="fms-wet-canvas"></canvas>' +
+    '<img class="fms-spray-bottle" data-spray-bottle="' + key + '" src="' + arch.main.img + '" alt="" draggable="false">';
+  block.appendChild(spray);
+
+  // ═══ PERSONALITY — TEXTURE REVEAL ═══
+  var reveal = document.createElement('div');
+  reveal.className = 'fms-personality-reveal';
+  reveal.setAttribute('data-reveal-key', key);
+
+  var parasHTML = bodyParagraphs.map(function(p) {
+    return '<p class="fms-personality-para">' + p + '</p>';
+  }).join('');
+
+  reveal.innerHTML =
+    '<div class="fms-personality-texture" data-texture="' + key + '"></div>' +
+    '<div class="fms-personality-content">' +
+      parasHTML +
+      '<p class="fms-personality-closer">' + closerText + '</p>' +
+    '</div>';
+  block.appendChild(reveal);
+
+  // ═══ ZONE 2 WRAPPER (ingredients + YOUR SCENT label) ═══
   var z2 = document.createElement('div');
   z2.className = 'fms-zone fms-z2';
 
-  // Header
-  var z2Header = '<div class="fms-z2-header">' +
-    '<span class="fms-z2-eyebrow">yOur ScenT pErsoNality</span>' +
-    '<hr class="fms-z2-rule">' +
-    '</div>';
-
-  // Pull quote + vinyl
-  var vinylId = 'vinyl-' + key;
-  var z2Pull = '<div class="fms-z2-pull">' +
-    '<div class="fms-z2-pull-text" style="color:' + ac.titleColor + ';">' + pullQuote + '</div>' +
-    '<div class="vinyl-wrap" data-vinyl="' + key + '">' +
-    '<div class="vinyl-record vinyl-spin paused" data-vinyl-record="' + key + '">' +
-    '<div class="vinyl-label" style="background:' + vinylColor + ';"></div>' +
-    '<div class="vinyl-hole"></div>' +
-    '</div>' +
-    '<div class="vinyl-arm-wrap"><div class="vinyl-arm-pivot" style="background:' + vinylColor + '55;"></div>' +
-    '<div class="vinyl-arm" data-vinyl-arm="' + key + '" style="background:linear-gradient(180deg,' + vinylColor + '99 0%,' + vinylColor + '44 100%);"></div></div>' +
-    '<div class="vinyl-status" data-vinyl-status="' + key + '">tap to play</div>' +
-    '</div></div>';
-
-  // Body rows alternating with mood images
-  var z2Rows = '';
-  for (var i = 0; i < bodyParagraphs.length; i++) {
-    var isReverse = (i % 2 === 1);
-    var imgSrc = moodImgs[i] || '';
-    var imgHTML = imgSrc ? '<img class="fms-z2-row-img" src="' + imgSrc + '" alt="">' : '';
-    z2Rows += '<div class="fms-z2-row' + (isReverse ? ' reverse' : '') + '">' +
-      '<div class="fms-z2-row-text">' + bodyParagraphs[i] + '</div>' +
-      imgHTML +
-      '</div>';
-  }
-
-  // Closer
-  var z2Closer = '<div class="fms-z2-closer"><div class="fms-z2-closer-text">' + closerText + '</div></div>';
-
-  // Ingredients
   var ingredientsHTML = '';
   if (arch.ingredients) {
     var itemsHTML = arch.ingredients.map(function(ing, idx) {
@@ -432,10 +438,10 @@ function buildBlock(key, arch) {
       '</div>';
   }
 
-  z2.innerHTML = z2Header + z2Pull + z2Rows + z2Closer + ingredientsHTML + '<div class="fms-z3-label">your scent</div>';
+  z2.innerHTML = ingredientsHTML + '<div class="fms-z3-label">your scent</div>';
   block.appendChild(z2);
 
-  // â•â•â• ZONE 3 â€” MAIN MATCH â•â•â•
+  // ═══ ZONE 3 — MAIN MATCH ═══
   var z3 = document.createElement('div');
   z3.className = 'fms-zone fms-z3';
 
@@ -451,7 +457,7 @@ function buildBlock(key, arch) {
     '<a class="fms-z3-cta" href="' + arch.main.link + '" target="_blank" rel="noopener">discover \u2192</a>';
   block.appendChild(z3);
 
-  // â•â•â• ZONE 4 â€” ALTERNATIVES GRID â•â•â•
+  // ═══ ZONE 4 — ALTERNATIVES GRID ═══
   var z4 = document.createElement('div');
   z4.className = 'fms-zone fms-z4';
 
@@ -477,7 +483,7 @@ function buildBlock(key, arch) {
     '<div class="fms-z4-grid">' + altsHTML + '</div>';
   block.appendChild(z4);
 
-  // â•â•â• ZONE 5 â€” EMAIL â•â•â•
+  // ═══ ZONE 5 — EMAIL ═══
   var z5 = document.createElement('div');
   z5.className = 'fms-zone fms-z5';
   z5.innerHTML = '<div class="fms-z5-email" id="fms-email-' + key + '">' +
@@ -488,7 +494,7 @@ function buildBlock(key, arch) {
     '<div class="fms-z5-email-msg" id="fms-em-' + key + '"></div></div>';
   block.appendChild(z5);
 
-  // Email wiring
+  // Email wiring (unchanged)
   var emailInput   = z5.querySelector('#fms-ei-' + key);
   var emailSend    = z5.querySelector('#fms-es-' + key);
   var emailConsent = z5.querySelector('#fms-ec-' + key);
@@ -543,7 +549,7 @@ function buildBlock(key, arch) {
 }
 
 // ============================================================
-// SECTION 1C â€” CMS OVERRIDE with S/R/P MATCHING (unchanged)
+// SECTION 1C — CMS OVERRIDE with S/R/P MATCHING (unchanged)
 // ============================================================
 
 function loadCMSPerfumes() {
@@ -662,45 +668,328 @@ function loadCMSPerfumes() {
 }
 
 // ============================================================
-// SECTION 1D â€” VINYL PLAYER INIT
+// SECTION 1D — SPRAY SCREEN INIT
 // ============================================================
 
-function initVinylPlayers() {
-  var wraps = document.querySelectorAll('[data-vinyl]');
-  wraps.forEach(function(wrap) {
-    var key = wrap.getAttribute('data-vinyl');
-    var record = wrap.querySelector('[data-vinyl-record="' + key + '"]');
-    var arm = wrap.querySelector('[data-vinyl-arm="' + key + '"]');
-    var status = wrap.querySelector('[data-vinyl-status="' + key + '"]');
-    var isPlaying = false;
-    var audio = null;
+function initSpray() {
+  var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase();
+  var sprayContainer = document.querySelector('[data-spray-key="' + winner + '"]');
+  if (!sprayContainer) return;
 
-    wrap.addEventListener('click', function() {
-      if (!audio) {
-        audio = new Audio();
-        // Audio src will be set per archetype when tracks are ready
-        audio.loop = true;
-        audio.volume = 0.4;
+  var coverCanvas = sprayContainer.querySelector('[data-cover="' + winner + '"]');
+  var wetCanvas = sprayContainer.querySelector('.fms-wet-canvas');
+  var bottle = sprayContainer.querySelector('[data-spray-bottle="' + winner + '"]');
+  if (!coverCanvas || !bottle) return;
+
+  var coverCtx = coverCanvas.getContext('2d');
+  var wetCtx = wetCanvas ? wetCanvas.getContext('2d') : null;
+
+  var isDragging = false;
+  var dissolved = false;
+  var userTookOver = false;
+  var autoDemo = null;
+  var prevX = null, prevY = null;
+
+  function initCanvas() {
+    var w = sprayContainer.offsetWidth;
+    var h = sprayContainer.offsetHeight;
+    coverCanvas.width = w;
+    coverCanvas.height = h;
+    if (wetCanvas) { wetCanvas.width = w; wetCanvas.height = h; }
+
+    // Compute bg color from parent
+    var bgColor = getComputedStyle(sprayContainer).backgroundColor || '#fdf0e8';
+    coverCtx.fillStyle = bgColor;
+    coverCtx.fillRect(0, 0, w, h);
+
+    for (var i = 0; i < 12000; i++) {
+      coverCtx.fillStyle = 'rgba(126, 61, 48, ' + (Math.random() * 0.04) + ')';
+      coverCtx.fillRect(Math.random() * w, Math.random() * h, Math.random() > 0.5 ? 2 : 1, 1);
+    }
+
+    bottle.style.left = (w * 0.38) + 'px';
+    bottle.style.top = (h * 0.45) + 'px';
+    setTimeout(startAutoDemo, 400);
+  }
+
+  function drawBlob(ctx, x, y, r, pts) {
+    ctx.beginPath();
+    for (var i = 0; i <= pts; i++) {
+      var a = (i / pts) * Math.PI * 2;
+      var wobble = r * (0.7 + Math.random() * 0.6);
+      var bx = x + Math.cos(a) * wobble;
+      var by = y + Math.sin(a) * wobble;
+      if (i === 0) ctx.moveTo(bx, by); else ctx.lineTo(bx, by);
+    }
+    ctx.closePath();
+  }
+
+  function eraseSpot(x, y, r) {
+    coverCtx.globalCompositeOperation = 'destination-out';
+    drawBlob(coverCtx, x, y, r, 10);
+    var g = coverCtx.createRadialGradient(x, y, 0, x, y, r * 1.3);
+    g.addColorStop(0, 'rgba(0,0,0,1)');
+    g.addColorStop(0.6, 'rgba(0,0,0,0.85)');
+    g.addColorStop(0.85, 'rgba(0,0,0,0.3)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    coverCtx.fillStyle = g;
+    coverCtx.fill();
+    coverCtx.globalCompositeOperation = 'source-over';
+  }
+
+  function sprayAt(cx, cy) {
+    for (var i = 0; i < 6; i++) {
+      var a = Math.random() * Math.PI * 2, d = Math.random() * 35;
+      eraseSpot(cx + Math.cos(a) * d, cy + Math.sin(a) * d * 0.5 - Math.random() * 15, Math.random() * 14 + 8);
+    }
+    for (var j = 0; j < Math.floor(Math.random() * 4) + 2; j++) {
+      var sa = Math.random() * Math.PI * 2, sd = 35 + Math.random() * 25;
+      coverCtx.globalCompositeOperation = 'destination-out';
+      coverCtx.beginPath();
+      coverCtx.arc(cx + Math.cos(sa) * sd, cy + Math.sin(sa) * sd * 0.5, Math.random() * 3 + 1.5, 0, Math.PI * 2);
+      coverCtx.fillStyle = 'rgba(0,0,0,0.9)';
+      coverCtx.fill();
+      coverCtx.globalCompositeOperation = 'source-over';
+    }
+  }
+
+  function drawTrail(x1, y1, x2, y2) {
+    var dist = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    if (dist < 3) return;
+    var steps = Math.ceil(dist / 6);
+    for (var i = 0; i < steps; i++) {
+      var t = i / steps;
+      eraseSpot(
+        x1 + (x2 - x1) * t + (Math.random() - 0.5) * 8,
+        y1 + (y2 - y1) * t + (Math.random() - 0.5) * 8,
+        Math.random() * 10 + 5
+      );
+    }
+  }
+
+  function startAutoDemo() {
+    if (userTookOver) return;
+    var w = sprayContainer.offsetWidth;
+    var h = sprayContainer.offsetHeight;
+    var path = [
+      { x: w * 0.38, y: h * 0.42 },
+      { x: w * 0.50, y: h * 0.38 },
+      { x: w * 0.62, y: h * 0.44 },
+      { x: w * 0.55, y: h * 0.50 },
+      { x: w * 0.42, y: h * 0.52 },
+      { x: w * 0.50, y: h * 0.48 }
+    ];
+    var segIdx = 0, subStep = 0, stepsPerSeg = 20;
+    autoDemo = setInterval(function() {
+      if (userTookOver || segIdx >= path.length - 1) {
+        clearInterval(autoDemo);
+        if (!userTookOver) bottle.classList.add('waiting');
+        return;
       }
-      if (isPlaying) {
-        isPlaying = false;
-        record.classList.add('paused');
-        arm.classList.remove('playing');
-        status.textContent = 'tap to play';
-        if (audio.src) audio.pause();
-      } else {
-        isPlaying = true;
-        record.classList.remove('paused');
-        arm.classList.add('playing');
-        status.textContent = 'playing';
-        if (audio.src) audio.play().catch(function() {});
-      }
+      var from = path[segIdx], to = path[segIdx + 1];
+      var t = subStep / stepsPerSeg;
+      var easeT = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      var cx = from.x + (to.x - from.x) * easeT;
+      var cy = from.y + (to.y - from.y) * easeT;
+      bottle.style.left = cx + 'px';
+      bottle.style.top = cy + 'px';
+      var ny = cy - bottle.offsetHeight * 0.8;
+      sprayAt(cx, ny);
+      if (prevX !== null) drawTrail(prevX, prevY, cx, ny);
+      prevX = cx; prevY = ny;
+      subStep++;
+      if (subStep >= stepsPerSeg) { subStep = 0; segIdx++; }
+    }, 35);
+  }
+
+  function getXY(e) {
+    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  function onStart(e) {
+    e.preventDefault(); e.stopPropagation();
+    isDragging = true; prevX = null; prevY = null;
+    if (!userTookOver) {
+      userTookOver = true; bottle.classList.remove('waiting');
+      if (autoDemo) { clearInterval(autoDemo); autoDemo = null; }
+    }
+  }
+
+  function onMove(e) {
+    if (!isDragging || dissolved) return;
+    var p = getXY(e);
+    var rect = sprayContainer.getBoundingClientRect();
+    if (p.y < rect.top || p.y > rect.bottom) return;
+    e.preventDefault();
+    var ly = p.y - rect.top;
+    bottle.style.left = p.x + 'px';
+    bottle.style.top = ly + 'px';
+    var nx = p.x, ny = ly - bottle.offsetHeight * 0.8;
+    if (prevX !== null) drawTrail(prevX, prevY, nx, ny);
+    sprayAt(nx, ny);
+    prevX = nx; prevY = ny;
+  }
+
+  function onEnd() { isDragging = false; prevX = null; prevY = null; }
+
+  bottle.addEventListener('mousedown', onStart);
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onEnd);
+  bottle.addEventListener('touchstart', onStart, { passive: false });
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('touchend', onEnd);
+
+  // Scroll dissolve
+  window.addEventListener('scroll', function() {
+    if (dissolved) return;
+    var sy = window.scrollY, h = sprayContainer.offsetHeight;
+    if (sy > 0) {
+      var f = Math.min(sy / (h * 0.4), 1);
+      coverCanvas.style.opacity = 1 - f;
+      if (wetCanvas) wetCanvas.style.opacity = 1 - f;
+      if (f > 0.3) { bottle.classList.add('hidden'); if (autoDemo) { clearInterval(autoDemo); autoDemo = null; } }
+      if (f >= 1) dissolved = true;
+    }
+  }, { passive: true });
+
+  initCanvas();
+}
+
+// ============================================================
+// SECTION 1E — TEXTURE FLASHLIGHT INIT
+// ============================================================
+
+function initTextureReveal() {
+  var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase();
+  var revealSection = document.querySelector('[data-reveal-key="' + winner + '"]');
+  if (!revealSection) return;
+
+  var texture = revealSection.querySelector('[data-texture="' + winner + '"]');
+  if (!texture) return;
+
+  var trail = [
+    { x: -300, y: -300 }, { x: -300, y: -300 },
+    { x: -300, y: -300 }, { x: -300, y: -300 }
+  ];
+  var trailFrame = 0;
+
+  function clearTrail() {
+    for (var i = 0; i < 4; i++) trail[i] = { x: -300, y: -300 };
+    ['', '1', '2', '3'].forEach(function(s) {
+      texture.style.setProperty('--mx' + s, '-300px');
+      texture.style.setProperty('--my' + s, '-300px');
     });
+  }
+
+  revealSection.addEventListener('mousemove', function(e) {
+    var rect = revealSection.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    texture.style.setProperty('--mx', x + 'px');
+    texture.style.setProperty('--my', y + 'px');
+    trailFrame++;
+    if (trailFrame % 3 === 0) {
+      trail[3] = { x: trail[2].x, y: trail[2].y };
+      trail[2] = { x: trail[1].x, y: trail[1].y };
+      trail[1] = { x: trail[0].x, y: trail[0].y };
+      trail[0] = { x: x, y: y };
+      texture.style.setProperty('--mx1', trail[1].x + 'px');
+      texture.style.setProperty('--my1', trail[1].y + 'px');
+      texture.style.setProperty('--mx2', trail[2].x + 'px');
+      texture.style.setProperty('--my2', trail[2].y + 'px');
+      texture.style.setProperty('--mx3', trail[3].x + 'px');
+      texture.style.setProperty('--my3', trail[3].y + 'px');
+    }
+  });
+
+  revealSection.addEventListener('mouseleave', clearTrail);
+
+  revealSection.addEventListener('touchmove', function(e) {
+    if (e.touches.length) {
+      var rect = revealSection.getBoundingClientRect();
+      var x = e.touches[0].clientX - rect.left;
+      var y = e.touches[0].clientY - rect.top;
+      texture.style.setProperty('--mx', x + 'px');
+      texture.style.setProperty('--my', y + 'px');
+      trailFrame++;
+      if (trailFrame % 3 === 0) {
+        trail[3] = { x: trail[2].x, y: trail[2].y };
+        trail[2] = { x: trail[1].x, y: trail[1].y };
+        trail[1] = { x: trail[0].x, y: trail[0].y };
+        trail[0] = { x: x, y: y };
+        texture.style.setProperty('--mx1', trail[1].x + 'px');
+        texture.style.setProperty('--my1', trail[1].y + 'px');
+        texture.style.setProperty('--mx2', trail[2].x + 'px');
+        texture.style.setProperty('--my2', trail[2].y + 'px');
+        texture.style.setProperty('--mx3', trail[3].x + 'px');
+        texture.style.setProperty('--my3', trail[3].y + 'px');
+      }
+    }
+  }, { passive: true });
+
+  revealSection.addEventListener('touchend', clearTrail);
+}
+
+// ============================================================
+// SECTION 1F — FLOATING VINYL PLAYER
+// ============================================================
+
+function initFloatingVinyl() {
+  var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase();
+  if (!winner) return;
+
+  var vinylColor = VINYL_COLORS[winner] || '#7e3d30';
+  var trackUrl = MUSIC_URLS[winner] || '';
+
+  // Get z2-bg for hole color
+  var resultBlock = document.querySelector('[data-result="' + winner + '"]');
+  var holeBg = '#fdf0e8';
+  if (resultBlock) {
+    var computed = getComputedStyle(resultBlock);
+    holeBg = computed.getPropertyValue('--z2-bg').trim() || '#fdf0e8';
+  }
+
+  var vinyl = document.createElement('div');
+  vinyl.className = 'fms-vinyl-float';
+  vinyl.id = 'fms-vinyl-float';
+  vinyl.innerHTML =
+    '<div class="fms-vinyl-float-record fms-vinyl-float-spin paused" id="fms-vinyl-float-record">' +
+      '<div class="fms-vinyl-float-label" style="background:' + vinylColor + ';"></div>' +
+      '<div class="fms-vinyl-float-hole" style="background:' + holeBg + ';"></div>' +
+    '</div>' +
+    '<span class="fms-vinyl-float-status" id="fms-vinyl-float-status">\u266A</span>';
+  document.body.appendChild(vinyl);
+
+  var record = vinyl.querySelector('#fms-vinyl-float-record');
+  var status = vinyl.querySelector('#fms-vinyl-float-status');
+  var isPlaying = false;
+  var audio = null;
+
+  vinyl.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (!audio) {
+      audio = new Audio();
+      if (trackUrl) audio.src = trackUrl;
+      audio.loop = true;
+      audio.volume = 0.4;
+    }
+    if (isPlaying) {
+      isPlaying = false;
+      record.classList.add('paused');
+      status.textContent = '\u266A';
+      audio.pause();
+    } else {
+      isPlaying = true;
+      record.classList.remove('paused');
+      status.textContent = '\u266A playing';
+      if (audio.src) audio.play().catch(function() {});
+    }
   });
 }
 
 // ============================================================
-// SECTION 1E â€” INIT
+// SECTION 1G — INIT
 // ============================================================
 
 function init() {
@@ -719,7 +1008,12 @@ function init() {
     if (ingredient) openModal(ingredient);
   });
 
-  initVinylPlayers();
+  // Init interactive features for visible result only
+  setTimeout(function() {
+    initSpray();
+    initTextureReveal();
+    initFloatingVinyl();
+  }, 200);
 }
 
 if (document.readyState === 'loading') {
