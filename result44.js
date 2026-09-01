@@ -1,4 +1,11 @@
 // ============================================================
+// FIND MY SMELL — RESULT PAGE v44
+// v44: Spray reveal removed, Spider diagram Zone 1 added
+// All other functionality (texture reveal, vinyl, ingredients,
+// perfume matching, email) preserved exactly
+// ============================================================
+
+// ============================================================
 // SECTION 0 — S/R/P MATCHING ENGINE (unchanged)
 // ============================================================
 
@@ -37,6 +44,181 @@ function getUserSRP() {
 
   return { sweet: s, raw: r, proj: p };
 }
+
+// ============================================================
+// SECTION 0B — SPIDER DIAGRAM ENGINE
+// ============================================================
+
+(function () {
+
+  // ── Axis calculation maps ──
+
+  var SWEET_MAP = {
+    'Q_SWEET__NO_SWEET': 1, 'Q_SWEET__LITTLE_SW': 2,
+    'Q_SWEET__MODER_SW': 3, 'Q_SWEET__ENJOY_SW': 4
+  };
+  var RAW_MAP = {
+    'Q_WILD__NO_WILD': 1, 'Q_WILD__LITTLE_WILD': 2,
+    'Q_WILD__SOME_WILD': 3, 'Q_WILD__LOVE_WILD': 4
+  };
+  var PROJ_MAP = {
+    'Q_RADIUS__CLOSE': 1, 'Q_RADIUS__SOFT': 2,
+    'Q_RADIUS__NOTICEABLE': 3, 'Q_RADIUS__BOLD': 4
+  };
+
+  var WARMTH_SIGNALS = {
+    'Q_ATMOS__TROPICS': 3, 'Q_ATMOS__SOUTHFR': 2, 'Q_ATMOS__PARKRAIN': 1,
+    'Q_ATMOS__VILLAGE': 0, 'Q_ATMOS__SEA_AIR': 0, 'Q_ATMOS__NO_PREFER': 0,
+    'Q_ATMOS__FOGGY': -1, 'Q_ATMOS__MOUNT_AIR': -2, 'Q_ATMOS__WINTER': -3,
+    'Q_CALM__FIREPLAC': 2, 'Q_CALM__HOT_SHOW': 1, 'Q_CALM__MILK_SOFT': 1,
+    'Q_COZY__WARM_SKIN': 2, 'Q_COZY__FIREPLAC': 2, 'Q_COZY__BAKING': 1, 'Q_COZY__HOT_CHOC': 1,
+    'Q_SEXY__SMOK_SEX': 1, 'Q_ENERGY__HOT_SPICE': 1, 'Q_ENERGY__SUN_HEAT': 2,
+    'Q_CALM_NOW__TEA': 1, 'Q_CALM_NOW__FIRE': 2, 'Q_CALM_NOW__SWEET_COMF': 1,
+    'Q_CALM_NOW__RAIN': -1, 'Q_CALM_NOW__SEA_COMF': -1, 'Q_CALM_NOW__FRESH_COMF': -2, 'Q_CALM_NOW__CLEAN': -1,
+    'Q_CALM_NOW__COFFEE_COMF': 0, 'Q_CALM_NOW__WOOD': 0, 'Q_CALM_NOW__FLOWER': 0
+  };
+
+  var DEPTH_SIGNALS = {
+    'Q_WILD__LOVE_WILD': 3, 'Q_WILD__SOME_WILD': 2, 'Q_WILD__LITTLE_WILD': 0, 'Q_WILD__NO_WILD': -1,
+    'Q_EMO__MYST': 3, 'Q_EMO__SEXY': 2, 'Q_EMO__COZY': 0,
+    'Q_EMO__CALM': -1, 'Q_EMO__FOCUS': -1, 'Q_EMO__PLAY': -2, 'Q_EMO__ENERGY': -1,
+    'Q_CALM_NOW__WOOD': 2, 'Q_CALM_NOW__FIRE': 1, 'Q_CALM_NOW__COFFEE_COMF': 1, 'Q_CALM_NOW__RAIN': 1,
+    'Q_CALM_NOW__TEA': 0, 'Q_CALM_NOW__CLEAN': -2, 'Q_CALM_NOW__FRESH_COMF': -2,
+    'Q_CALM_NOW__FLOWER': -1, 'Q_CALM_NOW__SEA_COMF': -1,
+    'Q_CELEBRATE__INCENSE': 2, 'Q_CELEBRATE__SPICES': 1, 'Q_CELEBRATE__PERFUME': 1, 'Q_CELEBRATE__NIGHT': 1,
+    'Q_CELEBRATE__SWEET': -1, 'Q_CELEBRATE__LEMONAD': -2, 'Q_CELEBRATE__FRSH_FRUIT': -1,
+    'Q_CELEBRATE__FUZZY': -1, 'Q_CELEBRATE__FLOWERS': -1,
+    'Q_CELEBRATE__TROPICS': 0, 'Q_CELEBRATE__DINING_OUT': 0, 'Q_CELEBRATE__SAVORY': 0
+  };
+
+  var ARCHETYPE_DEFAULTS = {
+    CEO:       { sweetness: 1.5, rawEdge: 2,   projection: 3,   warmth: 2,   depth: 2.5 },
+    JAPAN:     { sweetness: 1.5, rawEdge: 1.5, projection: 1.5, warmth: 2,   depth: 2.5 },
+    HUG:       { sweetness: 3.5, rawEdge: 1,   projection: 1.5, warmth: 3.5, depth: 2   },
+    OFFGRID:   { sweetness: 1.5, rawEdge: 3.5, projection: 2,   warmth: 1.5, depth: 3.5 },
+    OUTOFTIME: { sweetness: 2,   rawEdge: 3,   projection: 2,   warmth: 2.5, depth: 3.5 },
+    SUMMER:    { sweetness: 2.5, rawEdge: 1.5, projection: 2.5, warmth: 3,   depth: 1.5 },
+    THERAPIST: { sweetness: 2.5, rawEdge: 2,   projection: 2,   warmth: 3,   depth: 3   }
+  };
+
+  function normalize(raw, minE, maxE) {
+    var c = Math.max(minE, Math.min(maxE, raw));
+    return 1 + ((c - minE) / (maxE - minE)) * 3;
+  }
+
+  function calculateSpiderAxes(archetypeKey) {
+    var answers = {};
+    try {
+      var raw = sessionStorage.getItem('quiz_answers') || localStorage.getItem('quiz_answers') || '{}';
+      answers = JSON.parse(raw);
+    } catch (e) {
+      return ARCHETYPE_DEFAULTS[archetypeKey] || ARCHETYPE_DEFAULTS.CEO;
+    }
+
+    var codes = Object.values(answers);
+    if (!codes.length) return ARCHETYPE_DEFAULTS[archetypeKey] || ARCHETYPE_DEFAULTS.CEO;
+
+    var sweet = 2.5, rawEdge = 2.5, proj = 2.5;
+
+    for (var i = 0; i < codes.length; i++) {
+      if (SWEET_MAP[codes[i]] !== undefined) sweet = SWEET_MAP[codes[i]];
+      if (RAW_MAP[codes[i]] !== undefined) rawEdge = RAW_MAP[codes[i]];
+      if (PROJ_MAP[codes[i]] !== undefined) proj = PROJ_MAP[codes[i]];
+    }
+
+    // Skin behavior adjustment
+    for (var j = 0; j < codes.length; j++) {
+      if (codes[j] === 'Q_SKIN_BEHAVIOR__SWEETER') sweet = Math.max(1, sweet - 0.5);
+      else if (codes[j] === 'Q_SKIN_BEHAVIOR__SHARPER') sweet = Math.min(4, sweet + 0.5);
+    }
+
+    var warmthRaw = 0, depthRaw = 0;
+    for (var k = 0; k < codes.length; k++) {
+      if (WARMTH_SIGNALS[codes[k]] !== undefined) warmthRaw += WARMTH_SIGNALS[codes[k]];
+      if (DEPTH_SIGNALS[codes[k]] !== undefined) depthRaw += DEPTH_SIGNALS[codes[k]];
+    }
+
+    return {
+      sweetness: sweet,
+      rawEdge: rawEdge,
+      projection: proj,
+      warmth: normalize(warmthRaw, -5, 6),
+      depth: normalize(depthRaw, -6, 8)
+    };
+  }
+
+  // ── SVG builder ──
+
+  var AXES = [
+    { key: 'sweetness',  lo: 'fresh',  hi: 'full sweetness' },
+    { key: 'depth',      lo: 'light',  hi: 'intense' },
+    { key: 'projection', lo: 'skin',   hi: 'everyone' },
+    { key: 'warmth',     lo: 'breezy', hi: 'cozy' },
+    { key: 'rawEdge',    lo: 'soft',   hi: 'wild' }
+  ];
+
+  function polar(angleDeg, radius, cx, cy) {
+    var rad = (angleDeg - 90) * Math.PI / 180;
+    return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) };
+  }
+
+  function buildRadarSVG(values) {
+    var W = 280, H = 300, cx = W / 2, cy = 140, maxR = 110, rings = 4, n = AXES.length;
+    var step = 360 / n;
+    var svg = '';
+
+    // Grid rings
+    for (var r = 1; r <= rings; r++) {
+      var rr = (r / rings) * maxR, pts = [];
+      for (var a = 0; a < n; a++) { var p = polar(a * step, rr, cx, cy); pts.push(p.x.toFixed(1) + ',' + p.y.toFixed(1)); }
+      svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>';
+    }
+
+    // Axis lines
+    for (var i = 0; i < n; i++) {
+      var tip = polar(i * step, maxR, cx, cy);
+      svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + tip.x.toFixed(1) + '" y2="' + tip.y.toFixed(1) + '" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>';
+    }
+
+    // Data shape
+    var dataPts = [], dots = [];
+    for (var d = 0; d < n; d++) {
+      var val = values[AXES[d].key] || 2.5;
+      var dp = polar(d * step, (val / 4) * maxR, cx, cy);
+      dataPts.push(dp.x.toFixed(1) + ',' + dp.y.toFixed(1));
+      dots.push(dp);
+    }
+    svg += '<polygon points="' + dataPts.join(' ') + '" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>';
+
+    // Dots
+    for (var v = 0; v < dots.length; v++) {
+      svg += '<circle cx="' + dots[v].x.toFixed(1) + '" cy="' + dots[v].y.toFixed(1) + '" r="3.5" fill="#fff" opacity="0.9"/>';
+    }
+
+    // Labels
+    var labelR = maxR + 20;
+    for (var l = 0; l < n; l++) {
+      var lp = polar(l * step, labelR, cx, cy);
+      var anchor = 'middle', lx = lp.x, ly = lp.y;
+      var angle = l * step;
+      if (angle > 30 && angle < 150) { lx += 4; anchor = 'start'; }
+      if (angle > 200 && angle < 340) { lx -= 4; anchor = 'end'; }
+      if (angle === 0) ly -= 6;
+      if (angle > 150 && angle < 210) ly += 10;
+      svg += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '" fill="rgba(255,255,255,0.55)" font-family="Inconsolata,monospace" font-size="10" font-weight="700" letter-spacing="0.06em">' + AXES[l].lo + ' \u2014 ' + AXES[l].hi + '</text>';
+    }
+
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your scent DNA radar chart" style="width:100%;max-width:' + W + 'px;height:auto;display:block;">' + svg + '</svg>';
+  }
+
+  // Expose globally for buildBlock
+  window.FMS_Spider = {
+    calculate: calculateSpiderAxes,
+    render: buildRadarSVG
+  };
+
+})();
+
 
 // ============================================================
 // SECTION 1 — ARCHETYPES DATA + PAGE BUILDER
@@ -107,7 +289,6 @@ var MUSIC_URLS = {
 
 // ── S/R/P to percentage for scale bars ──
 function srpToPercent(value) {
-  // 0=0%, 1=33%, 2=66%, 3=100%
   if (isNaN(value)) return 50;
   return Math.round((value / 3) * 100);
 }
@@ -139,12 +320,7 @@ const ARCHETYPES = {
       "You give feedback disguised as questions. You've described a vacation as \u201ca good opportunity to reset.\u201d You don't multitask. You single-task at a speed that looks like multitasking. You're not cold. You're just already three decisions ahead and slightly bored of where everyone else is.",
       "Your scent is the same: clean, sharp, no small talk. That's what a decision smells like."
     ],
-    main: {
-      name: 'Concrete', house: 'Comme des Gar\u00e7ons',
-      desc: 'The decision itself. Sharp, confident, walks with high chin.',
-      img: 'https://res.cloudinary.com/dcefrxxav/image/upload/v1776354725/1_mpedvv.png',
-      link: 'https://noseparis.com/en/concrete'
-    },
+    main: { name: 'Concrete', house: 'Comme des Gar\u00e7ons', desc: 'The decision itself. Sharp, confident, walks with high chin.', img: 'https://res.cloudinary.com/dcefrxxav/image/upload/v1776354725/1_mpedvv.png', link: 'https://noseparis.com/en/concrete' },
     alts: [
       { name: 'Legend', house: 'Montblanc', desc: "Doesn't surprise you. Doesn't need to. Shows up, delivers, leaves.", img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bbc57bc50bbad5b648f1_Find%20My%20Smell.png', link: 'https://www.montblanc-bordeaux.fr/products/legend-eau-de-toilette-100-ml' },
       { name: 'Escentric 05', house: 'Escentric Molecules', desc: 'Fresh and focused like your new business venture.', img: 'https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bc2082301bdff10b4568_2.png', link: 'https://www.escentric.com/en-eu/products/escentric-05-refill-30ml' },
@@ -367,7 +543,7 @@ function closeModal() {
 }
 
 // ============================================================
-// SECTION 1B — PAGE BUILDER (REBUILT for new layout)
+// SECTION 1B — PAGE BUILDER (v44: spider replaces spray)
 // ============================================================
 
 function buildBlock(key, arch) {
@@ -378,26 +554,30 @@ function buildBlock(key, arch) {
   var ac = FMS_ARCH_COLORS[key] || { zoneBg: 'transparent', titleColor: '#8B3A22', textColor: '#2a2a2a', ruleColor: '#2a2a2a' };
   var vinylColor = VINYL_COLORS[key] || '#7e3d30';
 
-  // ── Split desc: first = pull quote (spray), last = closer, middle = body ──
+  // ── v44: All desc paragraphs go to personality (no more spray pull quote) ──
   var descArr = arch.desc.slice();
-  var pullQuote = descArr.shift();
   var closerText = descArr.pop();
   var bodyParagraphs = descArr;
 
-  // ═══ SPRAY SCREEN ═══
-  var spray = document.createElement('div');
-  spray.className = 'fms-spray-container';
-  spray.setAttribute('data-spray-key', key);
-  spray.style.backgroundColor = 'var(--z2-bg)';
-  spray.innerHTML =
-    '<div class="fms-spray-text-layer">' +
-      '<div class="fms-spray-title">yOur ScenT pErsoNality</div>' +
-      '<div class="fms-spray-pull" style="color:' + ac.titleColor + ';">' + pullQuote + '</div>' +
-    '</div>' +
-    '<canvas class="fms-cover-canvas" data-cover="' + key + '"></canvas>' +
-    '<canvas class="fms-wet-canvas"></canvas>' +
-    '<img class="fms-spray-bottle" data-spray-bottle="' + key + '" src="' + arch.main.img + '" alt="" draggable="false">';
-  block.appendChild(spray);
+  // ═══ ZONE 1: SCENT DNA (spider + quote) ═══
+  var spiderValues = window.FMS_Spider ? window.FMS_Spider.calculate(key) : null;
+  var radarHTML = (window.FMS_Spider && spiderValues) ? window.FMS_Spider.render(spiderValues) : '';
+
+  var z1 = document.createElement('div');
+  z1.className = 'fms-zone fms-z1 fms-z1-dna';
+  z1.innerHTML =
+    '<div class="fms-z1-dna-inner">' +
+      '<div class="fms-z1-spider">' +
+        '<div class="fms-z1-dna-title">your scent dna</div>' +
+        radarHTML +
+      '</div>' +
+      '<div class="fms-z1-quote">' +
+        '<div class="fms-z1-you">' + arch.you + '</div>' +
+        '<div class="fms-z1-identity">' + arch.identity + '</div>' +
+        '<div class="fms-z1-descriptor">' + arch.descriptor + '</div>' +
+      '</div>' +
+    '</div>';
+  block.appendChild(z1);
 
   // ═══ PERSONALITY — TEXTURE REVEAL ═══
   var reveal = document.createElement('div');
@@ -621,27 +801,13 @@ function loadCMSPerfumes() {
 
       var best = srpBottles[0];
       ARCHETYPES[key].main = {
-        name: best.name,
-        house: best.brand,
-        link: best.link,
-        img: best.img,
+        name: best.name, house: best.brand, link: best.link, img: best.img,
         desc: best.desc || ARCHETYPES[key].main.desc,
-        sweet: best.sweet,
-        raw: best.raw,
-        proj: best.proj
+        sweet: best.sweet, raw: best.raw, proj: best.proj
       };
 
       ARCHETYPES[key].alts = srpBottles.slice(1, 4).map(function(b) {
-        return {
-          name: b.name,
-          house: b.brand,
-          link: b.link,
-          img: b.img,
-          desc: b.desc,
-          sweet: b.sweet,
-          raw: b.raw,
-          proj: b.proj
-        };
+        return { name: b.name, house: b.brand, link: b.link, img: b.img, desc: b.desc, sweet: b.sweet, raw: b.raw, proj: b.proj };
       });
 
     } else {
@@ -668,196 +834,7 @@ function loadCMSPerfumes() {
 }
 
 // ============================================================
-// SECTION 1D — SPRAY SCREEN INIT
-// ============================================================
-
-function initSpray() {
-  var winner = (sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result') || '').toUpperCase();
-  var sprayContainer = document.querySelector('[data-spray-key="' + winner + '"]');
-  if (!sprayContainer) return;
-
-  var coverCanvas = sprayContainer.querySelector('[data-cover="' + winner + '"]');
-  var wetCanvas = sprayContainer.querySelector('.fms-wet-canvas');
-  var bottle = sprayContainer.querySelector('[data-spray-bottle="' + winner + '"]');
-  if (!coverCanvas || !bottle) return;
-
-  var coverCtx = coverCanvas.getContext('2d');
-  var wetCtx = wetCanvas ? wetCanvas.getContext('2d') : null;
-
-  var isDragging = false;
-  var dissolved = false;
-  var userTookOver = false;
-  var autoDemo = null;
-  var prevX = null, prevY = null;
-
-  function initCanvas() {
-    var w = sprayContainer.offsetWidth;
-    var h = sprayContainer.offsetHeight;
-    coverCanvas.width = w;
-    coverCanvas.height = h;
-    if (wetCanvas) { wetCanvas.width = w; wetCanvas.height = h; }
-
-    // Compute bg color from parent
-    var bgColor = getComputedStyle(sprayContainer).backgroundColor || '#fdf0e8';
-    coverCtx.fillStyle = bgColor;
-    coverCtx.fillRect(0, 0, w, h);
-
-    for (var i = 0; i < 12000; i++) {
-      coverCtx.fillStyle = 'rgba(126, 61, 48, ' + (Math.random() * 0.04) + ')';
-      coverCtx.fillRect(Math.random() * w, Math.random() * h, Math.random() > 0.5 ? 2 : 1, 1);
-    }
-
-    bottle.style.left = (w * 0.38) + 'px';
-    bottle.style.top = (h * 0.45) + 'px';
-    setTimeout(startAutoDemo, 400);
-  }
-
-  function drawBlob(ctx, x, y, r, pts) {
-    ctx.beginPath();
-    for (var i = 0; i <= pts; i++) {
-      var a = (i / pts) * Math.PI * 2;
-      var wobble = r * (0.7 + Math.random() * 0.6);
-      var bx = x + Math.cos(a) * wobble;
-      var by = y + Math.sin(a) * wobble;
-      if (i === 0) ctx.moveTo(bx, by); else ctx.lineTo(bx, by);
-    }
-    ctx.closePath();
-  }
-
-  function eraseSpot(x, y, r) {
-    coverCtx.globalCompositeOperation = 'destination-out';
-    drawBlob(coverCtx, x, y, r, 10);
-    var g = coverCtx.createRadialGradient(x, y, 0, x, y, r * 1.3);
-    g.addColorStop(0, 'rgba(0,0,0,1)');
-    g.addColorStop(0.6, 'rgba(0,0,0,0.85)');
-    g.addColorStop(0.85, 'rgba(0,0,0,0.3)');
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    coverCtx.fillStyle = g;
-    coverCtx.fill();
-    coverCtx.globalCompositeOperation = 'source-over';
-  }
-
-  function sprayAt(cx, cy) {
-    for (var i = 0; i < 6; i++) {
-      var a = Math.random() * Math.PI * 2, d = Math.random() * 35;
-      eraseSpot(cx + Math.cos(a) * d, cy + Math.sin(a) * d * 0.5 - Math.random() * 15, Math.random() * 14 + 8);
-    }
-    for (var j = 0; j < Math.floor(Math.random() * 4) + 2; j++) {
-      var sa = Math.random() * Math.PI * 2, sd = 35 + Math.random() * 25;
-      coverCtx.globalCompositeOperation = 'destination-out';
-      coverCtx.beginPath();
-      coverCtx.arc(cx + Math.cos(sa) * sd, cy + Math.sin(sa) * sd * 0.5, Math.random() * 3 + 1.5, 0, Math.PI * 2);
-      coverCtx.fillStyle = 'rgba(0,0,0,0.9)';
-      coverCtx.fill();
-      coverCtx.globalCompositeOperation = 'source-over';
-    }
-  }
-
-  function drawTrail(x1, y1, x2, y2) {
-    var dist = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-    if (dist < 3) return;
-    var steps = Math.ceil(dist / 6);
-    for (var i = 0; i < steps; i++) {
-      var t = i / steps;
-      eraseSpot(
-        x1 + (x2 - x1) * t + (Math.random() - 0.5) * 8,
-        y1 + (y2 - y1) * t + (Math.random() - 0.5) * 8,
-        Math.random() * 10 + 5
-      );
-    }
-  }
-
-  function startAutoDemo() {
-    if (userTookOver) return;
-    var w = sprayContainer.offsetWidth;
-    var h = sprayContainer.offsetHeight;
-    var path = [
-      { x: w * 0.38, y: h * 0.42 },
-      { x: w * 0.50, y: h * 0.38 },
-      { x: w * 0.62, y: h * 0.44 },
-      { x: w * 0.55, y: h * 0.50 },
-      { x: w * 0.42, y: h * 0.52 },
-      { x: w * 0.50, y: h * 0.48 }
-    ];
-    var segIdx = 0, subStep = 0, stepsPerSeg = 20;
-    autoDemo = setInterval(function() {
-      if (userTookOver || segIdx >= path.length - 1) {
-        clearInterval(autoDemo);
-        if (!userTookOver) bottle.classList.add('waiting');
-        return;
-      }
-      var from = path[segIdx], to = path[segIdx + 1];
-      var t = subStep / stepsPerSeg;
-      var easeT = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-      var cx = from.x + (to.x - from.x) * easeT;
-      var cy = from.y + (to.y - from.y) * easeT;
-      bottle.style.left = cx + 'px';
-      bottle.style.top = cy + 'px';
-      var ny = cy - bottle.offsetHeight * 0.8;
-      sprayAt(cx, ny);
-      if (prevX !== null) drawTrail(prevX, prevY, cx, ny);
-      prevX = cx; prevY = ny;
-      subStep++;
-      if (subStep >= stepsPerSeg) { subStep = 0; segIdx++; }
-    }, 35);
-  }
-
-  function getXY(e) {
-    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    return { x: e.clientX, y: e.clientY };
-  }
-
-  function onStart(e) {
-    e.preventDefault(); e.stopPropagation();
-    isDragging = true; prevX = null; prevY = null;
-    if (!userTookOver) {
-      userTookOver = true; bottle.classList.remove('waiting');
-      if (autoDemo) { clearInterval(autoDemo); autoDemo = null; }
-    }
-  }
-
-  function onMove(e) {
-    if (!isDragging || dissolved) return;
-    var p = getXY(e);
-    var rect = sprayContainer.getBoundingClientRect();
-    if (p.y < rect.top || p.y > rect.bottom) return;
-    e.preventDefault();
-    var ly = p.y - rect.top;
-    bottle.style.left = p.x + 'px';
-    bottle.style.top = ly + 'px';
-    var nx = p.x, ny = ly - bottle.offsetHeight * 0.8;
-    if (prevX !== null) drawTrail(prevX, prevY, nx, ny);
-    sprayAt(nx, ny);
-    prevX = nx; prevY = ny;
-  }
-
-  function onEnd() { isDragging = false; prevX = null; prevY = null; }
-
-  bottle.addEventListener('mousedown', onStart);
-  document.addEventListener('mousemove', onMove);
-  document.addEventListener('mouseup', onEnd);
-  bottle.addEventListener('touchstart', onStart, { passive: false });
-  document.addEventListener('touchmove', onMove, { passive: false });
-  document.addEventListener('touchend', onEnd);
-
-  // Scroll dissolve
-  window.addEventListener('scroll', function() {
-    if (dissolved) return;
-    var sy = window.scrollY, h = sprayContainer.offsetHeight;
-    if (sy > 0) {
-      var f = Math.min(sy / (h * 0.4), 1);
-      coverCanvas.style.opacity = 1 - f;
-      if (wetCanvas) wetCanvas.style.opacity = 1 - f;
-      if (f > 0.3) { bottle.classList.add('hidden'); if (autoDemo) { clearInterval(autoDemo); autoDemo = null; } }
-      if (f >= 1) dissolved = true;
-    }
-  }, { passive: true });
-
-  initCanvas();
-}
-
-// ============================================================
-// SECTION 1E — TEXTURE FLASHLIGHT INIT
+// SECTION 1E — TEXTURE FLASHLIGHT INIT (unchanged)
 // ============================================================
 
 function initTextureReveal() {
@@ -932,7 +909,7 @@ function initTextureReveal() {
 }
 
 // ============================================================
-// SECTION 1F — FLOATING VINYL PLAYER
+// SECTION 1F — FLOATING VINYL PLAYER (unchanged)
 // ============================================================
 
 function initFloatingVinyl() {
@@ -942,7 +919,6 @@ function initFloatingVinyl() {
   var vinylColor = VINYL_COLORS[winner] || '#7e3d30';
   var trackUrl = MUSIC_URLS[winner] || '';
 
-  // Get z2-bg for hole color
   var resultBlock = document.querySelector('[data-result="' + winner + '"]');
   var holeBg = '#fdf0e8';
   if (resultBlock) {
@@ -989,7 +965,7 @@ function initFloatingVinyl() {
 }
 
 // ============================================================
-// SECTION 1G — INIT
+// SECTION 1G — INIT (v44: no more initSpray)
 // ============================================================
 
 function init() {
@@ -1009,8 +985,8 @@ function init() {
   });
 
   // Init interactive features for visible result only
+  // v44: spray removed, only texture reveal + vinyl remain
   setTimeout(function() {
-    initSpray();
     initTextureReveal();
     initFloatingVinyl();
   }, 200);
