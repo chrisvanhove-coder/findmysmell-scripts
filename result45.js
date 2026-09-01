@@ -163,7 +163,7 @@ function getUserSRP() {
   }
 
   function buildRadarSVG(values) {
-    var W = 280, H = 300, cx = W / 2, cy = 140, maxR = 110, rings = 4, n = AXES.length;
+    var W = 460, H = 480, cx = W / 2, cy = 220, maxR = 160, rings = 4, n = AXES.length;
     var step = 360 / n;
     var svg = '';
 
@@ -171,13 +171,13 @@ function getUserSRP() {
     for (var r = 1; r <= rings; r++) {
       var rr = (r / rings) * maxR, pts = [];
       for (var a = 0; a < n; a++) { var p = polar(a * step, rr, cx, cy); pts.push(p.x.toFixed(1) + ',' + p.y.toFixed(1)); }
-      svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>';
+      svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.75"/>';
     }
 
     // Axis lines
     for (var i = 0; i < n; i++) {
       var tip = polar(i * step, maxR, cx, cy);
-      svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + tip.x.toFixed(1) + '" y2="' + tip.y.toFixed(1) + '" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>';
+      svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + tip.x.toFixed(1) + '" y2="' + tip.y.toFixed(1) + '" stroke="rgba(255,255,255,0.1)" stroke-width="0.75"/>';
     }
 
     // Data shape
@@ -188,27 +188,27 @@ function getUserSRP() {
       dataPts.push(dp.x.toFixed(1) + ',' + dp.y.toFixed(1));
       dots.push(dp);
     }
-    svg += '<polygon points="' + dataPts.join(' ') + '" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.7)" stroke-width="1.5"/>';
+    svg += '<polygon points="' + dataPts.join(' ') + '" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>';
 
     // Dots
     for (var v = 0; v < dots.length; v++) {
-      svg += '<circle cx="' + dots[v].x.toFixed(1) + '" cy="' + dots[v].y.toFixed(1) + '" r="3.5" fill="#fff" opacity="0.9"/>';
+      svg += '<circle cx="' + dots[v].x.toFixed(1) + '" cy="' + dots[v].y.toFixed(1) + '" r="5" fill="#fff" opacity="0.9"/>';
     }
 
     // Labels
-    var labelR = maxR + 20;
+    var labelR = maxR + 28;
     for (var l = 0; l < n; l++) {
       var lp = polar(l * step, labelR, cx, cy);
       var anchor = 'middle', lx = lp.x, ly = lp.y;
       var angle = l * step;
-      if (angle > 30 && angle < 150) { lx += 4; anchor = 'start'; }
-      if (angle > 200 && angle < 340) { lx -= 4; anchor = 'end'; }
-      if (angle === 0) ly -= 6;
-      if (angle > 150 && angle < 210) ly += 10;
-      svg += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '" fill="rgba(255,255,255,0.55)" font-family="Inconsolata,monospace" font-size="10" font-weight="700" letter-spacing="0.06em">' + AXES[l].lo + ' \u2014 ' + AXES[l].hi + '</text>';
+      if (angle > 20 && angle < 160) { lx += 6; anchor = 'start'; }
+      if (angle > 200 && angle < 340) { lx -= 6; anchor = 'end'; }
+      if (angle === 0) ly -= 8;
+      if (angle > 150 && angle < 210) ly += 14;
+      svg += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '" fill="rgba(255,255,255,0.6)" font-family="Inconsolata,monospace" font-size="13" font-weight="700" letter-spacing="0.08em">' + AXES[l].lo + ' \u2014 ' + AXES[l].hi + '</text>';
     }
 
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your scent DNA radar chart" style="width:100%;max-width:' + W + 'px;height:auto;display:block;">' + svg + '</svg>';
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your scent DNA radar chart" style="width:100%;max-width:460px;height:auto;display:block;">' + svg + '</svg>';
   }
 
   // Expose globally for buildBlock
@@ -554,8 +554,9 @@ function buildBlock(key, arch) {
   var ac = FMS_ARCH_COLORS[key] || { zoneBg: 'transparent', titleColor: '#8B3A22', textColor: '#2a2a2a', ruleColor: '#2a2a2a' };
   var vinylColor = VINYL_COLORS[key] || '#7e3d30';
 
-  // ── v44: All desc paragraphs go to personality (no more spray pull quote) ──
+  // ── Split desc: first = pull quote (Zone 1), last = closer, middle = body ──
   var descArr = arch.desc.slice();
+  var pullQuote = descArr.shift();
   var closerText = descArr.pop();
   var bodyParagraphs = descArr;
 
@@ -566,15 +567,13 @@ function buildBlock(key, arch) {
   var z1 = document.createElement('div');
   z1.className = 'fms-zone fms-z1 fms-z1-dna';
   z1.innerHTML =
+    '<div class="fms-z1-dna-title">your scent dna</div>' +
     '<div class="fms-z1-dna-inner">' +
       '<div class="fms-z1-spider">' +
-        '<div class="fms-z1-dna-title">your scent dna</div>' +
         radarHTML +
       '</div>' +
       '<div class="fms-z1-quote">' +
-        '<div class="fms-z1-you">' + arch.you + '</div>' +
-        '<div class="fms-z1-identity">' + arch.identity + '</div>' +
-        '<div class="fms-z1-descriptor">' + arch.descriptor + '</div>' +
+        '<div class="fms-z1-pull">' + pullQuote + '</div>' +
       '</div>' +
     '</div>';
   block.appendChild(z1);
