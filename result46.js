@@ -929,15 +929,17 @@ function initFloatingVinyl() {
   vinyl.className = 'fms-vinyl-float';
   vinyl.id = 'fms-vinyl-float';
   vinyl.innerHTML =
+    '<div class="fms-vinyl-float-arm" id="fms-vinyl-float-arm"></div>' +
     '<div class="fms-vinyl-float-record fms-vinyl-float-spin paused" id="fms-vinyl-float-record">' +
       '<div class="fms-vinyl-float-label" style="background:' + vinylColor + ';"></div>' +
       '<div class="fms-vinyl-float-hole" style="background:' + holeBg + ';"></div>' +
     '</div>' +
-    '<span class="fms-vinyl-float-status" id="fms-vinyl-float-status">\u266A</span>';
+    '<span class="fms-vinyl-float-status" id="fms-vinyl-float-status">\u266A press play</span>';
   document.body.appendChild(vinyl);
 
   var record = vinyl.querySelector('#fms-vinyl-float-record');
   var status = vinyl.querySelector('#fms-vinyl-float-status');
+  var arm = vinyl.querySelector('#fms-vinyl-float-arm');
   var isPlaying = false;
   var audio = null;
 
@@ -952,16 +954,19 @@ function initFloatingVinyl() {
     if (isPlaying) {
       isPlaying = false;
       record.classList.add('paused');
-      status.textContent = '\u266A';
+      if (arm) arm.classList.remove('playing');
+      status.textContent = '\u266A press play';
       audio.pause();
     } else {
       isPlaying = true;
       record.classList.remove('paused');
+      if (arm) arm.classList.add('playing');
       status.textContent = '\u266A playing';
       if (audio.src) audio.play().catch(function() {});
     }
   });
 }
+  
 
 // ============================================================
 // SECTION 1G — INIT (v44: no more initSpray)
