@@ -1,8 +1,8 @@
 // ============================================================
-// FIND MY SMELL — RESULT PAGE v44
-// v44: Spray reveal removed, Spider diagram Zone 1 added
-// All other functionality (texture reveal, vinyl, ingredients,
-// perfume matching, email) preserved exactly
+// FIND MY SMELL — RESULT PAGE v46
+// v46: Spider diagram replaced with expandable Scent DNA river diagram.
+// All other functionality (texture reveal, vinyl w/ tonearm, ingredients,
+// perfume matching, email) preserved exactly from v44/v45.
 // ============================================================
 
 // ============================================================
@@ -46,12 +46,10 @@ function getUserSRP() {
 }
 
 // ============================================================
-// SECTION 0B — SPIDER DIAGRAM ENGINE
+// SECTION 0B — SCENT DNA ENGINE (river diagram, replaces spider)
 // ============================================================
 
 (function () {
-
-  // ── Axis calculation maps ──
 
   var SWEET_MAP = {
     'Q_SWEET__NO_SWEET': 1, 'Q_SWEET__LITTLE_SW': 2,
@@ -106,7 +104,7 @@ function getUserSRP() {
     return 1 + ((c - minE) / (maxE - minE)) * 3;
   }
 
-  function calculateSpiderAxes(archetypeKey) {
+  function calculateAxes(archetypeKey) {
     var answers = {};
     try {
       var raw = sessionStorage.getItem('quiz_answers') || localStorage.getItem('quiz_answers') || '{}';
@@ -126,7 +124,6 @@ function getUserSRP() {
       if (PROJ_MAP[codes[i]] !== undefined) proj = PROJ_MAP[codes[i]];
     }
 
-    // Skin behavior adjustment
     for (var j = 0; j < codes.length; j++) {
       if (codes[j] === 'Q_SKIN_BEHAVIOR__SWEETER') sweet = Math.max(1, sweet - 0.5);
       else if (codes[j] === 'Q_SKIN_BEHAVIOR__SHARPER') sweet = Math.min(4, sweet + 0.5);
@@ -147,74 +144,150 @@ function getUserSRP() {
     };
   }
 
-  // ── SVG builder ──
-
+  // ── Axis definitions with explanatory copy (plain, non-perfumery language) ──
   var AXES = [
-    { key: 'sweetness',  lo: 'fresh',  hi: 'full sweetness' },
-    { key: 'depth',      lo: 'light',  hi: 'intense' },
-    { key: 'projection', lo: 'skin',   hi: 'everyone' },
-    { key: 'warmth',     lo: 'breezy', hi: 'cozy' },
-    { key: 'rawEdge',    lo: 'soft',   hi: 'wild' }
+    {
+      key: 'sweetness', lo: 'Fresh', hi: 'Sweet',
+      loDesc: 'Like cold water on your face. Clean laundry. The air after rain.',
+      hiDesc: 'Like warm skin. A pastry shop in winter. The last sip of hot chocolate.'
+    },
+    {
+      key: 'rawEdge', lo: 'Polished', hi: 'Wild',
+      loDesc: 'Smooth and finished. Like ironed fabric or a new car interior.',
+      hiDesc: 'Unfinished and honest. Wet earth. Smoke from a campfire. Bark you peeled off a tree.'
+    },
+    {
+      key: 'projection', lo: 'Intimate', hi: 'Bold',
+      loDesc: 'Only you can smell it. A secret between you and your skin.',
+      hiDesc: 'People notice you before you sit down. Your scent enters the room first.'
+    },
+    {
+      key: 'warmth', lo: 'Cool', hi: 'Warm',
+      loDesc: 'Open windows. Sea breeze. The cold side of the pillow.',
+      hiDesc: "Blankets. A kitchen in winter. Someone's sweater after they've worn it all day."
+    },
+    {
+      key: 'depth', lo: 'Light', hi: 'Deep',
+      loDesc: 'Easy to wear. Like a white t-shirt — simple and it just works.',
+      hiDesc: 'Dense and lasting. Built to stay on you, not fade by noon.'
+    }
   ];
 
-  function polar(angleDeg, radius, cx, cy) {
-    var rad = (angleDeg - 90) * Math.PI / 180;
-    return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) };
+  function buildDNAHTML(values, pullQuote, archKey) {
+    var rowsHTML = AXES.map(function(axis, i) {
+      var val = values[axis.key] || 2.5;
+      var pct = Math.max(4, Math.min(96, ((val - 1) / 3) * 100));
+      return '<div class="fms-dna-row" data-idx="' + i + '" data-arch="' + archKey + '">' +
+        '<div class="fms-dna-row-bar">' +
+          '<span class="fms-dna-label">' + axis.lo + '</span>' +
+          '<div class="fms-dna-track" data-track="' + i + '">' +
+            '<span class="fms-dna-dot-ghost" style="left:25%"></span>' +
+            '<span class="fms-dna-dot-ghost" style="left:50%"></span>' +
+            '<span class="fms-dna-dot-ghost" style="left:75%"></span>' +
+            '<span class="fms-dna-dot-outer" style="left:' + pct + '%"></span>' +
+            '<span class="fms-dna-dot" style="left:' + pct + '%"></span>' +
+          '</div>' +
+          '<span class="fms-dna-label right">' + axis.hi + '</span>' +
+        '</div>' +
+        '<div class="fms-dna-expand">' +
+          '<div class="fms-dna-expand-inner">' +
+            '<div class="fms-dna-explain-grid">' +
+              '<div class="fms-dna-explain-side"><div class="fms-dna-explain-word">' + axis.lo + '</div><div class="fms-dna-explain-desc">' + axis.loDesc + '</div></div>' +
+              '<div class="fms-dna-explain-divider"></div>' +
+              '<div class="fms-dna-explain-side"><div class="fms-dna-explain-word">' + axis.hi + '</div><div class="fms-dna-explain-desc">' + axis.hiDesc + '</div></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    return '<div class="fms-dna-quote">' + pullQuote + '</div>' +
+      '<div class="fms-dna-diagram">' +
+        '<canvas class="fms-dna-river" data-river="' + archKey + '"></canvas>' +
+        rowsHTML +
+      '</div>' +
+      '<div class="fms-dna-tap-hint">tap any axis to learn more</div>';
   }
 
-  function buildRadarSVG(values) {
-    var W = 460, H = 480, cx = W / 2, cy = 220, maxR = 160, rings = 4, n = AXES.length;
-    var step = 360 / n;
-    var svg = '';
+  function drawRiver(archKey) {
+    var canvas = document.querySelector('canvas[data-river="' + archKey + '"]');
+    if (!canvas) return;
+    var parent = canvas.parentElement;
+    var w = parent.offsetWidth, h = parent.offsetHeight;
+    if (!w || !h) return;
+    canvas.width = w * 2;
+    canvas.height = h * 2;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    var ctx = canvas.getContext('2d');
+    ctx.scale(2, 2);
+    ctx.clearRect(0, 0, w, h);
 
-    // Grid rings
-    for (var r = 1; r <= rings; r++) {
-      var rr = (r / rings) * maxR, pts = [];
-      for (var a = 0; a < n; a++) { var p = polar(a * step, rr, cx, cy); pts.push(p.x.toFixed(1) + ',' + p.y.toFixed(1)); }
-      svg += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.75"/>';
+    var dots = [];
+    for (var i = 0; i < 5; i++) {
+      var track = parent.querySelector('[data-track="' + i + '"]');
+      if (!track) continue;
+      var dot = track.querySelector('.fms-dna-dot');
+      if (!dot) continue;
+      var pct = parseFloat(dot.style.left) / 100;
+      var trackRect = track.getBoundingClientRect();
+      var parentRect = parent.getBoundingClientRect();
+      var x = (trackRect.left - parentRect.left) + trackRect.width * pct;
+      var barEl = track.closest('.fms-dna-row-bar');
+      var barRect = barEl.getBoundingClientRect();
+      var y = (barRect.top - parentRect.top) + barRect.height / 2;
+      dots.push({ x: x, y: y });
     }
+    if (dots.length < 2) return;
 
-    // Axis lines
-    for (var i = 0; i < n; i++) {
-      var tip = polar(i * step, maxR, cx, cy);
-      svg += '<line x1="' + cx + '" y1="' + cy + '" x2="' + tip.x.toFixed(1) + '" y2="' + tip.y.toFixed(1) + '" stroke="rgba(255,255,255,0.1)" stroke-width="0.75"/>';
-    }
+    var layers = [
+      { width: 70, alpha: 0.03 }, { width: 56, alpha: 0.04 }, { width: 42, alpha: 0.06 },
+      { width: 30, alpha: 0.09 }, { width: 20, alpha: 0.13 }, { width: 12, alpha: 0.17 },
+      { width: 5,  alpha: 0.22 }
+    ];
 
-    // Data shape
-    var dataPts = [], dots = [];
-    for (var d = 0; d < n; d++) {
-      var val = values[AXES[d].key] || 2.5;
-      var dp = polar(d * step, (val / 4) * maxR, cx, cy);
-      dataPts.push(dp.x.toFixed(1) + ',' + dp.y.toFixed(1));
-      dots.push(dp);
-    }
-    svg += '<polygon points="' + dataPts.join(' ') + '" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>';
-
-    // Dots
-    for (var v = 0; v < dots.length; v++) {
-      svg += '<circle cx="' + dots[v].x.toFixed(1) + '" cy="' + dots[v].y.toFixed(1) + '" r="5" fill="#fff" opacity="0.9"/>';
-    }
-
-    // Labels
-    var labelR = maxR + 28;
-    for (var l = 0; l < n; l++) {
-      var lp = polar(l * step, labelR, cx, cy);
-      var anchor = 'middle', lx = lp.x, ly = lp.y;
-      var angle = l * step;
-      if (angle > 20 && angle < 160) { lx += 6; anchor = 'start'; }
-      if (angle > 200 && angle < 340) { lx -= 6; anchor = 'end'; }
-      if (angle === 0) ly -= 8;
-      if (angle > 150 && angle < 210) ly += 14;
-      svg += '<text x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '" fill="rgba(255,255,255,0.6)" font-family="Inconsolata,monospace" font-size="13" font-weight="700" letter-spacing="0.08em">' + AXES[l].lo + ' \u2014 ' + AXES[l].hi + '</text>';
-    }
-
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Your scent DNA radar chart" style="width:100%;max-width:460px;height:auto;display:block;">' + svg + '</svg>';
+    layers.forEach(function(layer) {
+      ctx.beginPath();
+      ctx.moveTo(dots[0].x, dots[0].y);
+      for (var j = 0; j < dots.length - 1; j++) {
+        var cpY = dots[j].y + (dots[j + 1].y - dots[j].y) * 0.5;
+        ctx.bezierCurveTo(dots[j].x, cpY, dots[j + 1].x, cpY, dots[j + 1].x, dots[j + 1].y);
+      }
+      ctx.strokeStyle = 'rgba(255,255,255,' + layer.alpha + ')';
+      ctx.lineWidth = layer.width;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+    });
   }
 
-  // Expose globally for buildBlock
-  window.FMS_Spider = {
-    calculate: calculateSpiderAxes,
-    render: buildRadarSVG
+  // ── Event delegation: toggle rows, redraw river ──
+  document.addEventListener('click', function(e) {
+    var row = e.target.closest('.fms-dna-row');
+    if (!row) return;
+    var archKey = row.getAttribute('data-arch');
+    var wasActive = row.classList.contains('active');
+    var diagram = row.closest('.fms-dna-diagram');
+    if (!diagram) return;
+    var siblingRows = diagram.querySelectorAll('.fms-dna-row');
+    siblingRows.forEach(function(r) { r.classList.remove('active'); });
+    if (!wasActive) row.classList.add('active');
+    var hint = diagram.parentElement.querySelector('.fms-dna-tap-hint');
+    if (hint) hint.style.opacity = '0';
+    setTimeout(function() { drawRiver(archKey); }, 50);
+    setTimeout(function() { drawRiver(archKey); }, 420);
+  });
+
+  window.addEventListener('resize', function() {
+    document.querySelectorAll('canvas[data-river]').forEach(function(c) {
+      drawRiver(c.getAttribute('data-river'));
+    });
+  });
+
+  window.FMS_DNA = {
+    calculate: calculateAxes,
+    buildHTML: buildDNAHTML,
+    drawRiver: drawRiver
   };
 
 })();
@@ -543,7 +616,7 @@ function closeModal() {
 }
 
 // ============================================================
-// SECTION 1B — PAGE BUILDER (v44: spider replaces spray)
+// SECTION 1B — PAGE BUILDER (v46: river diagram replaces spider)
 // ============================================================
 
 function buildBlock(key, arch) {
@@ -560,23 +633,18 @@ function buildBlock(key, arch) {
   var closerText = descArr.pop();
   var bodyParagraphs = descArr;
 
-  // ═══ ZONE 1: SCENT DNA (spider + quote) ═══
-  var spiderValues = window.FMS_Spider ? window.FMS_Spider.calculate(key) : null;
-  var radarHTML = (window.FMS_Spider && spiderValues) ? window.FMS_Spider.render(spiderValues) : '';
+  // ═══ ZONE 1: SCENT DNA (expandable river diagram) ═══
+  var dnaValues = window.FMS_DNA ? window.FMS_DNA.calculate(key) : null;
+  var dnaHTML = (window.FMS_DNA && dnaValues) ? window.FMS_DNA.buildHTML(dnaValues, pullQuote, key) : '';
 
   var z1 = document.createElement('div');
   z1.className = 'fms-zone fms-z1 fms-z1-dna';
-  z1.innerHTML =
-    '<div class="fms-z1-dna-title">your scent dna</div>' +
-    '<div class="fms-z1-dna-inner">' +
-      '<div class="fms-z1-spider">' +
-        radarHTML +
-      '</div>' +
-      '<div class="fms-z1-quote">' +
-        '<div class="fms-z1-pull">' + pullQuote + '</div>' +
-      '</div>' +
-    '</div>';
+  z1.innerHTML = '<div class="fms-z1-dna-title">your scent dna</div>' + dnaHTML;
   block.appendChild(z1);
+
+  if (window.FMS_DNA) {
+    setTimeout(function() { window.FMS_DNA.drawRiver(key); }, 300);
+  }
 
   // ═══ PERSONALITY — TEXTURE REVEAL ═══
   var reveal = document.createElement('div');
@@ -908,7 +976,7 @@ function initTextureReveal() {
 }
 
 // ============================================================
-// SECTION 1F — FLOATING VINYL PLAYER (unchanged)
+// SECTION 1F — FLOATING VINYL PLAYER (v46: tonearm + press play, unchanged from v45)
 // ============================================================
 
 function initFloatingVinyl() {
@@ -966,10 +1034,9 @@ function initFloatingVinyl() {
     }
   });
 }
-  
 
 // ============================================================
-// SECTION 1G — INIT (v44: no more initSpray)
+// SECTION 1G — INIT
 // ============================================================
 
 function init() {
@@ -988,8 +1055,6 @@ function init() {
     if (ingredient) openModal(ingredient);
   });
 
-  // Init interactive features for visible result only
-  // v44: spray removed, only texture reveal + vinyl remain
   setTimeout(function() {
     initTextureReveal();
     initFloatingVinyl();
