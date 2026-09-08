@@ -261,7 +261,7 @@ function getUserSRP() {
     });
   }
 
-  // ── Event delegation: toggle rows, redraw river ──
+    // ── Event delegation: toggle rows, redraw river ──
   document.addEventListener('click', function(e) {
     var row = e.target.closest('.fms-dna-row');
     if (!row) return;
