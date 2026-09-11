@@ -1,0 +1,999 @@
+<!--
+  Webflow → Site Settings → Custom Code
+  Выгружено 2026-09-11. Код приведён как есть, без правок.
+  Содержит: стили квиза, мобильные оверрайды, legal bar, переключатель языка,
+  навигацию по квизу, cookie-баннер, прогресс-бар.
+-->
+
+<style>
+  /* Global quiz question style */
+  [data-question-id] .question-text,
+  .question-text {
+    font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+    letter-spacing: 0.08em;
+  }
+
+  /* Global quiz answer style */
+  [data-answer-key] {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+</style>
+
+<style>
+
+/* ── 1. GLOBAL: prevent horizontal overflow ── */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    overflow-y: auto !important;
+  }
+
+  [data-answer-key] {
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .navbar.w-nav,
+  .container.w-container {
+    width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  #staywell-layout,
+  #daytday-layout,
+  #sweet-screen,
+  #wild-screen,
+  #emo-screen,
+  #atmos-layout,
+  #focus-layout,
+  #play-layout,
+  #calm-layout,
+  #energy-layout,
+  #sexy-layout,
+  #cozy-layout,
+  #myst-layout,
+  #cluster,
+  [id$="-screen"],
+  [id$="-layout"] {
+    width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  #staywell-layout,
+  #daytday-layout,
+  #atmos-layout,
+  [id$="-layout"] {
+    padding-top: 72px !important;
+    box-sizing: border-box !important;
+  }
+
+  #staywell-question,
+  #daytday-question,
+  #sweet-question,
+  #wild-question,
+  #emo-prefix,
+  [id$="-question"],
+  [id$="-ques"] {
+    font-size: clamp(16px, 5vw, 26px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.03em !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .staywell-option,
+  .daytday-option,
+  .atmos-option,
+  [class$="-option"] {
+    font-size: clamp(13px, 3.8vw, 20px) !important;
+    padding: 8px 16px !important;
+    letter-spacing: 0.06em !important;
+    line-height: 1.3 !important;
+  }
+
+  #fms-progress {
+    width: 100vw !important;
+    left: 0 !important;
+    bottom: 30px !important;
+    box-sizing: border-box !important;
+    padding: 12px 20px 14px !important;
+  }
+
+  #fms-bar-track {
+    width: clamp(80px, 25vw, 160px) !important;
+    height: 3px !important;
+  }
+
+  #fms-bar-label {
+    font-size: 14px !important;
+  }
+
+  #sweet-screen,
+  #wild-screen {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-evenly !important;
+    padding-top: 72px !important;
+    padding-bottom: 52px !important;
+    box-sizing: border-box !important;
+    gap: 0 !important;
+  }
+
+  #sweet-bottle-wrap,
+  #wild-bottle-wrap {
+    height: clamp(160px, 38dvh, 320px) !important;
+    width: clamp(80px, 18vw, 120px) !important;
+    flex-shrink: 0 !important;
+  }
+
+  #sweet-level-label,
+  #wild-level-label {
+    font-size: 10px !important;
+  }
+
+  #sweet-confirm,
+  #wild-confirm {
+    padding: 12px 28px !important;
+    font-size: 11px !important;
+    flex-shrink: 0 !important;
+  }
+
+  #fms-bottle-canvas,
+  canvas[style*="bottom:48px"] {
+    width: 90px !important;
+    height: 120px !important;
+    bottom: 50px !important;
+    left: 10px !important;
+  }
+
+  #fms-share-btn {
+    right: 12px !important;
+    bottom: 14px !important;
+    padding: 9px 14px !important;
+    font-size: 10px !important;
+  }
+
+  #emo-slot {
+    position: relative !important;
+    height: 70px !important;
+    overflow: hidden !important;
+  }
+
+  .emo-word {
+    height: 70px !important;
+    line-height: 70px !important;
+    font-size: clamp(28px, 8vw, 48px) !important;
+  }
+
+  .ans {
+    font-size: clamp(10px, 2.8vw, 13px) !important;
+    letter-spacing: 0.08em !important;
+    padding: 6px !important;
+  }
+
+  #fms-card-preview {
+    width: min(92vw, 400px) !important;
+  }
+
+  #fms-share-actions {
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
+  .fms-action-btn {
+    padding: 10px 12px !important;
+    font-size: 10px !important;
+  }
+
+  [id*="gen-card"],
+  [class*="gen-card"] {
+    width: 100% !important;
+    min-height: 80px !important;
+  }
+
+  [id$="-layout"] img,
+  [id$="-screen"] img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  #generation-layout,
+  [id*="generation"][id*="layout"],
+  [id*="generation"][id*="screen"] {
+    width: 100vw !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding-top: 72px !important;
+    padding-bottom: 60px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  #generation-question,
+  [id*="generation"][id*="ques"],
+  [id*="generation"][id*="question"] {
+    font-size: clamp(16px, 5vw, 26px) !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    padding: 0 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+    order: -1 !important;
+  }
+
+  [id*="gen-z"],
+  [id*="gen-x"],
+  [id*="boomer"],
+  [id*="millennial"],
+  [id*="gen-card"],
+  [class*="gen-card"],
+  [class*="generation-card"] {
+    width: calc(100vw - 32px) !important;
+    max-width: 500px !important;
+    margin: 6px 16px !important;
+    min-height: 80px !important;
+    box-sizing: border-box !important;
+  }
+
+  #daytday-layout {
+    width: 100vw !important;
+    height: 100dvh !important;
+    padding-top: 72px !important;
+    padding-bottom: 52px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  #daytday-question {
+    font-size: clamp(16px, 5vw, 26px) !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    flex-shrink: 0 !important;
+  }
+
+  .daytday-option {
+    font-size: clamp(12px, 3.8vw, 18px) !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    line-height: 1.3 !important;
+    padding: 8px 0 !important;
+    width: 100% !important;
+  }
+
+  #emo-hint,
+  [id*="emo"][id*="hint"],
+  [class*="emo-hint"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 13px !important;
+    text-align: center !important;
+    letter-spacing: 0.12em !important;
+    margin-top: 12px !important;
+    color: rgba(255,255,255,0.7) !important;
+  }
+
+  #emo-slot::after {
+    content: "↑  SCROLL  ↓" !important;
+    display: block !important;
+    position: absolute !important;
+    bottom: -28px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 11px !important;
+    letter-spacing: 0.18em !important;
+    color: rgba(255,255,255,0.55) !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+  }
+
+  #emo-screen,
+  [id*="emo-layout"] {
+    width: 100vw !important;
+    height: 100dvh !important;
+    padding-top: 72px !important;
+    padding-bottom: 52px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  #emo-prefix {
+    font-size: clamp(15px, 4.5vw, 26px) !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    padding: 0 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #env-child-layout,
+  [id*="env"][id*="child"][id*="layout"],
+  [id*="env-child"] {
+    width: 100vw !important;
+    height: 100dvh !important;
+    padding-top: 72px !important;
+    padding-bottom: 52px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  #cluster {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    grid-template-columns: unset !important;
+    padding: 16px 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #cluster-image,
+  [id*="cluster"][id*="img"],
+  [id*="env-child"][id*="img"] {
+    width: min(220px, 60vw) !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto 8px !important;
+  }
+
+  .ans {
+    font-size: clamp(11px, 3.2vw, 14px) !important;
+    letter-spacing: 0.08em !important;
+    padding: 10px 16px !important;
+    text-align: center !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    line-height: 1.3 !important;
+  }
+
+  #env-child-question,
+  [id*="env-child"][id*="ques"] {
+    font-size: clamp(15px, 4.5vw, 24px) !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    padding: 0 8px 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .staywell-option,
+  .daytday-option,
+  [class$="-option"] {
+    font-size: 12px !important;
+    padding: 6px 12px !important;
+  }
+
+  #fms-bottle-canvas,
+  canvas[style*="bottom:48px"] {
+    display: none !important;
+  }
+
+  #fms-share-actions {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+}
+
+</style>
+
+
+<style>
+#legal-bar {
+  position: fixed;
+  bottom: 0 !important;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 6px 24px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+#legal-bar a {
+  color: rgba(255,255,255,0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+#legal-bar a:hover {
+  color: rgba(255,255,255,0.85);
+}
+
+#legal-bar .legal-divider {
+  color: rgba(255,255,255,0.2);
+  font-size: 8px;
+}
+
+@media (max-width: 768px) {
+  #legal-bar {
+    gap: 8px;
+    padding: 5px 16px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 400px) {
+  #legal-bar {
+    font-size: 8px;
+    gap: 6px;
+    padding: 4px 10px;
+  }
+}
+
+  .legal-short { display: none; }
+
+@media (max-width: 768px) {
+  .legal-full { display: none; }
+  .legal-short { display: inline; }
+}
+</style>
+
+
+<div id="legal-bar">
+<a href="/privacy-policy">
+  <span class="legal-full">Politique de confidentialité (Privacy Policy)</span>
+  <span class="legal-short">Privacy</span>
+</a>
+  <span class="legal-divider">·</span>
+<a href="/mentions-legales">
+  <span class="legal-full">Mentions légales (Legal Notice)</span>
+  <span class="legal-short">Legal</span>
+</a>
+  <span class="legal-divider">·</span>
+<a href="https://www.instagram.com/findmysmell" target="_blank" rel="noopener">Instagram</a>
+  <span class="legal-divider">·</span>
+  <a href="mailto:contact@findmysmell.com">Contact</a>
+  <span class="legal-divider">·</span>
+  <span style="color:rgba(255,255,255,0.25);">© 2026 Find My Smell</span>
+</div>
+
+
+<script>
+(function() {
+  const trigger = document.getElementById('lang-trigger');
+  const dropdown = document.getElementById('lang-dropdown');
+
+  if (!trigger || !dropdown) return;
+
+  // Toggle dropdown on click
+  trigger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isOpen = dropdown.style.display === 'block';
+    dropdown.style.display = isOpen ? 'none' : 'block';
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', function() {
+    dropdown.style.display = 'none';
+  });
+
+  // Update trigger label when language selected
+  dropdown.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      const lang = this.getAttribute('data-lang');
+      if (lang) {
+        localStorage.setItem('fms_lang', lang);
+        trigger.textContent = lang.toUpperCase() + ' ▾';
+        dropdown.style.display = 'none';
+      }
+    });
+  });
+
+  // Set label on page load from saved language
+  const saved = localStorage.getItem('fms_lang');
+  if (saved) trigger.textContent = saved.toUpperCase() + ' ▾';
+
+})();
+</script>
+
+<script>
+  const QUESTION_ORDER = [
+  { id: "Q_GENDER", order: 100 },
+  { id: "Q_REGION_NOW", order: 110 },
+  { id: "Q_GENERATION", order: 120 },
+  { id: "Q_DAYTDAY", order: 200 },
+  { id: "Q_STAYWELL", order: 210 },
+  { id: "Q_ATMOS", order: 300 },
+  { id: "Q_YOURSELF", order: 310 },
+  { id: "Q_EMO", order: 400 },
+  { id: "Q_CALM", order: 410 },
+  { id: "Q_ENERGY", order: 420 },
+  { id: "Q_COZY", order: 430 },
+  { id: "Q_MYST", order: 440 },
+  { id: "Q_SEXY", order: 450 },
+  { id: "Q_FOCUS", order: 460 },
+  { id: "Q_PLAY", order: 470 },
+  { id: "Q_ENV_CHILD", order: 500 },
+  { id: "Q_REGION_CHILD", order: 510 },
+  { id: "Q_CELEBRATE", order: 520 },
+  { id: "Q_CALM_NOW", order: 530 },
+  { id: "Q_SWEET", order: 600 },
+  { id: "Q_WILD", order: 610 },
+  { id: "Q_SKIN_BEHAVIOR", order: 620 },
+  { id: "Q_RADIUS", order: 630 },
+  { id: "Q_OPEN", order: 700 },
+  { id: "RESULT", order: 800 }
+];
+function getNextQuestionId(currentQuestionId) {
+  const current = QUESTION_ORDER.find(q => q.id === currentQuestionId);
+  if (!current) return null;
+
+  const sorted = [...QUESTION_ORDER].sort((a, b) => a.order - b.order);
+  const index = sorted.findIndex(q => q.id === currentQuestionId);
+
+  if (index === -1 || index === sorted.length - 1) {
+    return "END";
+  }
+
+  return sorted[index + 1].id;
+}
+function questionIdToUrl(questionId) {
+  const path = window.location.pathname;
+  const prefix = path.startsWith('/fr/') ? '/fr' : path.startsWith('/ru/') ? '/ru' : '';
+  return prefix + "/" + questionId
+    .toLowerCase()
+    .replace(/_/g, "-");
+}
+document.addEventListener("click", function (e) {
+  const btn = e.target.closest("[data-answer-key]");
+if (!btn) return;
+
+  const answerKey = btn.getAttribute("data-answer-key");
+  const questionEl = document.querySelector("[data-question-id]");
+  const questionId = questionEl?.getAttribute("data-question-id");
+  if (!questionId) return;
+
+    // save answer
+  const raw = sessionStorage.getItem("quiz_answers");
+  const answers = raw ? JSON.parse(raw) : {};
+  answers[questionId] = answerKey;
+sessionStorage.setItem("quiz_answers", JSON.stringify(answers));
+localStorage.setItem("quiz_answers", JSON.stringify(answers));
+
+  // BRANCH override for emotion hub
+if (questionId === "Q_EMO") {
+  const emoMap = {
+    "Q_EMO__CALM": "Q_CALM",
+    "Q_EMO__ENERGY": "Q_ENERGY",
+    "Q_EMO__COZY": "Q_COZY",
+    "Q_EMO__MYST": "Q_MYST",
+    "Q_EMO__SEXY": "Q_SEXY",
+    "Q_EMO__FOCUS": "Q_FOCUS",
+    "Q_EMO__PLAY": "Q_PLAY"
+  };
+
+  const branchId = emoMap[answerKey];
+  if (branchId) {
+    window.location.href = questionIdToUrl(branchId);
+    return;
+  }
+}
+
+  // MERGE after emotion detail pages (always go to next normal block)
+const EMO_DETAIL = new Set(["Q_CALM","Q_ENERGY","Q_COZY","Q_MYST","Q_SEXY","Q_FOCUS","Q_PLAY"]);
+if (EMO_DETAIL.has(questionId)) {
+  window.location.href = questionIdToUrl("Q_ENV_CHILD");
+  return;
+}
+
+
+  // find next question
+  const nextQuestionId = getNextQuestionId(questionId);
+
+  if (nextQuestionId === "END") {
+  window.location.href = questionIdToUrl("RESULT");
+  return;
+}
+
+  const nextUrl = questionIdToUrl(nextQuestionId);
+  window.location.href = nextUrl;
+});
+
+</script>
+
+
+<!-- COOKIE CONSENT BANNER FOR WEBFLOW -->
+<!--
+INSTALLATION INSTRUCTIONS:
+1. Go to your Webflow project settings
+2. Navigate to Custom Code > Footer Code
+3. Paste this entire code block
+4. Publish your site
+
+This code creates a GDPR-compliant cookie consent banner that:
+- Appears on first visit
+- Stores user preference in localStorage
+- Blocks analytics/affiliate cookies until consent is given
+- Styled to match luxury aesthetic
+-->
+
+<style>
+/* Cookie Banner Styles */
+#cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 24px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    display: none;
+    animation: slideUp 0.4s ease-out;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.cookie-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.cookie-banner-text {
+    flex: 1;
+}
+
+.cookie-banner-text h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+}
+
+.cookie-banner-text p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #666;
+}
+
+.cookie-banner-text a {
+    color: #000;
+    text-decoration: underline;
+}
+
+.cookie-banner-buttons {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.cookie-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.cookie-btn-accept {
+    background: #000;
+    color: #fff;
+}
+
+.cookie-btn-accept:hover {
+    background: #333;
+}
+
+.cookie-btn-decline {
+    background: transparent;
+    color: #000;
+    border: 1px solid #000;
+}
+
+.cookie-btn-decline:hover {
+    background: #f5f5f5;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .cookie-banner-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .cookie-banner-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .cookie-btn {
+        width: 100%;
+    }
+}
+</style>
+
+<div id="cookie-banner">
+    <div class="cookie-banner-content">
+        <div class="cookie-banner-text">
+            <h3>🍪 We use cookies</h3>
+            <p>
+                We use cookies to personalize your experience, analyze site traffic, and enable affiliate tracking for product recommendations.
+                By clicking "Accept", you consent to our use of cookies.
+                <a href="/privacy-policy" target="_blank">Learn more in our Privacy Policy</a>.
+            </p>
+        </div>
+        <div class="cookie-banner-buttons">
+            <button class="cookie-btn cookie-btn-decline" onclick="handleCookieConsent(false)">
+                Decline
+            </button>
+            <button class="cookie-btn cookie-btn-accept" onclick="handleCookieConsent(true)">
+                Accept All Cookies
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Cookie Consent Management
+(function() {
+    // Check if user has already made a choice
+    const cookieConsent = localStorage.getItem('cookieConsent');
+
+    if (cookieConsent === null) {
+        // Show banner if no consent recorded
+        document.getElementById('cookie-banner').style.display = 'block';
+    } else if (cookieConsent === 'accepted') {
+        // Load analytics and affiliate tracking if accepted
+        loadTrackingScripts();
+    }
+})();
+
+function handleCookieConsent(accepted) {
+    // Store user's choice
+    localStorage.setItem('cookieConsent', accepted ? 'accepted' : 'declined');
+
+    // Hide banner
+    const banner = document.getElementById('cookie-banner');
+    banner.style.animation = 'slideUp 0.4s ease-out reverse';
+    setTimeout(() => {
+        banner.style.display = 'none';
+    }, 400);
+
+    // Load tracking if accepted
+    if (accepted) {
+        loadTrackingScripts();
+    }
+}
+
+function loadTrackingScripts() {
+    // Google Analytics (replace GA_MEASUREMENT_ID with your actual ID)
+    /*
+    (function() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID';
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    })();
+    */
+
+    // Affiliate tracking scripts will work automatically once cookies are accepted
+    // Awin, CJ, and other affiliate networks use cookies by default
+
+    console.log('Tracking scripts loaded - user accepted cookies');
+}
+
+// Optional: Function to revoke consent (can be called from a "Cookie Settings" link)
+function revokeCookieConsent() {
+    localStorage.removeItem('cookieConsent');
+    location.reload();
+}
+</script>
+
+<style>
+#fms-progress {
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 20px 12px;
+  pointer-events: none;
+  /* subtle fade-in */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+#fms-progress.visible { opacity: 1; }
+
+#fms-bar-track {
+  width: clamp(120px, 28vw, 260px);
+  height: 1px;
+  background: rgba(180, 160, 120, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+#fms-bar-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  background: rgba(180, 160, 120, 0.6);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+}
+#fms-bar-label {
+  font-family: 'Inconsolata', monospace;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  color: rgba(180, 160, 120, 0.55);
+  white-space: nowrap;
+  text-transform: uppercase;
+  min-width: 80px;
+}
+
+/* Adapt colours per page background */
+body[data-pg-light] #fms-bar-track  { background: rgba(60, 45, 20, 0.12); }
+body[data-pg-light] #fms-bar-fill   { background: rgba(60, 45, 20, 0.35); }
+body[data-pg-light] #fms-bar-label  { color: rgba(60, 45, 20, 0.45); }
+</style>
+
+<script>
+(function () {
+
+  /* ── QUESTION ORDER — matches your QUESTION_ORDER array ── */
+  const QUESTIONS = [
+    { id: 'Q_GENDER',       url: '/q-gender',       step: 1  },
+    { id: 'Q_REGION_NOW',   url: '/q-region-now',   step: 2  },
+    { id: 'Q_GENERATION',   url: '/q-generation',   step: 3  },
+    { id: 'Q_DAYTDAY',      url: '/q-daytday',      step: 4  },
+    { id: 'Q_STAYWELL',     url: '/q-staywell',     step: 5  },
+    { id: 'Q_ATMOS',        url: '/q-atmos',        step: 6  },
+    { id: 'Q_YOURSELF',     url: '/q-yourself',     step: 7  },
+    { id: 'Q_EMO',          url: '/q-emo',          step: 8  },
+    /* emotion sub-questions all count as step 9 */
+    { id: 'Q_CALM',         url: '/q-calm',         step: 9  },
+    { id: 'Q_ENERGY',       url: '/q-energy',       step: 9  },
+    { id: 'Q_COZY',         url: '/q-cozy',         step: 9  },
+    { id: 'Q_MYST',         url: '/q-myst',         step: 9  },
+    { id: 'Q_SEXY',         url: '/q-sexy',         step: 9  },
+    { id: 'Q_FOCUS',        url: '/q-focus',        step: 9  },
+    { id: 'Q_PLAY',         url: '/q-play',         step: 9  },
+    { id: 'Q_ENV_CHILD',    url: '/q-env-child',    step: 10 },
+    { id: 'Q_REGION_CHILD', url: '/q-region-child', step: 11 },
+    { id: 'Q_CELEBRATE',    url: '/q-celebrate',    step: 12 },
+    { id: 'Q_CALM_NOW',     url: '/q-calm-now',     step: 13 },
+    { id: 'Q_SWEET',        url: '/q-sweet',        step: 14 },
+    { id: 'Q_WILD',         url: '/q-wild',         step: 15 },
+    { id: 'Q_SKIN_BEHAVIOR',url: '/q-skin-behavior',step: 16 },
+    { id: 'Q_RADIUS',       url: '/q-radius',       step: 17 },
+    { id: 'Q_OPEN',         url: '/q-open',         step: 17 }, /* same as last */
+  ];
+
+  const TOTAL = 17;
+
+  /* ── FIND CURRENT STEP FROM URL ── */
+  function getCurrentStep() {
+    const path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    const match = QUESTIONS.find(q => path === q.url || path.endsWith(q.url));
+    return match ? match.step : null;
+  }
+
+  /* ── BUILD BAR ── */
+  function init() {
+    const step = getCurrentStep();
+    if (step === null) return; /* not a quiz page — don't show */
+
+    const pct = Math.round((step / TOTAL) * 100);
+
+    const bar = document.createElement('div');
+    bar.id = 'fms-progress';
+
+    bar.innerHTML = `
+      <div id="fms-bar-label">${pct}% complete</div>
+      <div id="fms-bar-track">
+        <div id="fms-bar-fill"></div>
+      </div>
+    `;
+
+    document.body.appendChild(bar);
+
+    /* Animate in after a short delay so page has settled */
+    requestAnimationFrame(() => {
+      bar.classList.add('visible');
+      setTimeout(() => {
+        document.getElementById('fms-bar-fill').style.width = pct + '%';
+      }, 120);
+    });
+
+    /* Auto-detect light backgrounds and switch colour scheme */
+    const bg = getComputedStyle(document.body).backgroundColor;
+    const rgb = bg.match(/\d+/g);
+    if (rgb) {
+      const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+      if (brightness > 140) document.body.setAttribute('data-pg-light', '');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
