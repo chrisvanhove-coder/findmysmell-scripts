@@ -29,10 +29,13 @@ console.log(`прочитано файлов: ${files.length}`);
 console.log(`уникальных позиций: ${byId.size} из ${total} по счётчику Webflow`);
 if (byId.size !== total) console.log('⚠ покрытие неполное — нужен ещё срез');
 
-const items = [...byId.values()].map((it) => {
+const items = [...byId.values()].map((it, order) => {
   const f = it.fieldData;
   return {
     id: it.id,
+    // Позиция в выдаче Webflow. При равном расстоянии старый движок
+    // опирался на порядок коллекции, поэтому его нужно сохранить.
+    order,
     name: f.name,
     // В Webflow поле slug переименовано в "Brand" и хранит марку.
     house: f.slug ?? '',
