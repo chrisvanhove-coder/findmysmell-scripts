@@ -1,0 +1,1478 @@
+{
+  "Q_GENDER__FEMININE": {
+    "CEO": 1,
+    "HUG": 2,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 2,
+    "OUTOFTIME": 1,
+    "THERAPIST": 2
+  },
+  "Q_GENDER__UNISEX": {
+    "CEO": 2,
+    "HUG": 2,
+    "OFFGRID": 2,
+    "JAPAN": 2,
+    "SUMMER": 2,
+    "OUTOFTIME": 2,
+    "THERAPIST": 3
+  },
+  "Q_GENDER__MASCULINE": {
+    "CEO": 2,
+    "HUG": 1,
+    "OFFGRID": 2,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 2,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__EUROPE_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__NORTH_AM_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__SOUTH_AM_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__MID_EAST_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__SOUTH_AS_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__EAST_AS_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__SE_ASIA_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__AFRIC_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__AUS_OC_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__MIXED_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_NOW__PREF_NOT_NOW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_GENERATION__GEN_Z": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_GENERATION__MILLEN": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_GENERATION__GEN_X": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_GENERATION__BOOMER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_GENERATION__PREF_NOT": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_DAYTDAY__FLOW": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_DAYTDAY__PLANDAY": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_DAYTDAY__INTERACT": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 3
+  },
+  "Q_DAYTDAY__CHANGDAY": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_DAYTDAY__NOTKNOWN": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 3,
+    "JAPAN": 0,
+    "SUMMER": 3,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_DAYTDAY__ACTIVED": {
+    "CEO": 3,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_DAYTDAY__CONSIST": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 3,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_STAYWELL__KNOWNEX": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_STAYWELL__FLEXIB": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_STAYWELL__NOCHANG": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_STAYWELL__SUPPEAPLE": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 3
+  },
+  "Q_STAYWELL__GROUND": {
+    "CEO": 0,
+    "HUG": 2,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_STAYWELL__MENTCLR": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 3,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_STAYWELL__STIMULT": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_ATMOS__WINTER": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_ATMOS__FOGGY": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 3,
+    "THERAPIST": 2
+  },
+  "Q_ATMOS__VILLAGE": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ATMOS__PARKRAIN": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ATMOS__SOUTHFR": {
+    "CEO": 2,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 3,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_ATMOS__TROPICS": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_ATMOS__SEA_AIR": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 3,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ATMOS__MOUNT_AIR": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 3,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_ATMOS__NO_PREFER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_YOURSELF__NATURE": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 3,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_YOURSELF__NEARWATER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 3,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_YOURSELF__INDOOR": {
+    "CEO": 0,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_YOURSELF__CITYURBAN": {
+    "CEO": 3,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_YOURSELF__TRANSITION": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 2,
+    "THERAPIST": 1
+  },
+  "Q_YOURSELF__MIXED": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_EMO__CALM": {
+    "CEO": 0,
+    "HUG": 2,
+    "OFFGRID": 2,
+    "JAPAN": 3,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_EMO__ENERGY": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 3,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_EMO__COZY": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_EMO__MYST": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 3,
+    "THERAPIST": 2
+  },
+  "Q_EMO__FOCUS": {
+    "CEO": 3,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_EMO__SEXY": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 3,
+    "THERAPIST": 1
+  },
+  "Q_EMO__PLAY": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 3,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_CALM__TEA_HERBS": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_CALM__LINENS": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_CALM__COOL_AIR": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_CALM__FIREPLAC": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_CALM__HOT_SHOW": {
+    "CEO": 0,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_CALM__MILK_SOFT": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_CALM__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ENERGY__CITRUS": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_ENERGY__COLD_SHOW": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_ENERGY__COFFEE": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ENERGY__MUSIC": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_ENERGY__HERBS": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 2,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_ENERGY__HOT_SPICE": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 1
+  },
+  "Q_ENERGY__SUN_HEAT": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_ENERGY__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_COZY__WARM_SKIN": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_COZY__BAKING": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_COZY__FIREPLAC": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_COZY__BLANKET": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_COZY__BUBBLE": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_COZY__HOT_CHOC": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_COZY__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_MYST__SMOKE": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_MYST__OLD_BOOK": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 3
+  },
+  "Q_MYST__ANTIQU": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 1
+  },
+  "Q_MYST__OLD_PLACES": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_MYST__STARS": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_MYST__MYST_SPICE": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_MYST__UNFAMIL": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_MYST__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SEXY__ESPRESSO": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SEXY__JAZZ": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 2
+  },
+  "Q_SEXY__SMOK_SEX": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_SEXY__LEATH_SEX": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_SEXY__SALT_SEX": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_SEXY__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_FOCUS__CLEAN_AIR": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_FOCUS__LIBRARY": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_FOCUS__TEA": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_FOCUS__ICE_WATER": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_FOCUS__COFFEE": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_FOCUS__LEMON_PEEL": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_FOCUS__NO_SMELL": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_FOCUS__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_PLAY__BUBBLE": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_PLAY__ADVENT": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_PLAY__BRIGHT_CITR": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_PLAY__FRUIT": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_PLAY__GREEN_FRESH": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_PLAY__FLIRT": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_PLAY__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ENV_CHILD__CITY": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ENV_CHILD__SMALL_TOWN": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ENV_CHILD__SEA": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ENV_CHILD__FOREST_MOUNT": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_ENV_CHILD__MIXED": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__EUROPE": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__NORTH_AMER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__SOUTH_AMER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__MIDDL_EAST": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__SOUTH_ASIA": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__EAST_ASIA": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__SE_ASIA": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__AFRICA": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__AUS_OCEAN": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__MIXED": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_REGION_CHILD__PREF_NOT": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_CELEBRATE__SWEET": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_CELEBRATE__DINING_OUT": {
+    "CEO": 2,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_CELEBRATE__FRSH_FRUIT": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_CELEBRATE__SPICES": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 2
+  },
+  "Q_CELEBRATE__SAVORY": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 2,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_CELEBRATE__FLOWERS": {
+    "CEO": 1,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 2,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_CELEBRATE__INCENSE": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 2,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 3,
+    "THERAPIST": 1
+  },
+  "Q_CELEBRATE__LEMONAD": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_CELEBRATE__PERFUME": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 1
+  },
+  "Q_CELEBRATE__TROPICS": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_CELEBRATE__NIGHT": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_CELEBRATE__FUZZY": {
+    "CEO": 0,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_CELEBRATE__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_CALM_NOW__CLEAN": {
+    "CEO": 1,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_CALM_NOW__TEA": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 2
+  },
+  "Q_CALM_NOW__FLOWER": {
+    "CEO": 0,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_CALM_NOW__RAIN": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 2,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 3,
+    "THERAPIST": 0
+  },
+  "Q_CALM_NOW__WOOD": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 3
+  },
+  "Q_CALM_NOW__SWEET_COMF": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_CALM_NOW__FIRE": {
+    "CEO": 0,
+    "HUG": 1,
+    "OFFGRID": 3,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 1,
+    "THERAPIST": 2
+  },
+  "Q_CALM_NOW__SEA_COMF": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 1,
+    "THERAPIST": 0
+  },
+  "Q_CALM_NOW__COFFEE_COMF": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 1
+  },
+  "Q_CALM_NOW__FRESH_COMF": {
+    "CEO": 1,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 2,
+    "SUMMER": 0,
+    "OUTOFTIME": 0,
+    "THERAPIST": 0
+  },
+  "Q_CALM_NOW__OTHER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SWEET__NO_SWEET": {
+    "CEO": 3,
+    "HUG": 0,
+    "OFFGRID": 0,
+    "JAPAN": 3,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_SWEET__LITTLE_SW": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 2,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SWEET__MODER_SW": {
+    "CEO": 0,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_SWEET__ENJOY_SW": {
+    "CEO": 0,
+    "HUG": 3,
+    "OFFGRID": 0,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_WILD__NO_WILD": {
+    "CEO": 2,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 2,
+    "SUMMER": 2,
+    "OUTOFTIME": 0,
+    "THERAPIST": 1
+  },
+  "Q_WILD__LITTLE_WILD": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 0,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 0,
+    "THERAPIST": 2
+  },
+  "Q_WILD__SOME_WILD": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 1,
+    "OUTOFTIME": 3,
+    "THERAPIST": 2
+  },
+  "Q_WILD__LOVE_WILD": {
+    "CEO": 0,
+    "HUG": 0,
+    "OFFGRID": 3,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 0
+  },
+  "Q_SKIN_BEHAVIOR__DISAPEAR": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SKIN_BEHAVIOR__NORMAL": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SKIN_BEHAVIOR__SWEETER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SKIN_BEHAVIOR__SHARPER": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_SKIN_BEHAVIOR__NOT_SURE": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_RADIUS__CLOSE": {
+    "CEO": 1,
+    "HUG": 2,
+    "OFFGRID": 0,
+    "JAPAN": 3,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 3
+  },
+  "Q_RADIUS__SOFT": {
+    "CEO": 1,
+    "HUG": 3,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 2,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_RADIUS__NOTICEABLE": {
+    "CEO": 2,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 0,
+    "SUMMER": 2,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  },
+  "Q_RADIUS__BOLD": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 2,
+    "JAPAN": 0,
+    "SUMMER": 0,
+    "OUTOFTIME": 2,
+    "THERAPIST": 3
+  },
+  "Q_OPEN__OPEN": {
+    "CEO": 1,
+    "HUG": 1,
+    "OFFGRID": 1,
+    "JAPAN": 1,
+    "SUMMER": 1,
+    "OUTOFTIME": 1,
+    "THERAPIST": 1
+  }
+}

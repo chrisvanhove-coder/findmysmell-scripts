@@ -1,0 +1,522 @@
+{
+  "CEO": {
+    "you": "You are",
+    "identity": "politely unreachable.",
+    "descriptor": "The one who left the party without saying goodbye.",
+    "desc": [
+      "You have a Notion template for your personality. Your calendar is not a calendar. It's an argument you're winning against time.",
+      "You've left at least three group chats this year - not out of drama, just efficiency. Your idea of relaxing is solving something. You're not a control freak. You just notice when things could be running better, which is always, which is the problem.",
+      "You give feedback disguised as questions. You've described a vacation as “a good opportunity to reset.” You don't multitask. You single-task at a speed that looks like multitasking. You're not cold. You're just already three decisions ahead and slightly bored of where everyone else is.",
+      "Your scent is the same: clean, sharp, no small talk. That's what a decision smells like."
+    ],
+    "main": {
+      "name": "Concrete",
+      "house": "Comme des Garçons",
+      "desc": "The decision itself. Sharp, confident, walks with high chin.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776354725/1_mpedvv.png",
+      "link": "https://noseparis.com/en/concrete"
+    },
+    "alts": [
+      {
+        "name": "Legend",
+        "house": "Montblanc",
+        "desc": "Doesn't surprise you. Doesn't need to. Shows up, delivers, leaves.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bbc57bc50bbad5b648f1_Find%20My%20Smell.png",
+        "link": "https://www.montblanc-bordeaux.fr/products/legend-eau-de-toilette-100-ml"
+      },
+      {
+        "name": "Escentric 05",
+        "house": "Escentric Molecules",
+        "desc": "Fresh and focused like your new business venture.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bc2082301bdff10b4568_2.png",
+        "link": "https://www.escentric.com/en-eu/products/escentric-05-refill-30ml"
+      },
+      {
+        "name": "Musky Oakmoss",
+        "house": "Dossier",
+        "desc": "Not there yet, but knows exactly what they want and is going for it.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69e0bc2b6da9778283cf250b_4.png",
+        "link": "https://dossier.eu/fr/products/musky-oakmoss"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Juniper",
+        "desc": "The countryside air outside at 6am when nobody else is there.",
+        "detail": "Piney, dry, slightly resinous with a bitterness underneath. Closer to the smell of a forest at altitude than a Christmas tree. There's something medicinal about it without being antiseptic. People smell juniper in \"Light Blue\" by D&G, in \"Gypsy Water\" by Byredo or in \"Guilty\" by Gucci.\nIn perfumery juniper is used to add sharpness and open-air clarity to a fragrance. Its molecules evaporate quickly, making it a top note — something that registers immediately and then recedes. It's the ingredient that makes a fragrance feel like cold air on a ski resort. Often paired with cedar, pepper, vetiver or aquatics.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885115/juniper_piiquy.jpg"
+      },
+      {
+        "name": "Black Pepper",
+        "desc": "Hot like a bathtub, short-lasting like a tropical rain.",
+        "detail": "Dry, hot, and slightly woody that feels like a spice in food, awakening and sharp. There's a brightness to it that citrus doesn't have, and a dryness that keeps it from ever feeling too soft.\nIn perfumery it's used as an opener — the first thing you smell before a fragrance settles. Often paired with leather, rose, cedar, or vetiver.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885163/black_pepper_duelif.png"
+      },
+      {
+        "name": "Cardamom",
+        "desc": "Spiced but precise. Not warm like cinnamon, more like a very good espresso.",
+        "detail": "Green, slightly sweet, and sharply aromatic. It sits between spice and freshness in a way nothing else does.\nIn perfumery cardamom is used to add sharpness without aggression. Often paired with leather, ginger, woods, or citrus.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885181/hf_20260428_134942_a25afcf7-fbd8-4089-94f2-9c1302266430_ncmbhn.png"
+      },
+      {
+        "name": "Birch",
+        "desc": "The smell of cold air just before a storm arrives.",
+        "detail": "Woody, slightly smoky and sweet, with a dry almost mineral edge.\nIn perfumery birch is used to add a cold, structural quality. Often paired with cedar, raspberry, pepper, or leather.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885146/hf_20260428_134820_0b287d99-4482-4ad5-b5ca-fa10db72af93_zillk4.png"
+      },
+      {
+        "name": "Cedar",
+        "desc": "A freshly sharpened pencil. Clean and slightly dry.",
+        "detail": "Dry, warm, and faintly dusty. In perfumery cedar is one of the most widely used root notes. The backbone of most masculine fragrance structures.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885200/hf_20260428_134734_dec13d8e-7f23-4471-9120-820ceb4926b0_xnruu5.png"
+      }
+    ]
+  },
+  "JAPAN": {
+    "you": "You are",
+    "identity": "Insistently Calm",
+    "descriptor": "You don’t need to explain yourself.",
+    "desc": [
+      "You've learned that most urgency is invented and most noise is optional.",
+      "You have removed things from your life without announcing it, explaining it, or needing anyone to understand it.",
+      "You don't need to be the most interesting person in the room. You're content being the one who noticed what was actually happening in it. People describe you as calming without knowing why. It's because you're not performing anything. The silence doesn't make you uncomfortable.",
+      "Your scent is the same: clean, minimal, and says nothing unnecessary."
+    ],
+    "main": {
+      "name": "Dirty Hinoki",
+      "house": "Heretic Parfum",
+      "desc": "Not for everyone. For the ones who know what wabi-sabi means without googling it.",
+      "img": "https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69e88e6c2d41e3859e44d7c7_hinoki-dirty.png",
+      "link": "https://hereticparfum.com/products/dirty-hinoki?variant=39270055346240"
+    },
+    "alts": [
+      {
+        "name": "Tokyo",
+        "house": "Gallivant",
+        "desc": "Every note in its place. Nothing added. Nothing missing.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd2c2e7afa045bcf95a91_31.png",
+        "link": "https://50-ml.fr/gallivant-tokyo-eau-de-parfum"
+      },
+      {
+        "name": "Shiso",
+        "house": "Roger & Gallet",
+        "desc": "Clean like rain on stone. Quiet like a choice already made.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd2604905ef7597e42770_28.png",
+        "link": "https://fr.roger-gallet.com/p/RG1013011WW/rg1013011ww-shiso-eau-parfumee-bienfaisante-heritage-100-ml"
+      },
+      {
+        "name": "New Zealand",
+        "house": "Demeter",
+        "desc": "Far enough from everything to finally hear yourself.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd20ab5bab41035b380b7_27.png",
+        "link": "https://demeterfragrance.com/products/new-zealand-cologne-spray"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Green Tea",
+        "desc": "The smell of water just before it boils. Green, slightly bitter.",
+        "detail": "It is not sweet. In perfumery green tea adds a clean, slightly cool quality. Present but not loud.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885226/gree-tea_w4toim.jpg"
+      },
+      {
+        "name": "Hinoki",
+        "desc": "Warm water on cold hands.",
+        "detail": "Woody, slightly citrusy, and clean in a way that feels ancient. In perfumery it adds a warm, clean woodiness.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885236/Hinoki_kwtliy.jpg"
+      },
+      {
+        "name": "Iris",
+        "desc": "The beginning of something great.",
+        "detail": "Powdery, slightly earthy, with a cool almost metallic edge. One of the most expensive ingredients to produce.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885261/iris_zuvmbv.jpg"
+      },
+      {
+        "name": "Elderflower",
+        "desc": "A feeling of a good evening ahead.",
+        "detail": "Delicate, slightly watery. The ingredient that makes a fragrance feel effortless.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885270/hf_20260428_134353_f762a115-cdd0-4303-b66c-0079aef4b627_v56tww.png"
+      },
+      {
+        "name": "Rice",
+        "desc": "The smell of something simple done perfectly.",
+        "detail": "Soft, powdery, and faintly sweet. In perfumery rice creates intimacy rather than presence.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885277/hf_20260428_140116_d0ea1402-bbc7-478b-929c-a066835069d8_gd3pzg.png"
+      }
+    ]
+  },
+  "HUG": {
+    "you": "You are",
+    "identity": "someone's favourite person.",
+    "descriptor": "The reason people stay longer than they planned.",
+    "desc": [
+      "You have heard more confessions than a priest and you were just trying to eat your lunch.",
+      "People find you and stay. Not because you're entertaining — because you make them feel like they're not too much. You listen in a way that most people don't.",
+      "You remember the small things. The name of someone's dog. The thing they mentioned once six months ago. You bring it up and they look at you like you performed a magic trick, but it wasn't a trick, you just actually listened.",
+      "You're warm without performing warmth. Calm without pretending. You make people feel like things are going to be okay. Most people spend their whole lives trying to make others feel that way. You do it without trying. Without noticing. Probably while also making tea.",
+      "People don't remember what you said. They remember how they felt after.",
+      "Your scent stays close, as warmth of the skin."
+    ],
+    "main": {
+      "name": "Eau Duelle",
+      "house": "Diptyque",
+      "desc": "It smells like being welcomed.",
+      "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc44fb8f35b9c43790fd0_hug-eau.png",
+      "link": "https://www.diptyqueparis.com/fr_fr/p/eau-de-toilette-eau-duelle-100ml.html"
+    },
+    "alts": [
+      {
+        "name": "You",
+        "house": "Glossier",
+        "desc": "Smells like someone who remembered how you take your coffee.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcee14281bf63f688fe03_17.png",
+        "link": "https://www.glossier.com/fr-fr/products/glossier-you-doux"
+      },
+      {
+        "name": "Baby Powder",
+        "house": "Demeter",
+        "desc": "Unfamiliar at first. Then suddenly the only thing that feels right.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcf8906d7f036ca2c3e1c_16.png",
+        "link": "https://demeterfragrance.com/products/baby-powder-cologne-spray"
+      },
+      {
+        "name": "By the Fireplace",
+        "house": "Maison Margiela",
+        "desc": "Nowhere to be. No one to perform for. Just this.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcfb56f2a237bf857889b_18.png",
+        "link": "https://www.my-origines.com/fr/by-the-fireplace-59L14132.html"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Benzoin",
+        "desc": "The smell of warmth without being sweet. A slight reminder of vanilla.",
+        "detail": "Warm, slightly vanilla-like, with a soothing balsamic edge. In perfumery benzoin is used as a fixative.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885417/benzoin_dijcu9.jpg"
+      },
+      {
+        "name": "Tonka Bean",
+        "desc": "Skin that's been in the sun and enjoyed it.",
+        "detail": "Sweet, slightly powdery, with a faint almond edge. In perfumery tonka bean adds a soft, warm sweetness.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885364/hf_20260428_140101_28111ef5-544f-458d-856b-7a5b238273fb_oooaya.png"
+      },
+      {
+        "name": "Beeswax",
+        "desc": "A candle that just went out. Warm and sweet like honey.",
+        "detail": "Honeyed, slightly powdery. In perfumery beeswax adds a soft, intimate warmth that stays very close to skin.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885380/hf_20260428_133547_88206f10-7510-47af-bccc-e2b0789a30ce_h02bmw.png"
+      },
+      {
+        "name": "Myrrh",
+        "desc": "Something ancient that still feels modern.",
+        "detail": "Warm, slightly bitter, with a spicy depth. A true base note: slow to appear, slow to leave.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885410/hf_20260428_133745_7ca73248-3b95-44df-94d4-95b230a54217_gslxyb.png"
+      },
+      {
+        "name": "Cocoa",
+        "desc": "Not chocolate. The raw powder. Warm, slightly bitter, deeply comforting.",
+        "detail": "Nutty, dusty, and faintly bitter. The ingredient that makes a fragrance feel like a hot comfort drink.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885403/hf_20260428_141332_1965b4a9-86e6-4d46-9f6b-f96d6dcb17d9_jxmaot.png"
+      }
+    ]
+  },
+  "OFFGRID": {
+    "you": "You are",
+    "identity": "secretly planning to disappear.",
+    "descriptor": "Nature is your reset button.",
+    "desc": [
+      "You need space. Sometimes you think: “I wish I lived in the middle of nowhere.” And you mean it.",
+      "You feel better after two hours outside. A long walk with no destination. A place with no signal. A morning that starts before anyone else is awake and belongs completely to you.",
+      "You're not antisocial. You just have a very honest relationship with what actually restores you. You're not running from anything. You're running toward the version of your life where less is more.",
+      "You are tougher than you look and softer than you let on. Both are true. Neither is the whole story.",
+      "Your scent is earth, cold air, smoke, and something blooming through bark."
+    ],
+    "main": {
+      "name": "Coven",
+      "house": "Andrea Maack",
+      "desc": "Smells like being outside long enough to forget time.",
+      "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc4c4c9baefd1bb0ebf81_offgrid-coven.png",
+      "link": "https://www.niche-beauty.com/fr-fr/produits/andrea-maack-coven/844-023"
+    },
+    "alts": [
+      {
+        "name": "Baikal Leather Intense",
+        "house": "Nicolaï",
+        "desc": "Cold enough to feel alive. Remote enough to feel free.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcd7227b99461cba4c136_11.png",
+        "link": "https://nicolaiparis.com/en/products/baikal-leather-intense-1"
+      },
+      {
+        "name": "From the Garden",
+        "house": "Maison Margiela",
+        "desc": "Dirt under the nails. Sun on the neck. Nowhere else to be.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbcd4772c26d08b99d8316_10.png",
+        "link": "https://www.my-origines.com/fr/from-the-garden-59L23139.html"
+      },
+      {
+        "name": "Sandflowers",
+        "house": "Montale",
+        "desc": "Wind, salt, nothing on the calendar. Finally.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbce1eb318deb4d73590e9_8.png",
+        "link": "https://montaleparfums.com/en/marine/70-376-sandflowers-argent.html"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Black Walnut",
+        "desc": "Dark, slightly bitter, and completely unique.",
+        "detail": "Rich, earthy. In perfumery black walnut adds a dark, grounding earthiness.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885496/hf_20260428_133100_047c96e8-8c61-45c4-a73c-65eb468d5730_bm12s4.png"
+      },
+      {
+        "name": "Sage",
+        "desc": "Dry, slightly peppery like the meditation itself.",
+        "detail": "There's a smokiness that makes it wilder than most herbs. In perfumery sage adds sharp, herbal clarity.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885503/sage_hame6q.jpg"
+      },
+      {
+        "name": "Opoponax",
+        "desc": "A fire that went out an hour ago but the wood is still warm.",
+        "detail": "Sweet, warm spicy, and faintly smoky. In perfumery opoponax is a base note and fixative.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885531/Opoponax1_qnzzdh.png"
+      },
+      {
+        "name": "Pine",
+        "desc": "Forest. Cold air. Hike.",
+        "detail": "Sharp, resinous, and clean. Gives fragrances a sense of open space and altitude.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885536/hf_20260428_132627_ea358af3-7764-49ee-b5e3-4015e19ad4fe_cl3jch.png"
+      },
+      {
+        "name": "Vetiver",
+        "desc": "Roots pulled from dark earth. Something honest about it.",
+        "detail": "Smells like the earth itself. One of the most important base notes in existence.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885580/hf_20260428_140455_e4acec14-5d2c-4118-a1a6-c4e5dda006a0_eowwiz.png"
+      }
+    ]
+  },
+  "OUTOFTIME": {
+    "you": "You are",
+    "identity": "chronically elsewhere.",
+    "descriptor": "Present in body. Somewhere completely different in your head.",
+    "desc": [
+      "You have a favourite kind of fog.",
+      "You romanticise rain. You've described your ideal Friday night as “honestly, just staying in.”",
+      "You're not antisocial. You're selective. You're more comfortable in almost-dark than in bright.",
+      "You're atmospheric. You don't follow trends. You follow moods.",
+      "People call you mysterious mostly because you don't explain yourself, and you find that explanation unnecessary.",
+      "People find you interesting in a way they can't explain. That's because you're not trying to be interesting. You're just somewhere else.",
+      "Your scent is mineral, dark and hidden. Smoke, shadow and something you can't quite name."
+    ],
+    "main": {
+      "name": "Gris Clair",
+      "house": "Serge Lutens",
+      "desc": "Smells like a thought you've been having for years.",
+      "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc609137dcd257a6dd5ae_outoftime-gris.png",
+      "link": "https://sergelutens.fr/products/gris-clair-eau-de-parfum-spray"
+    },
+    "alts": [
+      {
+        "name": "Aromatics Elixir",
+        "house": "Clinique",
+        "desc": "From an era when excess was a philosophy.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd0a99c6d03bf461752c9_23.png",
+        "link": "https://www.clinique.fr/product/aromatics-elixir-eau-de-parfum-spray?size=45_ml"
+      },
+      {
+        "name": "Encre Noire",
+        "house": "Lalique",
+        "desc": "Dark, deliberate, and completely unbothered.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd0609c6d03bf461738ee_22.png",
+        "link": "https://www.notino.fr/lalique/encre-noire-for-men-eau-de-toilette-pour-homme/p-62724/"
+      },
+      {
+        "name": "Grey Flannel",
+        "house": "Geoffrey Beene",
+        "desc": "Smells like staying in when everyone else went out.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd01c7659885dec161fb2_21.png",
+        "link": "https://www.my-origines.com/fr/grey-flannel-09118624.html"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Violet",
+        "desc": "Dusty, powdery and soft like a touch.",
+        "detail": "Chalky, slightly sweet. One of the few florals that introverts rather than projects.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885635/violet1_tirxvl.png"
+      },
+      {
+        "name": "Incense",
+        "desc": "Smoke from something ceremonial.",
+        "detail": "Dry, smoky, slightly sweet. Adds a meditative depth that few ingredients can replicate.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885644/hf_20260428_132415_f8646aa3-8b2f-4452-986a-0c9744ed4252_jjekcd.png"
+      },
+      {
+        "name": "Orris Root",
+        "desc": "Powdery and vintage. Like the gala dinner in a fancy place.",
+        "detail": "One of the most expensive and labor-intensive ingredients in existence.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885651/hf_20260428_132444_7a44eefa-413e-4ff4-9a35-9b1c13d09f1d_fu1eem.png"
+      },
+      {
+        "name": "Wet Stone",
+        "desc": "Mineral and cold but somehow calming.",
+        "detail": "Clean and slightly metallic. Adds a fresh cool quality that few natural ingredients can achieve.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885655/wet-stone1_dz7ohe.png"
+      },
+      {
+        "name": "Black Currant",
+        "desc": "Dark, slightly dangerous, and nothing like the juice.",
+        "detail": "The raw bud smells nothing like the fruit. Adds a dark, slightly raw edge.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885658/hf_20260428_131925_dd783dbb-36c7-474e-9a4a-3328f6d7df2a_rymcb7.png"
+      }
+    ]
+  },
+  "SUMMER": {
+    "you": "You are",
+    "identity": "pathologically chill.",
+    "descriptor": "Every good holiday has one of you.",
+    "desc": [
+      "You've planned a trip for a group of people who couldn't agree on anything and somehow made everyone happy.",
+      "You move easily between plans and people. You keep things light without losing the thread. You are not naive about how things work — you're optimistic, which is different.",
+      "You bring the energy up without turning the volume up. You make complicated situations feel simpler just by being in them.",
+      "You don't need drama to feel alive. You have momentum, which lasts longer and causes fewer problems. People feel better after spending time with you and can't always say why.",
+      "Your scent is a warm stone on the beach, warm air, and the feeling that today is going to work out."
+    ],
+    "main": {
+      "name": "Solo Vulcan",
+      "house": "Loewe",
+      "desc": "Smells like momentum. The kind that doesn't need a plan.",
+      "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc743841913865b2a9338_summer-solo.png",
+      "link": "https://www.perfumesloewe.com/int/en_FR/men/loewe-solo/loewe-solo-vulcan-edp-100ml-LW80620.html"
+    },
+    "alts": [
+      {
+        "name": "Avgoustos",
+        "house": "Parfums de Marly",
+        "desc": "Heat, salt, time slowing down on purpose.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd48441e84e3b0ceb7289_34.png",
+        "link": "https://www.korres.fr/products/eau-de-toilette-avgoustos"
+      },
+      {
+        "name": "Bois de Yuzu",
+        "house": "Karl Lagerfeld",
+        "desc": "The night is young and so is the conversation.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd43a7659885dec179a63_33.png",
+        "link": "https://www.notino.fr/karl-lagerfeld/bois-de-yuzu-eau-de-toilette-pour-homme/p-15791163/"
+      },
+      {
+        "name": "Un Jardin sur le Nil",
+        "house": "Hermès",
+        "desc": "Moves like you do. Light, unhurried, and somehow everywhere at once.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd4b7d360f752977ab6c9_35.png",
+        "link": "https://www.hermes.com/fr/fr/product/un-jardin-sur-le-nil-eau-de-toilette-V26993/"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Tiare",
+        "desc": "A white flower in warm wind. Slightly sweet and fresh.",
+        "detail": "Creamy, soft. One of the few florals that feels genuinely warm.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885741/tiare1_xmotv4.png"
+      },
+      {
+        "name": "Sea Salt",
+        "desc": "Your skin an hour after swimming. Mineral and light.",
+        "detail": "Clean, slightly bitter. Adds a clean, sparkly feeling that is open and uncontained.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885744/sea-salt1_iwtvlx.png"
+      },
+      {
+        "name": "Carrot Seed",
+        "desc": "Warm, dry, and nothing like the vegetable.",
+        "detail": "Earthy, slightly spicy. Adds the warmth of a stone in the sun all afternoon.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885747/hf_20260428_131402_8546c5c2-655b-471f-b044-c0f7e4fdaa74_drbx9q.png"
+      },
+      {
+        "name": "Grass",
+        "desc": "The smell of summer.",
+        "detail": "Slightly sweet and immediately recognisable. On skin it becomes less lawn, more open air.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885751/hf_20260428_131409_f4c0d2a1-c968-49cc-900d-7fee2c9566c9_csz0mi.png"
+      },
+      {
+        "name": "Cucumber",
+        "desc": "Cool, watery, slightly green. The smell of something refreshing.",
+        "detail": "Clean, faintly sweet. The ingredient that makes a fragrance feel like relief.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885753/hf_20260428_131017_162611d5-70ae-4e8e-b89f-dcfda00ddbc7_kt2ucz.png"
+      }
+    ]
+  },
+  "THERAPIST": {
+    "you": "You are",
+    "identity": "dangerously empathetic.",
+    "descriptor": "You already know. You always do.",
+    "desc": [
+      "You know things about people that they haven't told you yet. Not because you pry — because you pay attention in a way most people don't.",
+      "You are warm, but precise. You know when someone needs to hear the hard thing and you know how to say it.",
+      "You have standards for everything — your space, your time, the conversations you're willing to have. Not because you're difficult. Because you know what works and you've stopped apologising for it.",
+      "People feel seen around you, which means they sometimes avoid you when they're not ready to be seen. You understand. You wait.",
+      "You're not for everyone. You've made your peace with that. Actually, you prefer it.",
+      "Your scent is warm, deep, and already decided. Something that doesn't need to explain itself."
+    ],
+    "main": {
+      "name": "Black Tea",
+      "house": "Jil Sander",
+      "desc": "Smells like the conversation you didn't want to end.",
+      "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbc802f2d99f701a1415fd_therapist-blacktea.png",
+      "link": "https://www.jilsander.com/fr-fr/jil-sander-black-tea-100-ml/J65YX0006JFR001998.html"
+    },
+    "alts": [
+      {
+        "name": "Geranio Imperiale",
+        "house": "Culti Milano",
+        "desc": "Sharp enough to notice everything. Composed enough not to mention most of it.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd3d5e80c9c7c162eedbe_44.png",
+        "link": "https://www.notino.fr/culti/geranio-imperiale-aquae-di-profumo-eau-de-toilette-mixte/"
+      },
+      {
+        "name": "1472 La Divina Commedia",
+        "house": "Histoires de Parfums",
+        "desc": "Knows exactly where it ends. That's what makes it safe.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd3679c6d03bf4618308b_41.png",
+        "link": "https://www.notino.fr/histoires-de-parfums/1472-eau-de-parfum-mixte/p-16349773/"
+      },
+      {
+        "name": "702",
+        "house": "Bon Parfumeur",
+        "desc": "Smells like someone who already thought of everything.",
+        "img": "https://cdn.prod.website-files.com/69a98cf53a8601ad66e703e9/69cbd3a1d34b8acd99b18bb2_42.png",
+        "link": "https://www.bonparfumeur.com/fr/products/702-incense-lavender-and-cashmere-wood"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Oud",
+        "desc": "A very enveloping smell. Dense and sticky.",
+        "detail": "Dark, woody, deeply complex. The smell is ancient, layered, impossible to forget.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885775/oud1_bi4wwt.png"
+      },
+      {
+        "name": "Sandalwood",
+        "desc": "Warm wood in late afternoon light. Creamy and liquid.",
+        "detail": "Soft, creamy, faintly sweet. In perfumery sandalwood supports, it doesn't compete.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885845/sandalwood_szlhj7.png"
+      },
+      {
+        "name": "Patchouli",
+        "desc": "The smell of roots - not dirt, but depth.",
+        "detail": "Earthy, dark, slightly sweet. Not the heavy 1970s version. Adds grounding earthiness.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885848/patchouli1_mz9hrh.png"
+      },
+      {
+        "name": "Black Tea",
+        "desc": "A cup that's been steeping just long enough. Warm, slightly bitter, attentive.",
+        "detail": "Dry, slightly wine-like, faintly smoky. Adds warm, slightly bitter sophistication.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885852/hf_20260428_130858_f0573332-8837-41bd-b9d6-b45adb7c73f3_mohca3.png"
+      },
+      {
+        "name": "Beetroot",
+        "desc": "Dark, slightly sweet, and completely unexpected on skin.",
+        "detail": "Earthy, faintly sweet. Closer to damp earth and iron than anything edible.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885864/hf_20260428_130445_076b2947-292d-4493-9637-1eeb7a7199a5_nkqpoi.png"
+      }
+    ]
+  }
+}
