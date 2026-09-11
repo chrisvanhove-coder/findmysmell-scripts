@@ -1,6 +1,7 @@
 import catalog from '@/data/perfumes.json';
 import type { ArchetypeKey } from './archetype-colors';
 import type { Answers } from './scoring';
+import { EMOTION_BIAS, type AxisBias } from './emotion-bias';
 
 /**
  * Подбор парфюма по трём осям. Перенесён из getUserSRP + loadCMSPerfumes
@@ -84,6 +85,34 @@ export function preferencesFrom(answers: Answers): Preferences | null {
   return { sweet, raw, projection };
 }
 
+/**
+ * Смещение по эмоции, которую человек выбрал. Берётся ответ на Q_EMO и
+ * уточняющий ответ внутри ветки; если есть оба, они усредняются.
+ * Нужен только для разрешения ничьей — на само расстояние не влияет.
+ */
+export function emotionBiasFrom(answers: Answers): AxisBias | null {
+  const found: AxisBias[] = [];
+  for (const code of Object.values(answers)) {
+    const b = EMOTION_BIAS[code];
+    if (b) found.push(b);
+  }
+  if (!found.length) return null;
+  return {
+    sweet: found.reduce((t, b) => t + b.sweet, 0) / found.length,
+    raw: found.reduce((t, b) => t + b.raw, 0) / found.length,
+    projection: found.reduce((t, b) => t + b.projection, 0) / found.length,
+  };
+}
+
+/** Насколько оси парфюма совпадают с направлением эмоции. Больше — ближе. */
+function affinity(p: Perfume, bias: AxisBias): number {
+  return (
+    bias.sweet * (p.sweet ?? 0) +
+    bias.raw * (p.raw ?? 0) +
+    bias.projection * (p.projection ?? 0)
+  );
+}
+
 /** Манхэттенское расстояние между парфюмом и предпочтениями. */
 export function distance(p: Perfume, prefs: Preferences): number {
   return (
@@ -103,7 +132,11 @@ export interface Match {
  * Если осей у коллекции нет или пользователь не дошёл до этих вопросов,
  * работает запасная ветка по флагу isMain — как в старом коде.
  */
-export function match(archetype: ArchetypeKey, prefs: Preferences | null): Match | null {
+export function match(
+  archetype: ArchetypeKey,
+  prefs: Preferences | null,
+  bias: AxisBias | null = null,
+): Match | null {
   const pool = PERFUMES.filter((p) => p.archetype === archetype);
   if (!pool.length) return null;
 
@@ -112,8 +145,14 @@ export function match(archetype: ArchetypeKey, prefs: Preferences | null): Match
   if (scored.length && prefs) {
     const ranked = [...scored].sort((a, b) => {
       const d = distance(a, prefs) - distance(b, prefs);
-      // При равном расстоянии — порядок коллекции, как в старом движке.
-      return d !== 0 ? d : a.order - b.order;
+      if (d !== 0) return d;
+      // Расстояния равны — решает эмоция, которую человек искал.
+      // Без ответа про эмоцию остаётся порядок коллекции, как в старом движке.
+      if (bias) {
+        const t = affinity(b, bias) - affinity(a, bias);
+        if (Math.abs(t) > 1e-9) return t;
+      }
+      return a.order - b.order;
     });
     return { main: ranked[0], alternatives: ranked.slice(1, 4) };
   }

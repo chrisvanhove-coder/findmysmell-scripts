@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
 import { ARCHETYPE_KEYS, type ArchetypeKey } from '@/lib/archetype-colors';
 import { getArchetype } from '@/lib/content';
-import { match, type Preferences } from '@/lib/matching';
+import { match, emotionBiasFrom, type Preferences } from '@/lib/matching';
 import styles from './result.module.css';
 
 interface RouteParams {
@@ -62,7 +62,10 @@ export default async function ResultPage({
   if (!parsed) notFound();
 
   const a = getArchetype(parsed.locale, parsed.key);
-  const picked = match(parsed.key, previewPreferences(await searchParams));
+  const sp = await searchParams;
+  const emo = typeof sp.emo === 'string' ? sp.emo.toUpperCase() : null;
+  const bias = emo ? emotionBiasFrom({ Q_EMO: `Q_EMO__${emo}` }) : null;
+  const picked = match(parsed.key, previewPreferences(sp), bias);
   if (!picked) notFound();
   const { main, alternatives } = picked;
   const [pullQuote, ...rest] = a.desc;
