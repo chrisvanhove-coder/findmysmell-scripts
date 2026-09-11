@@ -1,0 +1,215 @@
+/* Первый проход по странице результата на новых токенах.
+   Пропорции и типографика взяты из продового CSS, но зоны названы по смыслу,
+   а не по номерам, и вёрстка собрана на grid/gap вместо !important-оверрайдов. */
+
+.page { display: flex; flex-direction: column; }
+
+.hero {
+  background: var(--fms-brand);
+  color: #fff;
+  padding: clamp(64px, 12vh, 140px) clamp(24px, 8vw, 120px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.you {
+  font-family: var(--fms-display);
+  font-size: clamp(16px, 3.5vw, 34px);
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.identity {
+  font-family: var(--fms-display);
+  font-size: clamp(34px, 8vw, 104px);
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.descriptor {
+  font-family: var(--fms-mono), monospace;
+  font-size: clamp(11px, 1.4vw, 14px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-top: 8px;
+}
+
+.personality {
+  background: var(--fms-paper);
+  color: var(--fms-ink);
+  padding: clamp(56px, 10vh, 112px) clamp(24px, 8vw, 120px);
+}
+
+.prose {
+  max-width: 62ch;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.para {
+  font-family: var(--fms-serif);
+  font-size: clamp(17px, 2.2vw, 24px);
+  line-height: 1.75;
+  opacity: 0.82;
+  margin: 0;
+}
+
+.closer { font-style: italic; opacity: 0.55; text-align: center; }
+
+.label {
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.ingredients {
+  background: var(--fms-paper);
+  color: var(--fms-ink);
+  padding: 0 clamp(24px, 8vw, 120px) clamp(56px, 10vh, 112px);
+}
+
+.ingredientList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: clamp(24px, 3vw, 44px);
+  margin-top: 28px;
+  border-top: 1px solid currentColor;
+  padding-top: 36px;
+}
+
+.ingredient { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+
+.ingredientImg {
+  width: clamp(64px, 9vw, 120px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(20%);
+}
+
+.ingredientName {
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ingredientDesc {
+  font-family: var(--fms-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  font-style: italic;
+  opacity: 0.65;
+  margin: 0;
+}
+
+.match {
+  background: var(--fms-stage);
+  color: var(--fms-stage-ink);
+  padding: clamp(56px, 10vh, 112px) clamp(24px, 8vw, 120px);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.bottle {
+  width: clamp(200px, 26vw, 320px);
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
+}
+
+.matchName {
+  font-family: var(--fms-display);
+  font-size: clamp(28px, 4.5vw, 60px);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.house {
+  font-family: var(--fms-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.matchDesc {
+  font-family: var(--fms-serif);
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.7;
+  font-style: italic;
+  opacity: 0.7;
+  max-width: 48ch;
+  margin: 0;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 18px 48px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.cta:hover { opacity: 0.7; }
+
+.alts {
+  background: var(--fms-paper);
+  color: var(--fms-ink);
+  padding: clamp(56px, 10vh, 112px) clamp(24px, 8vw, 120px);
+}
+
+.altGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: clamp(28px, 4vw, 56px);
+  margin-top: 32px;
+}
+
+.alt { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+
+.altImg { width: 70%; aspect-ratio: 2 / 3; object-fit: contain; }
+
+.altName {
+  font-family: var(--fms-display);
+  font-size: clamp(15px, 1.6vw, 20px);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.altHouse {
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+.altDesc {
+  font-family: var(--fms-serif);
+  font-size: 14px;
+  line-height: 1.6;
+  font-style: italic;
+  opacity: 0.6;
+  margin: 0;
+}

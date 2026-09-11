@@ -1,0 +1,62 @@
+/* СГЕНЕРИРОВАНО tools/build-tokens.mjs — не править руками.
+   Источник: webflow/page-result-head.css.html (прод на 2026-09-11). */
+
+:root {
+  --fms-ink: #1a1a1a;
+}
+
+[data-archetype='CEO'] {
+  --fms-brand: #a43f35;
+  --fms-paper: #e6e5dd;
+  --fms-stage: #1a1a1a;
+  --fms-stage-ink: #e6e5dd;
+  --fms-share-ink: #fff;
+}
+
+[data-archetype='JAPAN'] {
+  --fms-brand: #607f90;
+  --fms-paper: #cac88f;
+  --fms-stage: #1a1a1a;
+  --fms-stage-ink: #cac88f;
+  --fms-share-ink: #fff;
+}
+
+[data-archetype='HUG'] {
+  --fms-brand: #7e3d30;
+  --fms-paper: #fdf0e8;
+  --fms-stage: #1a1a1a;
+  --fms-stage-ink: #f0c8a8;
+  --fms-share-ink: #fdf0e8;
+}
+
+[data-archetype='OFFGRID'] {
+  --fms-brand: #3c5d45;
+  --fms-paper: #e8f0e0;
+  --fms-stage: #1a1a1a;
+  --fms-stage-ink: #e8f0e0;
+  --fms-share-ink: #e8f0e0;
+}
+
+[data-archetype='OUTOFTIME'] {
+  --fms-brand: #303437;
+  --fms-paper: #f5eefa;
+  --fms-stage: #604c65;
+  --fms-stage-ink: #f5eefa;
+  --fms-share-ink: #f5eefa;
+}
+
+[data-archetype='SUMMER'] {
+  --fms-brand: #c8a04a;
+  --fms-paper: #f6f6e9;
+  --fms-stage: #1a1a1a;
+  --fms-stage-ink: #f1e09b;
+  --fms-share-ink: #fff;
+}
+
+[data-archetype='THERAPIST'] {
+  --fms-brand: #074d82;
+  --fms-paper: #f0f0e0;
+  --fms-stage: #8f9a54;
+  --fms-stage-ink: #f0f0e0;
+  --fms-share-ink: #f0f0e0;
+}

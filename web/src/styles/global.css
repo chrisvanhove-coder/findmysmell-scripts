@@ -1,0 +1,21 @@
+/* Базовые стили. Палитра архетипа приходит из archetypes.css через
+   data-archetype на контейнере, поэтому здесь только нейтральная основа. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #111;
+  color: var(--fms-ink, #1a1a1a);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; }
+
+/* HIGHCRUISER — кастомный шрифт, загруженный в Webflow. Файла у нас пока нет,
+   поэтому здесь только фолбэк. Когда шрифт достанут, добавить @font-face. */
+:root {
+  --fms-display: 'HIGHCRUISER', 'Arial Black', Arial, sans-serif;
+  --fms-serif: Georgia, 'Times New Roman', serif;
+}

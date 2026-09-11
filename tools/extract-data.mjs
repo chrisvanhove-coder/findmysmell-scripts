@@ -6,7 +6,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const out = join(root, 'data');
+const out = join(root, 'web/src/data');
 mkdirSync(out, { recursive: true });
 
 // Заглушка, которая молча проглатывает любые обращения к DOM.
