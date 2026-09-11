@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
 import { ARCHETYPE_KEYS, type ArchetypeKey } from '@/lib/archetype-colors';
 import { getArchetype } from '@/lib/content';
-import { match, emotionBiasFrom, type Preferences } from '@/lib/matching';
+import { match } from '@/lib/matching';
+import ResultMatch from './ResultMatch';
 import styles from './result.module.css';
 
 interface RouteParams {
@@ -18,8 +19,9 @@ function parse(params: RouteParams): { locale: Locale; key: ArchetypeKey } | nul
   return { locale: params.locale, key };
 }
 
-// Каждый результат — отдельный адрес. Это даёт серверный рендер под шеринг
-// и предпросмотр любого архетипа без прохождения квиза.
+// Каждый результат — свой адрес, собранный заранее. Это то, что уходит
+// в мессенджер при шеринге; подбор под конкретного человека доводится
+// на клиенте, потому что его ответы есть только в его браузере.
 export function generateStaticParams() {
   return LOCALES.flatMap((locale) =>
     ARCHETYPE_KEYS.map((key) => ({ locale, archetype: key.toLowerCase() })),
@@ -40,34 +42,14 @@ export async function generateMetadata({
   };
 }
 
-/** Оси можно задать в адресе (?s=0&r=1&p=2), чтобы смотреть подбор без квиза. */
-function previewPreferences(sp: Record<string, string | string[] | undefined>): Preferences | null {
-  const axis = (v: string | string[] | undefined) => {
-    const n = Number(Array.isArray(v) ? v[0] : v);
-    return Number.isInteger(n) && n >= 0 && n <= 3 ? n : null;
-  };
-  const sweet = axis(sp.s), raw = axis(sp.r), projection = axis(sp.p);
-  if (sweet === null || raw === null || projection === null) return null;
-  return { sweet, raw, projection };
-}
-
-export default async function ResultPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<RouteParams>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
+export default async function ResultPage({ params }: { params: Promise<RouteParams> }) {
   const parsed = parse(await params);
   if (!parsed) notFound();
 
   const a = getArchetype(parsed.locale, parsed.key);
-  const sp = await searchParams;
-  const emo = typeof sp.emo === 'string' ? sp.emo.toUpperCase() : null;
-  const bias = emo ? emotionBiasFrom({ Q_EMO: `Q_EMO__${emo}` }) : null;
-  const picked = match(parsed.key, previewPreferences(sp), bias);
-  if (!picked) notFound();
-  const { main, alternatives } = picked;
+  const fallback = match(parsed.key, null);
+  if (!fallback) notFound();
+
   const [pullQuote, ...rest] = a.desc;
   const closer = rest.length > 1 ? rest[rest.length - 1] : null;
   const body = closer ? rest.slice(0, -1) : rest;
@@ -106,37 +88,15 @@ export default async function ResultPage({
         </div>
       </section>
 
-      <section className={styles.match}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.bottle} src={main.imageUrl} alt={main.name} />
-        <h2 className={styles.matchName}>{main.name}</h2>
-        <span className={styles.house}>{main.house}</span>
-        <p className={styles.matchDesc}>{main.description}</p>
-        <a className={styles.cta} href={main.shopUrl} target="_blank" rel="noopener noreferrer">
-          Discover
-        </a>
-      </section>
-
-      <section className={styles.alts}>
-        <span className={styles.label}>Also worth trying</span>
-        <div className={styles.altGrid}>
-          {alternatives.map((alt) => (
-            <a
-              key={alt.id}
-              className={styles.alt}
-              href={alt.shopUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className={styles.altImg} src={alt.imageUrl} alt={alt.name} />
-              <span className={styles.altName}>{alt.name}</span>
-              <span className={styles.altHouse}>{alt.house}</span>
-              <p className={styles.altDesc}>{alt.description}</p>
-            </a>
-          ))}
-        </div>
-      </section>
+      <ResultMatch
+        archetype={parsed.key}
+        fallback={fallback}
+        labels={{
+          main: 'Your scent',
+          alternatives: 'Also worth trying',
+          discover: 'Discover',
+        }}
+      />
     </main>
   );
 }
