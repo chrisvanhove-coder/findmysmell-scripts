@@ -1,0 +1,543 @@
+<!--
+  Webflow → страница RESULT FR (id 6a3ba04b3a9975cbe8e2b8c2) → Page Settings → Custom Code → <head>
+  Выгружено 2026-09-11 через Webflow MCP. Код приведён как есть.
+
+  Это СТАРОЕ поколение дизайна страницы результата, которое до сих пор
+  живёт на французской версии. Отличается от английского структурно:
+   — Zone 1 это hero с парящим флаконом (.fms-z1-identity), а не Scent DNA
+   — альтернативы выводятся списком (.fms-z4-list / .fms-z4-item),
+     а не сеткой карточек (.fms-z4-grid / .fms-z4-card)
+   — нет texture reveal, нет river diagram, нет винила
+
+  Цветовые токены архетипов (.result-ceo и далее) идентичны английской версии —
+  это единственная общая часть, и именно с неё имеет смысл начинать
+  дизайн-систему при переезде.
+
+  Футер FR-страницы совпадает с английским с точностью до имён скриптов
+  (result-shared-fr.js / result-fr6.js вместо result-shared15.js / result48.js).
+-->
+
+<!--
+     SECTION 1
+-->
+<style>
+[data-result] {
+  display: none !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow: visible !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+}
+
+[data-result][style*="flex"] {
+  display: flex !important;
+  height: auto !important;
+}
+
+/* ── Hide old Webflow panels ── */
+.div-block-16, .div-block-17,
+.div-block-18, .div-block-19,
+.div-block-20, .div-block-21,
+.div-block-22, .div-block-23,
+.div-block-24, .div-block-25,
+.div-block-26, .div-block-27,
+.div-block-28, .div-block-29 {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* ── Zone base ── */
+.fms-zone { width: 100%; }
+
+/* ── Force backgrounds on all zones ── */
+.fms-z1 { background-color: var(--z1-bg) !important; color: #fff !important; }
+.fms-z2 { background-color: var(--z2-bg) !important; color: var(--z2-color) !important; }
+.fms-z3 { background-color: var(--z3-bg) !important; color: var(--z3-color) !important; }
+.fms-z4 { background-color: var(--z4-bg) !important; color: var(--z4-color) !important; }
+.fms-z5 { background-color: var(--z5-bg) !important; color: var(--z5-color) !important; }
+
+/* ── ZONE 1: Hero ── */
+.fms-z1 {
+  min-height: 75dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 32px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.fms-z1-eyebrow {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.5;
+  position: absolute;
+  top: 80px;
+  left: 32px;
+}
+
+.fms-z1-bottle-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.fms-z1-bottle {
+  width: 140px;
+  height: 220px;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 40px rgba(0,0,0,0.35));
+  animation: fms-float 4s ease-in-out infinite;
+}
+
+@keyframes fms-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.fms-z1-text {
+  position: relative;
+  z-index: 2;
+}
+
+.fms-z1-you {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(16px, 4vw, 22px);
+  letter-spacing: 0.08em;
+  color: #fff;
+  opacity: 0.55;
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.fms-z1-identity {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(32px, 9vw, 56px);
+  letter-spacing: 0.02em;
+  color: #fff;
+  line-height: 1;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.fms-z1-descriptor {
+  font-family: 'Inconsolata', monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0.5;
+  display: block;
+}
+
+@keyframes fms-line-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes fms-arrow-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ── ZONE 2: Description ── */
+.fms-z2 {
+  padding: 56px 32px;
+  overflow: visible;
+  position: relative;
+}
+
+.fms-z2-eyebrow {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid currentColor;
+  opacity: 0.4;
+}
+
+.fms-z2-text {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(16px, 4vw, 20px);
+  line-height: 1.85;
+}
+
+.fms-z2-text p { margin-bottom: 20px; }
+.fms-z2-text p:last-child { margin-bottom: 0; }
+
+.fms-ingredients {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid currentColor;
+  opacity: 0.9;
+}
+.fms-ingredients-label {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  display: block;
+  margin-bottom: 28px;
+}
+.fms-ingredients-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.fms-ingredient-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.fms-ingredient-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  filter: grayscale(20%);
+}
+.fms-ingredient-body {}
+.fms-ingredient-name {
+  font-family: 'Inconsolata', monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+.fms-ingredient-desc {
+  font-family: Georgia, serif;
+  font-size: clamp(14px, 3.5vw, 16px);
+  line-height: 1.6;
+  opacity: 0.65;
+  font-style: italic;
+}
+@media (min-width: 768px) {
+  .fms-ingredients { margin-top: 56px; padding-top: 40px; }
+  .fms-ingredients-label { font-size: 13px; letter-spacing: 0.28em; margin-bottom: 36px; }
+  .fms-ingredient-img { width: 80px; height: 80px; }
+  .fms-ingredient-name { font-size: 13px; }
+  .fms-ingredient-desc { font-size: 17px; }
+  .fms-ingredients-list { gap: 32px; }
+}
+
+/* ── ZONE 3── */
+.fms-z3 {
+  padding: 0 0 40px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.fms-z3-label {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(40px, 9vw, 100px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  display: block;
+  color: var(--z1-bg);
+  width: 100%;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+  position: absolute;
+  bottom: -0.55em;
+  left: 0;
+  z-index: 10;
+  overflow: visible;
+}
+
+.fms-z3-bottle {
+  width: 260px;
+  height: 400px;
+  object-fit: contain;
+  margin: 0 auto 24px;
+  display: block;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+}
+
+.fms-z3-name {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(22px, 5vw, 32px);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.fms-z3-house {
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 16px;
+}
+
+.fms-z3-desc {
+  font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.7;
+  font-style: italic;
+  margin-bottom: 28px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.fms-z3-cta {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  text-align: center;
+  border: 1px solid currentColor;
+  color: inherit !important;
+  background: none !important;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.fms-z3-cta:hover { opacity: 0.7; }
+
+/* ── ZONE 4 ── */
+.fms-z4 { padding: 48px 32px; }
+
+.fms-z4-label {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.fms-z4-sublabel {
+  font-family: 'Inconsolata', monospace;
+  font-size: 12px; /* was 9px */
+  font-weight: 700; /* add this */
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6; /* was 0.35 */
+  display: block;
+  margin-bottom: 24px;
+}
+
+.fms-z4-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.fms-z4-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.fms-z4-item:last-child {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.fms-z4-img {
+  width: 44px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.fms-z4-info { flex: 1; }
+
+.fms-z4-name {
+  font-family: 'Inconsolata', monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  color: inherit !important;
+}
+
+.fms-z4-house {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  margin-bottom: 4px;
+}
+
+.fms-z4-tagline {
+  font-family: Georgia, serif;
+  font-size: 11px;
+  line-height: 1.5;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.fms-z4-discover {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border: 1px solid currentColor;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.fms-z4-discover:hover { opacity: 0.6; }
+
+/* ── ZONE 5 ── */
+.fms-z5 {
+  padding: 32px 32px 48px;
+  text-align: center;
+}
+
+.fms-z5-label {
+  font-family: 'Inconsolata', monospace;
+  font-size: clamp(16px, 4vw, 32px);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 24px;
+  color: inherit !important;
+  line-height: 1;
+}
+
+.fms-z5-headline {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(20px, 5vw, 28px);
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+  line-height: 1.2;
+  color: inherit !important;
+}
+
+.fms-z5-preview {
+  width: min(340px, 88vw);
+  aspect-ratio: 1;
+  margin: 0 auto 28px;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.fms-z5-canvas { width: 100%; height: 100%; display: block; }
+.fms-z5-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.fms-z5-btn {
+  font-family: 'Inconsolata', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 14px 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.fms-z5-btn:hover {
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.4);
+}
+
+/* ── Archetype color ── */
+.result-ceo    { --z1-bg:#a43f35; --z2-bg:#e6e5dd; --z2-color:#1a1a1a; --z3-bg:#1a1a1a; --z3-color:#e6e5dd; --z4-bg:#e6e5dd; --z4-color:#1a1a1a; --z5-bg:#a43f35; --z5-color:#fff; }
+.result-japan  { --z1-bg:#607f90; --z2-bg:#cac88f; --z2-color:#1a1a1a; --z3-bg:#1a1a1a; --z3-color:#cac88f; --z4-bg:#cac88f; --z4-color:#1a1a1a; --z5-bg:#607f90; --z5-color:#fff; }
+.result-hug    { --z1-bg:#7e3d30; --z2-bg:#fdf0e8; --z2-color:#1a1a1a; --z3-bg:#1a1a1a; --z3-color:#f0c8a8; --z4-bg:#fdf0e8; --z4-color:#1a1a1a; --z5-bg:#7e3d30; --z5-color:#fdf0e8; }
+.result-offgrid { --z1-bg:#3c5d45; --z2-bg:#e8f0e0; --z2-color:#1a1a1a; --z3-bg:#1a1a1a; --z3-color:#e8f0e0; --z4-bg:#e8f0e0; --z4-color:#1a1a1a; --z5-bg:#3c5d45; --z5-color:#e8f0e0; }
+.result-outoftime { --z1-bg:#303437; --z2-bg:#f5eefa; --z2-color:#1a1a1a; --z3-bg:#604c65; --z3-color:#f5eefa; --z4-bg:#f5eefa; --z4-color:#1a1a1a; --z5-bg:#303437; --z5-color:#f5eefa; }
+.result-summer { --z1-bg:#c8a04a; --z2-bg:#f6f6e9; --z2-color:#1a1a1a; --z3-bg:#1a1a1a; --z3-color:#f1e09b; --z4-bg:#f6f6e9; --z4-color:#1a1a1a; --z5-bg:#c8a04a; --z5-color:#fff; }
+.result-therapist { --z1-bg:#074d82; --z2-bg:#f0f0e0; --z2-color:#1a1a1a; --z3-bg:#8f9a54; --z3-color:#f0f0e0; --z4-bg:#f0f0e0; --z4-color:#1a1a1a; --z5-bg:#074d82; --z5-color:#f0f0e0; }
+
+/* ── DESKTOP ONLY ── */
+@media (min-width: 768px) {
+
+  /* Zone 1 */
+  .fms-z1 { padding: 0 10vw 10vh; }
+  .fms-z1-eyebrow { left: 10vw; top: 56px; font-size: 13px; letter-spacing: 0.3em; opacity: 0.65; }
+  .fms-z1-you { font-size: clamp(28px, 3.5vw, 44px); opacity: 0.65; }
+  .fms-z1-identity { font-size: clamp(64px, 8vw, 120px); }
+  .fms-z1-descriptor { font-size: 15px; letter-spacing: 0.2em; opacity: 0.65; }
+  .fms-z1-bottle { width: 200px; height: 320px; }
+
+  /* Zone 2 */
+.fms-z2 { padding: 100px 10vw; overflow: visible; }
+  .fms-z2-eyebrow { font-size: 14px; letter-spacing: 0.3em; opacity: 0.55; margin-bottom: 36px; }
+  .fms-z2-text { font-size: clamp(22px, 2.2vw, 30px); max-width: 780px; }
+.fms-ingredients-list {flex-direction: row; gap: 40px; align-items: flex-start;
+}
+.fms-ingredient-item { flex-direction: column; align-items: center; text-align: center; flex: 1;
+}
+.fms-ingredient-img {  width: 120px; height: 120px;  margin-bottom: 16px;
+}
+  /* Zone 3 */
+.fms-z3 { padding: 0 0 60px; }
+.fms-z3-label { font-size: clamp(64px, 11vw, 200px); bottom: -0.55em; }
+  .fms-z3-bottle { width: 320px; height: 480px; }
+  .fms-z3-name { font-size: clamp(40px, 4.5vw, 60px); }
+  .fms-z3-house { font-size: 14px; letter-spacing: 0.2em; opacity: 0.6; }
+  .fms-z3-desc { font-size: 18px; max-width: 520px; }
+  .fms-z3-cta { max-width: 520px; margin: 0 auto; font-size: 13px; letter-spacing: 0.25em; padding: 20px; }
+
+  /* Zone 4 */
+  .fms-z4 { padding: 100px 10vw; }
+  .fms-z4-label { font-size: 14px; letter-spacing: 0.3em; opacity: 0.55; margin-bottom: 8px; }
+  .fms-z4-sublabel { font-size: 14px; opacity: 0.65; margin-bottom: 32px; }
+  .fms-z4-list { max-width: 780px; }
+  .fms-z4-item { padding: 24px 0; gap: 24px; }
+  .fms-z4-img { width: 60px; height: 88px; }
+  .fms-z4-name { font-size: 16px; }
+  .fms-z4-house { font-size: 12px; }
+  .fms-z4-tagline { font-size: 14px; }
+  .fms-z4-discover { font-size: 12px; padding: 12px 20px; }
+
+  /* Zone 5 */
+  .fms-z5 { padding: 60px 10vw 80px; }
+.fms-z5-label { font-size: clamp(20px, 2.5vw, 36px); margin-bottom: 32px; }
+  .fms-z5-headline { font-size: clamp(32px, 4vw, 52px); margin-bottom: 36px; }
+.fms-z5-preview { width: 480px; }
+  .fms-z5-btns { max-width: 520px; margin: 0 auto; gap: 10px; }
+  .fms-z5-btn { font-size: 12px; letter-spacing: 0.18em; padding: 18px 12px; }
+}
+</style>

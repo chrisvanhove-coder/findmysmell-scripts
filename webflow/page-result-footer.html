@@ -1,0 +1,74 @@
+<!--
+  Webflow → страница RESULT (id 699812ef6054e1bf72e20920) → Page Settings → Custom Code → перед </body>
+  Выгружено 2026-09-11 через Webflow MCP. Код приведён как есть.
+
+  ВАЖНО: здесь видно, как репозиторий попадает в прод — через jsDelivr с ветки @main.
+  То есть любой push в main мгновенно уходит на живой сайт, без пиннинга версии.
+-->
+
+<!--
+  FIND MY SMELL — RESULT PAGE before </body> code (v4)
+  Paste into: Webflow Page Settings > Custom Code > Before </body> tag
+  v4: loads result46.js (spider), no more result43.js (spray)
+-->
+
+<script src="https://cdn.jsdelivr.net/gh/chrisvanhove-coder/findmysmell-scripts@main/result-shared15.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/chrisvanhove-coder/findmysmell-scripts@main/result48.js"></script>
+
+<script>
+/* Hide all result blocks immediately before paint */
+const hideStyle = document.createElement('style');
+hideStyle.textContent = '[data-result] { display: none !important; visibility: hidden !important; }';
+document.head.appendChild(hideStyle);
+</script>
+
+<script>
+(function () {
+  function showResult() {
+    const winner = sessionStorage.getItem('quiz_result') || localStorage.getItem('quiz_result');
+    if (!winner) {
+      document.body.innerHTML = `<div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111;gap:24px;font-family:'HIGHCRUISER','Arial Black',Arial;text-align:center;padding:40px;"><div style="font-size:clamp(18px,3vw,32px);color:#c8a882;letter-spacing:0.08em;line-height:1.4;">PLEASE COMPLETE<br>THE QUIZ FIRST</div><a href="https://www.findmysmell.com/q-gender" style="font-family:'Inconsolata',monospace;font-size:12px;letter-spacing:0.2em;color:rgba(200,168,130,0.6);border:1px solid rgba(200,168,130,0.25);padding:12px 32px;text-decoration:none;text-transform:uppercase;">START THE QUIZ →</a></div>`;
+      return;
+    }
+    const block = document.querySelector('[data-result="' + winner + '"]');
+    if (block) {
+      block.style.cssText = 'display:flex !important;visibility:visible !important;opacity:1 !important;';
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 150);
+    }
+    // Send to Sheets once per session
+    if (sessionStorage.getItem('quiz_sent') === '1') return;
+    sessionStorage.setItem('quiz_sent', '1');
+    const scores = JSON.parse(sessionStorage.getItem('quiz_scores') || localStorage.getItem('quiz_scores') || '{}');
+    const answers = sessionStorage.getItem('quiz_answers') || localStorage.getItem('quiz_answers') || '';
+    const open_answer = sessionStorage.getItem('quiz_open') || localStorage.getItem('quiz_open') || '';
+    const secondary = sessionStorage.getItem('quiz_secondary') || localStorage.getItem('quiz_secondary') || '';
+    const consent_aggregate = localStorage.getItem('consent_aggregate') === 'true';
+    const payload = {
+      page_url: window.location.href,
+      winner: winner,
+      secondary: secondary,
+      scores: JSON.stringify(scores),
+      answers: answers,
+      open_answer: open_answer,
+      consent_aggregate: consent_aggregate
+    };
+    fetch("https://script.google.com/macros/s/AKfycbxLaOnGVCv3P8ge0cKaP59ZdYUcgySLo7CUUhef4eltooQqg59W35MPzZ6CVtsnifA/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+      body: "payload=" + encodeURIComponent(JSON.stringify(payload))
+    })
+    .then(() => console.log("✅ Sent to sheet:", winner, "| open:", open_answer))
+    .catch(err => console.warn("❌ Send failed:", err));
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showResult);
+  } else {
+    showResult();
+  }
+})();
+</script>
+
+<style>
+#fms-grain { position: fixed; inset: 0; pointer-events: none; z-index: 9980; opacity: 0.06; mix-blend-mode: overlay; }
+</style>
+<canvas id="fms-grain"></canvas>
