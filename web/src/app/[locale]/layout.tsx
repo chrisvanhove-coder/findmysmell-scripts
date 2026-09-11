@@ -1,10 +1,17 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Inconsolata, Montserrat } from 'next/font/google';
+import { Fraunces, Inconsolata, Montserrat } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { LOCALES, isLocale } from '@/lib/i18n';
 import '@/styles/global.css';
 import '@/styles/archetypes.css';
+
+const fraunces = Fraunces({
+  subsets: ['latin', 'latin-ext'],
+  axes: ['SOFT', 'WONK', 'opsz'],
+  variable: '--fms-fraunces',
+  display: 'swap',
+});
 
 const inconsolata = Inconsolata({
   subsets: ['latin', 'latin-ext'],
@@ -40,7 +47,7 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={locale} className={`${inconsolata.variable} ${montserrat.variable}`}>
+    <html lang={locale} className={`${fraunces.variable} ${inconsolata.variable} ${montserrat.variable}`}>
       <body>{children}</body>
     </html>
   );

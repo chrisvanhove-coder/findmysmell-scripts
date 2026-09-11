@@ -24,10 +24,15 @@ for (let i = 0; i < 30; i++) {
   const slug = url.split('/').pop();
   visited.push(slug);
 
+  const hasSearch = await page.locator('#country-search').count();
   const open = await page.locator('textarea').count();
-  if (open) {
+  if (hasSearch) {
+    await page.locator('#country-search').fill('Fra');
+    await page.locator('[role="option"] button').first().click();
+  } else if (open) {
     await page.locator('textarea').fill('smells like my grandmother kitchen');
-    await page.getByRole('button', { name: /see my result/i }).click();
+    // Две кнопки — согласие на исследование, а не отправка и пропуск.
+    await page.getByRole('button', { name: 'Agree & continue', exact: true }).click();
   } else {
     const options = page.locator('ul li button');
     const n = await options.count();
@@ -51,5 +56,8 @@ const answers = await page.evaluate(() => localStorage.getItem('quiz_answers'));
 const parsed = JSON.parse(answers ?? '{}');
 console.log('сохранено ответов:', Object.keys(parsed).length);
 console.log('открытый ответ:', JSON.stringify(await page.evaluate(() => localStorage.getItem('quiz_open'))));
+console.log('согласие на исследование:', await page.evaluate(() => localStorage.getItem('consent_aggregate')));
+console.log('страна (где живёт):', JSON.parse(answers ?? '{}').Q_REGION_NOW);
+console.log('страна (где вырос):', JSON.parse(answers ?? '{}').Q_REGION_CHILD);
 
 await browser.close();

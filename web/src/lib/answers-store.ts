@@ -50,3 +50,19 @@ export function clearAnswers() {
     try { s?.removeItem(KEY); s?.removeItem(OPEN_KEY); } catch { /* пусто */ }
   }
 }
+
+const CONSENT_KEY = 'consent_aggregate';
+
+/**
+ * Согласие на использование анонимных ответов в исследовании.
+ * Ключ тот же, что читала старая отправка результата.
+ */
+export function saveResearchConsent(agreed: boolean) {
+  write(CONSENT_KEY, agreed ? 'true' : 'false');
+}
+
+export function loadResearchConsent(): boolean | null {
+  const v =
+    read(globalThis.localStorage, CONSENT_KEY) ?? read(globalThis.sessionStorage, CONSENT_KEY);
+  return v === null ? null : v === 'true';
+}

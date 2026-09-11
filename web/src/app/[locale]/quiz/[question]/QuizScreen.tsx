@@ -6,7 +6,11 @@ import type { Locale } from '@/lib/i18n';
 import {
   type Question, nextQuestion, stepOf, toSlug, TOTAL_STEPS,
 } from '@/lib/quiz';
-import { loadAnswers, saveAnswer, loadOpenText, saveOpenText } from '@/lib/answers-store';
+import {
+  loadAnswers, saveAnswer, loadOpenText, saveOpenText, saveResearchConsent,
+} from '@/lib/answers-store';
+import { isCountryQuestion } from '@/data/countries';
+import CountrySearch from './CountrySearch';
 import { resolve } from '@/lib/scoring';
 import styles from './quiz.module.css';
 
@@ -38,9 +42,15 @@ export default function QuizScreen({
 
   // Следующий экран заранее подгружаем, чтобы переход был мгновенным.
   useEffect(() => {
-    for (const a of question.answers.slice(0, 8)) {
-      const next = nextQuestion(question.id, a.code);
-      router.prefetch(next === 'RESULT' ? `/${locale}/result` : `/${locale}/quiz/${toSlug(next)}`);
+    // У вопросов с поиском по странам вариантов в данных нет — следующий шаг
+    // у них всегда один, поэтому подгружаем его напрямую.
+    const codes = question.answers.length
+      ? question.answers.slice(0, 8).map((a) => a.code)
+      : [''];
+    for (const code of codes) {
+      const next = nextQuestion(question.id, code);
+      if (next === 'RESULT') continue;
+      router.prefetch(`/${locale}/quiz/${toSlug(next)}`);
     }
   }, [question, locale, router]);
 
@@ -59,8 +69,14 @@ export default function QuizScreen({
     go(nextQuestion(question.id, code));
   }
 
-  function submitOpen(skip: boolean) {
-    saveOpenText(skip ? '' : openText.trim());
+  /**
+   * Открытый вопрос закрывает квиз. Две кнопки — это не «отправить» и
+   * «пропустить», а согласие на использование анонимных ответов
+   * в исследовании. Ответ человека сохраняется в обоих случаях.
+   */
+  function finish(consent: boolean) {
+    saveOpenText(openText.trim());
+    saveResearchConsent(consent);
     go(nextQuestion(question.id, ''));
   }
 
@@ -80,7 +96,16 @@ export default function QuizScreen({
         <h1 className={styles.question}>{title}</h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
 
-        {question.openText ? (
+        {isCountryQuestion(question.id) ? (
+          <CountrySearch
+            value={chosen}
+            onPick={(country) => {
+              setChosen(country);
+              saveAnswer(question.id, country);
+              go(nextQuestion(question.id, country));
+            }}
+          />
+        ) : question.openText ? (
           <>
             <textarea
               id="quiz-open-answer"
@@ -92,13 +117,20 @@ export default function QuizScreen({
               }}
               placeholder="Anything you want to add — a memory, a smell, a place."
             />
-            <div className={styles.actions}>
-              <button type="button" className={styles.primary} onClick={() => submitOpen(false)}>
-                See my result
-              </button>
-              <button type="button" className={styles.secondary} onClick={() => submitOpen(true)}>
-                Skip
-              </button>
+            <div className={styles.consent}>
+              <p className={styles.consentText}>
+                You just finished the quiz — none of it asked for your name or email.
+                Can we include your anonymous answers in fragrance research?
+                No email or identifying info, ever.
+              </p>
+              <div className={styles.actions}>
+                <button type="button" className={styles.primary} onClick={() => finish(true)}>
+                  Agree &amp; continue
+                </button>
+                <button type="button" className={styles.secondary} onClick={() => finish(false)}>
+                  Disagree &amp; continue
+                </button>
+              </div>
             </div>
           </>
         ) : (

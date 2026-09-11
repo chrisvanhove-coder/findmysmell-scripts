@@ -176,3 +176,70 @@
   opacity: 0.5;
   margin: 12px 0 0;
 }
+
+/* ── Поиск по странам ── */
+.search { position: relative; margin-top: clamp(24px, 4vh, 40px); max-width: 480px; }
+
+.searchInput {
+  width: 100%;
+  padding: 16px 20px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(240, 236, 225, 0.22);
+  border-radius: 3px;
+  outline: none;
+}
+
+.searchInput::placeholder { color: rgba(240, 236, 225, 0.35); }
+.searchInput:focus { border-color: #c8a882; }
+
+.searchList {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #211f16;
+  border: 1px solid rgba(240, 236, 225, 0.16);
+  border-radius: 3px;
+  z-index: 20;
+}
+
+.searchItem {
+  display: block;
+  width: 100%;
+  padding: 11px 20px;
+  text-align: left;
+  font-family: var(--fms-mono), monospace;
+  font-size: 15px;
+  color: rgba(240, 236, 225, 0.85);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.searchItem[data-active] { background: rgba(200, 168, 130, 0.16); color: #f0ece1; }
+.searchEmpty { padding: 12px 20px; font-size: 14px; font-style: italic; opacity: 0.4; }
+
+/* ── Согласие на обработку ответов ── */
+.consent {
+  margin-top: clamp(28px, 5vh, 44px);
+  padding-top: 24px;
+  border-top: 1px solid rgba(240, 236, 225, 0.14);
+}
+
+.consentText {
+  font-family: var(--fms-mono), monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(240, 236, 225, 0.6);
+  max-width: 60ch;
+  margin: 0 0 20px;
+}

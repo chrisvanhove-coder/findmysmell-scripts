@@ -13,9 +13,11 @@ html, body {
 
 img { max-width: 100%; }
 
-/* HIGHCRUISER — кастомный шрифт, загруженный в Webflow. Файла у нас пока нет,
-   поэтому здесь только фолбэк. Когда шрифт достанут, добавить @font-face. */
+/* Заголовочный шрифт. HIGHCRUISER остался в Webflow и файла у нас нет,
+   поэтому вместо него Fraunces — у неё есть характер, и она не требует
+   верхнего регистра, чтобы держать страницу.
+   Если шрифт когда-нибудь достанут, менять надо только эту переменную. */
 :root {
-  --fms-display: 'HIGHCRUISER', 'Arial Black', Arial, sans-serif;
+  --fms-display: var(--fms-fraunces), Georgia, serif;
   --fms-serif: Georgia, 'Times New Roman', serif;
 }

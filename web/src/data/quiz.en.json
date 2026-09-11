@@ -1,265 +1,685 @@
 {
-  "_note": "Ответы квиза, выгружены из Webflow через MCP 2026-09-11. Тексты приведены как в разметке, лишние пробелы срезаны. hidden: элемент скрыт в Webflow. open: ответ открывает поле для своего варианта.",
+  "_note": "Ответы квиза, выгружены из Webflow через MCP 2026-09-11. hidden: кнопка намеренно скрыта от пользователя, в квизе не участвует. open: ответ открывает поле для своего варианта. countrySearch: вопрос отвечается поиском по странам, кнопки материков остались в Webflow скрытыми и не используются.",
   "Q_GENDER": {
     "answers": [
-      { "code": "Q_GENDER__FEMININE", "label": "softer, warmer, rounder" },
-      { "code": "Q_GENDER__UNISEX", "label": "balanced, neither too soft nor too fresh" },
-      { "code": "Q_GENDER__MASCULINE", "label": "fresher, drier, more structured" }
+      {
+        "code": "Q_GENDER__FEMININE",
+        "label": "Softer, warmer, rounder"
+      },
+      {
+        "code": "Q_GENDER__UNISEX",
+        "label": "Balanced, neither too soft nor too fresh"
+      },
+      {
+        "code": "Q_GENDER__MASCULINE",
+        "label": "Fresher, drier, more structured"
+      }
     ]
   },
   "Q_REGION_NOW": {
-    "answers": [
-      { "code": "Q_REGION_NOW__EUROPE_NOW", "label": "Europe" },
-      { "code": "Q_REGION_NOW__NORTH_AM_NOW", "label": "North America" },
-      { "code": "Q_REGION_NOW__SOUTH_AM_NOW", "label": "South America" },
-      { "code": "Q_REGION_NOW__MID_EAST_NOW", "label": "Middle East" },
-      { "code": "Q_REGION_NOW__SE_ASIA_NOW", "label": "South Asia", "conflict": "дубль кода: этот же код стоит на Southeast Asia, поэтому Q_REGION_NOW__SOUTH_AS_NOW недостижим" },
-      { "code": "Q_REGION_NOW__EAST_AS_NOW", "label": "East Asia" },
-      { "code": "Q_REGION_NOW__SE_ASIA_NOW", "label": "Southeast Asia" },
-      { "code": "Q_REGION_NOW__AFRIC_NOW", "label": "Africa" },
-      { "code": "Q_REGION_NOW__AUS_OC_NOW", "label": "Australia / Oceania" },
-      { "code": "Q_REGION_NOW__PREF_NOT_NOW", "label": "Other" }
-    ]
+    "answers": [],
+    "countrySearch": true
   },
   "Q_GENERATION": {
     "answers": [
-      { "code": "Q_GENERATION__GEN_Z", "label": "Gen Z (1997–2012)" },
-      { "code": "Q_GENERATION__MILLEN", "label": "Millennial (1981–1996)" },
-      { "code": "Q_GENERATION__GEN_X", "label": "Gen X (1965–1980)" },
-      { "code": "Q_GENERATION__BOOMER", "label": "Boomer (1946–1964)" },
-      { "code": "Q_GENERATION__PREF_NOT", "label": "Other" }
+      {
+        "code": "Q_GENERATION__GEN_Z",
+        "label": "Gen Z (1997–2012)"
+      },
+      {
+        "code": "Q_GENERATION__MILLEN",
+        "label": "Millennial (1981–1996)"
+      },
+      {
+        "code": "Q_GENERATION__GEN_X",
+        "label": "Gen X (1965–1980)"
+      },
+      {
+        "code": "Q_GENERATION__BOOMER",
+        "label": "Boomer (1946–1964)"
+      },
+      {
+        "code": "Q_GENERATION__PREF_NOT",
+        "label": "Other"
+      }
     ]
   },
   "Q_DAYTDAY": {
     "answers": [
-      { "code": "Q_DAYTDAY__FLOW", "label": "I go with the flow of the day" },
-      { "code": "Q_DAYTDAY__PLANDAY", "label": "I like to have a plan and follow it" },
-      { "code": "Q_DAYTDAY__INTERACT", "label": "I spend most of my day interacting with people" },
-      { "code": "Q_DAYTDAY__CHANGDAY", "label": "My days change a lot : different places, roles, or situations" },
-      { "code": "Q_DAYTDAY__NOTKNOWN", "label": "I’m okay when things aren’t fully figured out right away", "hidden": true },
-      { "code": "Q_DAYTDAY__ACTIVED", "label": "I don’t like to stay still for too long" },
-      { "code": "Q_DAYTDAY__CONSIST", "label": "I prefer calm, stable days that don’t change much" }
+      {
+        "code": "Q_DAYTDAY__FLOW",
+        "label": "I go with the flow of the day"
+      },
+      {
+        "code": "Q_DAYTDAY__PLANDAY",
+        "label": "I like to have a plan and follow it"
+      },
+      {
+        "code": "Q_DAYTDAY__INTERACT",
+        "label": "I spend most of my day interacting with people"
+      },
+      {
+        "code": "Q_DAYTDAY__CHANGDAY",
+        "label": "My days change a lot : different places, roles, or situations"
+      },
+      {
+        "code": "Q_DAYTDAY__NOTKNOWN",
+        "label": "I’m okay when things aren’t fully figured out right away",
+        "hidden": true
+      },
+      {
+        "code": "Q_DAYTDAY__ACTIVED",
+        "label": "I don’t like to stay still for too long"
+      },
+      {
+        "code": "Q_DAYTDAY__CONSIST",
+        "label": "I prefer calm, stable days that don’t change much"
+      }
     ]
   },
   "Q_STAYWELL": {
     "answers": [
-      { "code": "Q_STAYWELL__KNOWNEX", "label": "Knowing what comes next" },
-      { "code": "Q_STAYWELL__FLEXIB", "label": "Staying flexible as things change" },
-      { "code": "Q_STAYWELL__NOCHANG", "label": "Keeping familiar routines" },
-      { "code": "Q_STAYWELL__SUPPEAPLE", "label": "Having my people around me" },
-      { "code": "Q_STAYWELL__GROUND", "label": "Feeling comfortable in my surroundings" },
-      { "code": "Q_STAYWELL__MENTCLR", "label": "Having a clear, calm mind" },
-      { "code": "Q_STAYWELL__STIMULT", "label": "Feeling excited by what’s ahead" }
+      {
+        "code": "Q_STAYWELL__KNOWNEX",
+        "label": "Knowing what comes next"
+      },
+      {
+        "code": "Q_STAYWELL__FLEXIB",
+        "label": "Staying flexible as things change"
+      },
+      {
+        "code": "Q_STAYWELL__NOCHANG",
+        "label": "Keeping familiar routines"
+      },
+      {
+        "code": "Q_STAYWELL__SUPPEAPLE",
+        "label": "Having my people around me"
+      },
+      {
+        "code": "Q_STAYWELL__GROUND",
+        "label": "Feeling comfortable in my surroundings"
+      },
+      {
+        "code": "Q_STAYWELL__MENTCLR",
+        "label": "Having a clear, calm mind"
+      },
+      {
+        "code": "Q_STAYWELL__STIMULT",
+        "label": "Feeling excited by what’s ahead"
+      }
     ]
   },
   "Q_ATMOS": {
     "answers": [
-      { "code": "Q_ATMOS__WINTER", "label": "Winter air", "hint": "crisp, dry, fast-moving" },
-      { "code": "Q_ATMOS__FOGGY", "label": "Foggy or misty places", "hint": "cool, moist air" },
-      { "code": "Q_ATMOS__VILLAGE", "label": "Small town, village", "hint": "dry, calm, neutral air" },
-      { "code": "Q_ATMOS__PARKRAIN", "label": "A park after rain", "hint": "mild, green, slightly humid" },
-      { "code": "Q_ATMOS__SOUTHFR", "label": "Mediterranean towns", "hint": "warm, dry air" },
-      { "code": "Q_ATMOS__TROPICS", "label": "Tropical regions", "hint": "warm, dense, humid air" },
-      { "code": "Q_ATMOS__SEA_AIR", "label": "Near the sea", "hint": "salty air, mineral, constant breeze" },
-      { "code": "Q_ATMOS__MOUNT_AIR", "label": "Near the mountains", "hint": "thin, clear, slightly cold air" },
-      { "code": "Q_ATMOS__NO_PREFER", "label": "Not sure / no preference" }
+      {
+        "code": "Q_ATMOS__WINTER",
+        "label": "Winter air",
+        "hint": "crisp, dry, fast-moving"
+      },
+      {
+        "code": "Q_ATMOS__FOGGY",
+        "label": "Foggy or misty places",
+        "hint": "cool, moist air"
+      },
+      {
+        "code": "Q_ATMOS__VILLAGE",
+        "label": "Small town, village",
+        "hint": "dry, calm, neutral air"
+      },
+      {
+        "code": "Q_ATMOS__PARKRAIN",
+        "label": "A park after rain",
+        "hint": "mild, green, slightly humid"
+      },
+      {
+        "code": "Q_ATMOS__SOUTHFR",
+        "label": "Mediterranean towns",
+        "hint": "warm, dry air"
+      },
+      {
+        "code": "Q_ATMOS__TROPICS",
+        "label": "Tropical regions",
+        "hint": "warm, dense, humid air"
+      },
+      {
+        "code": "Q_ATMOS__SEA_AIR",
+        "label": "Near the sea",
+        "hint": "salty air, mineral, constant breeze"
+      },
+      {
+        "code": "Q_ATMOS__MOUNT_AIR",
+        "label": "Near the mountains",
+        "hint": "thin, clear, slightly cold air"
+      },
+      {
+        "code": "Q_ATMOS__NO_PREFER",
+        "label": "Not sure / no preference"
+      }
     ]
   },
   "Q_YOURSELF": {
     "answers": [
-      { "code": "Q_YOURSELF__NATURE", "label": "In nature (forest, mountains, open air)" },
-      { "code": "Q_YOURSELF__CITYURBAN", "label": "In a city or urban environment" },
-      { "code": "Q_YOURSELF__NEARWATER", "label": "Near water or the sea" },
-      { "code": "Q_YOURSELF__INDOOR", "label": "In a quiet, calm indoor space" },
-      { "code": "Q_YOURSELF__TRANSITION", "label": "While moving or in transition (travel, streets, in-between places)" },
-      { "code": "Q_YOURSELF__MIXED", "label": "It changes" }
+      {
+        "code": "Q_YOURSELF__NATURE",
+        "label": "In nature (forest, mountains, open air)"
+      },
+      {
+        "code": "Q_YOURSELF__CITYURBAN",
+        "label": "In a city or urban environment"
+      },
+      {
+        "code": "Q_YOURSELF__NEARWATER",
+        "label": "Near water or the sea"
+      },
+      {
+        "code": "Q_YOURSELF__INDOOR",
+        "label": "In a quiet, calm indoor space"
+      },
+      {
+        "code": "Q_YOURSELF__TRANSITION",
+        "label": "While moving or in transition (travel, streets, in-between places)"
+      },
+      {
+        "code": "Q_YOURSELF__MIXED",
+        "label": "It changes"
+      }
     ]
   },
   "Q_EMO": {
     "branch": true,
     "answers": [
-      { "code": "Q_EMO__CALM", "label": "Calm" },
-      { "code": "Q_EMO__ENERGY", "label": "Energetic" },
-      { "code": "Q_EMO__COZY", "label": "Cozy" },
-      { "code": "Q_EMO__MYST", "label": "Mysterious" },
-      { "code": "Q_EMO__SEXY", "label": "Sexy" },
-      { "code": "Q_EMO__FOCUS", "label": "Focused" },
-      { "code": "Q_EMO__PLAY", "label": "Playful" }
+      {
+        "code": "Q_EMO__CALM",
+        "label": "Calm"
+      },
+      {
+        "code": "Q_EMO__ENERGY",
+        "label": "Energetic"
+      },
+      {
+        "code": "Q_EMO__COZY",
+        "label": "Cozy"
+      },
+      {
+        "code": "Q_EMO__MYST",
+        "label": "Mysterious"
+      },
+      {
+        "code": "Q_EMO__SEXY",
+        "label": "Sexy"
+      },
+      {
+        "code": "Q_EMO__FOCUS",
+        "label": "Focused"
+      },
+      {
+        "code": "Q_EMO__PLAY",
+        "label": "Playful"
+      }
     ]
   },
   "Q_CALM": {
     "emotionDetail": true,
     "answers": [
-      { "code": "Q_CALM__TEA_HERBS", "label": "Warm tea or gentle herbs" },
-      { "code": "Q_CALM__LINENS", "label": "Fresh linens or soap" },
-      { "code": "Q_CALM__FIREPLAC", "label": "Fireplace" },
-      { "code": "Q_CALM__MILK_SOFT", "label": "Soft, milky sweetness" },
-      { "code": "Q_CALM__COOL_AIR", "label": "Cool air or sea breeze" },
-      { "code": "Q_CALM__HOT_SHOW", "label": "Hot shower steam" },
-      { "code": "Q_CALM__OTHER", "label": "Other (open answer)", "open": true }
+      {
+        "code": "Q_CALM__TEA_HERBS",
+        "label": "Warm tea or gentle herbs"
+      },
+      {
+        "code": "Q_CALM__LINENS",
+        "label": "Fresh linens or soap"
+      },
+      {
+        "code": "Q_CALM__FIREPLAC",
+        "label": "Fireplace"
+      },
+      {
+        "code": "Q_CALM__MILK_SOFT",
+        "label": "Soft, milky sweetness"
+      },
+      {
+        "code": "Q_CALM__COOL_AIR",
+        "label": "Cool air or sea breeze"
+      },
+      {
+        "code": "Q_CALM__HOT_SHOW",
+        "label": "Hot shower steam"
+      },
+      {
+        "code": "Q_CALM__OTHER",
+        "label": "Other (open answer)",
+        "open": true
+      }
     ]
   },
   "Q_ENERGY": {
     "emotionDetail": true,
     "answers": [
-      { "code": "Q_ENERGY__CITRUS", "label": "Citrus" },
-      { "code": "Q_ENERGY__MUSIC", "label": "Music" },
-      { "code": "Q_ENERGY__COLD_SHOW", "label": "Cold air or a cold shower" },
-      { "code": "Q_ENERGY__HERBS", "label": "Mint, basil or other green herbs" },
-      { "code": "Q_ENERGY__HOT_SPICE", "label": "Hot spices" },
-      { "code": "Q_ENERGY__SUN_HEAT", "label": "Sun or heat" },
-      { "code": "Q_ENERGY__OTHER", "label": "Other (open answer)", "open": true }
+      {
+        "code": "Q_ENERGY__CITRUS",
+        "label": "Citrus"
+      },
+      {
+        "code": "Q_ENERGY__MUSIC",
+        "label": "Music"
+      },
+      {
+        "code": "Q_ENERGY__COLD_SHOW",
+        "label": "Cold air or a cold shower"
+      },
+      {
+        "code": "Q_ENERGY__HERBS",
+        "label": "Mint, basil or other green herbs"
+      },
+      {
+        "code": "Q_ENERGY__HOT_SPICE",
+        "label": "Hot spices"
+      },
+      {
+        "code": "Q_ENERGY__SUN_HEAT",
+        "label": "Sun or heat"
+      },
+      {
+        "code": "Q_ENERGY__OTHER",
+        "label": "Other (open answer)",
+        "open": true
+      }
     ]
   },
   "Q_COZY": {
     "emotionDetail": true,
     "answers": [
-      { "code": "Q_COZY__WARM_SKIN", "label": "Warm skin or a hug" },
-      { "code": "Q_COZY__BLANKET", "label": "Soft fabric (blanket)" },
-      { "code": "Q_COZY__BAKING", "label": "Baking or warm food" },
-      { "code": "Q_COZY__FIREPLAC", "label": "Fireplace or candles" },
-      { "code": "Q_COZY__HOT_CHOC", "label": "Hot drink before bed" },
-      { "code": "Q_COZY__BUBBLE", "label": "Bubble bath" },
-      { "code": "Q_COZY__OTHER", "label": "Other (open answer)", "open": true }
+      {
+        "code": "Q_COZY__WARM_SKIN",
+        "label": "Warm skin or a hug"
+      },
+      {
+        "code": "Q_COZY__BLANKET",
+        "label": "Soft fabric (blanket)"
+      },
+      {
+        "code": "Q_COZY__BAKING",
+        "label": "Baking or warm food"
+      },
+      {
+        "code": "Q_COZY__FIREPLAC",
+        "label": "Fireplace or candles"
+      },
+      {
+        "code": "Q_COZY__HOT_CHOC",
+        "label": "Hot drink before bed"
+      },
+      {
+        "code": "Q_COZY__BUBBLE",
+        "label": "Bubble bath"
+      },
+      {
+        "code": "Q_COZY__OTHER",
+        "label": "Other (open answer)",
+        "open": true
+      }
     ]
   },
   "Q_MYST": {
     "emotionDetail": true,
     "answers": [
-      { "code": "Q_MYST__SMOKE", "label": "Smoke or incense" },
-      { "code": "Q_MYST__STARS", "label": "Night (stars, dark night)" },
-      { "code": "Q_MYST__ANTIQU", "label": "Antique wooden furniture" },
-      { "code": "Q_MYST__UNFAMIL", "label": "Something unfamiliar" },
-      { "code": "Q_MYST__OLD_BOOK", "label": "Old books" },
-      { "code": "Q_MYST__MYST_SPICE", "label": "Spices" },
-      { "code": "Q_MYST__OLD_PLACES", "label": "Abandoned places" },
-      { "code": "Q_MYST__OTHER", "label": "Other (open answer)", "open": true }
+      {
+        "code": "Q_MYST__SMOKE",
+        "label": "Smoke or incense"
+      },
+      {
+        "code": "Q_MYST__STARS",
+        "label": "Night (stars, dark night)"
+      },
+      {
+        "code": "Q_MYST__ANTIQU",
+        "label": "Antique wooden furniture"
+      },
+      {
+        "code": "Q_MYST__UNFAMIL",
+        "label": "Something unfamiliar"
+      },
+      {
+        "code": "Q_MYST__OLD_BOOK",
+        "label": "Old books"
+      },
+      {
+        "code": "Q_MYST__MYST_SPICE",
+        "label": "Spices"
+      },
+      {
+        "code": "Q_MYST__OLD_PLACES",
+        "label": "Abandoned places"
+      },
+      {
+        "code": "Q_MYST__OTHER",
+        "label": "Other (open answer)",
+        "open": true
+      }
     ]
   },
   "Q_SEXY": {
     "emotionDetail": true,
     "answers": [
-      { "code": "Q_SEXY__SALT_SEX", "label": "Warm skin, mineral salty skin,", "hint": "just after dance" },
-      { "code": "Q_SEXY__ESPRESSO", "label": "Dark chocolate or strong espresso" },
-      { "code": "Q_SEXY__JAZZ", "label": "Jazz or low bass music" },
-      { "code": "Q_SEXY__SMOK_SEX", "label": "Smoke" },
-      { "code": "Q_SEXY__LEATH_SEX", "label": "Leather clothing" },
-      { "code": "Q_SEXY__OTHER", "label": "Other (open answer)", "open": true }
+      {
+        "code": "Q_SEXY__SALT_SEX",
+        "label": "Warm skin, mineral salty skin,",
+        "hint": "just after dance"
+      },
+      {
+        "code": "Q_SEXY__ESPRESSO",
+        "label": "Dark chocolate or strong espresso"
+      },
+      {
+        "code": "Q_SEXY__JAZZ",
+        "label": "Jazz or low bass music"
+      },
+      {
+        "code": "Q_SEXY__SMOK_SEX",
+        "label": "Smoke"
+      },
+      {
+        "code": "Q_SEXY__LEATH_SEX",
+        "label": "Leather clothing"
+      },
+      {
+        "code": "Q_SEXY__OTHER",
+        "label": "Other (open answer)",
+        "open": true
+      }
     ]
   },
   "Q_FOCUS": {
     "emotionDetail": true,
     "answers": [
-      { "code": "Q_FOCUS__CLEAN_AIR", "label": "clean, cool air" },
-      { "code": "Q_FOCUS__LIBRARY", "label": "quiet spaces / library" },
-      { "code": "Q_FOCUS__COFFEE", "label": "coffee" },
-      { "code": "Q_FOCUS__ICE_WATER", "label": "ice water" },
-      { "code": "Q_FOCUS__TEA", "label": "hot tea" },
-      { "code": "Q_FOCUS__NO_SMELL", "label": "no smell at all" },
-      { "code": "Q_FOCUS__LEMON_PEEL", "label": "lemon peel" },
-      { "code": "Q_FOCUS__OTHER", "label": "other (open answer)", "open": true }
+      {
+        "code": "Q_FOCUS__CLEAN_AIR",
+        "label": "Clean, cool air"
+      },
+      {
+        "code": "Q_FOCUS__LIBRARY",
+        "label": "Quiet spaces / library"
+      },
+      {
+        "code": "Q_FOCUS__COFFEE",
+        "label": "Coffee"
+      },
+      {
+        "code": "Q_FOCUS__ICE_WATER",
+        "label": "Ice water"
+      },
+      {
+        "code": "Q_FOCUS__TEA",
+        "label": "Hot tea"
+      },
+      {
+        "code": "Q_FOCUS__NO_SMELL",
+        "label": "No smell at all"
+      },
+      {
+        "code": "Q_FOCUS__LEMON_PEEL",
+        "label": "Lemon peel"
+      },
+      {
+        "code": "Q_FOCUS__OTHER",
+        "label": "Other (open answer)",
+        "open": true
+      }
     ]
   },
   "Q_PLAY": {
     "emotionDetail": true,
     "answers": [
-      { "code": "Q_PLAY__FRUIT", "label": "Fruits" },
-      { "code": "Q_PLAY__BUBBLE", "label": "Bubbles or fizz" },
-      { "code": "Q_PLAY__ADVENT", "label": "Adventure" },
-      { "code": "Q_PLAY__BRIGHT_CITR", "label": "Bright citrus" },
-      { "code": "Q_PLAY__FLIRT", "label": "Flirting" },
-      { "code": "Q_PLAY__GREEN_FRESH", "label": "Bright greens" },
-      { "code": "Q_PLAY__OTHER", "label": "Other", "open": true }
+      {
+        "code": "Q_PLAY__FRUIT",
+        "label": "Fruits"
+      },
+      {
+        "code": "Q_PLAY__BUBBLE",
+        "label": "Bubbles or fizz"
+      },
+      {
+        "code": "Q_PLAY__ADVENT",
+        "label": "Adventure"
+      },
+      {
+        "code": "Q_PLAY__BRIGHT_CITR",
+        "label": "Bright citrus"
+      },
+      {
+        "code": "Q_PLAY__FLIRT",
+        "label": "Flirting"
+      },
+      {
+        "code": "Q_PLAY__GREEN_FRESH",
+        "label": "Bright greens"
+      },
+      {
+        "code": "Q_PLAY__OTHER",
+        "label": "Other",
+        "open": true
+      }
     ]
   },
   "Q_ENV_CHILD": {
     "answers": [
-      { "code": "Q_ENV_CHILD__CITY", "label": "Big city" },
-      { "code": "Q_ENV_CHILD__SMALL_TOWN", "label": "Small town/Suburb" },
-      { "code": "Q_ENV_CHILD__SEA", "label": "By the sea" },
-      { "code": "Q_ENV_CHILD__FOREST_MOUNT", "label": "Near forests or mountains" }
+      {
+        "code": "Q_ENV_CHILD__CITY",
+        "label": "Big city"
+      },
+      {
+        "code": "Q_ENV_CHILD__SMALL_TOWN",
+        "label": "Small town/Suburb"
+      },
+      {
+        "code": "Q_ENV_CHILD__SEA",
+        "label": "By the sea"
+      },
+      {
+        "code": "Q_ENV_CHILD__FOREST_MOUNT",
+        "label": "Near forests or mountains"
+      }
     ]
   },
   "Q_REGION_CHILD": {
-    "answers": [
-      { "code": "Q_REGION_CHILD__EUROPE", "label": "Europe" },
-      { "code": "Q_REGION_CHILD__NORTH_AMER", "label": "North America" },
-      { "code": "Q_REGION_CHILD__SOUTH_AMER", "label": "South America" },
-      { "code": "Q_REGION_CHILD__MIDDL_EAST", "label": "Middle East" },
-      { "code": "Q_REGION_CHILD__SOUTH_ASIA", "label": "South Asia" },
-      { "code": "Q_REGION_CHILD__EAST_ASIA", "label": "East Asia" },
-      { "code": "Q_REGION_CHILD__SE_ASIA", "label": "Southeast Asia" },
-      { "code": "Q_REGION_CHILD__AFRICA", "label": "Africa" },
-      { "code": "Q_REGION_CHILD__AUS_OCEAN", "label": "Australia / Oceania" },
-      { "code": "Q_REGION_CHILD__PREF_NOT", "label": "Other", "open": true }
-    ]
+    "answers": [],
+    "countrySearch": true
   },
   "Q_CELEBRATE": {
     "answers": [
-      { "code": "Q_CELEBRATE__SWEET", "label": "Sweet baking or desserts" },
-      { "code": "Q_CELEBRATE__DINING_OUT", "label": "Restaurant food or dining out" },
-      { "code": "Q_CELEBRATE__FRSH_FRUIT", "label": "Fresh fruits" },
-      { "code": "Q_CELEBRATE__SPICES", "label": "Festive spices (cinnamon, cardamom, cloves, masala)" },
-      { "code": "Q_CELEBRATE__SAVORY", "label": "BBQ ( grilled food, outdoor fun)" },
-      { "code": "Q_CELEBRATE__FLOWERS", "label": "Flowers or floral decorations / garlands", "hidden": true },
-      { "code": "Q_CELEBRATE__INCENSE", "label": "Incense, or ritual smoke", "hidden": true },
-      { "code": "Q_CELEBRATE__LEMONAD", "label": "Lemonade (fresh citrus)", "hidden": true },
-      { "code": "Q_CELEBRATE__PERFUME", "label": "Perfume or oils (adults dressing up)" },
-      { "code": "Q_CELEBRATE__TROPICS", "label": "Tropical or special fruit (mango, pineapple)", "hidden": true },
-      { "code": "Q_CELEBRATE__NIGHT", "label": "Night air, fireworks" },
-      { "code": "Q_CELEBRATE__FUZZY", "label": "Fizzy drinks / soda / lemonade" },
-      { "code": "Q_CELEBRATE__OTHER", "label": "Other (write your own)", "open": true }
+      {
+        "code": "Q_CELEBRATE__SWEET",
+        "label": "Sweet baking or desserts"
+      },
+      {
+        "code": "Q_CELEBRATE__DINING_OUT",
+        "label": "Restaurant food or dining out"
+      },
+      {
+        "code": "Q_CELEBRATE__FRSH_FRUIT",
+        "label": "Fresh fruits"
+      },
+      {
+        "code": "Q_CELEBRATE__SPICES",
+        "label": "Festive spices (cinnamon, cardamom, cloves, masala)"
+      },
+      {
+        "code": "Q_CELEBRATE__SAVORY",
+        "label": "BBQ ( grilled food, outdoor fun)"
+      },
+      {
+        "code": "Q_CELEBRATE__FLOWERS",
+        "label": "Flowers or floral decorations / garlands",
+        "hidden": true
+      },
+      {
+        "code": "Q_CELEBRATE__INCENSE",
+        "label": "Incense, or ritual smoke",
+        "hidden": true
+      },
+      {
+        "code": "Q_CELEBRATE__LEMONAD",
+        "label": "Lemonade (fresh citrus)",
+        "hidden": true
+      },
+      {
+        "code": "Q_CELEBRATE__PERFUME",
+        "label": "Perfume or oils (adults dressing up)"
+      },
+      {
+        "code": "Q_CELEBRATE__TROPICS",
+        "label": "Tropical or special fruit (mango, pineapple)",
+        "hidden": true
+      },
+      {
+        "code": "Q_CELEBRATE__NIGHT",
+        "label": "Night air, fireworks"
+      },
+      {
+        "code": "Q_CELEBRATE__FUZZY",
+        "label": "Fizzy drinks / soda / lemonade"
+      },
+      {
+        "code": "Q_CELEBRATE__OTHER",
+        "label": "Other (write your own)",
+        "open": true
+      }
     ]
   },
   "Q_CALM_NOW": {
     "answers": [
-      { "code": "Q_CALM_NOW__CLEAN", "label": "Clean laundry or skin after shower" },
-      { "code": "Q_CALM_NOW__TEA", "label": "Warm tea, herbs, or cacao" },
-      { "code": "Q_CALM_NOW__FLOWER", "label": "Flowers" },
-      { "code": "Q_CALM_NOW__RAIN", "label": "Rainy day" },
-      { "code": "Q_CALM_NOW__WOOD", "label": "Wood, paper, or books" },
-      { "code": "Q_CALM_NOW__SWEET_COMF", "label": "Sweet comfort (warm dessert)" },
-      { "code": "Q_CALM_NOW__FIRE", "label": "Fireplace or camping fire" },
-      { "code": "Q_CALM_NOW__SEA_COMF", "label": "Being near water" },
-      { "code": "Q_CALM_NOW__COFFEE_COMF", "label": "Coffee (the smell)" },
-      { "code": "Q_CALM_NOW__FRESH_COMF", "label": "Fresh air or nature" },
-      { "code": "Q_CALM_NOW__OTHER", "label": "Not sure / Other", "open": true }
+      {
+        "code": "Q_CALM_NOW__CLEAN",
+        "label": "Clean laundry or skin after shower"
+      },
+      {
+        "code": "Q_CALM_NOW__TEA",
+        "label": "Warm tea, herbs, or cacao"
+      },
+      {
+        "code": "Q_CALM_NOW__FLOWER",
+        "label": "Flowers"
+      },
+      {
+        "code": "Q_CALM_NOW__RAIN",
+        "label": "Rainy day"
+      },
+      {
+        "code": "Q_CALM_NOW__WOOD",
+        "label": "Wood, paper, or books"
+      },
+      {
+        "code": "Q_CALM_NOW__SWEET_COMF",
+        "label": "Sweet comfort (warm dessert)"
+      },
+      {
+        "code": "Q_CALM_NOW__FIRE",
+        "label": "Fireplace or camping fire"
+      },
+      {
+        "code": "Q_CALM_NOW__SEA_COMF",
+        "label": "Being near water"
+      },
+      {
+        "code": "Q_CALM_NOW__COFFEE_COMF",
+        "label": "Coffee (the smell)"
+      },
+      {
+        "code": "Q_CALM_NOW__FRESH_COMF",
+        "label": "Fresh air or nature"
+      },
+      {
+        "code": "Q_CALM_NOW__OTHER",
+        "label": "Not sure / Other",
+        "open": true
+      }
     ]
   },
   "Q_SWEET": {
     "axis": "sweet",
     "answers": [
-      { "code": "Q_SWEET__NO_SWEET", "label": "I avoid sweet scents" },
-      { "code": "Q_SWEET__LITTLE_SW", "label": "A slight touch of sweetness is okay" },
-      { "code": "Q_SWEET__MODER_SW", "label": "I enjoy a noticeable level of sweetness" },
-      { "code": "Q_SWEET__ENJOY_SW", "label": "I really enjoy sweet scents on my skin" }
+      {
+        "code": "Q_SWEET__NO_SWEET",
+        "label": "I avoid sweet scents"
+      },
+      {
+        "code": "Q_SWEET__LITTLE_SW",
+        "label": "A slight touch of sweetness is okay"
+      },
+      {
+        "code": "Q_SWEET__MODER_SW",
+        "label": "I enjoy a noticeable level of sweetness"
+      },
+      {
+        "code": "Q_SWEET__ENJOY_SW",
+        "label": "I really enjoy sweet scents on my skin"
+      }
     ]
   },
   "Q_WILD": {
     "axis": "raw",
     "answers": [
-      { "code": "Q_WILD__NO_WILD", "label": "I don’t enjoy those kinds of scents" },
-      { "code": "Q_WILD__LITTLE_WILD", "label": "I’m okay with a little" },
-      { "code": "Q_WILD__SOME_WILD", "label": "I like some raw notes" },
-      { "code": "Q_WILD__LOVE_WILD", "label": "I really enjoy that kind of character" }
+      {
+        "code": "Q_WILD__NO_WILD",
+        "label": "I don’t enjoy those kinds of scents"
+      },
+      {
+        "code": "Q_WILD__LITTLE_WILD",
+        "label": "I’m okay with a little"
+      },
+      {
+        "code": "Q_WILD__SOME_WILD",
+        "label": "I like some raw notes"
+      },
+      {
+        "code": "Q_WILD__LOVE_WILD",
+        "label": "I really enjoy that kind of character"
+      }
     ]
   },
   "Q_SKIN_BEHAVIOR": {
     "answers": [
-      { "code": "Q_SKIN_BEHAVIOR__DISAPEAR", "label": "It disappears quickly" },
-      { "code": "Q_SKIN_BEHAVIOR__NORMAL", "label": "It lasts normally" },
-      { "code": "Q_SKIN_BEHAVIOR__SWEETER", "label": "It becomes sweeter" },
-      { "code": "Q_SKIN_BEHAVIOR__SHARPER", "label": "It becomes more bitter" },
-      { "code": "Q_SKIN_BEHAVIOR__NOT_SURE", "label": "Not sure" }
+      {
+        "code": "Q_SKIN_BEHAVIOR__DISAPEAR",
+        "label": "It disappears quickly"
+      },
+      {
+        "code": "Q_SKIN_BEHAVIOR__NORMAL",
+        "label": "It lasts normally"
+      },
+      {
+        "code": "Q_SKIN_BEHAVIOR__SWEETER",
+        "label": "It becomes sweeter"
+      },
+      {
+        "code": "Q_SKIN_BEHAVIOR__SHARPER",
+        "label": "It becomes more bitter"
+      },
+      {
+        "code": "Q_SKIN_BEHAVIOR__NOT_SURE",
+        "label": "Not sure"
+      }
     ]
   },
   "Q_RADIUS": {
     "axis": "projection",
     "answers": [
-      { "code": "Q_RADIUS__CLOSE", "label": "Close to skin: only me" },
-      { "code": "Q_RADIUS__SOFT", "label": "Soft aura: only me and closest to me" },
-      { "code": "Q_RADIUS__NOTICEABLE", "label": "Noticeable: people start looking at you" },
-      { "code": "Q_RADIUS__BOLD", "label": "Bold: everyone must know" }
+      {
+        "code": "Q_RADIUS__CLOSE",
+        "label": "Close to skin: only me"
+      },
+      {
+        "code": "Q_RADIUS__SOFT",
+        "label": "Soft aura: only me and closest to me"
+      },
+      {
+        "code": "Q_RADIUS__NOTICEABLE",
+        "label": "Noticeable: people start looking at you"
+      },
+      {
+        "code": "Q_RADIUS__BOLD",
+        "label": "Bold: everyone must know"
+      }
     ]
   },
   "Q_OPEN": {

@@ -1,9 +1,10 @@
 /**
- * Тексты вопросов, выгружены из Webflow через MCP 2026-09-11.
+ * Тексты вопросов. Выгружены из Webflow через MCP 2026-09-11.
  *
- * Регистр букв сохранён как в оригинале: «How dO you Prefer Your sCent…» —
- * это не опечатки, а приём бренда, рассчитанный на шрифт HIGHCRUISER.
- * Не «исправлять» без отдельного решения.
+ * В оригинале регистр букв был рваный — «How dO you Prefer Your sCent…» —
+ * это приём под шрифт HIGHCRUISER. Шрифта у нас нет, и без него такой набор
+ * читается как опечатки, поэтому текст приведён к обычному виду.
+ * Смысл и формулировки не менялись.
  *
  * subtitle — уточнение под вопросом, если оно есть на странице.
  */
@@ -14,24 +15,24 @@ export interface QuestionTitle {
 }
 
 export const QUESTION_COPY: Record<string, QuestionTitle> = {
-  Q_GENDER: { title: 'How dO you Prefer Your sCent To fEel oN you?' },
-  Q_REGION_NOW: { title: 'where do you live now?' },
-  Q_GENERATION: { title: 'WhicH gEneraTion dO you BeloNg to?' },
-  Q_DAYTDAY: { title: 'How do yOu live day to day?' },
-  Q_STAYWELL: { title: 'What mAkes a Space Feel lIkE yoUrs?' },
-  Q_ATMOS: { title: 'Which atmosphere feels Most natural and comfortable for you?' },
-  Q_YOURSELF: { title: 'where do you feeL Most yourself?' },
-  Q_EMO: { title: 'How do You Want This pErfume tO Make yOu Feel?' },
+  Q_GENDER: { title: 'How do you prefer your scent to feel on you?' },
+  Q_REGION_NOW: { title: 'Where do you live now?' },
+  Q_GENERATION: { title: 'Which generation do you belong to?' },
+  Q_DAYTDAY: { title: 'How do you live day to day?' },
+  Q_STAYWELL: { title: 'What makes a space feel like yours?' },
+  Q_ATMOS: { title: 'Which atmosphere feels most natural and comfortable for you?' },
+  Q_YOURSELF: { title: 'Where do you feel most yourself?' },
+  Q_EMO: { title: 'How do you want this perfume to make you feel?' },
 
-  Q_CALM: { title: 'What does Calm smell like to you?' },
+  Q_CALM: { title: 'What does calm smell like to you?' },
   Q_ENERGY: { title: 'What does energy smell like to you?' },
-  Q_COZY: { title: 'wHat does cozy smell like to you?' },
+  Q_COZY: { title: 'What does cozy smell like to you?' },
   Q_MYST: { title: 'What does mystery smell like to you?' },
-  Q_SEXY: { title: 'what does sexy sMell like to you?' },
+  Q_SEXY: { title: 'What does sexy smell like to you?' },
   Q_FOCUS: { title: 'What helps you concentrate?' },
-  Q_PLAY: { title: 'What does playful smell Like to you?' },
+  Q_PLAY: { title: 'What does playful smell like to you?' },
 
-  Q_ENV_CHILD: { title: 'What geneRal eNvironment Did yoU grOw uP in?' },
+  Q_ENV_CHILD: { title: 'What general environment did you grow up in?' },
   Q_REGION_CHILD: { title: 'Where did you grow up?' },
   Q_CELEBRATE: {
     title: "What's the first thing you smell when you think of celebration as a child?",
@@ -42,16 +43,16 @@ export const QUESTION_COPY: Record<string, QuestionTitle> = {
     subtitle: '(Choose the closest one)',
   },
 
-  Q_SWEET: { title: 'How do yOu feeL aboUt sweEtness in a perfume On yoUr skiN?' },
+  Q_SWEET: { title: 'How do you feel about sweetness in a perfume on your skin?' },
   Q_WILD: {
-    title: 'How do you feeL aboUt perfuMes thAt havE a moRe raw or nAtural edGe?',
+    title: 'How do you feel about perfumes that have a more raw or natural edge?',
     subtitle: '(for example: smoke, leather, earth, not polished smells)',
   },
-  Q_SKIN_BEHAVIOR: { title: 'how does perfume behave on your skin?' },
+  Q_SKIN_BEHAVIOR: { title: 'How does perfume behave on your skin?' },
   Q_RADIUS: { title: 'Do you prefer your scent to stay close to the skin or project around you?' },
 
-  // TODO: выгрузка Q_OPEN упёрлась в лимит запросов Webflow (429).
-  // Текст ниже — заглушка, заменить на оригинал со страницы /q-open.
+  // TODO: оригинал заголовка со страницы /q-open ещё не выгружен —
+  // Webflow ответил 429 на последнем запросе. Заменить, когда заберём.
   Q_OPEN: { title: 'Anything else you want to tell us?' },
 };
 
