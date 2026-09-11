@@ -8,6 +8,10 @@ export const perfumes = pgTable(
   'perfumes',
   {
     id: uuid('id').defaultRandom().primaryKey(),
+    // id позиции в Webflow CMS — ключ идемпотентности при повторном сиде.
+    cmsId: text('cms_id').notNull().unique(),
+    // Порядок из коллекции. Нужен как последний критерий при равном расстоянии.
+    sortOrder: integer('sort_order').notNull().default(0),
     archetype: text('archetype').notNull(),
     name: text('name').notNull(),
     house: text('house').notNull(),

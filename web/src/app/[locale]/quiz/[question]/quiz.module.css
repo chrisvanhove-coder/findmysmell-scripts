@@ -1,0 +1,178 @@
+/* Экран вопроса. Один макет на все 24 вопроса вместо 24 отдельных страниц. */
+
+.screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(28px, 5vh, 56px);
+  padding: clamp(72px, 10vh, 120px) clamp(20px, 6vw, 80px) clamp(72px, 12vh, 120px);
+  background: #16150f;
+  color: #f0ece1;
+}
+
+.inner { width: 100%; max-width: 760px; margin: 0 auto; }
+
+.eyebrow {
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(200, 168, 130, 0.55);
+}
+
+.question {
+  font-family: var(--fms-display);
+  font-size: clamp(24px, 5vw, 46px);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  margin: 14px 0 0;
+  text-wrap: balance;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: clamp(28px, 5vh, 48px);
+  list-style: none;
+  padding: 0;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 20px;
+  text-align: left;
+  font-family: var(--fms-sans), sans-serif;
+  font-size: clamp(14px, 2vw, 17px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(240, 236, 225, 0.16);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.option:hover { background: rgba(255, 255, 255, 0.09); border-color: rgba(240, 236, 225, 0.4); }
+.option:focus-visible { outline: 2px solid #c8a882; outline-offset: 2px; }
+.option[aria-pressed='true'] { background: rgba(200, 168, 130, 0.2); border-color: #c8a882; }
+
+.hint {
+  font-family: var(--fms-serif);
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.55;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 140px;
+  margin-top: 24px;
+  padding: 16px 18px;
+  font-family: var(--fms-serif);
+  font-size: 17px;
+  line-height: 1.6;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(240, 236, 225, 0.16);
+  border-radius: 2px;
+  resize: vertical;
+}
+
+.textarea:focus { outline: none; border-color: rgba(240, 236, 225, 0.45); }
+
+.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+
+.primary {
+  padding: 15px 32px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #272727;
+  background: #e0d6a2;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.secondary {
+  composes: primary;
+  color: rgba(240, 236, 225, 0.75);
+  background: transparent;
+  border: 1px solid rgba(240, 236, 225, 0.28);
+}
+
+.primary:hover, .secondary:hover { opacity: 0.85; }
+
+/* Прогресс. Фиксирован снизу, но ничего не перекрывает —
+   экран уже держит нижний отступ под него. */
+.progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: linear-gradient(to top, #16150f 60%, transparent);
+  pointer-events: none;
+}
+
+.track {
+  width: clamp(120px, 28vw, 260px);
+  height: 1px;
+  background: rgba(200, 168, 130, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: rgba(200, 168, 130, 0.7);
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.count {
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: rgba(200, 168, 130, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+.back {
+  position: fixed;
+  top: 18px;
+  left: clamp(16px, 6vw, 80px);
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 225, 0.45);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.back:hover { color: rgba(240, 236, 225, 0.8); }
+
+.subtitle {
+  font-family: var(--fms-serif);
+  font-size: clamp(14px, 1.7vw, 17px);
+  font-style: italic;
+  opacity: 0.5;
+  margin: 12px 0 0;
+}
