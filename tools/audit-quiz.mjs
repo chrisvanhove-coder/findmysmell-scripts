@@ -17,8 +17,11 @@ const inWeights = new Set(Object.keys(W));
 // Намеренно не считаем дырами: скрытые кнопки (убраны из квиза решением
 // редактора), коды материков (вопрос отвечается поиском по странам)
 // и Q_OPEN__OPEN (там свободный текст, кнопки нет по замыслу).
+const retiredSrc = readFileSync('web/src/data/retired-answers.ts', 'utf8');
+const RETIRED = new Set([...retiredSrc.matchAll(/^\s\s(Q_[A-Z_]+):/gm)].map((m) => m[1]));
 const BY_DESIGN = (c) =>
-  c.startsWith('Q_REGION_NOW__') || c.startsWith('Q_REGION_CHILD__') || c === 'Q_OPEN__OPEN';
+  c.startsWith('Q_REGION_NOW__') || c.startsWith('Q_REGION_CHILD__') ||
+  c === 'Q_OPEN__OPEN' || RETIRED.has(c);
 const unreachable = [...inWeights].filter((c) => !clickable.has(c) && !BY_DESIGN(c)).sort();
 const noWeight = [...onPage.keys()].filter((c) => !inWeights.has(c)).sort();
 const duplicated = [...onPage.entries()].filter(([, n]) => n > 1).map(([c]) => c);
@@ -40,5 +43,8 @@ for (const c of noWeight) console.log('  ' + c);
 console.log(`\nДУБЛИ КОДА (одна кнопка перекрывает другую) — ${duplicated.length}:`);
 for (const c of duplicated) console.log('  ' + c);
 
-console.log(`\nСКРЫТЫ НАМЕРЕННО (не участвуют в квизе) — ${hidden.length}:`);
-for (const h of hidden) console.log('  ' + h);
+console.log(`\nВЫВЕДЕНЫ ИЗ КВИЗА НАМЕРЕННО — ${RETIRED.size}:`);
+for (const c of [...RETIRED].sort()) {
+  const reason = retiredSrc.match(new RegExp(c + ":\\s*'([^']+)'"))?.[1] ?? '';
+  console.log(`  ${c.padEnd(24)} ${reason}`);
+}

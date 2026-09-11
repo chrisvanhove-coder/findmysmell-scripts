@@ -63,11 +63,6 @@
         "label": "My days change a lot : different places, roles, or situations"
       },
       {
-        "code": "Q_DAYTDAY__NOTKNOWN",
-        "label": "I’m okay when things aren’t fully figured out right away",
-        "hidden": true
-      },
-      {
         "code": "Q_DAYTDAY__ACTIVED",
         "label": "I don’t like to stay still for too long"
       },
@@ -508,28 +503,8 @@
         "label": "BBQ ( grilled food, outdoor fun)"
       },
       {
-        "code": "Q_CELEBRATE__FLOWERS",
-        "label": "Flowers or floral decorations / garlands",
-        "hidden": true
-      },
-      {
-        "code": "Q_CELEBRATE__INCENSE",
-        "label": "Incense, or ritual smoke",
-        "hidden": true
-      },
-      {
-        "code": "Q_CELEBRATE__LEMONAD",
-        "label": "Lemonade (fresh citrus)",
-        "hidden": true
-      },
-      {
         "code": "Q_CELEBRATE__PERFUME",
         "label": "Perfume or oils (adults dressing up)"
-      },
-      {
-        "code": "Q_CELEBRATE__TROPICS",
-        "label": "Tropical or special fruit (mango, pineapple)",
-        "hidden": true
       },
       {
         "code": "Q_CELEBRATE__NIGHT",

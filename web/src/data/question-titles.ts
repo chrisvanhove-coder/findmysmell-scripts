@@ -51,9 +51,7 @@ export const QUESTION_COPY: Record<string, QuestionTitle> = {
   Q_SKIN_BEHAVIOR: { title: 'How does perfume behave on your skin?' },
   Q_RADIUS: { title: 'Do you prefer your scent to stay close to the skin or project around you?' },
 
-  // TODO: оригинал заголовка со страницы /q-open ещё не выгружен —
-  // Webflow ответил 429 на последнем запросе. Заменить, когда заберём.
-  Q_OPEN: { title: 'Anything else you want to tell us?' },
+  Q_OPEN: { title: 'Anything else you want to tell us about your most memorable scent?' },
 };
 
 export const QUESTION_TITLES: Record<string, string> = Object.fromEntries(

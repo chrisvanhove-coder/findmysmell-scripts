@@ -115,7 +115,7 @@ export default function QuizScreen({
                 setOpenText(e.target.value);
                 saveOpenText(e.target.value);
               }}
-              placeholder="Anything you want to add — a memory, a smell, a place."
+              placeholder="A smell you remember, one you wish you could find again, a place it takes you back to."
             />
             <div className={styles.consent}>
               <p className={styles.consentText}>
