@@ -1,0 +1,141 @@
+/* Шапка и подвал сайта.
+
+   Подвал перенесён из #legal-bar в site-custom-code Webflow: там он
+   зафиксирован внизу экрана поверх страницы, тёмный и полупрозрачный,
+   с размытием. Здесь так же — иначе на длинной странице результата
+   юридические ссылки пришлось бы искать прокруткой до конца.
+
+   Шапка в проде была элементом Webflow и в выгрузку кода не попала,
+   поэтому собрана по скриншоту: имя слева, язык справа. */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(16px, 5vw, 40px);
+  /* Высота зафиксирована: от неё отсчитываются фиксированные элементы
+     квиза, и «примерно столько» их бы не спасло. */
+  min-height: var(--fms-header-h);
+  background: var(--fms-paper, #e6e5dd);
+  color: var(--fms-ink, #1a1a1a);
+  /* Над зонами страницы результата: у большой строки «your scent»
+     собственный слой, и шапка не должна оказаться под ней. */
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  font-family: var(--fms-display);
+  font-size: clamp(15px, 2.4vw, 20px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo:hover { opacity: 0.7; }
+.logo:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+/* ----------------------------- язык ----------------------------- */
+
+.langBox { position: relative; }
+
+.langTrigger {
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.langTrigger:hover { opacity: 1; }
+.langTrigger:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.langMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 140px;
+  background: var(--fms-paper, #e6e5dd);
+  border: 1px solid currentColor;
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+}
+
+.langItem {
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: inherit;
+  text-decoration: none;
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.langItem:hover { background: rgba(0, 0, 0, 0.07); }
+.langCurrent { font-weight: 700; }
+
+/* ----------------------------- подвал ----------------------------- */
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 6px 20px;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.45);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.footer a:hover { color: #fff; }
+.footer a:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.7); outline-offset: 2px; }
+
+.dot { color: rgba(255, 255, 255, 0.2); font-size: 8px; }
+.copyright { color: rgba(255, 255, 255, 0.25); white-space: nowrap; }
+
+/* Две длины подписей, как в проде: на узком экране короткие, иначе
+   подвал переносится на две строки и накрывает текст страницы. */
+.short { display: none; }
+
+@media (max-width: 768px) {
+  .footer { gap: 8px; padding: 5px 16px; font-size: 9px; }
+  .full { display: none; }
+  .short { display: inline; }
+}
+
+@media (max-width: 400px) {
+  .footer { gap: 6px; padding: 4px 10px; font-size: 8px; }
+}
+
+/* На самых узких экранах (320px) даже короткие подписи не влезают
+   в строку. Копирайт — единственное здесь, что ничем не обязано:
+   юридические ссылки и контакт остаются. */
+@media (max-width: 359px) {
+  .copyright, .lastDot { display: none; }
+}

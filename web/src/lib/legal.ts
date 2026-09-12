@@ -1,5 +1,7 @@
-import en from '@/data/privacy.en.json';
-import fr from '@/data/privacy.fr.json';
+import privacyEn from '@/data/privacy.en.json';
+import privacyFr from '@/data/privacy.fr.json';
+import noticeEn from '@/data/legal-notice.en.json';
+import noticeFr from '@/data/legal-notice.fr.json';
 import { type Locale } from './i18n';
 
 /**
@@ -33,13 +35,26 @@ export interface LegalDocument {
   sections: LegalSection[];
 }
 
-// Русского перевода политики пока нет — отдаём английский, как и везде.
+// Русского перевода пока нет — отдаём английский, как и везде.
 const PRIVACY: Record<Locale, LegalDocument> = {
-  en: en as LegalDocument,
-  fr: fr as LegalDocument,
-  ru: en as LegalDocument,
+  en: privacyEn as LegalDocument,
+  fr: privacyFr as LegalDocument,
+  ru: privacyEn as LegalDocument,
+};
+
+// Mentions légales — французский документ по происхождению: этого требует
+// французский закон, и оригинал считается французским. Английская версия —
+// перевод для удобства.
+const LEGAL_NOTICE: Record<Locale, LegalDocument> = {
+  en: noticeEn as LegalDocument,
+  fr: noticeFr as LegalDocument,
+  ru: noticeEn as LegalDocument,
 };
 
 export function getPrivacyPolicy(locale: Locale): LegalDocument {
   return PRIVACY[locale];
+}
+
+export function getLegalNotice(locale: Locale): LegalDocument {
+  return LEGAL_NOTICE[locale];
 }

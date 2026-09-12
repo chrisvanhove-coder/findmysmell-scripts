@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { Fraunces, Inconsolata, Montserrat } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { LOCALES, isLocale } from '@/lib/i18n';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 import '@/styles/global.css';
 import '@/styles/archetypes.css';
 
@@ -48,7 +50,11 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${fraunces.variable} ${inconsolata.variable} ${montserrat.variable}`}>
-      <body>{children}</body>
+      <body>
+        <SiteHeader locale={locale} />
+        {children}
+        <SiteFooter locale={locale} />
+      </body>
     </html>
   );
 }

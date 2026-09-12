@@ -81,9 +81,10 @@
 .match {
   background: var(--fms-stage);
   color: var(--fms-stage-ink);
-  /* Перекрывает нижнюю половину большой строки из зоны ингредиентов. */
+  /* Большая строка «your scent» приходит из зоны ингредиентов и должна
+     лежать поверх сцены, а не под ней — поэтому здесь только контекст
+     позиционирования, без z-index. */
   position: relative;
-  z-index: 1;
   padding: clamp(56px, 10vh, 112px) clamp(24px, 8vw, 120px);
   text-align: center;
   display: flex;

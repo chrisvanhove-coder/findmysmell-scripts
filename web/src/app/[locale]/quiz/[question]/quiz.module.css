@@ -113,13 +113,13 @@
 
 .primary:hover, .secondary:hover { opacity: 0.85; }
 
-/* Прогресс. Фиксирован снизу, но ничего не перекрывает —
-   экран уже держит нижний отступ под него. */
+/* Прогресс. Фиксирован снизу — поднят над общим подвалом сайта,
+   иначе тот его накрывает. */
 .progress {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: var(--fms-footer-h);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,7 +154,9 @@
 
 .back {
   position: fixed;
-  top: 18px;
+  /* Ниже шапки сайта: раньше кнопка стояла у самого верха экрана,
+     а теперь там имя и переключатель языка. */
+  top: calc(var(--fms-header-h) + 10px);
   left: clamp(16px, 6vw, 80px);
   font-family: var(--fms-mono), monospace;
   font-size: 11px;
