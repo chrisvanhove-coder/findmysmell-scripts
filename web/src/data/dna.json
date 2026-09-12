@@ -1,0 +1,190 @@
+{
+  "axes": [
+    {
+      "key": "sweetness",
+      "lo": "Fresh",
+      "loDesc": "Like cold water on your face. Clean laundry. The air after rain.",
+      "hi": "Sweet",
+      "hiDesc": "Like warm skin. A pastry shop in winter. The last sip of hot chocolate."
+    },
+    {
+      "key": "rawEdge",
+      "lo": "Polished",
+      "loDesc": "Smooth and finished. Like ironed fabric or a new car interior.",
+      "hi": "Wild",
+      "hiDesc": "Unfinished and honest. Wet earth. Smoke from a campfire. Bark you peeled off a tree."
+    },
+    {
+      "key": "projection",
+      "lo": "Intimate",
+      "loDesc": "Only you can smell it. A secret between you and your skin.",
+      "hi": "Bold",
+      "hiDesc": "People notice you before you sit down. Your scent enters the room first."
+    },
+    {
+      "key": "warmth",
+      "lo": "Cool",
+      "loDesc": "Open windows. Sea breeze. The cold side of the pillow.",
+      "hi": "Warm",
+      "hiDesc": "Blankets. A kitchen in winter. Someone's sweater after they've worn it all day."
+    },
+    {
+      "key": "depth",
+      "lo": "Light",
+      "loDesc": "Easy to wear. Like a white t-shirt — simple and it just works.",
+      "hi": "Deep",
+      "hiDesc": "Dense and lasting. Built to stay on you, not fade by noon."
+    }
+  ],
+  "base": {
+    "sweetness": 2.5,
+    "rawEdge": 2.5,
+    "projection": 2.5
+  },
+  "ranges": {
+    "warmth": [
+      -5,
+      6
+    ],
+    "depth": [
+      -6,
+      8
+    ]
+  },
+  "maps": {
+    "sweet": {
+      "Q_SWEET__NO_SWEET": 1,
+      "Q_SWEET__LITTLE_SW": 2,
+      "Q_SWEET__MODER_SW": 3,
+      "Q_SWEET__ENJOY_SW": 4
+    },
+    "rawEdge": {
+      "Q_WILD__NO_WILD": 1,
+      "Q_WILD__LITTLE_WILD": 2,
+      "Q_WILD__SOME_WILD": 3,
+      "Q_WILD__LOVE_WILD": 4
+    },
+    "projection": {
+      "Q_RADIUS__CLOSE": 1,
+      "Q_RADIUS__SOFT": 2,
+      "Q_RADIUS__NOTICEABLE": 3,
+      "Q_RADIUS__BOLD": 4
+    }
+  },
+  "signals": {
+    "warmth": {
+      "Q_ATMOS__WINTER": -3,
+      "Q_ATMOS__FOGGY": -1,
+      "Q_ATMOS__PARKRAIN": 1,
+      "Q_ATMOS__SOUTHFR": 2,
+      "Q_ATMOS__TROPICS": 3,
+      "Q_ATMOS__MOUNT_AIR": -2,
+      "Q_CALM__FIREPLAC": 2,
+      "Q_CALM__HOT_SHOW": 1,
+      "Q_CALM__MILK_SOFT": 1,
+      "Q_ENERGY__HOT_SPICE": 1,
+      "Q_ENERGY__SUN_HEAT": 2,
+      "Q_COZY__WARM_SKIN": 2,
+      "Q_COZY__BAKING": 1,
+      "Q_COZY__FIREPLAC": 2,
+      "Q_COZY__HOT_CHOC": 1,
+      "Q_SEXY__SMOK_SEX": 1,
+      "Q_CALM_NOW__CLEAN": -1,
+      "Q_CALM_NOW__TEA": 1,
+      "Q_CALM_NOW__RAIN": -1,
+      "Q_CALM_NOW__SWEET_COMF": 1,
+      "Q_CALM_NOW__FIRE": 2,
+      "Q_CALM_NOW__SEA_COMF": -1,
+      "Q_CALM_NOW__FRESH_COMF": -2
+    },
+    "depth": {
+      "Q_EMO__CALM": -1,
+      "Q_EMO__ENERGY": -1,
+      "Q_EMO__MYST": 3,
+      "Q_EMO__FOCUS": -1,
+      "Q_EMO__SEXY": 2,
+      "Q_EMO__PLAY": -2,
+      "Q_CELEBRATE__SWEET": -1,
+      "Q_CELEBRATE__FRSH_FRUIT": -1,
+      "Q_CELEBRATE__SPICES": 1,
+      "Q_CELEBRATE__FLOWERS": -1,
+      "Q_CELEBRATE__INCENSE": 2,
+      "Q_CELEBRATE__LEMONAD": -2,
+      "Q_CELEBRATE__PERFUME": 1,
+      "Q_CELEBRATE__NIGHT": 1,
+      "Q_CELEBRATE__FUZZY": -1,
+      "Q_CALM_NOW__CLEAN": -2,
+      "Q_CALM_NOW__FLOWER": -1,
+      "Q_CALM_NOW__RAIN": 1,
+      "Q_CALM_NOW__WOOD": 2,
+      "Q_CALM_NOW__FIRE": 1,
+      "Q_CALM_NOW__SEA_COMF": -1,
+      "Q_CALM_NOW__COFFEE_COMF": 1,
+      "Q_CALM_NOW__FRESH_COMF": -2,
+      "Q_WILD__NO_WILD": -1,
+      "Q_WILD__SOME_WILD": 2,
+      "Q_WILD__LOVE_WILD": 3
+    }
+  },
+  "skin": {
+    "step": {
+      "Q_SKIN_BEHAVIOR__SWEETER": -0.5,
+      "Q_SKIN_BEHAVIOR__SHARPER": 0.5
+    },
+    "clamp": {
+      "min": 1,
+      "max": 4
+    }
+  },
+  "defaults": {
+    "CEO": {
+      "sweetness": 1.5,
+      "rawEdge": 2,
+      "projection": 3,
+      "warmth": 2,
+      "depth": 2.5
+    },
+    "JAPAN": {
+      "sweetness": 1.5,
+      "rawEdge": 1.5,
+      "projection": 1.5,
+      "warmth": 2,
+      "depth": 2.5
+    },
+    "HUG": {
+      "sweetness": 3.5,
+      "rawEdge": 1,
+      "projection": 1.5,
+      "warmth": 3.5,
+      "depth": 2
+    },
+    "OFFGRID": {
+      "sweetness": 1.5,
+      "rawEdge": 3.5,
+      "projection": 2,
+      "warmth": 1.5,
+      "depth": 3.5
+    },
+    "OUTOFTIME": {
+      "sweetness": 2,
+      "rawEdge": 3,
+      "projection": 2,
+      "warmth": 2.5,
+      "depth": 3.5
+    },
+    "SUMMER": {
+      "sweetness": 2.5,
+      "rawEdge": 1.5,
+      "projection": 2.5,
+      "warmth": 3,
+      "depth": 1.5
+    },
+    "THERAPIST": {
+      "sweetness": 2.5,
+      "rawEdge": 2,
+      "projection": 2,
+      "warmth": 3,
+      "depth": 3
+    }
+  }
+}

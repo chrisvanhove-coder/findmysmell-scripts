@@ -35,7 +35,9 @@ for (let i = 0; i < 30; i++) {
 
 const archetype = page.url().split('/').pop();
 await page.waitForTimeout(300); // клиентское уточнение подбора
-const shown = (await page.locator('h2').first().textContent())?.trim();
+// Ищем именно название флакона, а не «первый h2 на странице»: заголовков
+// на странице теперь несколько (зона Scent DNA тоже озаглавлена).
+const shown = (await page.locator('[class*="matchName"]').first().textContent())?.trim();
 const alts = await page.locator('[class*="altName"]').allTextContents();
 
 // ── 3. Что должен был выдать движок ──

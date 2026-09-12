@@ -5,6 +5,7 @@ import { ARCHETYPE_KEYS, type ArchetypeKey } from '@/lib/archetype-colors';
 import { getArchetype } from '@/lib/content';
 import { match } from '@/lib/matching';
 import Ingredients from './Ingredients';
+import ScentDna from './ScentDna';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
 import SubscribeForm from './SubscribeForm';
@@ -53,6 +54,8 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
   const fallback = match(parsed.key, null);
   if (!fallback) notFound();
 
+  // Первый абзац в проде — не начало текста, а фраза над диаграммой ДНК
+  // (z1 в result48.js). Поэтому он уходит в ScentDna, а не в блок текста.
   const [pullQuote, ...rest] = a.desc;
   const closer = rest.length > 1 ? rest[rest.length - 1] : null;
   const body = closer ? rest.slice(0, -1) : rest;
@@ -65,9 +68,10 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
         <span className={styles.descriptor}>{a.descriptor}</span>
       </header>
 
+      <ScentDna archetype={parsed.key} quote={pullQuote} />
+
       <section className={styles.personality}>
         <div className={styles.prose}>
-          <p className={styles.para}>{pullQuote}</p>
           {body.map((p, i) => (
             <p key={i} className={styles.para}>
               {p}

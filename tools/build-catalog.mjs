@@ -2,6 +2,7 @@
 // На вход — файлы ответов list_collection_items (страницы могут перекрываться,
 // дубли снимаются по id).
 import { readFileSync, writeFileSync } from 'node:fs';
+import { rewriteImages, reportLeftovers } from './image-map.mjs';
 
 const files = process.argv.slice(2);
 if (!files.length) { console.error('укажите файлы выгрузки'); process.exit(1); }
@@ -57,8 +58,18 @@ items.sort((a, b) =>
   Number(b.isMain) - Number(a.isMain) ||
   a.name.localeCompare(b.name));
 
-writeFileSync('web/src/data/perfumes.json', JSON.stringify(items, null, 2) + '\n');
+// Картинки флаконов живут в Cloudinary, а CMS отдаёт старые адреса Webflow.
+const catalog = rewriteImages(items);
+const leftovers = reportLeftovers('perfumes', catalog);
+
+writeFileSync('web/src/data/perfumes.json', JSON.stringify(catalog, null, 2) + '\n');
 console.log('✓ web/src/data/perfumes.json');
+
+if (leftovers) {
+  console.log(`\nНЕ ПЕРЕНЕСЕНО КАРТИНОК: ${leftovers}. Загрузить их в Cloudinary`);
+  console.log('и дописать пары в tools/image-map.json, иначе сайт зависит от Webflow.');
+  process.exitCode = 1;
+}
 
 // ── сводка качества данных ──
 const live = items.filter((p) => !p.isDraft && !p.isArchived);

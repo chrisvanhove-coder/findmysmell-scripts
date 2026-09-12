@@ -1,69 +1,24 @@
 // Извлекает данные из legacy-скриптов Webflow в структурированный JSON.
-// Скрипты писались под браузер, поэтому исполняем их в vm с заглушкой DOM.
+// Сам запуск в vm с заглушкой DOM живёт в tools/legacy-vm.mjs — им же
+// пользуется tools/extract-dna.mjs.
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createContext, runInContext } from 'node:vm';
-import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
+import { root, run } from './legacy-vm.mjs';
+import { rewriteImages, reportLeftovers } from './image-map.mjs';
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, 'web/src/data');
 mkdirSync(out, { recursive: true });
 
-// Заглушка, которая молча проглатывает любые обращения к DOM.
-function stub() {
-  const target = function () { return new Proxy(target, handler); };
-  const handler = {
-    get(_t, prop) {
-      if (prop === Symbol.toPrimitive) return () => '';
-      if (prop === 'length') return 0;
-      if (prop === Symbol.iterator) return function* () {};
-      if (prop === 'then') return undefined;
-      return new Proxy(target, handler);
-    },
-    set() { return true; },
-    apply() { return new Proxy(target, handler); },
-    construct() { return new Proxy(target, handler); },
-  };
-  return new Proxy(target, handler);
-}
-
-function run(file) {
-  const code = readFileSync(join(root, file), 'utf8');
-  const win = {
-    addEventListener() {}, removeEventListener() {}, dispatchEvent() {},
-    innerWidth: 1280, innerHeight: 800, devicePixelRatio: 1,
-    matchMedia: () => ({ matches: false, addEventListener() {}, addListener() {} }),
-    scrollY: 0, pageYOffset: 0,
-  };
-  const ctx = createContext({
-    window: win,
-    addEventListener() {}, removeEventListener() {},
-    Event: function () {}, CustomEvent: function () {},
-    innerWidth: 1280, innerHeight: 800, devicePixelRatio: 1,
-    matchMedia: () => ({ matches: false, addEventListener() {}, addListener() {} }),
-    document: stub(),
-    navigator: stub(),
-    location: { pathname: '/', href: 'https://www.findmysmell.com/result' },
-    sessionStorage: { getItem: () => null, setItem() {}, removeItem() {} },
-    localStorage: { getItem: () => null, setItem() {}, removeItem() {} },
-    setTimeout: () => 0,
-    setInterval: () => 0,
-    requestAnimationFrame: () => 0,
-    console: { log() {}, warn() {}, error() {} },
-    fetch: () => Promise.resolve(stub()),
-    Image: function () { return stub(); },
-    getComputedStyle: () => stub(),
-  });
-  ctx.globalThis = ctx;
-  try { runInContext(code, ctx, { filename: file }); }
-  catch (e) { console.error(`  ! ${file}: ${e.message}`); }
-  return { win, ctx };
-}
+let leftovers = 0;
 
 function save(name, value, note) {
   if (!value) { console.log(`  ✗ ${name} — не найдено`); return; }
   const n = Array.isArray(value) ? value.length : Object.keys(value).length;
-  writeFileSync(join(out, name + '.json'), JSON.stringify(value, null, 2) + '\n');
+  // Картинки в источнике всё ещё с CDN Webflow — подменяем на Cloudinary.
+  const data = rewriteImages(value);
+  leftovers += reportLeftovers(name, data);
+  writeFileSync(join(out, name + '.json'), JSON.stringify(data, null, 2) + '\n');
   console.log(`  ✓ ${name}.json — ${n} ${note}`);
 }
 
@@ -93,4 +48,10 @@ if (m) {
   save('answer-weights', weights, 'вариантов ответа');
 } else {
   console.log('  ✗ ANSWER_WEIGHTS — не найдено');
+}
+
+if (leftovers) {
+  console.log(`\nНЕ ПЕРЕНЕСЕНО КАРТИНОК: ${leftovers}. Загрузить их в Cloudinary`);
+  console.log('и дописать пары в tools/image-map.json, иначе сайт зависит от Webflow.');
+  process.exitCode = 1;
 }

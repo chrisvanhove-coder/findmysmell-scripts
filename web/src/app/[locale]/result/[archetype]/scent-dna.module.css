@@ -1,0 +1,202 @@
+/* Зона Scent DNA. Размеры, отступы и прозрачности перенесены из продового
+   CSS (.fms-z1-dna / .fms-dna-* в webflow/page-result-head.css.html).
+
+   Зона всегда тёмная — фон архетипа, белый текст, — поэтому прозрачности
+   заданы через rgba(255,255,255,…), как в проде, а не через currentColor. */
+
+.zone {
+  background: var(--fms-brand);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px 36px;
+}
+
+.title {
+  font-family: var(--fms-display);
+  font-size: clamp(28px, 9vw, 48px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  margin: 0 0 28px;
+}
+
+.quote {
+  text-align: center;
+  font-family: var(--fms-serif);
+  font-size: clamp(18px, 4.5vw, 24px);
+  font-weight: 700;
+  line-height: 1.4;
+  max-width: 420px;
+  margin: 0 auto 40px;
+  opacity: 0.95;
+}
+
+.diagram {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Река рисуется под строками и не должна перехватывать нажатия. */
+.river {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.row { position: relative; }
+
+/* В проде строка была div с обработчиком клика. Здесь это кнопка: строка
+   раскрывается, значит должна работать с клавиатуры и читаться экранным
+   диктором. Кнопочные умолчания приходится снимать вручную. */
+.bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 16px 0;
+  position: relative;
+  z-index: 2;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.bar:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.6); outline-offset: 2px; }
+
+.label {
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 62px;
+  transition: color 0.3s;
+}
+
+.right { text-align: right; }
+.labelActive { color: rgba(255, 255, 255, 0.85); }
+
+.track {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  position: relative;
+  margin: 0 8px;
+}
+
+.ghost,
+.halo,
+.dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.ghost { width: 5px; height: 5px; background: rgba(255, 255, 255, 0.13); }
+.halo { width: 12px; height: 12px; background: rgba(255, 255, 255, 0.1); }
+.dot { width: 8px; height: 8px; background: #fff; opacity: 0.9; }
+
+.expand {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  position: relative;
+  z-index: 2;
+  transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease;
+}
+
+.expandOpen {
+  max-height: 130px;
+  opacity: 1;
+  transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease 0.03s;
+}
+
+.explain {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 0 4px 24px;
+}
+
+.side { flex: 1; }
+
+.word {
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 5px;
+}
+
+.desc {
+  font-family: var(--fms-serif);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  align-self: stretch;
+  flex-shrink: 0;
+  margin: 2px 0;
+}
+
+.hint {
+  font-family: var(--fms-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  text-align: center;
+  margin: 12px 0 0;
+  transition: opacity 0.5s;
+}
+
+/* Подсказка нужна один раз: как только человек раскрыл ось, она уходит. */
+.hintGone { opacity: 0; }
+
+@media (min-width: 768px) {
+  .zone { min-height: 90vh; padding: 80px 8vw; }
+  .title { font-size: clamp(36px, 7vw, 72px); margin-bottom: clamp(32px, 5vh, 60px); }
+  .quote { font-size: clamp(22px, 2.6vw, 30px); max-width: 560px; margin-bottom: 52px; }
+  .diagram { max-width: 620px; }
+  .label { font-size: 11px; min-width: 80px; }
+  .bar { padding: 20px 0; }
+  .word { font-size: 11px; }
+  .desc { font-size: 14px; }
+}
+
+@media (min-width: 1024px) {
+  .quote { font-size: clamp(26px, 2.2vw, 34px); max-width: 640px; margin-bottom: 60px; }
+  .diagram { max-width: 700px; }
+  .label { font-size: 12px; min-width: 96px; }
+  .bar { padding: 24px 0; }
+  .explain { padding: 0 8px 28px; }
+  .word { font-size: 12px; }
+  .desc { font-size: 15px; max-width: 90%; }
+}
+
+/* Анимация раскрытия — украшение; кому она мешает, тому её быть не должно. */
+@media (prefers-reduced-motion: reduce) {
+  .expand, .expandOpen, .label, .hint { transition: none; }
+}

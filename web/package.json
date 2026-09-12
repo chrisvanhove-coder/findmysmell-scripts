@@ -12,7 +12,11 @@
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx scripts/seed-perfumes.ts",
     "e2e": "node e2e/quiz-flow.mjs",
+    "e2e:dna": "node e2e/dna.mjs",
+    "e2e:funnel": "node e2e/funnel.mjs",
+    "e2e:submission": "node e2e/submission.mjs",
     "check:submissions": "tsx scripts/check-submissions.mts",
+    "check:dna": "tsx ../tools/dna-parity.mjs",
     "copy-static": "cp -r .next/static .next/standalone/.next/static && (cp -r public .next/standalone/public 2>/dev/null || true)"
   },
   "dependencies": {
