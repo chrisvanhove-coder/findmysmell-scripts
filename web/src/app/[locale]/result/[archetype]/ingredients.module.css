@@ -30,13 +30,17 @@
   margin: 14px 0 0;
 }
 
+.rule {
+  border-top: 1px solid currentColor;
+  opacity: 0.35;
+  margin-bottom: clamp(28px, 4vh, 44px);
+}
+
 .list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: clamp(24px, 3vw, 44px);
-  margin-top: 28px;
-  border-top: 1px solid currentColor;
-  padding-top: 36px;
+  margin-top: 36px;
 }
 
 .item {
@@ -174,4 +178,33 @@
   line-height: 1.75;
   white-space: pre-line;
   margin: 0;
+}
+
+/* Мобильная раскладка. В проде базовое правило .fms-ingredient-item —
+   именно строка (картинка слева, текст слева), а центрированной колонкой
+   она становится только с 768px. Десктоп у нас уже совпадал; расхождение
+   было именно на телефоне, где заказчик и смотрела. */
+@media (max-width: 767px) {
+  .list {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .item {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 16px;
+  }
+
+  .img {
+    width: 56px;
+    height: 56px;
+    aspect-ratio: auto;
+  }
+
+  .body {
+    align-items: flex-start;
+    gap: 8px;
+  }
 }

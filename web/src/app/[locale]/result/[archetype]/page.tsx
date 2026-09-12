@@ -87,7 +87,7 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
           // Подписи как в проде (z4 в result48.js), не свои.
           alternatives: 'Also consider',
           alternativesSub: 'Same energy, different character',
-          discover: 'Discover',
+          discover: 'Discover →',
         }}
       />
 

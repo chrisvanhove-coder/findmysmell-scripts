@@ -230,11 +230,19 @@
 }
 
 /* Подзаголовок блока альтернатив — fms-z4-sublabel в проде. */
+/* Точные значения из .fms-z4-sublabel в продовом CSS: моно, капс,
+   разрядка 0.14em, прозрачность 0.35. Курсивный сериф был моей выдумкой. */
 .subLabel {
   display: block;
-  font-family: var(--fms-serif);
-  font-size: clamp(14px, 1.5vw, 17px);
-  font-style: italic;
-  opacity: 0.55;
-  margin-top: 8px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.35;
+  margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+  .subLabel { font-size: 14px; }
 }

@@ -54,6 +54,9 @@ export default function Ingredients({ ingredients }: { ingredients: Ingredient[]
 
   return (
     <section className={styles.zone}>
+      {/* В проде линейка отделяет блок ингредиентов сверху, до заголовка,
+          а не стоит между вводной фразой и списком. */}
+      <div className={styles.rule} />
       <span className={styles.label}>{LABEL}</span>
       <p className={styles.intro}>{INTRO}</p>
 
