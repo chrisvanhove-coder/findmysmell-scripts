@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getDb, schema } from '@/db';
-import { parseSubmission, buildRecord, shouldPersist } from '@/lib/submission';
+import { parseSubmission, buildRecord } from '@/lib/submission';
 
 /**
  * Приём прохождения квиза. Заменяет fetch в Google Apps Script
  * из webflow/page-result-footer.html.
  *
- * Логика разбора и политика согласия живут в src/lib/submission.ts —
- * здесь только HTTP и запись. Так их можно прогнать тестом без сервера,
- * см. tools/submission-check.mjs.
+ * Разбор входа и сборка строки живут в src/lib/submission.ts — здесь только
+ * HTTP и запись. Так их можно прогнать тестом без сервера,
+ * см. scripts/check-submissions.mts.
  */
 
 // Запись в базу — никакого кеша и никакой предгенерации.
@@ -27,12 +27,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
-  // Отказ от исследования: подтверждаем приём, но ничего не пишем.
-  // Клиенту при этом отвечаем как при успехе — ему незачем повторять попытку.
-  if (!shouldPersist(parsed.input)) {
-    return NextResponse.json({ stored: false, reason: 'no research consent' });
-  }
-
+  // Отказ от исследования не отменяет запись: прохождение пишется всегда,
+  // отказ фиксируется в consent_research. Так было и в проде.
   const record = buildRecord(parsed.input);
 
   try {

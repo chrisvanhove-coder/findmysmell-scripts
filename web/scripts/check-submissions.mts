@@ -22,13 +22,7 @@ import { drizzle } from 'drizzle-orm/pglite';
 import { migrate } from 'drizzle-orm/pglite/migrator';
 import { sql } from 'drizzle-orm';
 import * as schema from '../src/db/schema';
-import {
-  parseSubmission,
-  buildRecord,
-  shouldPersist,
-  parseSubscriber,
-  PERSIST_WITHOUT_CONSENT,
-} from '../src/lib/submission';
+import { parseSubmission, buildRecord, parseSubscriber } from '../src/lib/submission';
 import { resolve } from '../src/lib/scoring';
 
 let failures = 0;
@@ -130,23 +124,22 @@ console.log('\nСогласие на исследование');
   if (!agreed.ok || !refused.ok) {
     check('оба варианта разобрались', false);
   } else {
-    check('при согласии прохождение пишется', shouldPersist(agreed.input));
-    check(
-      'при отказе не пишется',
-      shouldPersist(refused.input) === PERSIST_WITHOUT_CONSENT,
-      `PERSIST_WITHOUT_CONSENT=${PERSIST_WITHOUT_CONSENT}`,
-    );
-
+    // Как в проде: отказ ничего не отменяет, он только фиксируется флагом.
     const yes = buildRecord(agreed.input);
-    check('при согласии ответы сохранены', Object.keys(yes.answers).length === 17);
-    check('при согласии открытый текст сохранён', yes.openAnswer !== null);
-
-    // Страховка на случай, если заказчик включит PERSIST_WITHOUT_CONSENT:
-    // строка появится, но без самих ответов.
     const no = buildRecord(refused.input);
-    check('при отказе ответы вычищены', Object.keys(no.answers).length === 0);
-    check('при отказе открытый текст вычищен', no.openAnswer === null);
-    check('при отказе результат всё равно посчитан', no.winner === yes.winner);
+
+    check('при согласии флаг true', yes.consentResearch === true);
+    check('при отказе флаг false', no.consentResearch === false);
+
+    check('при согласии ответы сохранены', Object.keys(yes.answers).length === 17);
+    check('при отказе ответы тоже сохранены', Object.keys(no.answers).length === 17);
+
+    check('при согласии открытый текст сохранён', yes.openAnswer !== null);
+    check('при отказе открытый текст тоже сохранён', no.openAnswer === yes.openAnswer);
+
+    check('результат одинаковый в обоих случаях', no.winner === yes.winner);
+    check('баллы одинаковые в обоих случаях',
+      JSON.stringify(no.scores) === JSON.stringify(yes.scores));
   }
 }
 
@@ -186,8 +179,26 @@ console.log('\nЗапись в Postgres (pglite, миграции из drizzle/)
     .returning({ id: schema.submissions.id });
   check('новый токен создаёт новую строку', second.length === 1);
 
+  // Прохождение с отказом от исследования: пишется так же, флаг false.
+  const refusedParsed = parseSubmission(base({ consentResearch: false, clientToken: 'token-3' }));
+  if (!refusedParsed.ok) throw new Error('неожиданно: отказ не разобрался');
+  const refusedRows = await db
+    .insert(schema.submissions)
+    .values(buildRecord(refusedParsed.input))
+    .onConflictDoNothing({ target: schema.submissions.clientToken })
+    .returning({ id: schema.submissions.id });
+  check('прохождение с отказом записалось', refusedRows.length === 1);
+
   const rows = await db.select().from(schema.submissions);
-  check('всего строк 2', rows.length === 2, `есть ${rows.length}`);
+  check('всего строк 3', rows.length === 3, `есть ${rows.length}`);
+
+  const refusedStored = rows.find((r) => r.clientToken === 'token-3');
+  check('у отказа флаг false в базе', refusedStored?.consentResearch === false);
+  check('у отказа ответы лежат в базе',
+    Object.keys((refusedStored?.answers ?? {}) as Record<string, string>).length === 17);
+  check('у отказа открытый текст лежит в базе',
+    refusedStored?.openAnswer === base().openAnswer);
+  check('у отказа победитель посчитан', refusedStored?.winner === record.winner);
 
   const stored = rows.find((r) => r.clientToken === 'token-1');
   check('локаль сохранена', stored?.locale === 'fr');

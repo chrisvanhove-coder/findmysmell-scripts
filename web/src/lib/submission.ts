@@ -6,16 +6,16 @@ import { ARCHETYPE_KEYS, type ArchetypeKey } from './archetype-colors';
  * Приём прохождения квиза. Заменяет отправку в Google Apps Script,
  * которая была зашита в webflow/page-result-footer.html.
  *
- * Два отличия от прода, оба намеренные:
+ * Отличие от прода одно, и оно намеренное: баллы и победитель НЕ принимаются
+ * от клиента, а считаются здесь заново из ответов. В проде клиент присылал
+ * winner и scores готовыми, то есть их можно было прислать любыми. Пересчёт
+ * стал возможен только после того, как из подсчёта убрали Math.random: на
+ * одних и тех же ответах resolve() теперь даёт то же самое на сервере, что
+ * и в браузере.
  *
- * 1. Баллы и победитель НЕ принимаются от клиента, а считаются здесь заново
- *    из ответов. В проде клиент присылал winner и scores готовыми, то есть
- *    их можно было прислать любыми. Пересчёт стал возможен только после того,
- *    как из подсчёта убрали Math.random: на одних и тех же ответах resolve()
- *    теперь даёт то же самое на сервере, что и в браузере.
- *
- * 2. Отказ от исследования уважается: см. PERSIST_WITHOUT_CONSENT ниже.
- *    Прод писал ответы в таблицу всегда и лишь помечал согласие флагом.
+ * Согласие на исследование работает как в проде: прохождение пишется всегда,
+ * ответы сохраняются всегда, а отказ фиксируется флагом consent_research =
+ * false. Результат человек видит независимо от ответа на этот вопрос.
  */
 
 /** Максимумы — чтобы в базу не уехал мусор произвольного размера. */
@@ -26,22 +26,6 @@ const LIMITS = {
   openAnswer: 2000,
   clientToken: 64,
 } as const;
-
-/**
- * Писать ли прохождение, если человек отказался от участия в исследовании.
- *
- * false — при отказе не пишем ничего. Таблица submissions и есть тот самый
- * исследовательский набор, а согласие спрашивалось именно про «использование
- * анонимных ответов в исследовании», поэтому отказ трактуется буквально.
- * Аудитория французская, данные остаются в ЕС — консервативная сторона здесь
- * дешевле, чем спор потом.
- *
- * Цена: прохождения с отказом не попадают в счётчики воронки. Если заказчик
- * решит, что нужен хотя бы обезличенный счётчик завершений, это решение
- * заказчика, а не техническое: поставить true, и тогда строка пишется
- * без answers и open_answer (их вычищает buildRecord).
- */
-export const PERSIST_WITHOUT_CONSENT = false;
 
 export interface SubmissionInput {
   locale: string;
@@ -129,28 +113,22 @@ export function parseSubmission(body: unknown): Parsed {
  * Строка для вставки. Победитель и баллы считаются здесь, из ответов —
  * присланным клиентом значениям не верим.
  *
- * При отказе от исследования сами ответы и открытый текст не сохраняются:
- * остаются только локаль, результат и сам факт отказа.
+ * Ответы и открытый текст сохраняются независимо от согласия на
+ * исследование: отказ фиксируется флагом consentResearch, как в проде.
  */
 export function buildRecord(input: SubmissionInput): SubmissionRecord {
   const { winner, secondary, scores } = resolve(input.answers);
-  const consented = input.consentResearch;
 
   return {
     locale: input.locale as Locale,
     winner,
     secondary,
     scores,
-    answers: consented ? input.answers : {},
-    openAnswer: consented && input.openAnswer !== '' ? input.openAnswer : null,
-    consentResearch: consented,
+    answers: input.answers,
+    openAnswer: input.openAnswer !== '' ? input.openAnswer : null,
+    consentResearch: input.consentResearch,
     clientToken: input.clientToken,
   };
-}
-
-/** Нужно ли вообще писать это прохождение в базу. */
-export function shouldPersist(input: SubmissionInput): boolean {
-  return input.consentResearch || PERSIST_WITHOUT_CONSENT;
 }
 
 /* ------------------------------- подписка ------------------------------- */
