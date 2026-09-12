@@ -1,0 +1,180 @@
+{
+  "_": "Политика приватности. Перенесена со страницы /privacy-policy в Webflow (версия 1.1, апрель 2026) через MCP. Скриптом не пересобирается: Webflow MCP доступен только агенту, не node. Часть про устройство системы приведена в соответствие с тем, что делает код — расхождения перечислены в разделе 9.5 HANDOFF.md.",
+  "title": "Privacy Policy",
+  "updated": "Last updated: September 2026",
+  "sections": [
+    {
+      "heading": "1. Introduction",
+      "blocks": [
+        { "p": "Welcome to Find My Smell (\"we,\" \"our,\" or \"us\"). We respect your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, and protect your information when you use our fragrance personality quiz at findmysmell.com." }
+      ]
+    },
+    {
+      "heading": "2. Information We Collect",
+      "blocks": [
+        { "sub": "2.1 Information You Provide" },
+        { "p": "When you take our quiz, we may collect:" },
+        { "list": [
+          "Quiz responses (your preferences, lifestyle patterns, emotional preferences),",
+          "Your own words, if you choose to write them in the open question at the end,",
+          "Email address, only if you ask us to send you your result."
+        ] },
+        { "sub": "2.2 Information Collected Automatically" },
+        { "p": "We do not run analytics, advertising, or device-fingerprinting scripts on this website. The only identifier we use is a random number your browser generates at the start of a quiz run and keeps in its own storage. It lets us avoid saving the same run twice. It is not derived from your device, it tells us nothing about you, and it is discarded when you start a new run." },
+        { "p": "Like any website, ours is served by a hosting provider that keeps standard server logs (IP address, browser type, requested page) for security and troubleshooting. We do not combine those logs with your quiz responses." }
+      ]
+    },
+    {
+      "heading": "3. How We Use Your Information",
+      "blocks": [
+        { "p": "We use your information to:" },
+        { "list": [
+          "Provide personalised fragrance recommendations based on your quiz responses,",
+          "Improve our quiz algorithm and user experience,",
+          "Send you your quiz result (if you provided an email address),",
+          "Comply with legal obligations."
+        ] },
+        { "sub": "Legal Basis for Processing (GDPR Art. 6)" },
+        { "p": "We process your personal data on the following legal bases:" },
+        { "list": [
+          "Consent — storing your quiz responses for research, and sending you your result by email. Each is a separate checkbox, and you may withdraw either at any time by contacting us at contact@findmysmell.com.",
+          "Legitimate interest — aggregated psychographic and demographic analysis for fragrance market research, and website security.",
+          "Legal obligation — where processing is required to comply with applicable laws."
+        ] },
+        { "p": "If you decline the research checkbox, you still see your result: it is calculated in your browser. Your answers are recorded as not consented and are not used in research." }
+      ]
+    },
+    {
+      "heading": "4. Cookies and Tracking Technologies",
+      "blocks": [
+        { "p": "This website sets no cookies. What it does use is your browser's own storage, on your device, to remember your progress through the quiz and your result. Nothing in that storage is sent anywhere except the answers you submit at the end. You can clear it at any time through your browser settings, and doing so removes everything the site has kept on your device." },
+        { "sub": "Automated Processing & Profiling" },
+        { "p": "Our quiz uses automated processing to assign you a fragrance archetype based on your responses. This profiling is not used to make decisions that produce legal or similarly significant effects on you. It is used solely to generate a personalised fragrance recommendation. You have the right to request human review of any automated result by contacting us at contact@findmysmell.com." }
+      ]
+    },
+    {
+      "heading": "5. Affiliate Marketing Disclosure",
+      "blocks": [
+        { "p": "Find My Smell participates in affiliate marketing programs. When you click on product recommendations and make a purchase, we may earn a commission at no additional cost to you." },
+        { "sub": "5.1 Affiliate Partners" },
+        { "p": "We work with the following affiliate networks and retailers:" },
+        { "list": [
+          "Awin (including merchants like Cult Beauty, Douglas, and others),",
+          "CJ Affiliate (including Notino and other fragrance retailers),",
+          "Individual brand affiliate programs."
+        ] },
+        { "sub": "5.2 Affiliate Tracking" },
+        { "p": "When you follow a product link, you leave our site and the retailer's own tracking begins. Those cookies are set by the retailer, not by us. They identify that you came from our website, track whether you made a purchase, typically expire within 30 days, and do not collect personally identifiable information." },
+        { "p": "For more information on how our affiliate partners handle data, please review their privacy policies: Awin (awin.com/gb/privacy) and CJ Affiliate (cj.com/legal/privacy-policy-services)." }
+      ]
+    },
+    {
+      "heading": "6. Data Sharing",
+      "blocks": [
+        { "p": "We do not sell your personal data. We may share your information with:" },
+        { "list": [
+          "Service providers: third-party services that help us operate our website (hosting, database, image delivery, email),",
+          "Business insights partners: aggregated, anonymised psychographic and demographic data (trends, preferences, archetype distributions, geographic patterns) may be shared with fragrance brands for market research purposes. Individual user information is never identified or shared,",
+          "Legal compliance: when required by law or to protect our rights."
+        ] },
+        { "sub": "Data Processors" },
+        { "p": "We use the following third-party data processors, who may access your data solely to provide services on our behalf:" },
+        { "list": [
+          "Railway Corp. — application hosting and database. Our database runs in the European Union (Amsterdam).",
+          "Cloudinary Ltd. — image delivery (USA). Images only; no quiz data reaches Cloudinary.",
+          "Brevo (Sendinblue SAS, 55 rue d'Amsterdam, 75008 Paris, France) — email delivery, when you ask for your result by email. Brevo is GDPR-compliant and stores data within the EU."
+        ] },
+        { "p": "All processors operate under GDPR-compliant data processing agreements." }
+      ]
+    },
+    {
+      "heading": "7. Data Retention",
+      "blocks": [
+        { "p": "We retain your information as follows:" },
+        { "list": [
+          "Quiz response vectors (your full set of scored answers): retained for a maximum of 3 years from the date of submission, after which they are permanently deleted or fully anonymised.",
+          "Aggregated, anonymised psychographic data (trends, archetype distributions, demographic patterns): retained indefinitely for research and market intelligence purposes. This data cannot be linked to any individual user.",
+          "Email addresses: stored for a maximum of 12 months, after which they are deleted.",
+          "The random run identifier: lives only in your browser's storage and never leaves your device in any form that identifies it."
+        ] },
+        { "p": "You may request deletion of any data associated with a contact you have provided by emailing contact@findmysmell.com." },
+        { "sub": "7.1 Email" },
+        { "p": "When you ask for your quiz result by email, we collect your email address. It is stored in our database in the European Union and used solely to send you your result — one transactional email. We do not send newsletters, marketing emails, or any follow-up communications unless you explicitly opt in separately. Your email address is stored separately from quiz responses and is not linked to them." },
+        { "p": "Legal basis: we process your email on the basis of your explicit consent, given via the checkbox on the result page." }
+      ]
+    },
+    {
+      "heading": "8. Your Rights (GDPR)",
+      "blocks": [
+        { "p": "If you are located in the European Union, you have the following rights:" },
+        { "list": [
+          "Right to Access: request a copy of your personal data,",
+          "Right to Rectification: correct inaccurate or incomplete data,",
+          "Right to Erasure: request deletion of your personal data,",
+          "Right to Restrict Processing: limit how we use your data,",
+          "Right to Data Portability: receive your data in a structured format,",
+          "Right to Object: object to certain types of processing,",
+          "Right to Withdraw Consent: withdraw consent for data processing at any time."
+        ] },
+        { "p": "For anonymous quiz responses: quiz responses submitted without contact information are stored without any personal identifier and cannot be linked to individual users. Once submitted this way, we cannot identify, access, or delete a specific person's responses, because nothing in them points to a person." },
+        { "p": "To exercise any of these rights (if you have provided contact information), please contact us at contact@findmysmell.com." },
+        { "sub": "Supervisory Authority" },
+        { "p": "You have the right to lodge a complaint with your local data protection authority. In France, this is the Commission Nationale de l'Informatique et des Libertés (CNIL). Website: www.cnil.fr. Address: 3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07." }
+      ]
+    },
+    {
+      "heading": "9. International Data Transfers",
+      "blocks": [
+        { "p": "Your quiz responses and, if you provide one, your email address are stored in the European Union and do not leave it." },
+        { "p": "Images on this site are delivered by Cloudinary, whose servers are outside the European Economic Area. This affects the delivery of pictures only — no quiz data is transferred. Where data is transferred outside the EEA, we rely on Standard Contractual Clauses approved by the European Commission under Article 46 GDPR. For more information on the safeguards in place, please contact us at contact@findmysmell.com." }
+      ]
+    },
+    {
+      "heading": "10. Security",
+      "blocks": [
+        { "p": "We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, alteration, disclosure, or destruction. However, no internet transmission is completely secure, and we cannot guarantee absolute security." }
+      ]
+    },
+    {
+      "heading": "11. Children's Privacy",
+      "blocks": [
+        { "p": "Our website is not intended for individuals under the age of 18. We do not knowingly collect personal data from children. If you believe we have collected information from a child, please contact us immediately." }
+      ]
+    },
+    {
+      "heading": "12. Changes to This Privacy Policy",
+      "blocks": [
+        { "p": "We may update this privacy policy from time to time. We will notify you of significant changes by posting the new policy on this page with an updated \"Last updated\" date. We encourage you to review this policy periodically." }
+      ]
+    },
+    {
+      "heading": "13. Contact Us",
+      "blocks": [
+        { "p": "If you have any questions about this privacy policy or our data practices, please contact us:" },
+        { "list": ["Email: contact@findmysmell.com", "Website: findmysmell.com"] }
+      ]
+    },
+    {
+      "heading": "14. Glossary",
+      "blocks": [
+        { "p": "The following terms are used in this privacy policy:" },
+        { "list": [
+          "Archetype — a fragrance personality profile assigned to you at the end of the quiz (for example: CEO, HUG, JAPAN, SUMMER). Your archetype is based on the pattern of your quiz responses and is used solely to generate your personalised fragrance recommendation.",
+          "Psychographic data — information about your personality traits, preferences, lifestyle patterns, and emotional responses, as revealed through your quiz answers. This type of data goes beyond basic demographics (age, location) to describe how and why you make choices.",
+          "Score vector — the full numerical record of your quiz responses across all questions and answer options. Rather than storing only your winning archetype, we store the complete set of scores, which provides richer data for research and recommendation accuracy. Score vectors are stored without personal identifiers and cannot be linked to you personally.",
+          "Aggregated data — data that has been combined and summarised across many users so that no individual can be identified. For example: \"40% of users in Europe selected the same perfume archetype.\" This is the form in which we share insights with fragrance industry partners."
+        ] }
+      ]
+    },
+    {
+      "heading": "15. Version History",
+      "blocks": [
+        { "list": [
+          "Version 1.0 — February 2026. Initial policy published.",
+          "Version 1.1 — April 2026. Added legal basis for processing, data processors list, CNIL reference, glossary, version history, updated data retention specifics.",
+          "Version 2.0 — September 2026. Rewritten for the new website. Device fingerprinting, analytics cookies, and Google Sheets storage were removed from the product, and from this policy with them. Quiz responses and email addresses are now stored in the European Union."
+        ] }
+      ]
+    }
+  ]
+}
