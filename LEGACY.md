@@ -14,3 +14,5 @@ https://cdn.jsdelivr.net/gh/chrisvanhove-coder/findmysmell-scripts@main/result48
 Новое приложение живёт в `web/` и на эти файлы не влияет.
 Они остаются здесь до переключения трафика, после чего их можно убрать
 одним коммитом.
+
+Контекст целиком — в `HANDOFF.md`.
