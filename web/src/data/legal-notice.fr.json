@@ -6,32 +6,53 @@
     {
       "heading": "Éditeur du site",
       "blocks": [
-        { "p": "Le site findmysmell.com est édité par : Kristina Vanhove, Paris, France." },
-        { "p": "Email : contact@findmysmell.com" }
+        {
+          "p": "Le site findmysmell.com est édité par : Kristina Vanhove, Paris, France."
+        },
+        {
+          "p": "Email : contact@findmysmell.com"
+        }
       ]
     },
     {
       "heading": "Directeur de la publication",
-      "blocks": [{ "p": "Kristina Vanhove" }]
+      "blocks": [
+        {
+          "p": "Kristina Vanhove"
+        }
+      ]
     },
     {
       "heading": "Hébergement",
       "blocks": [
-        { "p": "Le site est hébergé par Railway Corporation (railway.com). L'infrastructure qui sert ce site et la base de données se trouvent dans l'Union européenne (Amsterdam, Pays-Bas)." },
-        { "p": "Les images du site sont diffusées par Cloudinary Ltd." }
+        {
+          "p": "Le site est hébergé par Railway Corporation, 548 Market St PMB 68956, San Francisco, CA 94104, États-Unis. Téléphone : +1 415 707-7675. Site : railway.com."
+        },
+        {
+          "p": "L'infrastructure qui sert ce site et la base de données se trouvent dans l'Union européenne (Amsterdam, Pays-Bas)."
+        },
+        {
+          "p": "Les images du site sont diffusées par Cloudinary Ltd."
+        }
       ]
     },
     {
       "heading": "Propriété intellectuelle",
       "blocks": [
-        { "p": "L'ensemble des contenus présents sur le site findmysmell.com (textes, visuels, quiz, code, identité graphique) est la propriété exclusive de Kristina Vanhove, sauf mention contraire. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite et constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle." }
+        {
+          "p": "L'ensemble des contenus présents sur le site findmysmell.com (textes, visuels, quiz, code, identité graphique) est la propriété exclusive de Kristina Vanhove, sauf mention contraire. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite et constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle."
+        }
       ]
     },
     {
       "heading": "Données personnelles",
       "blocks": [
-        { "p": "Pour toute question relative au traitement de vos données personnelles, consultez notre Politique de Confidentialité ou contactez-nous à contact@findmysmell.com." },
-        { "p": "Vous pouvez également contacter la CNIL : www.cnil.fr, 3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07." }
+        {
+          "p": "Pour toute question relative au traitement de vos données personnelles, consultez notre Politique de Confidentialité ou contactez-nous à contact@findmysmell.com."
+        },
+        {
+          "p": "Vous pouvez également contacter la CNIL : www.cnil.fr, 3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07."
+        }
       ]
     }
   ]

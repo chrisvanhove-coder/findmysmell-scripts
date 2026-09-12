@@ -1,0 +1,30 @@
+{
+  "CEO": {
+    "color": "#a43f35",
+    "track": "https://res.cloudinary.com/dcefrxxav/video/upload/v1787902079/CEO_-_main_choice_2026-08-27T133238_f9p3h9.mp3"
+  },
+  "JAPAN": {
+    "color": "#607f90",
+    "track": "https://res.cloudinary.com/dcefrxxav/video/upload/v1787903341/JAPAN_v.1_2026-08-27T134916_auvykb.mp3"
+  },
+  "HUG": {
+    "color": "#7e3d30",
+    "track": "https://res.cloudinary.com/dcefrxxav/video/upload/v1787902080/HUG_-_main_choice_2026-08-27T134002_hllndz.mp3"
+  },
+  "OFFGRID": {
+    "color": "#3c5d45",
+    "track": "https://res.cloudinary.com/dcefrxxav/video/upload/v1787904954/offgrid_v.2_2026-08-28T081023_q1obrj.mp3"
+  },
+  "OUTOFTIME": {
+    "color": "#604c65",
+    "track": "https://res.cloudinary.com/dcefrxxav/video/upload/v1787906042/OUTOFTIME_2026-08-28T083105_xdg70h.mp3"
+  },
+  "SUMMER": {
+    "color": "#c8a04a",
+    "track": "https://res.cloudinary.com/dcefrxxav/video/upload/v1787903335/SUMMER_v.2_2026-08-28T074622_k3vnwr.mp3"
+  },
+  "THERAPIST": {
+    "color": "#074d82",
+    "track": "https://res.cloudinary.com/dcefrxxav/video/upload/v1787906377/Therapist_v.2_2026-08-28T083741_fxynzb.mp3"
+  }
+}

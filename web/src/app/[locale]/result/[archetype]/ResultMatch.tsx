@@ -91,10 +91,13 @@ export default function ResultMatch({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img className={styles.altImg} src={alt.imageUrl} alt={alt.name} />
-              <span className={styles.altName}>{alt.name}</span>
-              <span className={styles.altHouse}>{alt.house}</span>
-              <p className={styles.altDesc}>{alt.description}</p>
-              <Scales perfume={alt} compact />
+              {/* Флакон слева, всё про него — справа. */}
+              <span className={styles.altBody}>
+                <span className={styles.altName}>{alt.name}</span>
+                <span className={styles.altHouse}>{alt.house}</span>
+                <span className={styles.altDesc}>{alt.description}</span>
+                <Scales perfume={alt} compact />
+              </span>
             </a>
           ))}
         </div>

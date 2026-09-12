@@ -24,8 +24,9 @@ html, body {
   :root { --fms-footer-h: 30px; }
 }
 
-/* Подвал зафиксирован внизу экрана и иначе накрыл бы последнюю строку. */
+/* Обе полосы закреплены и иначе накрыли бы края страницы. */
 body {
+  padding-top: var(--fms-header-h);
   padding-bottom: var(--fms-footer-h);
 }
 

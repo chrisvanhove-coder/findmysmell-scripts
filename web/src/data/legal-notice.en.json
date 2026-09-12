@@ -6,32 +6,53 @@
     {
       "heading": "Site publisher",
       "blocks": [
-        { "p": "findmysmell.com is published by Kristina Vanhove, Paris, France." },
-        { "p": "Email: contact@findmysmell.com" }
+        {
+          "p": "findmysmell.com is published by Kristina Vanhove, Paris, France."
+        },
+        {
+          "p": "Email: contact@findmysmell.com"
+        }
       ]
     },
     {
       "heading": "Publication director",
-      "blocks": [{ "p": "Kristina Vanhove" }]
+      "blocks": [
+        {
+          "p": "Kristina Vanhove"
+        }
+      ]
     },
     {
       "heading": "Hosting",
       "blocks": [
-        { "p": "This site is hosted by Railway Corporation (railway.com). The infrastructure serving this site and its database are located in the European Union (Amsterdam, the Netherlands)." },
-        { "p": "Images on this site are delivered by Cloudinary Ltd." }
+        {
+          "p": "This site is hosted by Railway Corporation, 548 Market St PMB 68956, San Francisco, CA 94104, USA. Phone: +1 415 707-7675. Website: railway.com."
+        },
+        {
+          "p": "The infrastructure serving this site and its database are located in the European Union (Amsterdam, the Netherlands)."
+        },
+        {
+          "p": "Images on this site are delivered by Cloudinary Ltd."
+        }
       ]
     },
     {
       "heading": "Intellectual property",
       "blocks": [
-        { "p": "All content on findmysmell.com (texts, visuals, quiz, code, graphic identity) is the exclusive property of Kristina Vanhove unless stated otherwise. Any reproduction, representation, or distribution, in whole or in part, without prior written permission is prohibited and constitutes an infringement under the French Intellectual Property Code." }
+        {
+          "p": "All content on findmysmell.com (texts, visuals, quiz, code, graphic identity) is the exclusive property of Kristina Vanhove unless stated otherwise. Any reproduction, representation, or distribution, in whole or in part, without prior written permission is prohibited and constitutes an infringement under the French Intellectual Property Code."
+        }
       ]
     },
     {
       "heading": "Personal data",
       "blocks": [
-        { "p": "For any question about the processing of your personal data, see our Privacy Policy or contact us at contact@findmysmell.com." },
-        { "p": "You may also contact the CNIL: www.cnil.fr, 3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07." }
+        {
+          "p": "For any question about the processing of your personal data, see our Privacy Policy or contact us at contact@findmysmell.com."
+        },
+        {
+          "p": "You may also contact the CNIL: www.cnil.fr, 3 Place de Fontenoy, TSA 80715, 75334 Paris Cedex 07."
+        }
       ]
     }
   ]

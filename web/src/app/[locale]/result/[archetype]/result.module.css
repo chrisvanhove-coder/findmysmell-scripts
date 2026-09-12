@@ -148,22 +148,32 @@
   padding: clamp(56px, 10vh, 112px) clamp(24px, 8vw, 120px);
 }
 
+/* Альтернативы идут списком сверху вниз, а не сеткой.
+   Сетка на три карточки давала «два сверху, один сбоку» — перекошенный
+   ряд, в котором третий флакон висел сам по себе. Список из одинаковых
+   строк читается ровно при любом их числе. */
 .altGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: clamp(28px, 4vw, 56px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 48px);
   margin-top: 32px;
 }
 
 /* Карточка альтернативы — целиком ссылка, поэтому нужен тот же сброс,
    что у .cta: без него браузер рисовал её синей и подчёркнутой,
-   включая подписи шкал. */
+   включая подписи шкал.
+
+   Флакон слева, всё остальное справа: название, дом, описание и шкалы
+   стоят одной колонкой рядом с картинкой. */
 .alt {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  /* Колонка с флаконом ограничена сверху: от её ширины зависит высота
+     строки (картинки 2:3), и на широком экране три строки по 385px
+     превращали блок в бесконечную прокрутку. */
+  grid-template-columns: clamp(84px, 16vw, 168px) 1fr;
   align-items: center;
-  text-align: center;
-  gap: 10px;
+  gap: clamp(16px, 3vw, 36px);
+  text-align: left;
   color: inherit;
   text-decoration: none;
   transition: opacity 0.2s ease;
@@ -172,7 +182,30 @@
 .alt:hover { opacity: 0.72; }
 .alt:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; }
 
-.altImg { width: 70%; aspect-ratio: 2 / 3; object-fit: contain; }
+/* Правая колонка. Собрана здесь, а не в разметке, чтобы карточка
+   осталась одной ссылкой без лишних обёрток. */
+.altBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  /* Текст и шкалы не должны растягиваться через весь экран — строку
+     в 900px не читают, а шкала такой ширины перестаёт читаться как шкала. */
+  max-width: 62ch;
+}
+
+.altImg {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+}
+
+/* На узком экране флакон уменьшается, но строка остаётся строкой —
+   так все три альтернативы видно сразу, без долгой прокрутки. */
+@media (max-width: 600px) {
+  .alt { gap: 14px; }
+}
 
 .altName {
   font-family: var(--fms-display);
@@ -191,6 +224,7 @@
 }
 
 .altDesc {
+  display: block;
   font-family: var(--fms-serif);
   font-size: 14px;
   line-height: 1.6;

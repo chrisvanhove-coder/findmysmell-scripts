@@ -9,6 +9,7 @@ import ScentDna from './ScentDna';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
 import SubscribeForm from './SubscribeForm';
+import VinylPlayer from './VinylPlayer';
 import styles from './result.module.css';
 
 interface RouteParams {
@@ -98,6 +99,9 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
       />
 
       <SubscribeForm locale={parsed.locale} archetype={parsed.key} />
+
+      {/* У каждого архетипа своя музыка. */}
+      <VinylPlayer archetype={parsed.key} />
 
       {/* Ничего не рисует: пишет прохождение в базу один раз за проход. */}
       <RecordSubmission locale={parsed.locale} />

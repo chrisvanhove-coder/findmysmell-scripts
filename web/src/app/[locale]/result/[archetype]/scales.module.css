@@ -70,8 +70,10 @@
   background: currentColor;
 }
 
-/* Карточки альтернатив: в проде подписи 8px и точка 8px. */
-.compact { gap: 10px; max-width: none; }
+/* Карточки альтернатив: в проде подписи 8px и точка 8px.
+   Ширина ограничена — рядом с флаконом шкала идёт через всю строку,
+   и без потолка она растягивалась на пол-экрана. */
+.compact { gap: 10px; max-width: 420px; margin-inline: 0; }
 .compact .label { font-size: 8px; width: 72px; letter-spacing: 0.06em; }
 .compact .dot { width: 8px; height: 8px; }
 

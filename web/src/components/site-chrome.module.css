@@ -8,7 +8,18 @@
    Шапка в проде была элементом Webflow и в выгрузку кода не попала,
    поэтому собрана по скриншоту: имя слева, язык справа. */
 
+/* Шапка сделана в той же манере, что и подвал: полупрозрачная тёмная
+   полоса с размытием, а не плашка своего цвета. Так она не спорит
+   с палитрой архетипа и одинаково выглядит на любой странице.
+
+   Закреплена сверху: имя и переключатель языка должны быть под рукой
+   на всей длине страницы результата, как юридические ссылки снизу. */
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -17,12 +28,10 @@
   /* Высота зафиксирована: от неё отсчитываются фиксированные элементы
      квиза, и «примерно столько» их бы не спасло. */
   min-height: var(--fms-header-h);
-  background: var(--fms-paper, #e6e5dd);
-  color: var(--fms-ink, #1a1a1a);
-  /* Над зонами страницы результата: у большой строки «your scent»
-     собственный слой, и шапка не должна оказаться под ней. */
-  position: relative;
-  z-index: 10;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .logo {
@@ -34,7 +43,7 @@
   text-decoration: none;
 }
 
-.logo:hover { opacity: 0.7; }
+.logo:hover { color: #fff; }
 .logo:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
 /* ----------------------------- язык ----------------------------- */
@@ -62,12 +71,14 @@
   position: absolute;
   top: 100%;
   right: 0;
-  min-width: 140px;
-  background: var(--fms-paper, #e6e5dd);
-  border: 1px solid currentColor;
+  min-width: 150px;
+  /* Список — плотный, а не полупрозрачный: сквозь него не должна
+     просвечивать страница, иначе названия языков не прочитать. */
+  background: #14140f;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   display: flex;
   flex-direction: column;
-  z-index: 20;
+  z-index: 50;
 }
 
 .langItem {
@@ -80,7 +91,8 @@
   white-space: nowrap;
 }
 
-.langItem:hover { background: rgba(0, 0, 0, 0.07); }
+.langItem { color: rgba(255, 255, 255, 0.7); }
+.langItem:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
 .langCurrent { font-weight: 700; }
 
 /* ----------------------------- подвал ----------------------------- */
