@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import type { ArchetypeKey } from '@/lib/archetype-colors';
 import { loadAnswers } from '@/lib/answers-store';
 import { match, preferencesFrom, emotionBiasFrom, type Match } from '@/lib/matching';
+import Scales from './Scales';
 import styles from './result.module.css';
 
 /**
@@ -24,7 +25,12 @@ export default function ResultMatch({
 }: {
   archetype: ArchetypeKey;
   fallback: Match;
-  labels: { main: string; alternatives: string; discover: string };
+  labels: {
+    main: string;
+    alternatives: string;
+    alternativesSub: string;
+    discover: string;
+  };
 }) {
   const [picked, setPicked] = useState<Match>(fallback);
 
@@ -65,6 +71,7 @@ export default function ResultMatch({
         <h2 className={styles.matchName}>{main.name}</h2>
         <span className={styles.house}>{main.house}</span>
         <p className={styles.matchDesc}>{main.description}</p>
+        <Scales perfume={main} />
         <a className={styles.cta} href={main.shopUrl} target="_blank" rel="noopener noreferrer">
           {labels.discover}
         </a>
@@ -72,6 +79,7 @@ export default function ResultMatch({
 
       <section className={styles.alts}>
         <span className={styles.label}>{labels.alternatives}</span>
+        <span className={styles.subLabel}>{labels.alternativesSub}</span>
         <div className={styles.altGrid}>
           {alternatives.map((alt) => (
             <a
@@ -86,6 +94,7 @@ export default function ResultMatch({
               <span className={styles.altName}>{alt.name}</span>
               <span className={styles.altHouse}>{alt.house}</span>
               <p className={styles.altDesc}>{alt.description}</p>
+              <Scales perfume={alt} compact />
             </a>
           ))}
         </div>

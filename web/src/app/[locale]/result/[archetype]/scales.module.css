@@ -1,0 +1,83 @@
+/* Шкалы осей. Размеры и пропорции взяты из продового CSS
+   (.fms-scales / .fms-scale-* в webflow/page-result-head.css.html).
+
+   Одно отличие по существу: в проде цвета дублировались отдельными
+   правилами под тёмную зону 3 и светлую зону 4. Здесь вместо этого
+   currentColor — блок сам подхватывает цвет той зоны, в которую
+   вставлен, и дублировать палитру не нужно. */
+
+.scales {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  /* Под главным флаконом шкалы не должны растягиваться на всю ширину
+     секции — на широком экране это выглядело как три полосы через весь
+     экран. Внутри карточки альтернативы ограничение не мешает: там
+     контейнер и так узкий. */
+  max-width: 440px;
+  margin-inline: auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.label {
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  /* В проде было 80px, но «FILLS THE ROOM» в эту ширину не влезает
+     и переносится на вторую строку, ломая выравнивание ряда. */
+  width: 96px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.right { text-align: left; }
+
+.track {
+  flex: 1;
+  height: 3px;
+  position: relative;
+}
+
+/* Прозрачность дорожки живёт на псевдоэлементе, а не на .track:
+   opacity у родителя применилась бы и к точке, и та стала бы
+   почти невидимой — компенсировать это на дочернем элементе нельзя. */
+.track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.14;
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Карточки альтернатив: в проде подписи 8px и точка 8px. */
+.compact { gap: 10px; max-width: none; }
+.compact .label { font-size: 8px; width: 72px; letter-spacing: 0.06em; }
+.compact .dot { width: 8px; height: 8px; }
+
+/* На узком экране сетка альтернатив становится одноколоночной, места
+   больше — можно вернуть читаемый размер, но ширины подписи хватить
+   должно и здесь, иначе «FILLS THE ROOM» опять переносится. */
+@media (max-width: 600px) {
+  .compact .label { font-size: 9px; width: 82px; }
+}

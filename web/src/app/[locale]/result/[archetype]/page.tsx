@@ -4,6 +4,7 @@ import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
 import { ARCHETYPE_KEYS, type ArchetypeKey } from '@/lib/archetype-colors';
 import { getArchetype } from '@/lib/content';
 import { match } from '@/lib/matching';
+import Ingredients from './Ingredients';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
 import SubscribeForm from './SubscribeForm';
@@ -76,26 +77,16 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
         </div>
       </section>
 
-      <section className={styles.ingredients}>
-        <span className={styles.label}>Ingredients worth discovering</span>
-        <div className={styles.ingredientList}>
-          {a.ingredients.map((ing) => (
-            <article key={ing.name} className={styles.ingredient}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className={styles.ingredientImg} src={ing.img} alt={ing.name} />
-              <span className={styles.ingredientName}>{ing.name}</span>
-              <p className={styles.ingredientDesc}>{ing.desc}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <Ingredients ingredients={a.ingredients} />
 
       <ResultMatch
         archetype={parsed.key}
         fallback={fallback}
         labels={{
           main: 'Your scent',
-          alternatives: 'Also worth trying',
+          // Подписи как в проде (z4 в result48.js), не свои.
+          alternatives: 'Also consider',
+          alternativesSub: 'Same energy, different character',
           discover: 'Discover',
         }}
       />

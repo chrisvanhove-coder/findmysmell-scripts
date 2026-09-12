@@ -185,7 +185,22 @@
   margin-top: 32px;
 }
 
-.alt { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
+/* Карточка альтернативы — целиком ссылка, поэтому нужен тот же сброс,
+   что у .cta: без него браузер рисовал её синей и подчёркнутой,
+   включая подписи шкал. */
+.alt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.alt:hover { opacity: 0.72; }
+.alt:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; }
 
 .altImg { width: 70%; aspect-ratio: 2 / 3; object-fit: contain; }
 
@@ -212,4 +227,14 @@
   font-style: italic;
   opacity: 0.6;
   margin: 0;
+}
+
+/* Подзаголовок блока альтернатив — fms-z4-sublabel в проде. */
+.subLabel {
+  display: block;
+  font-family: var(--fms-serif);
+  font-size: clamp(14px, 1.5vw, 17px);
+  font-style: italic;
+  opacity: 0.55;
+  margin-top: 8px;
 }
