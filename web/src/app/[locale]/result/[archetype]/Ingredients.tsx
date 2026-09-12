@@ -27,7 +27,14 @@ const INTRO =
 const LABEL = 'Ingredients worth discovering';
 const READ_MORE = 'Read more';
 
-export default function Ingredients({ ingredients }: { ingredients: Ingredient[] }) {
+export default function Ingredients({
+  ingredients,
+  band,
+}: {
+  ingredients: Ingredient[];
+  /** Большая строка внизу зоны — «your scent» перед флаконом. */
+  band: string;
+}) {
   const [open, setOpen] = useState<Ingredient | null>(null);
 
   const close = useCallback(() => setOpen(null), []);
@@ -81,6 +88,10 @@ export default function Ingredients({ ingredients }: { ingredients: Ingredient[]
           </article>
         ))}
       </div>
+
+      {/* Заголовок следующей зоны, как в проде: он стоит внизу светлой зоны
+          и нижней половиной уходит под тёмную сцену с флаконом. */}
+      <span className={styles.band} aria-hidden="true">{band}</span>
 
       {open && (
         <div

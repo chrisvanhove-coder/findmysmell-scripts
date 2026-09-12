@@ -10,6 +10,38 @@
   background: var(--fms-paper);
   color: var(--fms-ink);
   padding: 0 clamp(24px, 8vw, 120px) clamp(56px, 10vh, 112px);
+  /* Якорь для большой строки внизу зоны. */
+  position: relative;
+}
+
+/* «YOUR SCENT» — заголовок следующей зоны (fms-z3-label в проде).
+   Он принадлежит светлой зоне, но свисает ниже её края, и тёмная сцена
+   закрывает его нижнюю половину. Отсюда эффект наполовину утопленных букв.
+   Ширину задаём в vw, чтобы строка шла через весь экран на любом размере;
+   переносить её нельзя — отсюда nowrap. */
+.band {
+  position: absolute;
+  left: 0;
+  bottom: -0.42em;
+  width: 100%;
+  text-align: center;
+  font-family: var(--fms-display);
+  font-size: 15.5vw;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--fms-brand);
+  /* Тёмная сцена — следующий блок; она должна лечь поверх, а не под. */
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Кегль подобран так, чтобы строка шла почти во всю ширину, но не упиралась
+   в края: на узком экране шрифт отрисовывается шире относительно кегля,
+   поэтому там значение меньше. Проверено замером на 390/430/768/1280/1600. */
+@media (max-width: 767px) {
+  .band { font-size: 14.4vw; }
 }
 
 .label {

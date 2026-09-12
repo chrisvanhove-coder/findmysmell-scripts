@@ -46,6 +46,16 @@ export async function generateMetadata({
   };
 }
 
+// Подписи зон как в проде (result48.js), не свои. `main` — та самая
+// большая строка над флаконом; она живёт внизу светлой зоны и наполовину
+// уходит под тёмную, поэтому отдаётся в Ingredients, а не в ResultMatch.
+const LABELS = {
+  main: 'your scent',
+  alternatives: 'Also consider',
+  alternativesSub: 'Same energy, different character',
+  discover: 'Discover →',
+};
+
 export default async function ResultPage({ params }: { params: Promise<RouteParams> }) {
   const parsed = parse(await params);
   if (!parsed) notFound();
@@ -62,12 +72,10 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
 
   return (
     <main className={styles.page} data-archetype={parsed.key}>
-      <header className={styles.hero}>
-        <span className={styles.you}>{a.you}</span>
-        <h1 className={styles.identity}>{a.identity}</h1>
-        <span className={styles.descriptor}>{a.descriptor}</span>
-      </header>
-
+      {/* Старого героя («You are / politely unreachable») здесь нет намеренно:
+          заказчик убрала его со всех архетипов. Результат начинается сразу
+          со Scent DNA. Тексты you/identity/descriptor остались в данных —
+          из них собирается заголовок вкладки и превью ссылки. */}
       <ScentDna archetype={parsed.key} quote={pullQuote} />
 
       <section className={styles.personality}>
@@ -81,18 +89,12 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
         </div>
       </section>
 
-      <Ingredients ingredients={a.ingredients} />
+      <Ingredients ingredients={a.ingredients} band={LABELS.main} />
 
       <ResultMatch
         archetype={parsed.key}
         fallback={fallback}
-        labels={{
-          main: 'Your scent',
-          // Подписи как в проде (z4 в result48.js), не свои.
-          alternatives: 'Also consider',
-          alternativesSub: 'Same energy, different character',
-          discover: 'Discover →',
-        }}
+        labels={LABELS}
       />
 
       <SubscribeForm locale={parsed.locale} archetype={parsed.key} />
