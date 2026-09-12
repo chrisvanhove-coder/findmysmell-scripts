@@ -68,8 +68,12 @@ export default function ResultMatch({
       <section className={styles.match}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className={styles.bottle} src={main.imageUrl} alt={main.name} />
+        {/* Название уже содержит бренд там, где он есть («Cedrus by Chloé»).
+            Вторая строка под ним показывала поле house, а в нём лежит слаг
+            из Webflow — и он не просто некрасивый: у семи позиций он
+            называет другой парфюм, чем поле name, у четырёх — чужой дом.
+            Показывать его значило дезинформировать. Подробности в 9.7. */}
         <h2 className={styles.matchName}>{main.name}</h2>
-        <span className={styles.house}>{main.house}</span>
         <p className={styles.matchDesc}>{main.description}</p>
         <Scales perfume={main} />
         <a className={styles.cta} href={main.shopUrl} target="_blank" rel="noopener noreferrer">
@@ -94,7 +98,6 @@ export default function ResultMatch({
               {/* Флакон слева, всё про него — справа. */}
               <span className={styles.altBody}>
                 <span className={styles.altName}>{alt.name}</span>
-                <span className={styles.altHouse}>{alt.house}</span>
                 <span className={styles.altDesc}>{alt.description}</span>
                 <Scales perfume={alt} compact />
               </span>
