@@ -1,0 +1,116 @@
+/* Блок подписки. В проде это зона 5 страницы результата (fms-z5-email),
+   она шла на фоне архетипа, поэтому здесь те же токены: --fms-brand
+   под фон и --fms-share-ink под текст. */
+
+.block {
+  background: var(--fms-brand);
+  color: var(--fms-share-ink);
+  padding: clamp(56px, 10vh, 112px) clamp(24px, 8vw, 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.title {
+  font-family: var(--fms-display);
+  font-size: clamp(24px, 3.4vw, 44px);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.sub {
+  font-family: var(--fms-serif);
+  font-size: clamp(14px, 1.5vw, 17px);
+  line-height: 1.6;
+  font-style: italic;
+  opacity: 0.72;
+  max-width: 44ch;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 16px 18px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 0;
+}
+
+.input::placeholder { color: inherit; opacity: 0.4; }
+.input:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.send {
+  flex: 0 0 auto;
+  padding: 16px 28px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.send:hover:not(:disabled) { opacity: 0.7; }
+.send:disabled { opacity: 0.45; cursor: default; }
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  opacity: 0.66;
+  cursor: pointer;
+}
+
+.consent input { margin-top: 2px; flex: 0 0 auto; accent-color: currentColor; }
+.consent a { color: inherit; text-decoration: underline; }
+
+.message {
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.ok { opacity: 0.85; }
+.error { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+/* На узком экране кнопка уходит под поле — иначе поле сжимается
+   до неюзабельной ширины. */
+@media (max-width: 520px) {
+  .row { flex-direction: column; }
+  .send { width: 100%; }
+}

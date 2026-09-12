@@ -35,7 +35,10 @@ export default function QuizScreen({
   const [openText, setOpenText] = useState('');
 
   // Показываем ранее выбранный ответ, если человек вернулся назад.
+  // Экран предгенерирован, ответы лежат в storage — прочитать их можно
+  // только после монтирования, инициализатор useState сломал бы гидратацию.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setChosen(loadAnswers()[question.id] ?? null);
     if (question.openText) setOpenText(loadOpenText());
   }, [question.id, question.openText]);

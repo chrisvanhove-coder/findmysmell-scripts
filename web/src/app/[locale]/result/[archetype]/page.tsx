@@ -5,6 +5,8 @@ import { ARCHETYPE_KEYS, type ArchetypeKey } from '@/lib/archetype-colors';
 import { getArchetype } from '@/lib/content';
 import { match } from '@/lib/matching';
 import ResultMatch from './ResultMatch';
+import RecordSubmission from './RecordSubmission';
+import SubscribeForm from './SubscribeForm';
 import styles from './result.module.css';
 
 interface RouteParams {
@@ -97,6 +99,11 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
           discover: 'Discover',
         }}
       />
+
+      <SubscribeForm locale={parsed.locale} archetype={parsed.key} />
+
+      {/* Ничего не рисует: пишет прохождение в базу один раз за проход. */}
+      <RecordSubmission locale={parsed.locale} />
     </main>
   );
 }

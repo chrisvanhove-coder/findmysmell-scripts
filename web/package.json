@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npm run postbuild",
+    "build": "next build && npm run copy-static",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "postbuild": "cp -r .next/static .next/standalone/.next/static && (cp -r public .next/standalone/public 2>/dev/null || true)",
     "db:seed": "tsx scripts/seed-perfumes.ts",
-    "e2e": "node e2e/quiz-flow.mjs"
+    "e2e": "node e2e/quiz-flow.mjs",
+    "check:submissions": "tsx scripts/check-submissions.mts",
+    "copy-static": "cp -r .next/static .next/standalone/.next/static && (cp -r public .next/standalone/public 2>/dev/null || true)"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",
@@ -28,6 +29,8 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
     "drizzle-kit": "^0.31.6",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.5",
     "playwright": "^1.63.0",
     "tsx": "^4.23.13",
     "typescript": "^5.9.3"

@@ -37,6 +37,11 @@ export const submissions = pgTable(
   'submissions',
   {
     id: uuid('id').defaultRandom().primaryKey(),
+    // Ключ идемпотентности: браузер генерирует его один раз за прохождение.
+    // В проде защитой от повтора был только флаг quiz_sent в sessionStorage —
+    // он терялся при очистке хранилища, и то же прохождение уезжало дважды.
+    // Здесь повтор отсекает база, а не клиент.
+    clientToken: text('client_token').notNull().unique(),
     locale: text('locale').notNull(),
     winner: text('winner').notNull(),
     secondary: text('secondary'),

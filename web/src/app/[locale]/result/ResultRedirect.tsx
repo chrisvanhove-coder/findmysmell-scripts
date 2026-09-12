@@ -22,6 +22,10 @@ export default function ResultRedirect({ locale }: { locale: Locale }) {
   useEffect(() => {
     const answers = loadAnswers();
     if (!Object.keys(answers).length) {
+      // Страница предгенерирована, а ответы есть только в браузере — иначе
+      // как после монтирования их не прочитать. Читать в инициализаторе
+      // useState нельзя: на сервере storage нет, будет рассинхрон гидратации.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setEmpty(true);
       return;
     }

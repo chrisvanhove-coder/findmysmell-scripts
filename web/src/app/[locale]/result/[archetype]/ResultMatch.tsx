@@ -48,8 +48,12 @@ export default function ResultMatch({
 
     if (!prefs) return; // квиз не пройден — оставляем запасной вариант
     const next = match(archetype, prefs, bias);
+    // Тот же случай, что в QuizScreen: страница предгенерирована, ответы
+    // только в браузере. Серверная разметка показывает запасной флакон,
+    // здесь он уточняется после монтирования — это и есть смысл компонента.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (next) setPicked(next);
-  }, [archetype]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [archetype]);
 
   const { main, alternatives } = picked;
 
