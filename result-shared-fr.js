@@ -2,6 +2,33 @@
 // SECTION 3 — FMS_ARCHETYPES (share card data)
 // ============================================================
 
+// ============================================================
+// ДОСТАВКА КАРТИНОК — трансформации Cloudinary
+// Без трансформации в ссылке Cloudinary отдаёт оригинал. Оригиналы здесь —
+// PNG до 6,5 МБ на кружок ингредиента 64×64, до 4,2 МБ на фон. Пресеты и
+// замеры: webflow/LIVE-SITE.md. Хелпер ничего не делает с чужими хостами,
+// со SVG и со ссылками, где трансформация уже есть.
+// ============================================================
+
+window.fmsTx = window.fmsTx || function (url, tx) {
+  if (!url || url.indexOf('https://res.cloudinary.com/') !== 0) return url;
+  if (url.slice(-4) === '.svg') return url;
+  var parts = url.split('/upload/');
+  if (parts.length !== 2) return url;
+  var first = parts[1].split('/')[0];
+  if (/^[a-z]{1,3}_[^\/,]+(,[a-z]{1,3}_[^\/,]+)*$/.test(first)) return url;
+  return parts[0] + '/upload/' + tx + '/' + parts[1];
+};
+
+var FMS_TX = {
+  thumb:   'c_fill,g_auto,h_128,w_128/f_auto/q_auto',   // кружок 64×64
+  modal:   'c_fill,g_auto,h_480,w_1040/f_auto/q_auto',  // модалка 520×240
+  bottle:  'c_limit,w_640/f_auto/q_auto',               // главный флакон 260×400
+  bottleS: 'c_limit,w_420/f_auto/q_auto',               // флакон альтернативы
+  card:    'c_limit,w_640/f_auto/q_auto',               // флакон на карточке, 320×380
+  cardIng: 'c_fill,g_auto,h_256,w_256/f_auto/q_auto'    // кружок на карточке, ≤124px
+};
+
 var FMS_ARCHETYPES = {
   'CEO': {
     headline: 'VOICI À QUOI\nRESSEMBLE UNE\nDÉCISION.',
@@ -381,7 +408,7 @@ function fmsDrawCard3(canvas, callback) {
   if (!arch) { if (callback) callback(); return; }
 
   var ings = fullArch && fullArch.ingredients ? fullArch.ingredients : [];
-  var imgSrcs = ings.map(function(i) { return i.img || ''; }).filter(Boolean);
+  var imgSrcs = ings.map(function(i) { return i.img ? window.fmsTx(i.img, FMS_TX.cardIng) : ''; }).filter(Boolean);
 
   fmsLoadImages(imgSrcs, function(images) {
     var S = 1200;
