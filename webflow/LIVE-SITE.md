@@ -223,8 +223,110 @@ q-wild        HOW DO YOU FEEL ABOUT RAW, EARTHY NOTES?
 7. **`calmnow-water.jpeg` в Cloudinary лежит как `calmnow-wat`** — имя
    обрезано, автосопоставление её не нашло, вписал вручную.
 
+## Добавлено после скриншотов, части 5/6
+
+Прогресс-бар подтвердил шаги: `q-skin-behavior` = 94% (16/17),
+`q-radius` = 100% (17/17). Арифметика сошлась.
+
+**Тексты ответов, которых не было в коде** (сняты со скриншотов):
+
+`q-skin-behavior` — «How does perfume behave on your skin?»
+
+| ключ | ответ |
+|---|---|
+| `Q_SKIN_BEHAVIOR__DISAPEAR` | It disappears quickly |
+| `Q_SKIN_BEHAVIOR__NORMAL` | It lasts normally |
+| `Q_SKIN_BEHAVIOR__SWEETER` | It becomes sweeter |
+| `Q_SKIN_BEHAVIOR__SHARPER` | It becomes more bitter |
+| `Q_SKIN_BEHAVIOR__NOT_SURE` | Not sure |
+
+Кнопки — чёрные пилюли на оливковом `#8a8547`, видео флакона справа
+внутри активной. Вопрос белым, HIGHCRUISER.
+
+`q-radius` — «Do you prefer your scent to stay close to the skin or
+project around you?»
+
+| ключ | ответ |
+|---|---|
+| `Q_RADIUS__CLOSE` | Close to skin: only me |
+| `Q_RADIUS__SOFT` | Soft aura: only me and closest to me |
+| `Q_RADIUS__NOTICEABLE` | Noticeable: people start looking at you |
+| `Q_RADIUS__BOLD` | Bold: everyone must know |
+
+Фон кремовый, пилюли почти белые, пузыри `#f1e09b` видны поверх всего.
+Вопрос тёмным — единственный экран, где он не белый.
+
+**`q-open` — финальный экран:**
+
+```
+Last question, and it's all yours.
+
+A scent memory, a perfume you love, a place that has a meaningful
+for you smell?
+
+Share what comes to mind in this moment:
+
+[ textarea ]
+
+You just finished the quiz — none of it asked for your name or email.
+Can we include your anonymous answers in fragrance research?
+No email or identifying info, ever.
+
+[ AGREE & SEE MY RESULT ]   (залитая золотом)
+[ NO THANKS — JUST MY RESULT ]   (контурная)
+```
+
+В строке «a place that has a meaningful for you smell?» сломана
+грамматика — в проде так и висит.
+
+**Шапка и футер вопросов:** слева `FIND MY SMELL`, справа `EN ▾`, оба
+белым поверх фона вопроса. Футер: `PRIVACY · LEGAL · INSTAGRAM ·
+CONTACT · © 2026 FIND MY SMELL`. Прогресс-бар — подпись `94% COMPLETE`
+слева, полоска справа. Это у меня уже сделано так же.
+
+## Текст результата: у меня он не короче
+
+Проверил на HUG (это тот архетип на скриншотах — «confessions than a
+priest» принадлежит ему). В проде шесть абзацев `desc`, в моих данных
+те же шесть, побайтово. Прогнал каждый через собранный HTML моей
+страницы — все шесть на месте, ни один не теряется: первый уходит над
+диаграммой ДНК, четыре в основной блок, последний курсивом в конце.
+
+Типографика тоже почти совпадает:
+
+| | прод | у меня |
+|---|---|---|
+| размер | `clamp(18px, 2.8vw, 26px)` | `clamp(17px, 2.2vw, 24px)` |
+| интерлиньяж | 1.75 | 1.75 |
+| прозрачность | 0.8 | 0.82 |
+| ширина колонки | 750px | 62ch (≈744px) |
+| отступ между абзацами | 40px | 32px |
+
+На телефоне это 18px против 17px — разница 6%, на «в два раза больше
+текста» не тянет.
+
+**Зато нашёл настоящую разницу — «фонарик».** У блока личности в проде
+есть `.fms-personality-texture`: картинка
+`textured-wall_sh9lpw.png` на весь блок, `opacity 0.35`,
+`mix-blend-mode: multiply`, и поверх неё маска из **четырёх радиальных
+градиентов**, которые следуют за курсором/пальцем:
+
+```css
+mask-image:
+  radial-gradient(circle 160px at var(--mx) var(--my), black 0%, ...),
+  radial-gradient(circle 120px at var(--mx1) var(--my1), ...),
+  radial-gradient(circle  90px at var(--mx2) var(--my2), ...),
+  radial-gradient(circle  60px at var(--mx3) var(--my3), ...);
+```
+
+Четыре круга с разным запаздыванием — получается шлейф, текстура
+проявляется там, где ведёшь, и гаснет за тобой. Плюс
+`box-shadow: inset 0 0 100px 60px` по краям как виньетка. Это и есть та
+бледная картинка за текстом на скриншоте. У меня этого нет вообще.
+
 ## Чего ещё не видел
 
-- тексты ответов на 13 страницах группы Б (лежат в Webflow-дизайне)
-- `head`-блоки 22 страниц (там SEO-бойлерплейт, но мог затесаться CSS)
-- части 5 и 6 скриншотов
+- тексты ответов на 11 страницах группы Б (Q_ATMOS, Q_YOURSELF,
+  Q_CELEBRATE, Q_CALM_NOW и семь страниц-веток)
+- `head`-блоки 22 страниц
+- часть 6 скриншотов
