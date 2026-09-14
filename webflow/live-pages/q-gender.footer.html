@@ -1,0 +1,427 @@
+<style>
+#gender-layout {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  z-index: 100;
+}
+
+/* ── DESKTOP VIDEO PANEL ── */
+#gender-video-panel {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+#gender-video-panel video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+#gender-video-panel video.active {
+  opacity: 1;
+}
+
+/* ── DESKTOP CONTENT PANEL ── */
+#gender-content-panel {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 48px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
+}
+
+#gender-question {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(22px, 3.5vw, 48px);
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 48px;
+  letter-spacing: 0.02em;
+}
+
+/* ── OPTIONS (desktop) ── */
+.gender-option {
+  cursor: pointer;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+}
+
+.gender-option:last-child {
+  border-bottom: none;
+}
+
+.gender-option-label {
+  font-family: 'Inconsolata', monospace;
+  font-size: clamp(20px, 1.2vw, 24px);
+  color: #fff;
+  letter-spacing: 0.12em;
+  text-transform: none;
+  display: block;
+  transition: none;
+  line-height: 1.4;
+}
+
+.gender-option-sub {
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  display: block;
+}
+
+.gender-option.dimmed {
+  opacity: 0.25;
+}
+
+/* ── MOBILE ONLY ELEMENTS — hidden by default ── */
+.gender-option-video {
+  display: none;
+}
+
+.gender-option-overlay {
+  display: none;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+
+  .gender-option-label-desk,
+  .gender-option-sub-desk {
+    display: none !important;
+  }
+
+  #gender-layout {
+    flex-direction: column;
+  }
+
+  #gender-video-panel {
+    display: none;
+  }
+
+  #gender-content-panel {
+    width: 100%;
+    height: 100dvh;
+    padding: 0;
+    justify-content: flex-start;
+    overflow-y: hidden;
+  }
+
+  #gender-question {
+    font-size: 15px;
+    margin-bottom: 0;
+    padding: 12px 20px 6px;
+    flex-shrink: 0;
+  }
+
+#gender-options-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 78dvh;
+}
+
+  .gender-option {
+  flex: none;
+  height: 26dvh;
+    position: relative;
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    transition: none;
+    will-change: auto;
+    overflow: hidden;
+  }
+
+  .gender-option:last-child {
+    border-bottom: none;
+  }
+
+  .gender-option.dimmed {
+    opacity: 1;
+  }
+
+  /* Mobile video behind text */
+  .gender-option-video {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.45;
+  }
+
+  /* Gradient overlay */
+  .gender-option-overlay {
+    display: flex;
+    position: absolute;
+    inset: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 14px 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 60%);
+  }
+
+  /* On mobile, label/sub are inside overlay — re-style */
+  .gender-option-label {
+    font-size: 14px !important;
+    letter-spacing: 0.08em;
+    transition: none;
+  }
+
+  .gender-option-sub {
+    font-size: 10px;
+  }
+}
+</style>
+
+<script>
+(function() {
+
+  const options = [
+    {
+      key: 'Q_GENDER__FEMININE',
+      label: 'Softer, warmer, rounder',
+      sub: 'enveloping · skin-close · round',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1773935881/feminine_vjqnhb.mp4'
+    },
+    {
+      key: 'Q_GENDER__UNISEX',
+      label: 'Balanced, neither too soft nor too fresh',
+      sub: 'neutral · precise · clean',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1773936248/unisex_ml3vxc.mp4'
+    },
+    {
+      key: 'Q_GENDER__MASCULINE',
+      label: 'Fresher, drier, more structured',
+      sub: 'sharp · dry · architectural',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/v1773935883/masculine_l95axl.mp4'
+    }
+  ];
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+
+  const layout = document.createElement('div');
+  layout.id = 'gender-layout';
+
+  /* ── DESKTOP: video panel (left side) ── */
+  const videoPanel = document.createElement('div');
+  videoPanel.id = 'gender-video-panel';
+
+  const desktopVideos = {};
+  options.forEach(opt => {
+    const vid = document.createElement('video');
+    vid.src = opt.video;
+    vid.autoplay = true;
+    vid.muted = true;
+    vid.loop = true;
+    vid.playsInline = true;
+    vid.preload = 'auto';
+    desktopVideos[opt.key] = vid;
+    videoPanel.appendChild(vid);
+  });
+
+  /* ── CONTENT PANEL (right side desktop / full mobile) ── */
+  const contentPanel = document.createElement('div');
+  contentPanel.id = 'gender-content-panel';
+
+  const questionEl = document.createElement('div');
+  questionEl.id = 'gender-question';
+  questionEl.textContent = 'HOW DO YOU PREFER YOUR SCENT TO FEEL ON YOU?';
+  contentPanel.appendChild(questionEl);
+  
+  /* ── Mobile hint — tap to continue ── */
+const hintEl = document.createElement('div');
+hintEl.id = 'gender-hint';
+hintEl.textContent = 'tap to select and continue →';
+hintEl.style.cssText = `
+  font-family: 'Inconsolata', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  padding: 0 20px 12px;
+  opacity: 1;
+  transition: opacity 1s ease;
+  pointer-events: none;
+`;
+contentPanel.appendChild(hintEl);
+
+  /* Wrapper for flex layout on mobile */
+  const optionsWrap = document.createElement('div');
+  optionsWrap.id = 'gender-options-wrap';
+  contentPanel.appendChild(optionsWrap);
+
+  const optionEls = {};
+  let activeTouchKey = null;
+
+  options.forEach(opt => {
+    const div = document.createElement('div');
+    div.className = 'gender-option';
+    div.setAttribute('data-key', opt.key);
+
+    /* Mobile video (hidden on desktop via CSS) */
+    const mobileVid = document.createElement('video');
+    mobileVid.className = 'gender-option-video';
+    mobileVid.src = opt.video;
+    mobileVid.autoplay = true;
+    mobileVid.muted = true;
+    mobileVid.loop = true;
+    mobileVid.playsInline = true;
+    mobileVid.preload = 'auto';
+    div.appendChild(mobileVid);
+
+    /* Overlay with text (used on mobile) */
+    const overlay = document.createElement('div');
+    overlay.className = 'gender-option-overlay';
+
+    const label = document.createElement('span');
+    label.className = 'gender-option-label';
+    label.textContent = opt.label;
+
+    const sub = document.createElement('span');
+    sub.className = 'gender-option-sub';
+    sub.textContent = opt.sub;
+
+    overlay.appendChild(label);
+    overlay.appendChild(sub);
+    div.appendChild(overlay);
+
+    /* Desktop: also add label/sub directly to div (visible when overlay is hidden) */
+    const labelDesk = label.cloneNode(true);
+    const subDesk = sub.cloneNode(true);
+    labelDesk.className = 'gender-option-label gender-option-label-desk';
+    subDesk.className = 'gender-option-sub gender-option-sub-desk';
+    div.appendChild(labelDesk);
+    div.appendChild(subDesk);
+
+    optionsWrap.appendChild(div);
+    optionEls[opt.key] = div;
+  });
+
+  layout.appendChild(videoPanel);
+  layout.appendChild(contentPanel);
+  document.body.appendChild(layout);
+
+  document.querySelectorAll('[data-question-id="Q_GENDER"]').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  /* ── DESKTOP functions ── */
+  function showVideo(key) {
+    Object.entries(desktopVideos).forEach(([k, vid]) => {
+      if (k === key) { vid.classList.add('active'); vid.play(); }
+      else vid.classList.remove('active');
+    });
+  }
+
+  function dimOthers(activeKey) {
+    Object.entries(optionEls).forEach(([k, el]) => {
+      el.classList.toggle('active', k === activeKey);
+      el.classList.toggle('dimmed', k !== activeKey);
+    });
+  }
+
+  function resetAll() {
+    Object.values(optionEls).forEach(el => el.classList.remove('active', 'dimmed'));
+    Object.values(desktopVideos).forEach(vid => vid.classList.remove('active'));
+  }
+
+  function selectAnswer(key) {
+    const btn = document.querySelector('[data-answer-key="' + key + '"]');
+    if (btn) btn.click();
+  }
+
+  Object.entries(optionEls).forEach(([key, el]) => {
+
+    /* Desktop hover */
+    el.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      showVideo(key);
+      dimOthers(key);
+    });
+
+    el.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      resetAll();
+    });
+
+    el.addEventListener('click', (e) => {
+      if (isMobile()) return;
+      e.stopImmediatePropagation();
+      selectAnswer(key);
+    });
+
+    /* Mobile tap — no class changes, just select */
+    let touchStartY = 0;
+    el.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      touchStartY = e.touches[0].clientY;
+      activeTouchKey = key;
+    }, { passive: true });
+
+    el.addEventListener('touchend', (e) => {
+      if (!isMobile()) return;
+      const movedY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+      if (activeTouchKey === key && movedY < 10) {
+        e.preventDefault();
+        selectAnswer(key);
+      }
+    }, { passive: false });
+  });
+
+  /* Desktop: show first video on load */
+  setTimeout(() => {
+    if (!isMobile()) desktopVideos[options[0].key].classList.add('active');
+  }, 300);
+
+})();
+</script>
+
+
+<script>
+(function() {
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:0.07;mix-blend-mode:overlay;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  let last = 0;
+  function loop(ts) {
+    if (ts - last > 80) {
+      const img = ctx.createImageData(cvs.width, cvs.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v;
+        d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      last = ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>

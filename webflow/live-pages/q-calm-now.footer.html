@@ -1,0 +1,166 @@
+
+<!-- ==================== Q_CALM_NOW_EN ==================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const overlay = document.createElement('div');
+  overlay.id = 'open-answer-overlay';
+  overlay.style.cssText = `display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;`;
+  overlay.innerHTML = `<div style="background:rgba(255,255,255,0.12);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.25);border-radius:28px;padding:48px 36px 40px;max-width:480px;width:90%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.3);"><p style="font-family:Georgia,serif;font-size:20px;margin-bottom:28px;color:#fff;letter-spacing:0.02em;line-height:1.5;">Is there a smell that instantly calms you?</p><input id="open-answer-input" type="text" placeholder="Type your answer..." style="width:100%;padding:16px 20px;font-size:16px;font-family:Georgia,serif;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);border-radius:50px;outline:none;color:#fff;box-sizing:border-box;letter-spacing:0.03em;"><button id="open-answer-submit" style="margin-top:16px;width:100%;padding:16px;background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:50px;font-size:14px;cursor:pointer;font-family:Georgia,serif;letter-spacing:0.14em;text-transform:uppercase;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">Continue →</button></div>`;
+  document.body.appendChild(overlay);
+  function attachOpenAnswerListener() {
+    const btn = document.querySelector('[data-open-answer="true"]');
+    if (!btn) return;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      overlay.style.display = 'flex';
+      setTimeout(() => document.getElementById('open-answer-input').focus(), 50);
+    });
+  }
+  attachOpenAnswerListener();
+  document.getElementById('open-answer-submit').addEventListener('click', function() {
+    const text = document.getElementById('open-answer-input').value.trim();
+    if (!text) return;
+    sessionStorage.setItem('quiz_open', text); localStorage.setItem('quiz_open', text);
+    const answers = JSON.parse(sessionStorage.getItem('quiz_answers') || '{}');
+    answers['Q_CALM_NOW'] = 'Q_CALM_NOW_OTHER';
+    sessionStorage.setItem('quiz_answers', JSON.stringify(answers));
+    window.location.href = '/q-sweet';
+  });
+  document.getElementById('open-answer-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('open-answer-submit').click(); });
+});
+</script>
+
+<script>
+(function() {
+
+  const imageMap = {
+    'Q_CALM_NOW__CLEAN':      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6baa0f5802fb06d744_calmnow-clean.png',
+    'Q_CALM_NOW__FLOWER':     'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6c6e61083b546d84e8_calmnow-flowers.png',
+    'Q_CALM_NOW__TEA':        'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6c85f950be14cded03_calmnow-tea.png',
+    'Q_CALM_NOW__FRESH_COMF': 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6c5c6c97a4ee2b2fb6_calmnow-air.png',
+    'Q_CALM_NOW__RAIN':       'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6cd79aa423ee242c9f_calmnow-rain.png',
+    'Q_CALM_NOW__FIRE':       'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6c88b77bda8ddfe9bc_calmnow-fire.png',
+    'Q_CALM_NOW__SWEET_COMF': 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6ccda8012da32277e7_calmnow-baked.png',
+    'Q_CALM_NOW__WOOD':       'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee6c34b591aa04ac055b_calmnow-books.png',
+    'Q_CALM_NOW__SEA_COMF':   'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69cbee8677ff5df5b171984e_calmnow-water.jpeg',
+  };
+
+  /* Preload */
+  Object.values(imageMap).forEach(url => { const img = new Image(); img.src = url; });
+
+  /* Full-screen background overlay */
+  const bg = document.createElement('div');
+  bg.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    pointer-events: none;
+  `;
+  document.body.appendChild(bg);
+
+  /* Grain overlay on top */
+  const grain = document.createElement('canvas');
+  grain.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:0.07;mix-blend-mode:overlay;';
+  document.body.appendChild(grain);
+  const gctx = grain.getContext('2d');
+  function resizeGrain(){ grain.width = window.innerWidth; grain.height = window.innerHeight; }
+  resizeGrain(); window.addEventListener('resize', resizeGrain);
+  let gLast = 0;
+  (function gloop(ts){
+    if (ts - gLast > 80) {
+      const img = gctx.createImageData(grain.width, grain.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v; d[i+3] = 255;
+      }
+      gctx.putImageData(img, 0, 0); gLast = ts;
+    }
+    requestAnimationFrame(gloop);
+  })(0);
+
+  /* Keep question text above background */
+  const section = document.querySelector('[data-question-id="Q_CALM_NOW"]');
+  if (section) {
+    section.style.position = 'relative';
+    section.style.zIndex = '1';
+  }
+
+  let currentKey   = null;
+  let fadeOutTimer = null;
+  let activeTouchKey = null;
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+  const buttons  = document.querySelectorAll('[data-answer-key^="Q_CALM_NOW"]');
+
+  function showImage(key) {
+    if (!imageMap[key]) return;
+    clearTimeout(fadeOutTimer);
+    bg.style.backgroundImage = `url('${imageMap[key]}')`;
+    bg.style.opacity = '1';
+    currentKey = key;
+  }
+
+  function hideImage() {
+    fadeOutTimer = setTimeout(() => {
+      bg.style.opacity = '0';
+      currentKey = null;
+    }, 200);
+  }
+
+  function dimOthers(activeBtn) {
+    buttons.forEach(b => {
+      b.style.opacity   = b === activeBtn ? '1' : '0.4';
+      b.style.transition = 'opacity 0.3s ease';
+    });
+  }
+
+  function resetAll() {
+    buttons.forEach(b => { b.style.opacity = '1'; });
+  }
+
+  buttons.forEach(btn => {
+    const key = btn.getAttribute('data-answer-key');
+
+    /* Desktop hover */
+    btn.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      showImage(key);
+      dimOthers(btn);
+    });
+    btn.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      resetAll();
+      hideImage();
+    });
+
+    /* Mobile — first tap shows image, second tap selects */
+    btn.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      if (activeTouchKey !== key) {
+        e.preventDefault();
+        activeTouchKey = key;
+        showImage(key);
+        dimOthers(btn);
+      }
+      /* second tap falls through naturally to btn.click() */
+    }, { passive: false });
+  });
+
+  /* Tap outside resets mobile */
+  document.addEventListener('touchstart', (e) => {
+    if (!isMobile()) return;
+    const tapped = e.target.closest('[data-answer-key^="Q_CALM_NOW"]');
+    if (!tapped) {
+      activeTouchKey = null;
+      resetAll();
+      hideImage();
+    }
+  });
+
+})();
+</script>

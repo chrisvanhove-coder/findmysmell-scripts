@@ -1,0 +1,173 @@
+<style>
+  #fms-hero-wrap, #fms-hero-wrap *{margin:0;padding:0;box-sizing:border-box;}
+  #fms-hero-wrap{
+    --charcoal-950:#141917;
+    --charcoal:#26302E;
+    --terracotta:#D03D01;
+    --olive:#BBA149;
+    --cream:#EBE4CF;
+    --gold:#BBA149;
+    font-family:'Inconsolata',monospace;
+    background:var(--charcoal-950);
+    overflow-x:hidden;
+  }
+  #fms-hero-wrap a{text-decoration:none;}
+  @media (prefers-reduced-motion: reduce){
+    #fms-hero-wrap *{animation:none !important;transition:none !important;}
+  }
+
+  #fms-hero-wrap .kicker{font-family:'Inconsolata',monospace;font-weight:700;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;}
+
+  #fms-hero-wrap .hero{
+    position:relative;
+    min-height:78vh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
+  #fms-hero-wrap .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
+  #fms-hero-wrap .hero-scrim{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(20,25,23,0.45) 0%, rgba(20,25,23,0.58) 42%, rgba(20,25,23,0.9) 100%);
+  }
+  #fms-hero-wrap .hero-tint{position:absolute;inset:0;background:var(--charcoal);opacity:0.16;mix-blend-mode:multiply;}
+
+  #fms-hero-wrap .hero-content{
+    position:relative;z-index:2;
+    padding:clamp(28px,5vw,72px);
+  }
+  #fms-hero-wrap .hero-kicker{color:var(--gold);opacity:0.95;margin-bottom:clamp(18px,3vh,30px);display:block;}
+  #fms-hero-wrap .hero-headline{
+    font-family:'Fraunces',serif;font-weight:900;
+    font-size:clamp(40px,9vw,150px);
+    line-height:0.94;letter-spacing:-0.008em;
+    color:var(--terracotta);
+    margin-bottom:clamp(20px,3.5vh,34px);
+    overflow-wrap:anywhere;word-break:break-word;
+  }
+  #fms-hero-wrap .hero-copy{
+    font-weight:700;text-transform:uppercase;letter-spacing:0.02em;
+    font-size:clamp(18px,1.8vw,26px);line-height:1.55;
+    color:var(--cream);max-width:none;
+    margin-bottom:clamp(22px,4vh,38px);
+  }
+  
+  @media (max-width:600px){
+    #fms-hero-wrap .hero-copy{
+      max-width:42ch;
+    }
+  }
+  #fms-hero-wrap .hero-copy-emphasis{
+    color:var(--gold);
+    font-weight:700;
+  }
+  #fms-hero-wrap .hero-begin{
+    display:inline-flex;align-items:center;gap:10px;
+    width:fit-content;font-weight:700;font-size:15px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--charcoal-950);background:var(--gold);padding:18px 40px;border-radius:2px;
+    box-shadow:0 0 40px 5px rgba(208,61,1,0.45);
+    transition:background 0.2s, box-shadow 0.2s;
+    border:none;cursor:pointer;
+  }
+  #fms-hero-wrap .hero-begin:hover{background:var(--cream);box-shadow:0 0 48px 7px rgba(208,61,1,0.6);}
+  #fms-hero-wrap .hero-begin:focus-visible{outline:2px solid var(--cream);outline-offset:4px;}
+  #fms-hero-wrap .br-mobile{display:none;}
+
+  @media (max-width:600px){
+    #fms-hero-wrap .hero{min-height:74vh;}
+    #fms-hero-wrap .hero-headline{font-size:clamp(32px,13vw,72px);}
+    #fms-hero-wrap .hero-copy{font-size:clamp(15px,4vw,19px);}
+    #fms-hero-wrap .br-mobile{display:block;}
+  }
+  @media (max-width:380px){
+    #fms-hero-wrap .hero-headline{font-size:clamp(28px,13vw,54px);}
+  }
+
+  #fms-hero-wrap .s3{background:var(--cream);padding:clamp(56px,10vh,110px) clamp(24px,7vw,90px);}
+  #fms-hero-wrap .s3-kicker{color:var(--terracotta);opacity:1;margin-bottom:clamp(20px,3vh,32px);}
+  #fms-hero-wrap .s3-steps{
+    display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:clamp(28px,4vw,48px);
+    margin-bottom:clamp(40px,6vh,64px);border-top:1px solid rgba(39,39,39,0.15);padding-top:clamp(28px,4vh,40px);
+  }
+  @media (max-width:720px){#fms-hero-wrap .s3-steps{grid-template-columns:1fr;}}
+  #fms-hero-wrap .s3-step-num{font-family:'Fraunces',serif;font-weight:900;font-size:16px;color:var(--terracotta);margin-bottom:14px;}
+  #fms-hero-wrap .s3-step-label{font-weight:700;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:var(--charcoal);margin-bottom:10px;display:block;}
+  #fms-hero-wrap .s3-step-desc{font-size:15px;line-height:1.65;color:rgba(39,39,39,0.72);}
+  #fms-hero-wrap .s3-btn{
+    display:inline-flex;align-items:center;gap:10px;padding:18px 44px;border-radius:2px;
+    background:var(--charcoal);color:var(--cream);font-weight:700;font-size:14px;
+    letter-spacing:0.18em;text-transform:uppercase;box-shadow:0 6px 28px rgba(208,61,1,0.22);
+    transition:background 0.2s, box-shadow 0.2s;
+    border:none;cursor:pointer;
+  }
+  #fms-hero-wrap .s3-btn:hover{background:var(--terracotta);box-shadow:0 8px 34px rgba(208,61,1,0.34);}
+  #fms-hero-wrap .s3-btn:focus-visible{outline:2px solid var(--terracotta);outline-offset:4px;}
+</style>
+
+<div id="fms-hero-wrap">
+
+  <section class="hero">
+    <img class="hero-bg" src="https://res.cloudinary.com/dcefrxxav/image/upload/v1787323650/background_home_v16ghx.jpg" alt="">
+    <div class="hero-scrim"></div>
+    <div class="hero-tint"></div>
+    <div class="hero-content">
+      <h1 class="hero-headline">ThereIsNo<br>Universal<br class="br-mobile">Scent</h1>
+      <p class="hero-copy">
+        <span class="hero-copy-emphasis">FOR PEOPLE WHO LOVE FRAGRANCE, BUT DON'T SPEAK ITS LANGUAGE,</span> FIND MY SMELL IS A SCENT PERSONALITY PROFILE THAT <span class="hero-copy-emphasis">DECODES YOUR TASTE</span> THROUGH WHO YOU ARE RATHER THAN NOTES YOU CAN'T NAME, AND GIVES YOU <span class="hero-copy-emphasis">THE VOCABULARY TO SHOP ANY BRAND, ANY PRICE, FOR THE REST OF YOUR LIFE.</span>
+      </p>
+      <a class="hero-begin" href="https://www.findmysmell.com/q-gender">Begin <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <section class="s3">
+    <span class="kicker s3-kicker">How it works</span>
+    <div class="s3-steps">
+      <div>
+        <div class="s3-step-num">01</div>
+        <span class="s3-step-label">Answer Openly</span>
+        <p class="s3-step-desc">Twelve questions about mood, memories and emotions — not fragrance notes you've never smelled.</p>
+      </div>
+      <div>
+        <div class="s3-step-num">02</div>
+        <span class="s3-step-label">Get Matched</span>
+        <p class="s3-step-desc">One main recommendation built for who you are right now, plus few alternatives accompanied with five perfume notes you can come to any shop and ask to smell.</p>
+      </div>
+      <div>
+        <div class="s3-step-num">03</div>
+        <span class="s3-step-label">Come back later</span>
+        <p class="s3-step-desc">You're welcome to retake it whenever things change. They usually do.</p>
+      </div>
+    </div>
+    <a class="s3-btn" href="https://www.findmysmell.com/q-gender">Begin <span class="arrow">→</span></a>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var s1 = document.getElementById('fms-s1');
+  var hint = document.getElementById('fms-hint');
+  if (!s1 || !hint) return;
+
+  var seen = false;
+  function markSeen(){
+    if (seen) return;
+    seen = true;
+    hint.classList.add('fms-seen');
+    window.removeEventListener('scroll', onScroll);
+    if (io) io.disconnect();
+  }
+  function onScroll(){
+    if (window.scrollY > s1.offsetHeight * 0.5) markSeen();
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+
+  var io = null;
+  if ('IntersectionObserver' in window) {
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) markSeen();
+      });
+    }, { threshold: 0 });
+    io.observe(s1);
+  }
+})();
+</script>

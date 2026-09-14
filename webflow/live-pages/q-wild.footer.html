@@ -1,0 +1,266 @@
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;width:100%;overflow:hidden;background:#7a8c4a;}
+body{font-family:'Arial Black',Arial,sans-serif;}
+
+#wild-screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:24px;
+  z-index:10;
+}
+
+#wild-question{
+  font-family:'HIGHCRUISER','Arial Black',Arial;
+  font-size:clamp(15px,2.5vw,26px);
+  color:rgba(255,248,225,0.96);
+  letter-spacing:0.06em;
+  text-align:center;
+  line-height:1.3;
+  pointer-events:none;
+}
+
+#wild-bottle-wrap{
+  position:relative;
+  width:clamp(120px,14vw,180px);
+  height:clamp(260px,38vh,360px);
+  cursor:ns-resize;
+  user-select:none;
+  touch-action:none;
+  flex-shrink:0;
+}
+#wild-bottle-wrap canvas{width:100%;height:100%;}
+
+#wild-level-label{
+  font-family:'Inconsolata',monospace;
+  font-size:clamp(13px,1.4vw,15px);
+  letter-spacing:0.18em;
+  color:rgba(255,248,225,0.75);
+  text-align:center;
+  text-transform:uppercase;
+  min-height:20px;
+}
+
+#wild-confirm{
+  font-family:'Inconsolata',monospace;
+  font-size:clamp(12px,1.3vw,14px);
+  letter-spacing:0.2em;
+  color:rgba(255,248,225,0.75);
+  text-transform:uppercase;
+  background:none;
+  border:1px solid rgba(255,248,225,0.3);
+  padding:11px 36px;
+  cursor:pointer;
+  transition:all 0.25s;
+  opacity:0;pointer-events:none;
+}
+#wild-confirm.visible{opacity:1;pointer-events:all;}
+#wild-confirm:hover{background:rgba(255,248,225,0.1);border-color:rgba(255,248,225,0.55);}
+
+#wild-hint{
+  font-family:monospace;font-size:11px;
+  color:rgba(255,248,225,0.35);
+  letter-spacing:0.18em;text-transform:uppercase;
+}
+
+#wild-grain{position:fixed;inset:0;pointer-events:none;z-index:99;opacity:0.06;mix-blend-mode:overlay;}
+</style>
+
+<div id="wild-screen">
+  <div id="wild-question">HOW DO YOU FEEL ABOUT<br>RAW, EARTHY NOTES?</div>
+  <div id="wild-bottle-wrap">
+    <canvas id="wild-cvs" width="160" height="340"></canvas>
+  </div>
+  <div id="wild-level-label">DRAG UP TO SET YOUR LEVEL</div>
+  <button id="wild-confirm">CONFIRM →</button>
+  <div id="wild-hint" style="opacity:0;pointer-events:none;"></div>
+</div>
+<canvas id="wild-grain"></canvas>
+
+<script>
+(function(){
+
+const levels = [
+  { key:'Q_WILD__NO_WILD',    label:"I DON'T ENJOY THOSE NOTES", fill:0.00, color:'#4a4a42' },
+  { key:'Q_WILD__LITTLE_WILD',label:'A LITTLE IS FINE',          fill:0.33, color:'#6b5c3e' },
+  { key:'Q_WILD__SOME_WILD',  label:'I LIKE SOME RAW NOTES',     fill:0.66, color:'#7a4e2a' },
+  { key:'Q_WILD__LOVE_WILD',  label:'I LOVE THAT CHARACTER',     fill:1.00, color:'#5c3318' },
+];
+
+const cvs=document.getElementById('wild-cvs');
+const ctx=cvs.getContext('2d');
+const W=160,H=340;
+let fillFrac=0,targetFrac=0,waveT=0;
+let arrowT=0,arrowDone=false;
+let selectedLevel=levels[0];
+let isDragging=false,dragStartY=0,dragStartFrac=0;
+
+const wrap       =document.getElementById('wild-bottle-wrap');
+const levelLabel =document.getElementById('wild-level-label');
+const confirmBtn =document.getElementById('wild-confirm');
+
+function bottlePath(c){
+  c.beginPath();
+  c.moveTo(62,0);c.lineTo(98,0);c.lineTo(98,48);
+  c.bezierCurveTo(98,68,126,80,134,100);
+  c.lineTo(138,260);
+  c.quadraticCurveTo(138,290,108,295);
+  c.lineTo(52,295);
+  c.quadraticCurveTo(22,290,22,260);
+  c.lineTo(26,100);
+  c.bezierCurveTo(34,80,62,68,62,48);
+  c.closePath();
+}
+
+function getNearestLevel(frac){
+  let best=levels[0],bestD=Infinity;
+  levels.forEach(l=>{const d=Math.abs(l.fill-frac);if(d<bestD){bestD=d;best=l;}});
+  return best;
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.save();
+  bottlePath(ctx);
+  ctx.clip();
+
+  ctx.fillStyle='rgba(90,100,50,0.4)';
+  ctx.fillRect(0,0,W,H);
+
+  if(fillFrac>0.005){
+    const fillTop=295-(fillFrac*195);
+    const amp=3+fillFrac*5,freq=0.044;
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=2){
+      const y=fillTop+Math.sin(x*freq+waveT)*amp+Math.sin(x*freq*1.8+waveT*1.4)*amp*0.35;
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();
+    const nearest=getNearestLevel(fillFrac);
+    const grad=ctx.createLinearGradient(0,fillTop,0,H);
+    grad.addColorStop(0,nearest.color+'bb');
+    grad.addColorStop(1,nearest.color+'ff');
+    ctx.fillStyle=grad;ctx.fill();
+
+    ctx.beginPath();
+    for(let x=0;x<=W;x+=2){
+      const y=fillTop+Math.sin(x*freq+waveT)*amp+Math.sin(x*freq*1.8+waveT*1.4)*amp*0.35;
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1.5;ctx.stroke();
+  }
+
+  ctx.fillStyle='rgba(255,255,255,0.04)';
+  ctx.fillRect(30,100,12,180);
+  ctx.restore();
+
+  bottlePath(ctx);
+  ctx.strokeStyle='rgba(255,248,225,0.45)';ctx.lineWidth=2;ctx.stroke();
+
+  ctx.beginPath();ctx.moveTo(62,52);ctx.lineTo(98,52);
+  ctx.strokeStyle='rgba(255,248,225,0.2)';ctx.lineWidth=1;ctx.stroke();
+
+  ctx.beginPath();
+  if(ctx.roundRect)ctx.roundRect(56,-10,48,14,[3,3,0,0]);
+  else ctx.rect(56,-10,48,14);
+  ctx.fillStyle='rgba(255,248,225,0.15)';ctx.fill();
+  ctx.strokeStyle='rgba(255,248,225,0.4)';ctx.lineWidth=1.5;ctx.stroke();
+
+  [0,0.33,0.66,1].forEach(f=>{
+    const y=295-f*195;
+    ctx.beginPath();ctx.moveTo(138,y);ctx.lineTo(146,y);
+    ctx.strokeStyle='rgba(255,248,225,0.25)';ctx.lineWidth=1;ctx.stroke();
+  });
+
+  // Drag hint — two chevrons, centered ON the bottle, breathing apart/together
+  // to signal "drag up or down." Disappears after the first touch/drag.
+  if (!arrowDone) {
+    const pulse = (Math.sin(arrowT * 1.8) + 1) / 2;
+    const spread = 14 + pulse * 10;
+    const alpha  = 0.5 + pulse * 0.4;
+    const cx = 80;
+    const cy = 190;
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = 'rgba(255,248,225,0.9)';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const upY = cy - spread;
+    ctx.beginPath();
+    ctx.moveTo(cx - 9, upY + 9);
+    ctx.lineTo(cx, upY);
+    ctx.lineTo(cx + 9, upY + 9);
+    ctx.stroke();
+
+    const downY = cy + spread;
+    ctx.beginPath();
+    ctx.moveTo(cx - 9, downY - 9);
+    ctx.lineTo(cx, downY);
+    ctx.lineTo(cx + 9, downY - 9);
+    ctx.stroke();
+
+    ctx.restore();
+  }
+}
+
+function animate(){
+  if(!isDragging) fillFrac+=(targetFrac-fillFrac)*0.12;
+  waveT+=0.04;
+  if(!arrowDone) arrowT+=0.04;
+  draw();
+  requestAnimationFrame(animate);
+}
+animate();
+
+function onDragMove(screenY){
+  const delta=dragStartY-screenY;
+  const fracDelta=delta/wrap.getBoundingClientRect().height;
+  fillFrac=Math.max(0,Math.min(1,dragStartFrac+fracDelta*1.6));
+  const nearest=getNearestLevel(fillFrac);
+  levelLabel.textContent=nearest.label;
+  selectedLevel=nearest;
+  confirmBtn.classList.add('visible');
+}
+
+function onDragEnd(){
+  isDragging=false;
+  const nearest=getNearestLevel(fillFrac);
+  targetFrac=nearest.fill;selectedLevel=nearest;
+  levelLabel.textContent=nearest.label;
+}
+
+wrap.addEventListener('mousedown',e=>{isDragging=true;arrowDone=true;dragStartY=e.clientY;dragStartFrac=fillFrac;e.preventDefault();});
+document.addEventListener('mousemove',e=>{if(isDragging)onDragMove(e.clientY);});
+document.addEventListener('mouseup',()=>{if(isDragging)onDragEnd();});
+
+wrap.addEventListener('touchstart',e=>{isDragging=true;arrowDone=true;dragStartY=e.touches[0].clientY;dragStartFrac=fillFrac;e.preventDefault();},{passive:false});
+document.addEventListener('touchmove',e=>{if(isDragging){onDragMove(e.touches[0].clientY);e.preventDefault();}},{passive:false});
+document.addEventListener('touchend',()=>{if(isDragging)onDragEnd();});
+
+confirmBtn.addEventListener('click',()=>{
+  const btn=document.querySelector('[data-answer-key="'+selectedLevel.key+'"]');
+  if(btn) btn.click();
+});
+
+const grain=document.getElementById('wild-grain');
+const gctx=grain.getContext('2d');
+function resizeG(){grain.width=window.innerWidth;grain.height=window.innerHeight;}
+resizeG();window.addEventListener('resize',resizeG);
+let gLast=0;
+function grainLoop(ts){
+  if(ts-gLast>80){
+    const img=gctx.createImageData(grain.width,grain.height);
+    const d=img.data;
+    for(let i=0;i<d.length;i+=4){const v=Math.random()*255;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255;}
+    gctx.putImageData(img,0,0);gLast=ts;
+  }
+  requestAnimationFrame(grainLoop);
+}
+requestAnimationFrame(grainLoop);
+
+})();
+</script>

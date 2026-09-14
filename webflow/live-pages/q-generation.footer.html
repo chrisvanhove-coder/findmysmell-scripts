@@ -1,0 +1,328 @@
+<style>
+#generation-layout {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #3d3d20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px 40px;
+  box-sizing: border-box;
+}
+
+#generation-question {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(18px, 2.5vw, 32px);
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-bottom: 48px;
+  pointer-events: none;
+}
+
+#generation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.gen-card {
+  position: relative;
+  height: 160px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.gen-texture {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+  .gen-card.dimmed {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+  
+.gen-texture canvas {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  #generation-layout {
+    justify-content: center;
+    padding: 70px 30px 30px 10px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: center;
+  }
+
+  #generation-question {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+  }
+
+  #generation-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+    width: calc(100% - 80px) !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .gen-card {
+    height: 80px !important;
+    width: 100% !important;
+  }
+    .gen-card.dimmed {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+}
+</style>
+
+<script>
+(function() {
+
+  const generations = [
+    { key: 'Q_GENERATION__GEN_Z',  years: '1997 – 2012', style: 'digital' },
+    { key: 'Q_GENERATION__MILLEN', years: '1981 – 1996', style: 'film'    },
+    { key: 'Q_GENERATION__GEN_X',  years: '1965 – 1980', style: 'vhs'     },
+    { key: 'Q_GENERATION__BOOMER', years: '1946 – 1964', style: 'bw'      },
+  ];
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+
+  const layout = document.createElement('div');
+  layout.id = 'generation-layout';
+
+  const questionEl = document.createElement('div');
+  questionEl.id = 'generation-question';
+  questionEl.textContent = 'WHICH GENERATION DO YOU BELONG TO?';
+  layout.appendChild(questionEl);
+
+  const grid = document.createElement('div');
+  grid.id = 'generation-grid';
+
+  const cardEls = {};
+  const canvases = {};
+  let activeTouchKey = null;
+
+  generations.forEach(gen => {
+    const card = document.createElement('div');
+    card.className = 'gen-card';
+
+    const textureDiv = document.createElement('div');
+    textureDiv.className = 'gen-texture';
+    const canvas = document.createElement('canvas');
+    canvas.width = 400;
+    canvas.height = 160;
+    textureDiv.appendChild(canvas);
+    canvases[gen.key] = canvas;
+
+    card.appendChild(textureDiv);
+    grid.appendChild(card);
+    cardEls[gen.key] = card;
+  });
+
+  layout.appendChild(grid);
+  document.body.appendChild(layout);
+
+  document.querySelectorAll('[data-question-id="Q_GENERATION"]').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  function renderTexture(key, canvas) {
+    const gen = generations.find(g => g.key === key);
+    if (!gen) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    if (gen.style === 'digital') {
+      const imageData = ctx.createImageData(w, h);
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        const val = Math.random() > 0.5 ? 180 + Math.floor(Math.random() * 75) : 10;
+        imageData.data[i]     = val * 0.3;
+        imageData.data[i + 1] = val * 0.6;
+        imageData.data[i + 2] = val;
+        imageData.data[i + 3] = 255;
+      }
+      ctx.putImageData(imageData, 0, 0);
+      ctx.font = 'bold 28px Inconsolata, monospace';
+      ctx.fillStyle = '#00cfff';
+      ctx.shadowColor = '#00cfff';
+      ctx.shadowBlur = 12;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(gen.years, w / 2, h / 2);
+
+    } else if (gen.style === 'film') {
+      ctx.fillStyle = '#1a0a00';
+      ctx.fillRect(0, 0, w, h);
+      const imageData = ctx.createImageData(w, h);
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        const grain = Math.random() * 40;
+        imageData.data[i]     = Math.min(255, 120 + grain);
+        imageData.data[i + 1] = Math.min(255, 60 + grain * 0.5);
+        imageData.data[i + 2] = Math.min(255, 10 + grain * 0.1);
+        imageData.data[i + 3] = 200;
+      }
+      ctx.putImageData(imageData, 0, 0);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      const holeH = 12, holeW = 8, margin = 4;
+      for (let y = 10; y < h - 10; y += 22) {
+        ctx.beginPath(); ctx.roundRect(margin, y, holeW, holeH, 2); ctx.fill();
+        ctx.beginPath(); ctx.roundRect(w - margin - holeW, y, holeW, holeH, 2); ctx.fill();
+      }
+      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(18, 0); ctx.lineTo(18, h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(w - 18, 0); ctx.lineTo(w - 18, h); ctx.stroke();
+      ctx.font = 'bold 24px Inconsolata, monospace';
+      ctx.fillStyle = '#ffcc88';
+      ctx.shadowColor = '#ff8800';
+      ctx.shadowBlur = 6;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(gen.years, w / 2, h / 2);
+
+    } else if (gen.style === 'vhs') {
+      ctx.fillStyle = '#001800';
+      ctx.fillRect(0, 0, w, h);
+      for (let y = 0; y < h; y += 2) {
+        ctx.fillStyle = `rgba(0,${100 + Math.random() * 80},0,${0.2 + Math.random() * 0.3})`;
+        ctx.fillRect(0, y, w, 1);
+      }
+      for (let i = 0; i < 4; i++) {
+        const y = Math.floor(Math.random() * h);
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
+        ctx.fillRect(0, y, w + Math.random() * 20 - 10, 1);
+      }
+      ctx.font = 'bold 28px Inconsolata, monospace';
+      ctx.fillStyle = '#aaffaa';
+      ctx.shadowColor = '#00ff00';
+      ctx.shadowBlur = 10;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(gen.years, w / 2, h / 2);
+
+    } else if (gen.style === 'bw') {
+      const imageData = ctx.createImageData(w, h);
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        const val = 30 + Math.random() * 50;
+        imageData.data[i] = imageData.data[i+1] = imageData.data[i+2] = val;
+        imageData.data[i + 3] = 255;
+      }
+      ctx.putImageData(imageData, 0, 0);
+      for (let i = 0; i < 5; i++) {
+        const y = Math.floor(Math.random() * h);
+        ctx.fillStyle = 'rgba(255,255,255,0.15)';
+        ctx.fillRect(0, y, w, 1);
+      }
+      ctx.font = 'bold 28px Inconsolata, monospace';
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = '#ffffff';
+      ctx.shadowBlur = 4;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(gen.years, w / 2, h / 2);
+    }
+  }
+
+  generations.forEach(gen => renderTexture(gen.key, canvases[gen.key]));
+  setInterval(() => {
+    generations.forEach(gen => renderTexture(gen.key, canvases[gen.key]));
+  }, 150);
+
+  function dimOthers(activeKey) {
+    Object.entries(cardEls).forEach(([k, el]) => {
+      el.classList.toggle('dimmed', k !== activeKey);
+      el.classList.toggle('selected', false);
+      if (k === activeKey) el.classList.remove('dimmed');
+    });
+  }
+
+  function resetAll() {
+    Object.values(cardEls).forEach(el => el.classList.remove('dimmed', 'selected'));
+    activeTouchKey = null;
+  }
+
+  function selectAnswer(key) {
+    Object.entries(cardEls).forEach(([k, el]) => {
+      el.classList.toggle('selected', k === key);
+      el.classList.toggle('dimmed', k !== key);
+    });
+    setTimeout(() => {
+      const btn = document.querySelector('[data-answer-key="' + key + '"]');
+      if (btn) btn.click();
+    }, 600);
+  }
+
+  generations.forEach(gen => {
+    const card = cardEls[gen.key];
+
+    card.addEventListener('mouseenter', () => { if (isMobile()) return; dimOthers(gen.key); });
+    card.addEventListener('mouseleave', () => { if (isMobile()) return; resetAll(); });
+    card.addEventListener('click', (e) => { if (isMobile()) return; e.stopImmediatePropagation(); selectAnswer(gen.key); });
+
+    let touchStartY = 0;
+    card.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      touchStartY = e.touches[0].clientY;
+      activeTouchKey = gen.key;
+    }, { passive: true });
+
+    card.addEventListener('touchend', (e) => {
+      if (!isMobile()) return;
+      const movedY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+      if (activeTouchKey === gen.key && movedY < 10) {
+        e.preventDefault();
+        selectAnswer(gen.key);
+      }
+    }, { passive: false });
+  });
+
+  document.addEventListener('touchstart', (e) => {
+    if (!isMobile()) return;
+    if (!e.target.closest('.gen-card')) resetAll();
+  });
+
+})();
+</script>
+
+<script>
+(function() {
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:0.07;mix-blend-mode:overlay;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  let last = 0;
+  function loop(ts) {
+    if (ts - last > 80) {
+      const img = ctx.createImageData(cvs.width, cvs.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v; d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0); last = ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>

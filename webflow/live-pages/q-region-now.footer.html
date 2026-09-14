@@ -1,0 +1,221 @@
+<script>
+(function() {
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:0.07;mix-blend-mode:overlay;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  let last = 0;
+  function loop(ts) {
+    if (ts - last > 80) {
+      const img = ctx.createImageData(cvs.width, cvs.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v;
+        d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      last = ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+
+<!--
+  REGION NOW — Country Dropdown Embed
+  ─────────────────────────────────────
+  SETUP IN WEBFLOW:
+  1. Keep the grain canvas script ✅
+  2. Delete the hint script ("tap to select and continue") 🗑️
+  3. Delete radio button answer options in Webflow editor 🗑️
+  4. Paste this embed anywhere on the page — it centers itself ✅
+  ─────────────────────────────────────
+-->
+
+<style>
+#fms-rn-outer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 50;
+  pointer-events: none;
+}
+#fms-rn-wrap {
+  pointer-events: all;
+  width: 100%;
+  max-width: 480px;
+  font-family: 'Inconsolata', monospace;
+  position: relative;
+}
+#fms-rn-question {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial, sans-serif;
+  font-size: clamp(22px, 4vw, 36px);
+  color: #f1e09b;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+#fms-rn-input-wrap {
+  position: relative;
+}
+#fms-rn-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-family: 'Inconsolata', monospace;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(241,224,155,0.35);
+  border-radius: 3px;
+  color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 0.02em;
+}
+#fms-rn-input::placeholder { color: rgba(255,255,255,0.35); }
+#fms-rn-input:focus { border-color: #f1e09b; }
+#fms-rn-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #6b2a18;
+  border: 1px solid rgba(241,224,155,0.2);
+  border-radius: 3px;
+  z-index: 200;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(241,224,155,0.3) transparent;
+}
+#fms-rn-list::-webkit-scrollbar { width: 4px; }
+#fms-rn-list::-webkit-scrollbar-track { background: transparent; }
+#fms-rn-list::-webkit-scrollbar-thumb { background: rgba(241,224,155,0.3); border-radius: 2px; }
+.fms-rn-item {
+  padding: 12px 20px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.02em;
+}
+.fms-rn-item:hover { background: rgba(241,224,155,0.12); color: #f1e09b; }
+.fms-rn-none {
+  padding: 12px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+  font-style: italic;
+}
+@media (max-width: 480px) {
+  #fms-rn-outer { padding: 20px; }
+  #fms-rn-input { font-size: 15px; padding: 14px 16px; }
+  .fms-rn-item { padding: 11px 16px; font-size: 14px; }
+}
+</style>
+
+<div id="fms-rn-outer">
+  <div id="fms-rn-wrap">
+    <div id="fms-rn-question">Where do you live now?</div>
+    <div id="fms-rn-input-wrap">
+      <input id="fms-rn-input" type="text" placeholder="Search your country…" autocomplete="off" spellcheck="false">
+      <div id="fms-rn-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var ANSWER_KEY = 'Q_REGION_NOW';
+  var NEXT_PAGE  = '/q-generation';
+
+  var COUNTRIES = [
+    'Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda',
+    'Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain',
+    'Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia',
+    'Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso',
+    'Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic',
+    'Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Croatia','Cuba',
+    'Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic',
+    'Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia',
+    'Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia',
+    'Germany','Hong Kong (SAR China)','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau',
+    'Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq',
+    'Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya',
+    'Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia',
+    'Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia',
+    'Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico',
+    'Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique',
+    'Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua',
+    'Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan',
+    'Palau','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines',
+    'Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis',
+    'Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino',
+    'Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles',
+    'Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia',
+    'South Africa','South Korea','South Sudan','Spain','Sri Lanka','Sudan',
+    'Suriname','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania',
+    'Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia',
+    'Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates',
+    'United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Vatican City',
+    'Venezuela','Vietnam','Yemen','Zambia','Zimbabwe'
+  ];
+
+  var input  = document.getElementById('fms-rn-input');
+  var list   = document.getElementById('fms-rn-list');
+
+  function renderList(filter) {
+    var q = (filter || '').toLowerCase().trim();
+    var matches = q
+      ? COUNTRIES.filter(function(c) { return c.toLowerCase().indexOf(q) !== -1; })
+      : COUNTRIES;
+    list.innerHTML = matches.length
+      ? matches.map(function(c) {
+          return '<div class="fms-rn-item" data-value="' + c + '">' + c + '</div>';
+        }).join('')
+      : '<div class="fms-rn-none">No results</div>';
+    list.style.display = 'block';
+  }
+
+  function saveAndNavigate(country) {
+    var answers = {};
+    try {
+      answers = JSON.parse(
+        sessionStorage.getItem('quiz_answers') ||
+        localStorage.getItem('quiz_answers') || '{}'
+      );
+    } catch(e) {}
+    answers[ANSWER_KEY] = country;
+    var json = JSON.stringify(answers);
+    sessionStorage.setItem('quiz_answers', json);
+    localStorage.setItem('quiz_answers', json);
+    window.location.href = NEXT_PAGE;
+  }
+
+  input.addEventListener('input', function() { renderList(this.value); });
+  input.addEventListener('focus', function() { renderList(this.value); });
+
+  list.addEventListener('mousedown', function(e) {
+    var item = e.target.closest('.fms-rn-item');
+    if (item) saveAndNavigate(item.getAttribute('data-value'));
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('fms-rn-outer').contains(e.target)) {
+      list.style.display = 'none';
+    }
+  });
+})();
+</script>

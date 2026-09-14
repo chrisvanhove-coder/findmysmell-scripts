@@ -1,0 +1,248 @@
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;width:100%;background:#b8bfaa;}
+body{font-family:'Arial Black',Arial,sans-serif;}
+
+/* ── DESKTOP: 4-corner grid ── */
+#cluster{
+  display:grid;
+  grid-template-areas:
+    "tl . tr"
+    ".  q  ."
+    "bl . br";
+  grid-template-columns: auto clamp(200px,36vw,340px) auto;
+  grid-template-rows: auto auto auto;
+  gap: clamp(14px,2.4vh,28px) clamp(18px,3vw,42px);
+  align-items:center;
+  justify-items:center;
+  z-index:30;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+#question{
+  grid-area:q;
+  font-family:'Arial Black',Arial;
+  font-size:clamp(20px,4vw,42px);
+  color:rgba(30,24,14,0.82);
+  letter-spacing:0.05em;
+  line-height:1.2;
+  font-weight:900;
+  text-align:center;
+  pointer-events:none;
+}
+
+.ans{
+  font-family:'Inconsolata',monospace;
+  font-size:clamp(13px,1.8vw,18px);
+  color:rgba(40,32,18,0.55);
+  letter-spacing:0.2em;
+  font-weight:700;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:color 0.2s;
+  padding:10px;
+  line-height:1;
+  text-transform:uppercase;
+}
+.ans:hover{ color:rgba(30,24,14,0.92); }
+.ans.tl{ grid-area:tl; text-align:right; }
+.ans.tr{ grid-area:tr; text-align:left;  }
+.ans.bl{ grid-area:bl; text-align:right; }
+.ans.br{ grid-area:br; text-align:left;  }
+
+#grain{
+  position:fixed;inset:0;
+  pointer-events:none;
+  z-index:40;
+  opacity:0.06;
+  mix-blend-mode:overlay;
+}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  #cluster{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:0 !important;
+    position:fixed !important;
+    top:64px !important;
+    bottom:80px !important;
+    left:0 !important;
+    right:0 !important;
+    height:auto !important;
+    overflow-y:scroll !important;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    padding:24px 28px 80px !important;
+    transform:none !important;
+  }
+
+  #question{
+    font-size:clamp(22px,8vw,32px) !important;
+    margin-bottom:32px !important;
+    width:100% !important;
+    order:-1 !important;
+    color:rgba(20,16,8,0.88) !important;
+    flex-shrink:0 !important;
+  }
+
+  .ans{
+    width:100% !important;
+    font-size:clamp(14px,4.5vw,18px) !important;
+    letter-spacing:0.14em !important;
+    padding:20px 16px !important;
+    text-align:center !important;
+    white-space:normal !important;
+    border-bottom:1px solid rgba(40,32,18,0.12) !important;
+    color:rgba(40,32,18,0.65) !important;
+    flex-shrink:0 !important;
+  }
+  .ans:last-child{ border-bottom:none !important; }
+  .ans.tl,.ans.tr,.ans.bl,.ans.br{ text-align:center !important; }
+}
+
+/* ── DESKTOP PROTECTION: force grid above 600px ── */
+@media(min-width:601px){
+  #cluster{
+    display:grid !important;
+    flex-direction:unset !important;
+    overflow-y:visible !important;
+    top:50% !important;
+    bottom:auto !important;
+    left:50% !important;
+    right:auto !important;
+    height:auto !important;
+    transform:translate(-50%,-50%) !important;
+    padding:10px !important;
+  }
+  #question{
+    order:0 !important;
+    width:auto !important;
+    margin-bottom:0 !important;
+    font-size:clamp(20px,4vw,42px) !important;
+    color:rgba(30,24,14,0.82) !important;
+  }
+  .ans{
+    width:auto !important;
+    border-bottom:none !important;
+    white-space:nowrap !important;
+    padding:10px !important;
+    font-size:clamp(13px,1.8vw,18px) !important;
+    color:rgba(40,32,18,0.55) !important;
+    letter-spacing:0.2em !important;
+  }
+  .ans.tl{ grid-area:tl !important; text-align:right !important; }
+  .ans.tr{ grid-area:tr !important; text-align:left !important; }
+  .ans.bl{ grid-area:bl !important; text-align:right !important; }
+  .ans.br{ grid-area:br !important; text-align:left !important; }
+}
+</style>
+
+<canvas id="blobcvs" style="position:fixed;inset:0;z-index:0;"></canvas>
+
+<div id="cluster">
+  <div id="question">WHERE DID<br>YOU GROW UP?</div>
+  <div class="ans tl" data-key="city">BIG CITY</div>
+  <div class="ans tr" data-key="town">SMALL TOWN</div>
+  <div class="ans bl" data-key="sea">BY THE SEA</div>
+  <div class="ans br" data-key="forest">NATURE</div>
+</div>
+
+<canvas id="grain" style="position:fixed;inset:0;z-index:40;pointer-events:none;opacity:0.06;mix-blend-mode:overlay;"></canvas>
+
+<script>
+(function(){
+
+  const labels = { city:'BIG CITY', town:'SMALL TOWN', sea:'BY THE SEA', forest:'NATURE' };
+
+  const keyMap = {
+    city:   'Q_ENV_CHILD__CITY',
+    town:   'Q_ENV_CHILD__SMALL_TOWN',
+    sea:    'Q_ENV_CHILD__SEA',
+    forest: 'Q_ENV_CHILD__FOREST_MOUNT'
+  };
+
+
+  function select(key, el){
+    el.textContent = '✓ ' + labels[key];
+    el.style.color = 'rgba(60,50,30,0.9)';
+    const btn = document.querySelector('[data-answer-key="' + keyMap[key] + '"]');
+    if(btn) btn.click();
+  }
+
+  /* Desktop click */
+  document.querySelectorAll('.ans').forEach(el => {
+    const key = el.dataset.key;
+    el.addEventListener('click', () => select(key, el));
+  });
+
+  /* Mobile — touchend to avoid accidental fire */
+  document.querySelectorAll('.ans').forEach(el => {
+    el.addEventListener('touchend', e => {
+      e.preventDefault();
+      select(el.dataset.key, el);
+    }, {passive: false});
+  });
+
+  /* ── BLOB BACKGROUND ── */
+  const blobCvs = document.getElementById('blobcvs');
+  const bctx = blobCvs.getContext('2d');
+  let BW, BH;
+  function resizeBlob(){ BW = blobCvs.width = window.innerWidth; BH = blobCvs.height = window.innerHeight; }
+  resizeBlob();
+  window.addEventListener('resize', resizeBlob);
+
+  const blobs = [
+    { x:0.12, y:0.80, r:0.22, vx:0.00007, vy:-0.00004, phase:0 },
+    { x:1.05, y:0.30, r:0.19, vx:-0.00005, vy:0.00006, phase:1.5 },
+    { x:0.55, y:-0.08, r:0.08, vx:0.00004, vy:0.00005, phase:2.8 },
+    { x:0.80, y:1.05, r:0.13, vx:-0.00004, vy:-0.00005, phase:4.0 },
+  ];
+
+  let bt = 0;
+  function blobLoop(){
+    bctx.clearRect(0,0,BW,BH);
+    blobs.forEach(b => {
+      b.x += b.vx; b.y += b.vy;
+      if(b.x < -b.r*2) b.x = 1+b.r;
+      if(b.x > 1+b.r*2) b.x = -b.r;
+      if(b.y < -b.r*2) b.y = 1+b.r;
+      if(b.y > 1+b.r*2) b.y = -b.r;
+      const cx=b.x*BW, cy=b.y*BH, rad=b.r*Math.min(BW,BH);
+      const wobble = 1 + Math.sin(bt*0.35+b.phase)*0.015;
+      bctx.beginPath();
+      bctx.ellipse(cx,cy,rad*wobble,rad/wobble,Math.sin(bt*0.18+b.phase)*0.25,0,Math.PI*2);
+      bctx.fillStyle='#c4503a';
+      bctx.fill();
+    });
+    bt += 0.01;
+    requestAnimationFrame(blobLoop);
+  }
+  blobLoop();
+
+  /* ── GRAIN ── */
+  const grain = document.getElementById('grain');
+  const gctx = grain.getContext('2d');
+  function resizeGrain(){ grain.width=window.innerWidth; grain.height=window.innerHeight; }
+  resizeGrain();
+  window.addEventListener('resize', resizeGrain);
+  let gLast = 0;
+  function grainLoop(ts){
+    if(ts - gLast > 80){
+      const img = gctx.createImageData(grain.width, grain.height);
+      const d = img.data;
+      for(let i=0;i<d.length;i+=4){ const v=Math.random()*255; d[i]=d[i+1]=d[i+2]=v; d[i+3]=255; }
+      gctx.putImageData(img, 0, 0);
+      gLast = ts;
+    }
+    requestAnimationFrame(grainLoop);
+  }
+  requestAnimationFrame(grainLoop);
+
+})();
+</script>
