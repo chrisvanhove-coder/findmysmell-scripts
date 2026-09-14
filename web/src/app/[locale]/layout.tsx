@@ -23,7 +23,9 @@ const inconsolata = Inconsolata({
 
 const montserrat = Montserrat({
   subsets: ['latin', 'latin-ext', 'cyrillic'],
-  weight: ['400', '600'],
+  // 900 нужен заголовку главной: «THERE IS NO UNIVERSAL SCENT» в проде
+  // набран Montserrat Black, и в меньшем весе приём не работает.
+  weight: ['400', '600', '900'],
   variable: '--fms-sans',
   display: 'swap',
 });

@@ -1,0 +1,28 @@
+{
+  "_": "Главная страница. Перенесена с продовой страницы Webflow — там вся вёрстка и текст лежали в одном HTML-эмбеде. Картинки уже подменены на Cloudinary с f_auto,q_auto: оригиналы были PNG по 3,6 МБ, на телефоне это неприемлемо.",
+  "title": ["THERE", "IS NO", "UNIVERSAL", "SCENT"],
+  "tagline": "A 5-minute quiz that finds the perfume that fits who you are right now.",
+  "pitch": [
+    { "text": "The fragrance industry spends" },
+    { "text": "billions telling you what to buy." },
+    { "text": "It has never once asked who you are.", "accent": true, "gap": true },
+    { "text": "This quiz does.", "accent": true }
+  ],
+  "howLabel": "How it works",
+  "howBody": "Answer with what you feel right now — not with your mind, but with your current state, mood, point in life.",
+  "howBodyAccent": "what you feel right now",
+  "howNote": "You're welcome to come back when things change. At the end: one main perfume recommendation, and three others at a lower price point. All chosen for who you are — not for which notes you share.",
+  "howNoteAccent": "who you are",
+  "begin": "Begin",
+  "consent": "By clicking \"Begin\", you consent to the collection and analysis of your quiz responses. No personally identifiable information is collected or stored.",
+  "consentLink": "Read more",
+  "scrollHint": "scroll",
+  "images": {
+    "hero": "https://res.cloudinary.com/dcefrxxav/image/upload/f_auto,q_auto,w_1600/findmysmell/home/hero.png",
+    "heroMobile": "https://res.cloudinary.com/dcefrxxav/image/upload/f_auto,q_auto,w_900/findmysmell/home/hero.png",
+    "side": [
+      { "src": "https://res.cloudinary.com/dcefrxxav/image/upload/f_auto,q_auto,w_700/findmysmell/home/fireplace.png", "alt": "A fireplace" },
+      { "src": "https://res.cloudinary.com/dcefrxxav/image/upload/f_auto,q_auto,w_700/findmysmell/home/skiing.png", "alt": "Skiing" }
+    ]
+  }
+}
