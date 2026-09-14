@@ -137,6 +137,8 @@ export interface SubscriberInput {
   email: string;
   locale: Locale;
   archetype: ArchetypeKey | null;
+  /** id подобранного флакона, если браузер его прислал. */
+  perfumeId: string | null;
 }
 
 export type ParsedSubscriber =
@@ -159,7 +161,7 @@ const EMAIL_MAX = 254;
 export function parseSubscriber(body: unknown): ParsedSubscriber {
   if (!isPlainObject(body)) return { ok: false, error: 'body must be an object' };
 
-  const { email, locale, archetype, consentEmail } = body;
+  const { email, locale, archetype, consentEmail, perfumeId } = body;
 
   if (consentEmail !== true) return { ok: false, error: 'email consent is required' };
 
@@ -180,7 +182,21 @@ export function parseSubscriber(body: unknown): ParsedSubscriber {
     key = found;
   }
 
-  return { ok: true, input: { email: normalized, locale, archetype: key } };
+  // Подобранный флакон. Прохождения обезличены и с адресом не связаны,
+  // а подбор считается в браузере — восстановить его на сервере нельзя.
+  // Поле необязательное: без него письмо будет только про архетип.
+  let perfume: string | null = null;
+  if (perfumeId !== undefined && perfumeId !== null && perfumeId !== '') {
+    if (typeof perfumeId !== 'string' || perfumeId.length > 64) {
+      return { ok: false, error: 'invalid perfumeId' };
+    }
+    perfume = perfumeId;
+  }
+
+  return {
+    ok: true,
+    input: { email: normalized, locale, archetype: key, perfumeId: perfume },
+  };
 }
 
 function resolveArchetype(value: string): ArchetypeKey | null {

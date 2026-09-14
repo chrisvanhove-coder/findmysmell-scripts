@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import type { ArchetypeKey } from '@/lib/archetype-colors';
-import { loadAnswers } from '@/lib/answers-store';
-import { match, preferencesFrom, emotionBiasFrom, type Match } from '@/lib/matching';
+import { type Match } from '@/lib/matching';
+import { pickFromBrowser } from '@/lib/picked-client';
 import Scales from './Scales';
 import styles from './result.module.css';
 
@@ -35,25 +35,7 @@ export default function ResultMatch({
   const [picked, setPicked] = useState<Match>(fallback);
 
   useEffect(() => {
-    const sp = new URLSearchParams(window.location.search);
-    const axis = (k: string) => {
-      const n = Number(sp.get(k));
-      return sp.has(k) && Number.isInteger(n) && n >= 0 && n <= 3 ? n : null;
-    };
-    const s = axis('s'), r = axis('r'), p = axis('p');
-    const emo = sp.get('emo');
-
-    const answers = loadAnswers();
-    const prefs =
-      s !== null && r !== null && p !== null
-        ? { sweet: s, raw: r, projection: p }
-        : preferencesFrom(answers);
-    const bias = emo
-      ? emotionBiasFrom({ Q_EMO: `Q_EMO__${emo.toUpperCase()}` })
-      : emotionBiasFrom(answers);
-
-    if (!prefs) return; // квиз не пройден — оставляем запасной вариант
-    const next = match(archetype, prefs, bias);
+    const next = pickFromBrowser(archetype);
     // Тот же случай, что в QuizScreen: страница предгенерирована, ответы
     // только в браузере. Серверная разметка показывает запасной флакон,
     // здесь он уточняется после монтирования — это и есть смысл компонента.

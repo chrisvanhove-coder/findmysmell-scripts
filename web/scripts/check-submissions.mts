@@ -23,6 +23,8 @@ import { migrate } from 'drizzle-orm/pglite/migrator';
 import { sql } from 'drizzle-orm';
 import * as schema from '../src/db/schema';
 import { parseSubmission, buildRecord, parseSubscriber } from '../src/lib/submission';
+import { emailConfigured, sendResultEmail, buildResultEmail } from '../src/lib/email';
+import { match } from '../src/lib/matching';
 import { resolve } from '../src/lib/scoring';
 
 let failures = 0;
@@ -246,6 +248,171 @@ console.log('\nЗапись в Postgres (pglite, миграции из drizzle/)
     check('подписчик один, а не два', subs.length === 1, `есть ${subs.length}`);
     check('повторная подписка обновила архетип', subs[0]?.archetype === 'HUG');
     check('повторная подписка обновила локаль', subs[0]?.locale === 'en');
+
+    // Согласие должно быть доказуемо: раньше оно проверялось на входе
+    // и нигде не сохранялось.
+    check('согласие на письмо записано', subs[0]?.consentEmail === true);
+    check('время согласия записано', subs[0]?.consentAt instanceof Date);
+    check('письмо ещё не отмечено отправленным', subs[0]?.sentAt === null);
+  }
+
+  /* ------------------------ флакон для письма ------------------------ */
+  console.log('\nПодобранный флакон в подписке');
+  {
+    const withPerfume = parseSubscriber({
+      email: 'bottle@example.com', locale: 'en', archetype: 'CEO',
+      consentEmail: true, perfumeId: 'abc-123',
+    });
+    check('флакон принимается', withPerfume.ok && withPerfume.input.perfumeId === 'abc-123');
+
+    const without = parseSubscriber({
+      email: 'nobottle@example.com', locale: 'en', archetype: 'CEO', consentEmail: true,
+    });
+    check('без флакона тоже принимается', without.ok && without.input.perfumeId === null);
+
+    const tooLong = parseSubscriber({
+      email: 'x@example.com', locale: 'en', archetype: 'CEO',
+      consentEmail: true, perfumeId: 'x'.repeat(65),
+    });
+    check('слишком длинный id отклоняется', !tooLong.ok);
+
+    const wrongType = parseSubscriber({
+      email: 'x@example.com', locale: 'en', archetype: 'CEO',
+      consentEmail: true, perfumeId: 42,
+    });
+    check('id не строкой отклоняется', !wrongType.ok);
+  }
+
+  /* --------------------------- письмо --------------------------- */
+  // Сеть Brevo из песочницы закрыта, поэтому проверяется то, что от неё
+  // не зависит: что без ключа отправки нет, и что письмо собирается
+  // цельным — с архетипом, флаконом, ингредиентами и ссылками.
+  console.log('\nПисьмо с результатом');
+  {
+    delete process.env.BREVO_API_KEY;
+    check('без ключа отправка выключена', emailConfigured() === false);
+
+    const outcome = await sendResultEmail({
+      email: 'person@example.com', locale: 'en', archetype: 'CEO',
+      match: null, origin: 'https://example.com',
+    });
+    check('без ключа письмо не отправляется и не падает', outcome === 'not-configured');
+
+    process.env.BREVO_API_KEY = 'test-key';
+    process.env.BREVO_SENDER_EMAIL = 'contact@findmysmell.com';
+    check('с ключом отправка включается', emailConfigured() === true);
+    delete process.env.BREVO_API_KEY;
+
+    const picked = match('CEO', { sweet: 1, raw: 1, projection: 2 });
+    const built = buildResultEmail({
+      email: 'person@example.com', locale: 'en', archetype: 'CEO',
+      match: picked, origin: 'https://example.com',
+    });
+
+    check('тема письма ведётся парфюмом, а не снятой фразой «You are»',
+      built.subject.startsWith('Your scent:') && !built.subject.includes('You are'),
+      built.subject);
+    check('в письме нет снятого «You are …»',
+      !built.html.includes('You are') && !built.text.includes('You are'));
+    check('в письме назван подобранный флакон',
+      picked !== null && built.html.includes(picked.main.name), picked?.main.name);
+    check('в письме есть ингредиенты', built.html.includes('Ingredients worth discovering'));
+    check('в письме есть ссылка на результат',
+      built.html.includes('https://example.com/en/result/ceo'));
+    check('в письме есть ссылка на политику',
+      built.html.includes('https://example.com/en/privacy-policy'));
+    check('обещание «одно письмо» в тексте',
+      built.text.includes('nothing else follows'));
+    check('есть текстовая версия', built.text.length > 200, `${built.text.length} символов`);
+    check('стили только inline, без внешнего CSS',
+      !built.html.includes('<link') && !built.html.includes('@media'));
+
+    const fr = buildResultEmail({
+      email: 'person@example.com', locale: 'fr', archetype: 'CEO',
+      match: picked, origin: 'https://example.com',
+    });
+    check('французское письмо по-французски', fr.subject.startsWith('Votre parfum'), fr.subject);
+    check('французская ссылка на политику',
+      fr.html.includes('https://example.com/fr/privacy-policy'));
+
+    // Без флакона письмо должно остаться цельным, а не сломаться.
+    const noBottle = buildResultEmail({
+      email: 'person@example.com', locale: 'en', archetype: 'CEO',
+      match: null, origin: 'https://example.com',
+    });
+    check('без флакона письмо всё равно собирается',
+      noBottle.html.length > 500 && noBottle.html.includes('Ingredients worth discovering'));
+    check('без флакона тема нейтральная',
+      noBottle.subject === 'Your Find My Smell result', noBottle.subject);
+
+    // Разметка письма склеивается строками — экранирование обязательно.
+    const escaped = buildResultEmail({
+      email: 'person@example.com', locale: 'en', archetype: 'CEO',
+      match: null, origin: 'https://example.com/"><script>x</script>',
+    });
+    check('адрес в ссылках экранирован', !escaped.html.includes('<script>'));
+  }
+
+  /* ------------------- запрос в Brevo: форма и адрес ------------------- */
+  // api.brevo.com из песочницы закрыт, поэтому подменяем сам fetch:
+  // проверяется то, что мы отправляем, а не то, что Brevo отвечает.
+  console.log('\nЗапрос в Brevo');
+  {
+    const real = globalThis.fetch;
+    let seen: { url: string; init: RequestInit } | null = null;
+
+    process.env.BREVO_API_KEY = 'test-key-123';
+    process.env.BREVO_SENDER_EMAIL = 'contact@findmysmell.com';
+    process.env.BREVO_SENDER_NAME = 'Find My Smell';
+
+    globalThis.fetch = (async (url: string, init: RequestInit) => {
+      seen = { url: String(url), init };
+      return new Response('{"messageId":"1"}', { status: 201 });
+    }) as typeof fetch;
+
+    const ok = await sendResultEmail({
+      email: 'person@example.com', locale: 'en', archetype: 'CEO',
+      match: match('CEO', { sweet: 1, raw: 1, projection: 2 }), origin: 'https://example.com',
+    });
+    check('успешный ответ трактуется как отправка', ok === 'sent');
+
+    const sent = seen as { url: string; init: RequestInit } | null;
+    check('адрес API верный', sent?.url === 'https://api.brevo.com/v3/smtp/email', sent?.url);
+    const headers = (sent?.init.headers ?? {}) as Record<string, string>;
+    check('ключ уходит в заголовке api-key', headers['api-key'] === 'test-key-123');
+    check('тип содержимого json', headers['content-type'] === 'application/json');
+
+    const payload = JSON.parse(String(sent?.init.body ?? '{}'));
+    check('отправитель из переменных',
+      payload.sender?.email === 'contact@findmysmell.com' &&
+      payload.sender?.name === 'Find My Smell');
+    check('получатель один и тот, что просили',
+      Array.isArray(payload.to) && payload.to.length === 1 &&
+      payload.to[0].email === 'person@example.com');
+    check('в запросе есть и html, и текст',
+      typeof payload.htmlContent === 'string' && payload.htmlContent.length > 500 &&
+      typeof payload.textContent === 'string' && payload.textContent.length > 200);
+    check('тема не пустая', typeof payload.subject === 'string' && payload.subject.length > 0);
+
+    // Отказ Brevo не должен ломать подписку — только сообщать о себе.
+    globalThis.fetch = (async () =>
+      new Response('{"message":"sender not verified"}', { status: 400 })) as typeof fetch;
+    const rejected = await sendResultEmail({
+      email: 'person@example.com', locale: 'en', archetype: 'CEO',
+      match: null, origin: 'https://example.com',
+    });
+    check('отказ Brevo даёт failed, а не исключение', rejected === 'failed');
+
+    // Сеть отвалилась — то же самое.
+    globalThis.fetch = (async () => { throw new Error('network down'); }) as typeof fetch;
+    const thrown = await sendResultEmail({
+      email: 'person@example.com', locale: 'en', archetype: 'CEO',
+      match: null, origin: 'https://example.com',
+    });
+    check('обрыв сети даёт failed, а не исключение', thrown === 'failed');
+
+    globalThis.fetch = real;
+    delete process.env.BREVO_API_KEY;
   }
 
   await client.close();

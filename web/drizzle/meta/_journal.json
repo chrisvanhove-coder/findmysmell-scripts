@@ -15,6 +15,13 @@
       "when": 1789176714515,
       "tag": "0001_odd_bloodscream",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789410064453,
+      "tag": "0002_square_the_twelve",
+      "breakpoints": true
     }
   ]
 }

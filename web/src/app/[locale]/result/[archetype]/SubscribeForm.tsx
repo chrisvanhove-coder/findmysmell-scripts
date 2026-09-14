@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { ArchetypeKey } from '@/lib/archetype-colors';
 import type { Locale } from '@/lib/i18n';
+import { pickFromBrowser } from '@/lib/picked-client';
 import styles from './subscribe.module.css';
 
 /**
@@ -29,6 +30,9 @@ const COPY = {
   invalidEmail: 'Please enter a valid email address.',
   needConsent: 'Please check the consent box to continue.',
   success: 'Done! Check your inbox in a few minutes.',
+  // Отправка включается ключом Brevo. Пока его нет, адрес сохраняется,
+  // но письма не уходят — и говорить «проверьте почту» нельзя.
+  savedNotSent: 'Saved. Your result will arrive as soon as email is switched on.',
   failure: 'Something went wrong. Please try again.',
 } as const;
 
@@ -68,11 +72,21 @@ export default function SubscribeForm({
       const response = await fetch('/api/subscribers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: value, locale, archetype, consentEmail: true }),
+        body: JSON.stringify({
+          email: value,
+          locale,
+          archetype,
+          consentEmail: true,
+          // Подобранный флакон известен только браузеру: прохождения
+          // обезличены, и на сервере его не восстановить. Берём тем же
+          // помощником, что и страница результата, — логика одна.
+          perfumeId: pickFromBrowser(archetype)?.main.id,
+        }),
       });
       if (!response.ok) throw new Error('request failed');
+      const result: { sent?: boolean } = await response.json().catch(() => ({}));
       setState('done');
-      setMessage({ text: COPY.success, ok: true });
+      setMessage({ text: result.sent ? COPY.success : COPY.savedNotSent, ok: true });
     } catch {
       setState('idle');
       setMessage({ text: COPY.failure, ok: false });

@@ -64,5 +64,15 @@ export const subscribers = pgTable('subscribers', {
   email: text('email').notNull().unique(),
   locale: text('locale').notNull(),
   archetype: text('archetype'),
+  // Подобранный флакон. Нужен, чтобы письмо могло назвать конкретный парфюм:
+  // прохождения обезличены и с адресом не связаны, а подбор живёт в браузере,
+  // так что восстановить его на сервере нельзя — только принять от клиента.
+  perfumeId: text('perfume_id'),
+  // Доказательство согласия. Раньше согласие проверялось на входе и нигде
+  // не сохранялось — доказать, что человек его дал, было нечем.
+  consentEmail: boolean('consent_email').notNull().default(true),
+  consentAt: timestamp('consent_at', { withTimezone: true }).notNull().defaultNow(),
+  // Когда письмо действительно ушло. null — ещё не отправлено.
+  sentAt: timestamp('sent_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
