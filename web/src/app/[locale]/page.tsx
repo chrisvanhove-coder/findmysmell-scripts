@@ -5,6 +5,7 @@ import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
 import { getHomeCopy, splitAccent } from '@/lib/home';
 import { FIRST_QUESTION, toSlug } from '@/lib/quiz';
 import styles from './home.module.css';
+import { cld } from '@/lib/cloudinary';
 
 /**
  * Главная. Перенесена с продовой страницы Webflow, где вся вёрстка и текст
@@ -110,14 +111,21 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <div className={styles.sidePhotos}>
             {copy.images.side.map((photo) => (
               /* eslint-disable-next-line @next/next/no-img-element */
-              <img key={photo.src} className={styles.sidePhoto} src={photo.src} alt={photo.alt} />
+              <img
+                key={photo.src}
+                className={styles.sidePhoto}
+                src={cld(photo.src, 'homeSide')}
+                alt={photo.alt}
+                loading="lazy"
+                decoding="async"
+              />
             ))}
           </div>
         </div>
 
         <div className={styles.mid}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.midImg} src={copy.images.hero} alt="" />
+          <img className={styles.midImg} src={cld(copy.images.hero, 'homeFull')} alt="" />
           <div className={styles.midShade} />
           <div className={styles.midCopy}>{pitch}</div>
         </div>
@@ -156,7 +164,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
         <section className={styles.mPitch}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.midImg} src={copy.images.heroMobile} alt="" />
+          <img className={styles.midImg} src={cld(copy.images.heroMobile, 'homeFullMobile')} alt="" />
           <div className={styles.midShade} />
           <div className={styles.mPitchCopy}>{pitch}</div>
         </section>

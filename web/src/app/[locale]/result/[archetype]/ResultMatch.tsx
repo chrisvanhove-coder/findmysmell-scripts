@@ -6,6 +6,7 @@ import { type Match } from '@/lib/matching';
 import { pickFromBrowser } from '@/lib/picked-client';
 import Scales from './Scales';
 import styles from './result.module.css';
+import { cld } from '@/lib/cloudinary';
 
 /**
  * Подбирает флакон под ответы человека поверх серверной разметки.
@@ -49,7 +50,12 @@ export default function ResultMatch({
     <>
       <section className={styles.match}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className={styles.bottle} src={main.imageUrl} alt={main.name} />
+        <img
+          className={styles.bottle}
+          src={cld(main.imageUrl, 'bottleMain')}
+          alt={main.name}
+          decoding="async"
+        />
         {/* Название уже содержит бренд там, где он есть («Cedrus by Chloé»).
             Вторая строка под ним показывала поле house, а в нём лежит слаг
             из Webflow — и он не просто некрасивый: у семи позиций он
@@ -76,7 +82,13 @@ export default function ResultMatch({
               rel="noopener noreferrer"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img className={styles.altImg} src={alt.imageUrl} alt={alt.name} />
+              <img
+                className={styles.altImg}
+                src={cld(alt.imageUrl, 'bottleAlt')}
+                alt={alt.name}
+                loading="lazy"
+                decoding="async"
+              />
               {/* Флакон слева, всё про него — справа. */}
               <span className={styles.altBody}>
                 <span className={styles.altName}>{alt.name}</span>

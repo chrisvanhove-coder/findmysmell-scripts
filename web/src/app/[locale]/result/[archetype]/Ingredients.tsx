@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import type { Ingredient } from '@/lib/content';
+import { cld } from '@/lib/cloudinary';
 import styles from './ingredients.module.css';
 
 /**
@@ -71,7 +72,13 @@ export default function Ingredients({
         {ingredients.map((ing) => (
           <article key={ing.name} className={styles.item}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.img} src={ing.img} alt={ing.name} />
+            <img
+              className={styles.img}
+              src={cld(ing.img, 'ingredientThumb')}
+              alt={ing.name}
+              loading="lazy"
+              decoding="async"
+            />
             <div className={styles.body}>
               <span className={styles.name}>{ing.name}</span>
               <p className={styles.desc}>{ing.desc}</p>
@@ -114,7 +121,12 @@ export default function Ingredients({
               ✕
             </button>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.modalImg} src={open.img} alt={open.name} />
+            <img
+              className={styles.modalImg}
+              src={cld(open.img, 'ingredientModal')}
+              alt={open.name}
+              decoding="async"
+            />
             <div className={styles.modalBody}>
               <h3 className={styles.modalName}>{open.name}</h3>
               <p className={styles.modalPhrase}>{open.desc}</p>

@@ -1,0 +1,317 @@
+<script>
+(function() {
+
+  const emotions = [
+    { key: 'Q_EMO__MYST',   word: 'MYSTERIOUS', img: 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776357373/feel-myst_xapckv.jpg' },
+    { key: 'Q_EMO__ENERGY', word: 'ENERGETIC',  img: 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776357340/feel-energy_mn5jgs.png' },
+    { key: 'Q_EMO__SEXY',   word: 'SEXY',        img: 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776357407/feel-sexy_vbcves.png' },
+    { key: 'Q_EMO__COZY',   word: 'COZY',        img: 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776357323/feel-cozy_ubq7q8.jpg' },
+    { key: 'Q_EMO__PLAY',   word: 'PLAYFUL',     img: 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776357390/feel-play_ivcoxn.jpg' },
+    { key: 'Q_EMO__CALM',   word: 'CALM',        img: 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776357307/feel-calm_flmzez.jpg' },
+    { key: 'Q_EMO__FOCUS',  word: 'FOCUSED',     img: 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776357356/feel-focus_vngdso.jpg' },
+  ];
+
+  emotions.forEach(e => { const img = new Image(); img.src = e.img; });
+
+  const N = emotions.length;
+  const SLOT = 80;
+  const TOTAL = N * SLOT;
+  const AUTO_SPEED = 0.4;
+  const WORD_FONT_FAMILY = "'HIGHCRUISER','Arial Black',Arial";
+  const WORD_LETTER_SPACING = '0.12em';
+
+  // ── Нудж при загрузке: резкий рывок, отличный от медленного авто-вращения
+  const NUDGE_DURATION = 1100;   // мс
+  const NUDGE_AMPLITUDE = 22;    // px, чисто визуальная амплитуда
+
+  /* ── Inject styles ── */
+  const style = document.createElement('style');
+  style.textContent = `
+    #emo-layout { position:fixed;inset:0;z-index:9000;overflow:hidden;background:#111; }
+    #emo-bg { position:absolute;inset:0;background-size:cover;background-position:center;transition:background-image 0.6s ease,opacity 0.6s ease;opacity:0; }
+    #emo-overlay { position:absolute;inset:0;background:rgba(0,0,0,0.45);pointer-events:none; }
+    #emo-content { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0; }
+    #emo-prefix { font-family:${WORD_FONT_FAMILY};font-size:clamp(16px,3.5vw,28px);color:#fff;letter-spacing:0.08em;text-align:center;line-height:1.3;margin-bottom:32px;opacity:0.9; }
+
+    #emo-drum-wrap { display:flex;flex-direction:column;align-items:center;gap:0;cursor:grab;user-select:none; }
+    #emo-drum-wrap:active { cursor:grabbing; }
+
+    .emo-arrow { font-size:22px;color:rgba(255,255,255,0.5);line-height:1;padding:10px 24px;transition:color 0.2s; cursor:pointer; }
+    .emo-arrow:active { color:rgba(255,255,255,0.9); }
+    .emo-arrow-up   { animation:emo-bounce-up   1.4s ease-in-out infinite; }
+    .emo-arrow-down { animation:emo-bounce-down 1.4s ease-in-out infinite; }
+    @keyframes emo-bounce-up   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+    @keyframes emo-bounce-down { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+
+    #emo-slot { position:relative;height:80px;width:clamp(280px,80vw,600px);overflow:hidden;cursor:grab; }
+    #emo-slot:active { cursor:grabbing; }
+    #emo-slot::before,
+    #emo-slot::after {
+      content:'';position:absolute;left:0;right:0;height:40%;z-index:3;pointer-events:none;
+    }
+    #emo-slot::before { top:0;background:linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); }
+    #emo-slot::after  { bottom:0;background:linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+    .emo-word { position:absolute;width:100%;text-align:center;font-family:${WORD_FONT_FAMILY};font-size:clamp(27px,6vw,48px);letter-spacing:${WORD_LETTER_SPACING};color:#fff;line-height:80px;white-space:nowrap;transition:opacity 0.15s; }
+
+    #emo-hint {
+      font-family:'Inconsolata',monospace;font-size:clamp(10px,2.2vw,13px);
+      letter-spacing:0.18em;color:rgba(255,255,255,0.55);
+      margin-top:28px;text-align:center;
+      animation:emo-hint-pulse 2s ease-in-out 3;
+    }
+    #emo-hint.interacted { animation:none;opacity:0.35; }
+    #emo-hint.selected { color:#f1e09b;opacity:1;animation:none; }
+    @keyframes emo-hint-pulse { 0%,100%{opacity:0.35} 50%{opacity:0.9} }
+  `;
+  document.head.appendChild(style);
+
+  /* ── Build DOM ── */
+  const layout = document.createElement('div');
+  layout.id = 'emo-layout';
+
+  const bg = document.createElement('div'); bg.id = 'emo-bg'; layout.appendChild(bg);
+  const overlay = document.createElement('div'); overlay.id = 'emo-overlay'; layout.appendChild(overlay);
+  const content = document.createElement('div'); content.id = 'emo-content';
+
+  const prefix = document.createElement('div');
+  prefix.id = 'emo-prefix';
+  prefix.innerHTML = 'FOR THIS FRAGRANCE,<br>I WANT TO FEEL...';
+  content.appendChild(prefix);
+
+  const drumWrap = document.createElement('div');
+  drumWrap.id = 'emo-drum-wrap';
+
+  const arrowUp = document.createElement('div');
+  arrowUp.className = 'emo-arrow emo-arrow-up';
+  arrowUp.textContent = '↑';
+
+  const slot = document.createElement('div');
+  slot.id = 'emo-slot';
+
+  const arrowDown = document.createElement('div');
+  arrowDown.className = 'emo-arrow emo-arrow-down';
+  arrowDown.textContent = '↓';
+
+  drumWrap.appendChild(arrowUp);
+  drumWrap.appendChild(slot);
+  drumWrap.appendChild(arrowDown);
+  content.appendChild(drumWrap);
+
+  const wordEls = emotions.map(e => {
+    const div = document.createElement('div');
+    div.className = 'emo-word';
+    div.textContent = e.word;
+    slot.appendChild(div);
+    return div;
+  });
+
+  const hint = document.createElement('div');
+  hint.id = 'emo-hint';
+  hint.textContent = 'SWIPE UP OR DOWN  ·  TAP TO SELECT';
+  content.appendChild(hint);
+
+  layout.appendChild(content);
+  document.body.appendChild(layout);
+
+  document.querySelectorAll('[data-question-id="Q_EMO"]').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  /* ── Auto-fit шрифта под реальную ширину контейнера ── */
+  function measureTextWidth(text, fontSizePx) {
+    const probe = document.createElement('span');
+    probe.style.position = 'absolute';
+    probe.style.visibility = 'hidden';
+    probe.style.whiteSpace = 'nowrap';
+    probe.style.fontFamily = WORD_FONT_FAMILY;
+    probe.style.fontSize = fontSizePx + 'px';
+    probe.style.letterSpacing = WORD_LETTER_SPACING;
+    probe.textContent = text;
+    document.body.appendChild(probe);
+    const w = probe.getBoundingClientRect().width;
+    document.body.removeChild(probe);
+    return w;
+  }
+
+  function fitWordsToSlot() {
+    if (!wordEls.length) return;
+    const available = slot.clientWidth - 16;
+    const longest = emotions.reduce((a, b) => a.word.length >= b.word.length ? a : b).word;
+    let fontSize = parseFloat(getComputedStyle(wordEls[0]).fontSize);
+    const MIN_SIZE = 16;
+    while (fontSize > MIN_SIZE && measureTextWidth(longest, fontSize) > available) {
+      fontSize -= 1;
+    }
+    wordEls.forEach(el => { el.style.fontSize = fontSize + 'px'; });
+  }
+
+  fitWordsToSlot();
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(fitWordsToSlot);
+  }
+  window.addEventListener('resize', () => {
+    clearTimeout(window.__emoResizeTimer);
+    window.__emoResizeTimer = setTimeout(fitWordsToSlot, 150);
+  });
+
+  /* ── State ── */
+  let offset = 0, velocity = 0;
+  let autoRolling = true, isDragging = false;
+  let dragStartY = 0, dragStartOffset = 0;
+  let lastY = 0, lastTime = 0;
+  let lastBgIdx = -1, idleTimer = null;
+  let hasInteracted = false;
+  const nudgeStart = performance.now();
+
+  function mod(n, m) { return ((n % m) + m) % m; }
+
+  function render() {
+    const idx = mod(Math.round(offset / SLOT), N);
+
+    // Чисто визуальный нудж — не трогает реальный offset/выбор
+    let nudge = 0;
+    if (!hasInteracted) {
+      const t = (performance.now() - nudgeStart) / NUDGE_DURATION;
+      if (t < 1) {
+        nudge = Math.sin(t * Math.PI * 3) * NUDGE_AMPLITUDE * (1 - t);
+      }
+    }
+
+    wordEls.forEach((el, i) => {
+      let y = mod(i * SLOT - offset, TOTAL);
+      if (y > TOTAL / 2) y -= TOTAL;
+      el.style.top = (y + nudge) + 'px';
+      el.style.opacity = Math.abs(y) < SLOT ? '1' : '0';
+    });
+
+    if (idx !== lastBgIdx) {
+      lastBgIdx = idx;
+      bg.style.backgroundImage = `url('${emotions[idx].img}')`;
+      bg.style.opacity = '1';
+    }
+  }
+
+  function snapToNearest() {
+    const nearest = Math.round(offset / SLOT) * SLOT;
+    offset += (nearest - offset) * 0.12;
+  }
+
+  function loop() {
+    if (!isDragging) {
+      if (autoRolling) {
+        offset += AUTO_SPEED;
+      } else {
+        if (Math.abs(velocity) > 0.2) {
+          offset += velocity;
+          velocity *= 0.9;
+        } else {
+          velocity = 0;
+          snapToNearest();
+        }
+      }
+    }
+    offset = mod(offset, TOTAL);
+    render();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  function onInteract() {
+    if (!hasInteracted) {
+      hasInteracted = true;
+      hint.classList.add('interacted');
+    }
+  }
+
+  function resumeAuto() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => { autoRolling = true; }, 3000);
+  }
+
+  drumWrap.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    onInteract();
+    autoRolling = false; velocity = 0;
+    offset += e.deltaY * 0.3;
+    resumeAuto();
+  }, { passive: false });
+
+  drumWrap.addEventListener('mousedown', (e) => {
+    isDragging = true; autoRolling = false; velocity = 0;
+    dragStartY = e.clientY; dragStartOffset = offset;
+    lastY = e.clientY; lastTime = Date.now();
+    onInteract();
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const now = Date.now();
+    velocity = -(e.clientY - lastY) / Math.max(1, now - lastTime) * 16;
+    lastY = e.clientY; lastTime = now;
+    offset = dragStartOffset - (e.clientY - dragStartY);
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (!isDragging) return;
+    isDragging = false;
+    if (Math.abs(e.clientY - dragStartY) < 5) selectWord();
+    else resumeAuto();
+  });
+
+  drumWrap.addEventListener('touchstart', (e) => {
+    isDragging = true; autoRolling = false; velocity = 0;
+    dragStartY = e.touches[0].clientY; dragStartOffset = offset;
+    lastY = e.touches[0].clientY; lastTime = Date.now();
+    onInteract();
+  }, { passive: true });
+
+  drumWrap.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const t = e.touches[0], now = Date.now();
+    velocity = -(t.clientY - lastY) / Math.max(1, now - lastTime) * 16;
+    lastY = t.clientY; lastTime = now;
+    offset = dragStartOffset - (t.clientY - dragStartY);
+    e.preventDefault();
+  }, { passive: false });
+
+  drumWrap.addEventListener('touchend', (e) => {
+    isDragging = false;
+    if (Math.abs(e.changedTouches[0].clientY - dragStartY) < 10) selectWord();
+    else resumeAuto();
+  });
+
+  function selectWord() {
+    autoRolling = false; velocity = 0;
+    const nearest = Math.round(offset / SLOT) * SLOT;
+    offset = mod(nearest, TOTAL);
+    const idx = mod(Math.round(offset / SLOT), N);
+    const selected = emotions[idx];
+    hint.textContent = '✓  ' + selected.word;
+    hint.classList.remove('interacted');
+    hint.classList.add('selected');
+    setTimeout(() => {
+      const btn = document.querySelector('[data-answer-key="' + selected.key + '"]');
+      if (btn) btn.click();
+    }, 800);
+  }
+
+  /* ── Стрелки: шаг на одно слово, БЕЗ выбора. Останавливаем событие
+     до того, как оно долетит до общего обработчика drumWrap ── */
+  function stepWord(direction) {
+    onInteract();
+    autoRolling = false;
+    velocity = 0;
+    offset = mod(offset + direction * SLOT, TOTAL);
+    resumeAuto();
+  }
+
+  [arrowUp, arrowDown].forEach(arrow => {
+    arrow.addEventListener('mousedown', (e) => e.stopPropagation());
+    arrow.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+  });
+  arrowUp.addEventListener('click', (e) => { e.stopPropagation(); stepWord(-1); });
+  arrowDown.addEventListener('click', (e) => { e.stopPropagation(); stepWord(1); });
+
+})();
+</script>

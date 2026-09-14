@@ -1,0 +1,108 @@
+<script>
+(function() {
+
+  const imageMap = {
+    'Q_YOURSELF__NATURE':     'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776356374/feel-nature_ibkg6q.png',
+    'Q_YOURSELF__NEARWATER':  'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776356389/feel-sea_nlvsfh.png',
+    'Q_YOURSELF__CITYURBAN':  'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776356345/feel-city_w0gr58.png',
+    'Q_YOURSELF__TRANSITION': 'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776356404/feel-transit_ovsxns.png',
+    'Q_YOURSELF__INDOOR':     'https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1400/f_auto/q_auto/v1776356359/feel-indoor_cfrjhn.png'
+  };
+
+  const bg = document.createElement('div');
+  bg.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    pointer-events: none;
+  `;
+  document.body.appendChild(bg);
+
+  const section = document.querySelector('[data-question-id="Q_YOURSELF"]');
+  if (section) {
+    section.style.position = 'relative';
+    section.style.zIndex = '1';
+  }
+
+  Object.values(imageMap).forEach(url => {
+    const img = new Image();
+    img.src = url;
+  });
+
+  let currentKey = null;
+  let fadeOutTimer = null;
+  let activeTouchKey = null;
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+
+  const buttons = document.querySelectorAll('[data-answer-key^="Q_YOURSELF"]');
+
+  function showImage(key) {
+    if (!imageMap[key]) return;
+    clearTimeout(fadeOutTimer);
+    bg.style.backgroundImage = `url('${imageMap[key]}')`;
+    bg.style.opacity = '1';
+    currentKey = key;
+  }
+
+  function hideImage() {
+    fadeOutTimer = setTimeout(() => {
+      bg.style.opacity = '0';
+      currentKey = null;
+    }, 200);
+  }
+
+  function dimOthers(activeBtn) {
+    buttons.forEach(b => {
+      b.style.opacity = b === activeBtn ? '1' : '0.4';
+      b.style.transition = 'opacity 0.3s ease';
+    });
+  }
+
+  function resetAll() {
+    buttons.forEach(b => { b.style.opacity = '1'; });
+  }
+
+  buttons.forEach(btn => {
+    const key = btn.getAttribute('data-answer-key');
+
+    btn.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      showImage(key);
+      dimOthers(btn);
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      resetAll();
+      hideImage();
+    });
+
+    btn.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      if (activeTouchKey !== key) {
+        e.preventDefault();
+        activeTouchKey = key;
+        showImage(key);
+        dimOthers(btn);
+      }
+    }, { passive: false });
+  });
+
+  document.addEventListener('touchstart', (e) => {
+    if (!isMobile()) return;
+    const tappedButton = e.target.closest('[data-answer-key^="Q_YOURSELF"]');
+    if (!tappedButton) {
+      activeTouchKey = null;
+      resetAll();
+      hideImage();
+    }
+  });
+
+})();
+</script>
