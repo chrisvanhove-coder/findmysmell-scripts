@@ -5,6 +5,8 @@ import type { ArchetypeKey } from '@/lib/archetype-colors';
 import type { Locale } from '@/lib/i18n';
 import { pickFromBrowser } from '@/lib/picked-client';
 import styles from './subscribe.module.css';
+import { reportFunnel } from '@/lib/funnel';
+import { runToken } from '@/lib/answers-store';
 
 /**
  * «Хочешь сохранить результат?» — форма подписки со страницы результата.
@@ -85,6 +87,9 @@ export default function SubscribeForm({
       });
       if (!response.ok) throw new Error('request failed');
       const result: { sent?: boolean } = await response.json().catch(() => ({}));
+      // Последний шаг воронки. Сам адрес сюда не идёт — только факт, что
+      // на этом шаге человек дошёл до конца.
+      reportFunnel(locale, runToken(), { step: 'EMAIL_SENT', event: 'answer' });
       setState('done');
       setMessage({ text: result.sent ? COPY.success : COPY.savedNotSent, ok: true });
     } catch {

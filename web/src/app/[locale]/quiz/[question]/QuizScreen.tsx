@@ -7,8 +7,9 @@ import {
   type Question, nextQuestion, stepOf, toSlug, TOTAL_STEPS,
 } from '@/lib/quiz';
 import {
-  loadAnswers, saveAnswer, loadOpenText, saveOpenText, saveResearchConsent,
+  loadAnswers, saveAnswer, loadOpenText, saveOpenText, saveResearchConsent, runToken,
 } from '@/lib/answers-store';
+import { reportFunnel } from '@/lib/funnel';
 import { isCountryQuestion } from '@/data/countries';
 import CountrySearch from './CountrySearch';
 import { resolve } from '@/lib/scoring';
@@ -57,6 +58,12 @@ export default function QuizScreen({
     }
   }, [question, locale, router]);
 
+  // Шаг показан. Пара 'view'/'answer' на каждый вопрос и даёт воронку:
+  // разница между ними — это те, кто дошёл до вопроса и не ответил.
+  useEffect(() => {
+    reportFunnel(locale, runToken(), { step: question.id, event: 'view' });
+  }, [question.id, locale]);
+
   function go(next: string) {
     if (next !== 'RESULT') {
       router.push(`/${locale}/quiz/${toSlug(next)}`);
@@ -69,6 +76,7 @@ export default function QuizScreen({
   function choose(code: string) {
     setChosen(code);
     saveAnswer(question.id, code);
+    reportFunnel(locale, runToken(), { step: question.id, event: 'answer', answerCode: code });
     go(nextQuestion(question.id, code));
   }
 
@@ -80,6 +88,9 @@ export default function QuizScreen({
   function finish(consent: boolean) {
     saveOpenText(openText.trim());
     saveResearchConsent(consent);
+    // Без answerCode: текст открытого ответа личный, он живёт только
+    // в submissions под своим согласием и в статистику не попадает.
+    reportFunnel(locale, runToken(), { step: question.id, event: 'answer' });
     go(nextQuestion(question.id, ''));
   }
 
@@ -105,6 +116,9 @@ export default function QuizScreen({
             onPick={(country) => {
               setChosen(country);
               saveAnswer(question.id, country);
+              // Страну в статистику не пишем: это введённое значение, а не
+              // код варианта. Достаточно знать, что на шаге ответили.
+              reportFunnel(locale, runToken(), { step: question.id, event: 'answer' });
               go(nextQuestion(question.id, country));
             }}
           />

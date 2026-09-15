@@ -10,6 +10,7 @@ import {
   wasSent,
   markSent,
 } from '@/lib/answers-store';
+import { reportFunnel } from '@/lib/funnel';
 
 /**
  * Отправляет прохождение в базу — один раз за проход.
@@ -23,6 +24,14 @@ import {
  * присланным значениям он не верит (см. src/lib/submission.ts).
  */
 export default function RecordSubmission({ locale }: { locale: Locale }) {
+  // Шаг RESULT в воронке. Отдельным эффектом от записи прохождения: сюда
+  // доходят и те, кто не дал согласия на исследование, и их тоже надо
+  // считать — иначе «дошёл до результата» окажется меньше правды.
+  useEffect(() => {
+    if (!('Q_RADIUS' in loadAnswers())) return;
+    reportFunnel(locale, runToken(), { step: 'RESULT', event: 'view' });
+  }, [locale]);
+
   useEffect(() => {
     // Согласие записывается на последнем экране квиза. Если его нет вовсе,
     // человек до конца не дошёл — скорее всего пришёл по ссылке на чужой

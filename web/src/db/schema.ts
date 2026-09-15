@@ -76,3 +76,41 @@ export const subscribers = pgTable('subscribers', {
   sentAt: timestamp('sent_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+/**
+ * Измерение воронки. Своя, первой стороны, без куки и без сторонних скриптов.
+ *
+ * Почему без баннера. CNIL освобождает от согласия измерение аудитории, если
+ * оно строго для владельца сайта, первой стороны, данные никуда не уходят и
+ * идентификатор живёт не дольше 13 месяцев. Здесь жёстче: на устройстве
+ * вообще ничего не пишется ради измерения, а ключ строки — `runToken`,
+ * который уже существует как ключ идемпотентности прохождения. Он живёт в
+ * sessionStorage, умирает вместе с сессией и не связывает два визита.
+ *
+ * Чего здесь сознательно НЕТ: IP, user-agent, referrer, разрешение экрана,
+ * города. Всё это либо превращает строку в персональные данные, либо ведёт к
+ * фингерпринту — а политика обещает, что фингерпринта на сайте нет.
+ *
+ * Срок хранения — 13 месяцев, чистит scripts/purge-retention.mts.
+ */
+export const funnelEvents = pgTable(
+  'funnel_events',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    // Токен прохождения, не человека: одна сессия — один токен.
+    runToken: text('run_token').notNull(),
+    // Идентификатор шага: Q_GENDER, Q_EMO, RESULT, EMAIL_SENT.
+    step: text('step').notNull(),
+    // 'view' — шаг показан, 'answer' — на шаге ответили.
+    event: text('event').notNull(),
+    // Какой вариант выбрали. Даёт распределение ответов по каждому вопросу.
+    answerCode: text('answer_code'),
+    locale: text('locale').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    index('funnel_created_idx').on(t.createdAt),
+    index('funnel_run_idx').on(t.runToken),
+    index('funnel_step_idx').on(t.step),
+  ],
+);
