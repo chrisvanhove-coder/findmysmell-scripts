@@ -112,6 +112,20 @@ console.log('\nЗамок стоит на всей ветке /admin');
 
   const csv = readFileSync('src/app/admin/submissions.csv/route.ts', 'utf8');
   check('выгрузка не кешируется', csv.includes("dynamic = 'force-dynamic'"));
+
+  // Загрузка чужого файла — самая опасная страница в админке: она пишет
+  // в базу. Проверяем, что она под тем же замком и что по умолчанию
+  // НИЧЕГО не пишет.
+  const imp = readFileSync('src/app/admin/import/page.tsx', 'utf8');
+  check('страница переноса не кешируется', imp.includes("dynamic = 'force-dynamic'"));
+  check('страница переноса помечена noindex', imp.includes('noindex'));
+  check('запись только по явной галочке',
+    imp.includes("formData.get('apply') === 'on'") && imp.includes('if (apply)'),
+    'без галочки файл должен только разбираться');
+  check('есть предел на размер файла', /MAX_BYTES/.test(imp) && imp.includes('file.size >'));
+  check('в клиент не уходят сами прохождения',
+    !/runs: parsed\.runs/.test(imp),
+    'в браузер должна уезжать только сводка, а не ответы и адреса');
 }
 
 console.log('\nАдминка не раскрывает личных данных');

@@ -126,6 +126,11 @@ export default async function AdminPage({
       </nav>
 
       <section className={styles.exports}>
+        <span>Перенос из старой таблицы:</span>
+        <Link href="/admin/import">загрузить выгрузку Google Sheets</Link>
+      </section>
+
+      <section className={styles.exports}>
         <span>Скачать прохождения таблицей:</span>
         <a href={`/admin/submissions.csv?days=${days}&first=1`}>только первые (выборка)</a>
         <a href={`/admin/submissions.csv?days=${days}`}>все, с повторами</a>

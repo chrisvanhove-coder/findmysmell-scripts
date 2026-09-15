@@ -305,3 +305,54 @@
   font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
+
+/* ── перенос старой таблицы ───────────────────────────────────────── */
+
+.importForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 1040px;
+  margin: 0 auto 28px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.importFile { display: flex; flex-direction: column; gap: 6px; }
+.importFile > span { color: var(--dim); font-size: 12px; }
+
+.importCheck {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.importCheck input { margin-top: 3px; }
+
+.importBtn {
+  align-self: flex-start;
+  padding: 10px 20px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 13px;
+  cursor: pointer;
+}
+.importBtn:hover { background: #000; }
+.importBtn:disabled { opacity: 0.4; cursor: default; }
+
+.importResult { max-width: 1040px; margin: 0 auto 28px; }
+
+/* Номера исключённых строк бывают длинным списком — пусть переносится
+   и не растягивает таблицу. */
+.skipLines {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--dim);
+  word-break: break-word;
+}
