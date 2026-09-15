@@ -50,11 +50,21 @@ export const submissions = pgTable(
     openAnswer: text('open_answer'),
     // Согласие на использование анонимных ответов в исследовании.
     consentResearch: boolean('consent_research').notNull().default(false),
+    // Ключ браузера и номер прохождения. Нужны ровно для одного: отделить
+    // первое прохождение от повторных. Без них десять проходов одного
+    // человека выглядят как десять человек, и выборка перестаёт быть
+    // выборкой. Ключ живёт в localStorage не дольше 13 месяцев (потолок
+    // CNIL) и не про человека, а про браузер: телефон и ноутбук одного
+    // человека — два ключа. null, если хранилище недоступно.
+    browserKey: text('browser_key'),
+    runIndex: integer('run_index'),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [
     index('submissions_created_idx').on(t.createdAt),
     index('submissions_winner_idx').on(t.winner),
+    // Для «все прохождения этого браузера по порядку».
+    index('submissions_browser_idx').on(t.browserKey, t.createdAt),
   ],
 );
 

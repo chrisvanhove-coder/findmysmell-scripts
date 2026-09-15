@@ -85,5 +85,19 @@ check('политика описывает измерение аудитории
   /audience measurement|Audience Measurement/.test(policy),
   'нужен раздел про измерение — иначе собираем то, о чём не сказали');
 
+// Ключ браузера — уже хранение на устройстве, и он живёт 13 месяцев, а не
+// до конца сессии. Раз он есть в коде, он обязан быть и в политике, иначе
+// освобождение CNIL на него не распространяется.
+const keyInCode = readFileSync('src/lib/answers-store.ts', 'utf8').includes('fms_browser');
+check('политика раскрывает ключ браузера',
+  !keyInCode || /Recognising Repeat Runs/.test(policy),
+  'в коде есть fms_browser — в политике должен быть раздел 4.4');
+check('политика не называет ответы полностью анонимными',
+  !keyInCode || !/For anonymous quiz responses/.test(policy),
+  'с ключом браузера это псевдонимность, а не анонимность');
+check('срок ключа браузера в коде — 13 месяцев',
+  readFileSync('src/lib/answers-store.ts', 'utf8').includes('13 * 30'),
+  'потолок CNIL для идентификаторов измерения');
+
 console.log(failed ? `\n${failed} проверок упало\n` : '\nвсе проверки прошли\n');
 process.exit(failed ? 1 : 0);

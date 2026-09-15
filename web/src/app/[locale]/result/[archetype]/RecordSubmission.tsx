@@ -9,6 +9,8 @@ import {
   runToken,
   wasSent,
   markSent,
+  browserKey,
+  bumpRunIndex,
 } from '@/lib/answers-store';
 import { reportFunnel } from '@/lib/funnel';
 
@@ -49,6 +51,12 @@ export default function RecordSubmission({ locale }: { locale: Locale }) {
     // От потери самого флага защищает уникальный clientToken на сервере.
     markSent();
 
+    // Номер прохождения увеличиваем ровно здесь, после markSent(): так
+    // перезагрузка страницы результата его не накрутит, а второй проход
+    // StrictMode отсекается тем же флагом.
+    const key = browserKey();
+    const runIndex = key ? bumpRunIndex() : null;
+
     // Запрос намеренно не отменяется при размонтировании и идёт с keepalive:
     // человек может уйти со страницы сразу, прохождение всё равно должно
     // доехать. Отмена в cleanup здесь бы его просто теряла.
@@ -61,6 +69,8 @@ export default function RecordSubmission({ locale }: { locale: Locale }) {
         openAnswer: loadOpenText(),
         consentResearch: consent,
         clientToken: runToken(),
+        browserKey: key,
+        runIndex,
       }),
       keepalive: true,
     }).catch(() => {

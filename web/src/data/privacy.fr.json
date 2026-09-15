@@ -92,7 +92,19 @@
           "p": "Sont enregistrés : l'étape, le fait qu'elle ait été affichée ou qu'il y ait été répondu, l'option de réponse choisie, la langue du site et l'horodatage. Ne sont pas enregistrés : votre adresse IP, votre navigateur ou votre appareil, la page d'où vous venez, la taille de votre écran, votre localisation, ni le texte de votre réponse libre. Chaque ligne n'est rattachée qu'au nombre aléatoire propre au passage décrit à la section 2 — il disparaît avec la session de votre navigateur et ne peut relier deux visites."
         },
         {
-          "p": "Aucune bannière de consentement n'apparaît sur ce site parce qu'il n'y a rien à consentir : aucun cookie n'est déposé et rien n'est stocké sur votre appareil ni lu depuis celui-ci à des fins de mesure. Pour la mesure elle-même, nous nous appuyons sur l'exemption de consentement préalable prévue par la CNIL pour les statistiques d'audience strictement limitées à l'usage propre de l'éditeur, en première partie, jamais partagées et conservées pour une durée limitée. Ces lignes sont supprimées au bout de 13 mois, durée maximale indiquée par la CNIL."
+          "p": "Aucune bannière de consentement n'apparaît sur ce site parce qu'il n'y a rien à consentir : aucun cookie n'est déposé, rien n'est transmis à un tiers, et la seule chose conservée sur votre appareil à des fins de mesure est le nombre aléatoire décrit à la section 4.4. Pour la mesure elle-même, comme pour ce nombre, nous nous appuyons sur l'exemption de consentement préalable prévue par la CNIL pour les statistiques d'audience strictement limitées à l'usage propre de l'éditeur, en première partie, jamais partagées et conservées pour une durée limitée. Les lignes de mesure sont supprimées au bout de 13 mois et le nombre expire au bout de 13 mois — durée maximale indiquée par la CNIL."
+        },
+        {
+          "sub": "4.4 Reconnaissance des passages répétés"
+        },
+        {
+          "p": "Votre navigateur conserve également un nombre aléatoire dont le seul rôle est de distinguer un premier passage du questionnaire d'un deuxième ou d'un troisième. Sans lui, une personne qui passe le test dix fois ressemble à dix personnes, et l'échantillon de recherche cesse d'être un échantillon. Il est généré par votre navigateur, il ne dérive pas de votre appareil et ne contient rien sur vous."
+        },
+        {
+          "p": "Il expire au bout de 13 mois et est alors remplacé, si bien qu'il ne vit jamais plus longtemps que la durée maximale admise par la CNIL pour les identifiants de mesure. Il sert uniquement à nos propres statistiques, n'est jamais partagé et n'est jamais utilisé pour vous suivre sur un autre site. Effacer le stockage de votre navigateur le supprime, et le passage suivant compte simplement de nouveau comme un premier passage."
+        },
+        {
+          "p": "Ce que cela signifie, et ce que cela ne signifie pas. Il identifie un navigateur, pas une personne : la même personne sur un téléphone et sur un ordinateur compte pour deux. Il nous permet de dire « ces passages viennent du même navigateur, et l'archétype a changé entre les deux ». Il ne nous permet pas de savoir qui vous êtes, et nous ne pouvons toujours pas relier un passage à vous, sauf si vous nous donnez votre adresse e-mail."
         }
       ]
     },
@@ -169,7 +181,8 @@
             "Données psychographiques agrégées et anonymisées (tendances, distributions d'archétypes, données démographiques) : conservées indéfiniment à des fins de recherche et d'intelligence de marché. Ces données ne peuvent être liées à aucun utilisateur individuel.",
             "Adresses e-mail : conservées pendant une durée maximale de 12 mois, après quoi elles sont supprimées.",
             "Lignes de mesure du parcours (quelle étape a été affichée ou répondue, sans aucune donnée personnelle) : conservées 13 mois, puis supprimées définitivement.",
-            "L'identifiant aléatoire de passage : il ne vit que dans le stockage de votre navigateur et ne quitte jamais votre appareil sous une forme qui l'identifie."
+            "L'identifiant aléatoire de passage : il ne vit que dans le stockage de votre navigateur et ne quitte jamais votre appareil sous une forme qui l'identifie.",
+            "Le nombre aléatoire du navigateur servant à distinguer les passages répétés : expire au bout de 13 mois, puis est remplacé. Il réside dans le stockage propre de votre navigateur et vous pouvez l'effacer vous-même à tout moment."
           ]
         },
         {
@@ -204,7 +217,7 @@
           ]
         },
         {
-          "p": "Pour les réponses anonymes au quiz : les réponses soumises sans informations de contact sont stockées sans aucun identifiant personnel et ne peuvent pas être liées à des utilisateurs individuels. Une fois soumises ainsi, nous ne pouvons ni identifier, ni consulter, ni supprimer les réponses d'une personne en particulier, car rien en elles ne désigne une personne."
+          "p": "Pour les réponses au quiz soumises sans informations de contact : elles sont stockées sans aucun identifiant désignant une personne, et nous ne pouvons ni identifier, ni consulter, ni supprimer les réponses d'une personne précise, car rien en elles ne renvoie à vous. Elles portent en revanche le nombre aléatoire de navigateur décrit à la section 4.4, qui nous permet de voir que deux passages viennent du même navigateur. Elles sont donc pseudonymisées plutôt que totalement anonymes : les passages peuvent être reliés entre eux, mais pas à vous. Si vous souhaitez la suppression d'un passage et pouvez nous indiquer l'adresse e-mail utilisée, écrivez à contact@findmysmell.com."
         },
         {
           "p": "Pour exercer l'un de ces droits (si vous avez fourni des informations de contact), veuillez nous contacter à contact@findmysmell.com."
@@ -290,7 +303,8 @@
             "Version 1.0 — février 2026. Publication initiale de la politique.",
             "Version 1.1 — avril 2026. Ajout de la base légale du traitement, liste des sous-traitants, référence CNIL, glossaire, historique des versions, mise à jour des spécifications de conservation des données.",
             "Version 2.0 — septembre 2026. Réécrite pour le nouveau site. L'empreinte numérique, les cookies analytiques et le stockage via Google Sheets ont été retirés du produit, et de cette politique avec eux. Les réponses au quiz et les adresses e-mail sont désormais conservées dans l'Union européenne.",
-            "Version 2.1 — septembre 2026. Ajout d'une mesure d'audience en première partie : le site compte désormais la progression dans le questionnaire sur son propre serveur, sans cookie, sans script tiers et sans donnée personnelle. La section 4.3 décrit précisément ce qui est enregistré et ce qui ne l'est pas."
+            "Version 2.1 — septembre 2026. Ajout d'une mesure d'audience en première partie : le site compte désormais la progression dans le questionnaire sur son propre serveur, sans cookie, sans script tiers et sans donnée personnelle. La section 4.3 décrit précisément ce qui est enregistré et ce qui ne l'est pas.",
+            "Version 2.2 — septembre 2026. Ajout du nombre aléatoire de navigateur qui distingue un premier passage du questionnaire d'un passage répété, décrit à la section 4.4. La section 8 a été corrigée en conséquence : les réponses sont pseudonymisées et non totalement anonymes, puisque deux passages issus du même navigateur peuvent être vus comme liés."
           ]
         }
       ]

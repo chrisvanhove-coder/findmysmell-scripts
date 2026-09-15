@@ -106,6 +106,63 @@ for (const s of steps) {
   console.log();
 }
 
+// ── Повторные прохождения ──────────────────────────────────────────────
+// Это ответ на вопрос «а если один человек пройдёт тест десять раз».
+// Выборка для исследования — run_index = 1; остальное отдельный материал.
+try {
+  const runs = await db
+    .select({ runIndex: schema.submissions.runIndex, n: sql<number>`count(*)::int` })
+    .from(schema.submissions)
+    .where(gte(schema.submissions.createdAt, since))
+    .groupBy(schema.submissions.runIndex);
+
+  const total = runs.reduce((s, r) => s + r.n, 0);
+  if (total) {
+    const first = runs.find((r) => r.runIndex === 1)?.n ?? 0;
+    const repeat = runs.filter((r) => (r.runIndex ?? 0) > 1).reduce((s, r) => s + r.n, 0);
+    const unknown = runs.filter((r) => r.runIndex === null).reduce((s, r) => s + r.n, 0);
+
+    console.log(`Повторные прохождения за ${days} дн.\n`);
+    console.log(`   первое прохождение   ${String(first).padStart(5)}  ${((first / total) * 100).toFixed(1)}%  ← выборка для исследования`);
+    console.log(`   повторное            ${String(repeat).padStart(5)}  ${((repeat / total) * 100).toFixed(1)}%`);
+    if (unknown) {
+      console.log(`   без ключа            ${String(unknown).padStart(5)}  ${((unknown / total) * 100).toFixed(1)}%  приватный режим или чистое хранилище`);
+    }
+    for (const r of runs.filter((x) => (x.runIndex ?? 0) > 1).sort((a, b) => (a.runIndex ?? 0) - (b.runIndex ?? 0))) {
+      console.log(`      прохождение №${r.runIndex}: ${r.n}`);
+    }
+    console.log();
+
+    // Меняется ли архетип при повторе — то, что заказчик хотела видеть.
+    const seq = await db
+      .select({
+        browserKey: schema.submissions.browserKey,
+        runIndex: schema.submissions.runIndex,
+        winner: schema.submissions.winner,
+      })
+      .from(schema.submissions)
+      .where(gte(schema.submissions.createdAt, since))
+      .orderBy(schema.submissions.browserKey, schema.submissions.runIndex);
+
+    const byKey = new Map<string, string[]>();
+    for (const r of seq) {
+      if (!r.browserKey) continue;
+      byKey.set(r.browserKey, [...(byKey.get(r.browserKey) ?? []), r.winner]);
+    }
+    const multi = [...byKey.values()].filter((v) => v.length > 1);
+    if (multi.length) {
+      const same = multi.filter((v) => new Set(v).size === 1).length;
+      console.log(`Из ${multi.length} браузеров с повторами: тот же архетип у ${same}, другой у ${multi.length - same}\n`);
+      for (const chain of multi.slice(0, 12)) {
+        console.log(`   ${chain.join(' → ')}${new Set(chain).size === 1 ? '  (не изменился)' : ''}`);
+      }
+      console.log();
+    }
+  }
+} catch {
+  // Колонок может не быть, если миграция не применена — отчёт всё равно нужен.
+}
+
 // Архетипы берём из прохождений: в воронке победителя нет намеренно —
 // он вычисляется из ответов и живёт в submissions под своим согласием.
 try {

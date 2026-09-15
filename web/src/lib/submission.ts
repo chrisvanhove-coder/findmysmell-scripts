@@ -25,6 +25,9 @@ const LIMITS = {
   answerValue: 128,
   openAnswer: 2000,
   clientToken: 64,
+  browserKey: 64,
+  /** Больше — либо накрутка, либо ошибка счётчика. Обрезаем, а не верим. */
+  runIndex: 10_000,
 } as const;
 
 export interface SubmissionInput {
@@ -33,6 +36,8 @@ export interface SubmissionInput {
   openAnswer: string;
   consentResearch: boolean;
   clientToken: string;
+  browserKey: string | null;
+  runIndex: number | null;
 }
 
 /** Готовая к вставке строка submissions. */
@@ -45,6 +50,8 @@ export interface SubmissionRecord {
   openAnswer: string | null;
   consentResearch: boolean;
   clientToken: string;
+  browserKey: string | null;
+  runIndex: number | null;
 }
 
 export type Parsed =
@@ -60,6 +67,7 @@ export function parseSubmission(body: unknown): Parsed {
   if (!isPlainObject(body)) return { ok: false, error: 'body must be an object' };
 
   const { locale, answers, openAnswer, consentResearch, clientToken } = body;
+  const b = body;
 
   if (typeof locale !== 'string' || !isLocale(locale)) {
     return { ok: false, error: 'unknown locale' };
@@ -97,6 +105,23 @@ export function parseSubmission(body: unknown): Parsed {
     return { ok: false, error: 'clientToken too long' };
   }
 
+  // Ключ браузера и номер прохождения необязательны: в приватном режиме
+  // хранилище недоступно, и прохождение должно уехать без них, а не упасть.
+  const rawKey = b.browserKey;
+  const browserKey =
+    typeof rawKey === 'string' && rawKey.length > 0 && rawKey.length <= LIMITS.browserKey
+      ? rawKey
+      : null;
+
+  const rawIndex = b.runIndex;
+  const runIndex =
+    typeof rawIndex === 'number' &&
+    Number.isInteger(rawIndex) &&
+    rawIndex >= 1 &&
+    rawIndex <= LIMITS.runIndex
+      ? rawIndex
+      : null;
+
   return {
     ok: true,
     input: {
@@ -105,6 +130,8 @@ export function parseSubmission(body: unknown): Parsed {
       openAnswer: open,
       consentResearch,
       clientToken,
+      browserKey,
+      runIndex,
     },
   };
 }
@@ -128,6 +155,10 @@ export function buildRecord(input: SubmissionInput): SubmissionRecord {
     openAnswer: input.openAnswer !== '' ? input.openAnswer : null,
     consentResearch: input.consentResearch,
     clientToken: input.clientToken,
+    // Номер без ключа смысла не имеет: не с чем связать. И наоборот —
+    // ключ без номера бесполезен. Поэтому пара, либо ничего.
+    browserKey: input.browserKey !== null && input.runIndex !== null ? input.browserKey : null,
+    runIndex: input.browserKey !== null && input.runIndex !== null ? input.runIndex : null,
   };
 }
 

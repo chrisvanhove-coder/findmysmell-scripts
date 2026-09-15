@@ -128,3 +128,87 @@ export function wasSent(): boolean {
 export function markSent() {
   write(SENT_KEY, '1');
 }
+
+/* ────────────────────────────────────────────────────────────────────────
+   Повторные прохождения
+   ────────────────────────────────────────────────────────────────────────
+
+   Задача заказчика: один человек может пройти тест десять раз, и тогда
+   исследовательская выборка перестаёт быть выборкой — в ней десять копий
+   одного мнения.
+
+   Решение: случайный ключ браузера, который живёт 13 месяцев, и счётчик
+   прохождений. Прохождение уезжает с этими двумя полями, и дальше выборка
+   для исследования — это `run_index = 1`, а `run_index > 1` становится
+   отдельным и довольно интересным материалом: меняется ли архетип, когда
+   человек проходит тест снова.
+
+   Почему 13 месяцев. Это потолок CNIL для идентификаторов измерения
+   аудитории. Ключ старше — сбрасывается и заводится новый, то есть дольше
+   13 месяцев не живёт никогда.
+
+   Чего этот ключ НЕ делает. Он не про человека, а про браузер. Один человек
+   с телефона и с ноутбука — это два ключа. Почистил хранилище, пришёл из
+   приватного окна — новый ключ. Это сильный сигнал, но не гарантия, и
+   выдавать его за «узнали человека» нельзя.
+────────────────────────────────────────────────────────────────────────── */
+
+const BROWSER_KEY = 'fms_browser';
+const RUNS_KEY = 'fms_runs';
+/** Потолок CNIL для идентификаторов измерения аудитории. */
+const KEY_TTL_DAYS = 13 * 30;
+
+type BrowserMark = { key: string; since: string };
+
+function readBrowserMark(): BrowserMark | null {
+  // Только localStorage: ключ обязан переживать сессию, иначе он бесполезен.
+  const raw = read(globalThis.localStorage, BROWSER_KEY);
+  if (!raw) return null;
+  try {
+    const p: unknown = JSON.parse(raw);
+    if (!p || typeof p !== 'object') return null;
+    const m = p as Partial<BrowserMark>;
+    if (typeof m.key !== 'string' || typeof m.since !== 'string') return null;
+    const ageDays = (Date.now() - Date.parse(m.since)) / 86_400_000;
+    // Истёк — считаем, что ключа нет. Новый заведётся сам.
+    if (!Number.isFinite(ageDays) || ageDays > KEY_TTL_DAYS) return null;
+    return { key: m.key, since: m.since };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Ключ браузера. Заводится при первом обращении, сам себя сбрасывает через
+ * 13 месяцев. Возвращает null, если хранилище недоступно (приватный режим) —
+ * тогда прохождение просто уедет без ключа, а не сломается.
+ */
+export function browserKey(): string | null {
+  const existing = readBrowserMark();
+  if (existing) return existing.key;
+
+  const mark: BrowserMark = { key: newToken(), since: new Date().toISOString() };
+  try {
+    globalThis.localStorage?.setItem(BROWSER_KEY, JSON.stringify(mark));
+  } catch {
+    return null;
+  }
+  // Сброс счётчика вместе с ключом: иначе после истечения ключа номер
+  // прохождения продолжился бы от старого и врал.
+  try { globalThis.localStorage?.setItem(RUNS_KEY, '0'); } catch { /* ничего */ }
+  return mark.key;
+}
+
+/**
+ * Номер прохождения для этого браузера, 1-based. Увеличивается один раз
+ * за прохождение — вызывать при отправке, а не при показе результата,
+ * иначе перезагрузка страницы накрутит номер.
+ */
+export function bumpRunIndex(): number {
+  if (!browserKey()) return 1;
+  const raw = read(globalThis.localStorage, RUNS_KEY);
+  const prev = Number.parseInt(raw ?? '0', 10);
+  const next = Number.isFinite(prev) && prev > 0 ? prev + 1 : 1;
+  try { globalThis.localStorage?.setItem(RUNS_KEY, String(next)); } catch { /* ничего */ }
+  return next;
+}

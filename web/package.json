@@ -21,7 +21,8 @@
     "check:images": "tsx scripts/check-images.mts",
     "check:funnel": "tsx scripts/check-funnel.mts",
     "purge:retention": "tsx scripts/purge-retention.mts",
-    "funnel:report": "tsx scripts/funnel-report.mts"
+    "funnel:report": "tsx scripts/funnel-report.mts",
+    "e2e:repeat": "node e2e/repeat-runs.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

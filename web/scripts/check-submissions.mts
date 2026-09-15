@@ -20,7 +20,7 @@
 import { PGlite } from '@electric-sql/pglite';
 import { drizzle } from 'drizzle-orm/pglite';
 import { migrate } from 'drizzle-orm/pglite/migrator';
-import { sql } from 'drizzle-orm';
+import { sql, eq, isNull } from 'drizzle-orm';
 import * as schema from '../src/db/schema';
 import { parseSubmission, buildRecord, parseSubscriber } from '../src/lib/submission';
 import { emailConfigured, sendResultEmail, buildResultEmail } from '../src/lib/email';
@@ -145,6 +145,64 @@ console.log('\nСогласие на исследование');
   }
 }
 
+/* ------------------- 3.1 ключ браузера и номер прохода ------------------- */
+
+console.log('\nПовторные прохождения: ключ браузера и номер прохода');
+{
+  const KEY = 'a'.repeat(32);
+
+  // Пара живёт или целиком, или никак. Один ключ без номера бесполезен:
+  // он говорит «это тот же браузер» и молчит о том, какой это по счёту
+  // проход, а номер без ключа не с чем сопоставить.
+  const pair = parseSubmission(base({ browserKey: KEY, runIndex: 2 }));
+  check('пара ключ+номер принимается', pair.ok);
+  if (pair.ok) {
+    const r = buildRecord(pair.input);
+    check('ключ доехал до записи', r.browserKey === KEY);
+    check('номер прохода доехал до записи', r.runIndex === 2);
+  }
+
+  // Каждый из этих входов должен дать пустую пару, а не отказ: без
+  // хранилища (приватный режим) прохождение обязано уехать всё равно.
+  const dropped: Array<[string, Record<string, unknown>]> = [
+    ['без ключа и номера', {}],
+    ['только ключ', { browserKey: KEY }],
+    ['только номер', { runIndex: 3 }],
+    ['ключ не строка', { browserKey: 42, runIndex: 1 }],
+    ['пустой ключ', { browserKey: '', runIndex: 1 }],
+    ['ключ длиннее 64', { browserKey: 'x'.repeat(65), runIndex: 1 }],
+    ['номер нулевой', { browserKey: KEY, runIndex: 0 }],
+    ['номер отрицательный', { browserKey: KEY, runIndex: -5 }],
+    ['номер дробный', { browserKey: KEY, runIndex: 1.5 }],
+    ['номер строкой', { browserKey: KEY, runIndex: '2' }],
+    ['номер за потолком', { browserKey: KEY, runIndex: 10_001 }],
+  ];
+
+  for (const [label, extra] of dropped) {
+    const parsed = parseSubmission(base(extra));
+    if (!parsed.ok) {
+      check(`${label}: прохождение всё равно принято`, false, parsed.error);
+      continue;
+    }
+    const r = buildRecord(parsed.input);
+    check(`${label} → пара пустая, прохождение записано`,
+      r.browserKey === null && r.runIndex === null,
+      `key=${r.browserKey} index=${r.runIndex}`);
+  }
+
+  // Потолок — ровно 64 и ровно 10000, границы включительно.
+  const edge = parseSubmission(base({ browserKey: 'x'.repeat(64), runIndex: 10_000 }));
+  check('граничные значения принимаются',
+    edge.ok && buildRecord(edge.input).runIndex === 10_000);
+
+  // Ключ не должен влиять ни на результат, ни на согласие.
+  const plain = parseSubmission(base());
+  if (pair.ok && plain.ok) {
+    check('ключ не меняет архетип',
+      buildRecord(pair.input).winner === buildRecord(plain.input).winner);
+  }
+}
+
 /* ----------------------- 4. база: схема и запись ----------------------- */
 
 console.log('\nЗапись в Postgres (pglite, миграции из drizzle/)');
@@ -210,6 +268,41 @@ console.log('\nЗапись в Postgres (pglite, миграции из drizzle/)
     Object.keys((stored?.answers ?? {}) as Record<string, string>).length === 17);
   check('открытый текст сохранён', stored?.openAnswer === base().openAnswer);
   check('createdAt проставился сам', stored?.createdAt instanceof Date);
+
+  /* ------------------- повторы в реальной таблице ------------------- */
+  // То же, что проверяет e2e/repeat-runs.mjs в браузере, но здесь на
+  // настоящей схеме: два прохода одного браузера должны лежать двумя
+  // строками с одним ключом и номерами 1 и 2, а выборка для
+  // исследования — это run_index = 1.
+  const KEY = 'browser-key-for-db-test';
+  for (const i of [1, 2, 3]) {
+    const p = parseSubmission(base({ clientToken: `repeat-${i}`, browserKey: KEY, runIndex: i }));
+    if (!p.ok) throw new Error(`неожиданно: проход ${i} не разобрался`);
+    await db.insert(schema.submissions).values(buildRecord(p.input));
+  }
+
+  const runs = await db
+    .select({ runIndex: schema.submissions.runIndex })
+    .from(schema.submissions)
+    .where(eq(schema.submissions.browserKey, KEY))
+    .orderBy(schema.submissions.runIndex);
+  check('три прохода одного браузера легли тремя строками', runs.length === 3,
+    `есть ${runs.length}`);
+  check('номера прохождений 1, 2, 3',
+    runs.map((r) => r.runIndex).join(',') === '1,2,3', runs.map((r) => r.runIndex).join(','));
+
+  const firstRuns = await db
+    .select({ id: schema.submissions.id })
+    .from(schema.submissions)
+    .where(eq(schema.submissions.runIndex, 1));
+  check('выборка run_index = 1 отсекает повторы', firstRuns.length === 1,
+    `есть ${firstRuns.length}`);
+
+  const noKey = await db
+    .select({ id: schema.submissions.id })
+    .from(schema.submissions)
+    .where(isNull(schema.submissions.browserKey));
+  check('прохождения без ключа тоже в таблице', noKey.length === 3, `есть ${noKey.length}`);
 
   /* ---------------------------- подписка ---------------------------- */
 
