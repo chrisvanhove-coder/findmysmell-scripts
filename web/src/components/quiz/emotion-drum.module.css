@@ -24,21 +24,16 @@
   transition: opacity 0.6s ease;
 }
 
-/* Вуаль двойная: чёрный слой держит контраст текста (0.45, как в проде),
-   а цветной сверху окрашивает экран в цвет эмоции. color-mix, а не
-   готовая rgba: цвет приходит переменной, и прозрачность к нему надо
-   добавить уже здесь. */
+/* Вуаль ровно как в проде: чёрный слой 0.45 держит контраст текста.
+   ЦВЕТНОЙ СЛОЙ ПОВЕРХ ФОТОГРАФИИ БЫЛ ЛИШНИМ И Я ЕГО УБРАЛ. Фотографии
+   эмоций сами разного цвета, и подкраска их же цветом только глушила
+   картинку — экран начинал выглядеть как заливка, а не как фотография.
+   Цвет остался ровно там, где он помогает: в свечении за словом. */
 .veil {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(
-      color-mix(in srgb, var(--emo-color) 28%, transparent),
-      color-mix(in srgb, var(--emo-color) 40%, transparent)
-    ),
-    rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.45);
   pointer-events: none;
-  transition: background 0.6s ease;
 }
 
 .content {
@@ -110,12 +105,13 @@
   overflow: hidden;
   cursor: grab;
 
-  /* Свечение за словом цветом эмоции: слово читается даже там, где
-     фотография в этом месте тёмная. */
+  /* Свечение за словом цветом эмоции: слово читается и там, где
+     фотография в этом месте светлая. Слабое намеренно — фотография
+     должна оставаться видна сквозь него. */
   background: radial-gradient(
-    ellipse 70% 120% at 50% 50%,
-    color-mix(in srgb, var(--emo-color) 45%, transparent),
-    transparent 70%
+    ellipse 60% 110% at 50% 50%,
+    color-mix(in srgb, var(--emo-color) 30%, transparent),
+    transparent 72%
   );
   transition: background 0.6s ease;
 }
@@ -181,6 +177,5 @@
   .arrowDown,
   .hint { animation: none; }
   .backdrop,
-  .veil,
   .slot { transition: none; }
 }

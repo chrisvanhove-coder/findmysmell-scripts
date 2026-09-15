@@ -88,6 +88,54 @@ console.log('\nБарабан есть и крутится сам с откры�
   await context.close();
 }
 
+console.log('\nФон — ФОТОГРАФИЯ из Cloudinary, а не заливка цветом');
+{
+  // Эта проверка стоит здесь потому, что подкраска цветом эмоции может
+  // создать впечатление, будто фотографии нет. Фотография — главное;
+  // цвет только тонирует её сверху. Проверяем именно фотографию.
+  const context = await browser.newContext({ viewport: { width: 1200, height: 800 } });
+  const seen = [];
+  // Не подменяем, а записываем: нужно знать, какие адреса страница
+  // реально запрашивает.
+  await context.route('**://res.cloudinary.com/**', (route) => {
+    seen.push(route.request().url());
+    route.fulfill({
+      status: 200,
+      contentType: 'image/svg+xml',
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8">'
+        + '<rect width="8" height="8" fill="#345"/></svg>',
+    });
+  });
+  const page = await context.newPage();
+  await page.goto(PAGE, { waitUntil: 'networkidle' });
+  await page.locator('[role="listbox"]').waitFor({ timeout: 8000 });
+  await page.waitForTimeout(900);
+
+  check('страница запросила фотографии из Cloudinary', seen.length > 0,
+    `запросов ${seen.length}`);
+  check('запрошены все семь фотографий эмоций',
+    ['calm', 'energy', 'sexy', 'cozy', 'play', 'focus', 'myst']
+      .every((k) => seen.some((u) => u.includes(`feel-${k}`))),
+    seen.map((u) => u.split('/').pop()).join(', '));
+  check('адреса с преобразованием, а не исходные тяжёлые файлы',
+    seen.every((u) => u.includes('/upload/c_fill')),
+    'исходники sexy и energy весят по 3,6 МБ');
+
+  // И то, что реально стоит фоном у видимого слоя.
+  const bg = await page.evaluate(() =>
+    [...document.querySelectorAll('[aria-hidden]')]
+      .map((e) => e.style.backgroundImage)
+      .filter(Boolean));
+  check('фоном стоит фотография, а не цвет',
+    bg.length > 0 && bg.every((v) => v.includes('res.cloudinary.com')),
+    bg.join(' | ') || '(background-image не выставлен)');
+  check('в фоне есть имя файла эмоции',
+    bg.some((v) => /feel-(calm|energy|sexy|cozy|play|focus|myst)/.test(v)),
+    bg.join(' | '));
+
+  await context.close();
+}
+
 console.log('\nФон меняется вместе со словом');
 {
   const { context, page } = await open();
