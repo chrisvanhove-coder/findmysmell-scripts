@@ -31,7 +31,8 @@
     "check:share": "tsx scripts/check-share-card.mts",
     "e2e:grain": "node e2e/grain.mjs",
     "import:sheet": "tsx scripts/import-sheet.mts",
-    "check:counts": "tsx scripts/check-counts.mts"
+    "check:counts": "tsx scripts/check-counts.mts",
+    "e2e:drum": "node e2e/emotion-drum.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

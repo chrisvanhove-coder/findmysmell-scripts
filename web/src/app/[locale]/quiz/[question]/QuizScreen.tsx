@@ -12,6 +12,7 @@ import {
 import { reportFunnel } from '@/lib/funnel';
 import { isCountryQuestion } from '@/data/countries';
 import CountrySearch from './CountrySearch';
+import { MECHANICS } from '@/components/quiz/mechanics';
 import { resolve } from '@/lib/scoring';
 import styles from './quiz.module.css';
 
@@ -96,6 +97,30 @@ export default function QuizScreen({
 
   const step = stepOf(question.id);
   const pct = Math.round((step / TOTAL_STEPS) * 100);
+
+  /* У вопроса может быть своя механика — барабан, шары, ползунок. Тогда
+     она занимает экран целиком вместо списка кнопок, а сохранение,
+     воронка и переход остаются здесь (см. components/quiz/mechanics.ts). */
+  // Берём из модульной таблицы напрямую: ссылка на компонент стабильна
+  // между перерисовками, а вызов функции здесь линтер справедливо
+  // принял бы за создание компонента на каждом рендере.
+  const Mechanic = MECHANICS[question.id];
+  if (Mechanic) {
+    return (
+      <main className={styles.screen}>
+        <button type="button" className={styles.back} onClick={() => router.back()}>
+          ← Back
+        </button>
+        <Mechanic onChoose={choose} />
+        <div className={styles.progress}>
+          <span className={styles.count}>{pct}%</span>
+          <div className={styles.track}>
+            <div className={styles.fill} style={{ width: `${pct}%` }} />
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className={styles.screen}>

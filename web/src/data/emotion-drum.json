@@ -1,0 +1,45 @@
+{
+  "_": "Барабан эмоций на Q_EMO. Порядок слов и картинок как в проде (q-emo.footer.html). Слова заглавными — так в проде; шрифт пока Montserrat 900, HIGHCRUISER подставим, когда он придёт.",
+  "prefix": [
+    "FOR THIS FRAGRANCE,",
+    "I WANT TO FEEL..."
+  ],
+  "hint": "SWIPE UP OR DOWN  ·  TAP TO SELECT",
+  "items": [
+    {
+      "code": "Q_EMO__MYST",
+      "word": "MYSTERIOUS",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357373/feel-myst_xapckv.jpg"
+    },
+    {
+      "code": "Q_EMO__ENERGY",
+      "word": "ENERGETIC",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357340/feel-energy_mn5jgs.png"
+    },
+    {
+      "code": "Q_EMO__SEXY",
+      "word": "SEXY",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357407/feel-sexy_vbcves.png"
+    },
+    {
+      "code": "Q_EMO__COZY",
+      "word": "COZY",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357323/feel-cozy_ubq7q8.jpg"
+    },
+    {
+      "code": "Q_EMO__PLAY",
+      "word": "PLAYFUL",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357390/feel-play_ivcoxn.jpg"
+    },
+    {
+      "code": "Q_EMO__CALM",
+      "word": "CALM",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357307/feel-calm_flmzez.jpg"
+    },
+    {
+      "code": "Q_EMO__FOCUS",
+      "word": "FOCUSED",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357356/feel-focus_vngdso.jpg"
+    }
+  ]
+}

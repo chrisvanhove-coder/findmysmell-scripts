@@ -34,6 +34,10 @@ export const PRESETS = {
   bottleAlt: 'c_limit,w_336/f_auto/q_auto',
   /** Флакон в письме: ширина 180. */
   bottleEmail: 'c_limit,w_360/f_auto/q_auto',
+  /** Фон на весь экран в квизе: барабан эмоций и живые фоны вопросов. */
+  quizBackdrop: 'c_fill,g_auto,h_900,w_1600/f_auto/q_auto',
+  /** То же для телефона: вертикаль, вдвое меньше по площади. */
+  quizBackdropMobile: 'c_fill,g_auto,h_1280,w_720/f_auto/q_auto',
   /** Фото в боковой колонке главной: .sidePhoto, 3/2. */
   homeSide: 'c_fill,g_auto,h_480,w_720/f_auto/q_auto',
   /** Фон на всю колонку или экран, десктоп: .midImg. */

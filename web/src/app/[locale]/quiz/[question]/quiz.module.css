@@ -120,6 +120,9 @@
   left: 0;
   right: 0;
   bottom: var(--fms-footer-h);
+  /* Выше механик вопроса (барабан эмоций закреплён на z-index 10)
+     и ниже подвала сайта (40), чтобы не накрыть его ссылки. */
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
