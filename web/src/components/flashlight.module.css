@@ -1,0 +1,62 @@
+/* Фонарик по текстуре. Перенесено с прода (.fms-personality-reveal и
+   .fms-personality-texture в page-result-head.css.html). Числа те же:
+   круги 160/120/90/60px, opacity 0.35, multiply, виньетка inset 100/60. */
+
+.wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Виньетка поверх текстуры: гасит слой у краёв, иначе видно, где кончается
+   фотография. z-index 2 — между текстурой и текстом. */
+.wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  box-shadow: inset 0 0 100px 60px var(--fms-paper);
+  pointer-events: none;
+}
+
+.texture {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  /* Ширина под самый широкий слот; c_limit не увеличивает мелкое.
+     Фотография штукатурки, 3,3 МБ в оригинале. */
+  background-image: url('https://res.cloudinary.com/dcefrxxav/image/upload/c_limit,w_1600/f_auto/q_auto/v1787817113/textured-wall_sh9lpw.png');
+  background-size: cover;
+  background-position: center;
+
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+
+  /* Четыре круга: первый под курсором, три запаздывают. Координаты
+     приходят из Flashlight.tsx как CSS-переменные; по умолчанию все
+     за экраном, поэтому до первого движения текстуры не видно. */
+  -webkit-mask-image:
+    radial-gradient(circle 160px at var(--mx, -300px) var(--my, -300px),
+      black 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.1) 70%, transparent 100%),
+    radial-gradient(circle 120px at var(--mx1, -300px) var(--my1, -300px),
+      rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.15) 50%, transparent 100%),
+    radial-gradient(circle 90px at var(--mx2, -300px) var(--my2, -300px),
+      rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%),
+    radial-gradient(circle 60px at var(--mx3, -300px) var(--my3, -300px),
+      rgba(0, 0, 0, 0.1) 0%, transparent 80%);
+  mask-image:
+    radial-gradient(circle 160px at var(--mx, -300px) var(--my, -300px),
+      black 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.1) 70%, transparent 100%),
+    radial-gradient(circle 120px at var(--mx1, -300px) var(--my1, -300px),
+      rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.15) 50%, transparent 100%),
+    radial-gradient(circle 90px at var(--mx2, -300px) var(--my2, -300px),
+      rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.05) 50%, transparent 100%),
+    radial-gradient(circle 60px at var(--mx3, -300px) var(--my3, -300px),
+      rgba(0, 0, 0, 0.1) 0%, transparent 80%);
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+}

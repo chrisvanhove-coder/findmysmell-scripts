@@ -25,7 +25,8 @@
     "e2e:repeat": "node e2e/repeat-runs.mjs",
     "check:admin": "tsx scripts/check-admin.mts",
     "check:consent": "tsx scripts/check-consent.mts",
-    "e2e:consent": "node e2e/consent.mjs"
+    "e2e:consent": "node e2e/consent.mjs",
+    "e2e:flashlight": "node e2e/flashlight.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

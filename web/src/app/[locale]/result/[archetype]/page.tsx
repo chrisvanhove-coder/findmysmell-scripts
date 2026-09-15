@@ -6,6 +6,7 @@ import { getArchetype } from '@/lib/content';
 import { match } from '@/lib/matching';
 import Ingredients from './Ingredients';
 import ScentDna from './ScentDna';
+import Flashlight from '@/components/Flashlight';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
 import SubscribeForm from './SubscribeForm';
@@ -79,7 +80,9 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
           из них собирается заголовок вкладки и превью ссылки. */}
       <ScentDna archetype={parsed.key} quote={pullQuote} />
 
-      <section className={styles.personality}>
+      {/* Фонарик по штукатурке — как в проде: текстура проявляется под
+          курсором и тянется следом. Блок текста внутри, поверх слоя. */}
+      <Flashlight className={styles.personality}>
         <div className={styles.prose}>
           {body.map((p, i) => (
             <p key={i} className={styles.para}>
@@ -88,7 +91,7 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
           ))}
           {closer && <p className={`${styles.para} ${styles.closer}`}>{closer}</p>}
         </div>
-      </section>
+      </Flashlight>
 
       <Ingredients ingredients={a.ingredients} band={LABELS.main} />
 
