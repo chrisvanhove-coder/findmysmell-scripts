@@ -1,5 +1,5 @@
 {
-  "_": "Барабан эмоций на Q_EMO. Порядок слов и картинок как в проде (q-emo.footer.html). Слова заглавными — так в проде; шрифт пока Montserrat 900, HIGHCRUISER подставим, когда он придёт.",
+  "_": "Барабан эмоций на Q_EMO. Порядок слов и картинок как в проде (q-emo.footer.html). Слова заглавными — так в проде; шрифт пока Montserrat 900, HIGHCRUISER подставим, когда он придёт. Поле color — преобладающий цвет самой фотографии, взят из Cloudinary (get-asset-details с colors: true), не подобран на глаз. Им подкрашивается вуаль и свечение за словом, чтобы экран менял характер вместе с эмоцией. Само слово остаётся белым: оно лежит на фотографии, и цветное читалось бы хуже.",
   "prefix": [
     "FOR THIS FRAGRANCE,",
     "I WANT TO FEEL..."
@@ -9,37 +9,44 @@
     {
       "code": "Q_EMO__MYST",
       "word": "MYSTERIOUS",
-      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357373/feel-myst_xapckv.jpg"
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357373/feel-myst_xapckv.jpg",
+      "color": "#332D35"
     },
     {
       "code": "Q_EMO__ENERGY",
       "word": "ENERGETIC",
-      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357340/feel-energy_mn5jgs.png"
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357340/feel-energy_mn5jgs.png",
+      "color": "#BD9413"
     },
     {
       "code": "Q_EMO__SEXY",
       "word": "SEXY",
-      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357407/feel-sexy_vbcves.png"
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357407/feel-sexy_vbcves.png",
+      "color": "#6B2D35"
     },
     {
       "code": "Q_EMO__COZY",
       "word": "COZY",
-      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357323/feel-cozy_ubq7q8.jpg"
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357323/feel-cozy_ubq7q8.jpg",
+      "color": "#B7735A"
     },
     {
       "code": "Q_EMO__PLAY",
       "word": "PLAYFUL",
-      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357390/feel-play_ivcoxn.jpg"
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357390/feel-play_ivcoxn.jpg",
+      "color": "#BC9D60"
     },
     {
       "code": "Q_EMO__CALM",
       "word": "CALM",
-      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357307/feel-calm_flmzez.jpg"
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357307/feel-calm_flmzez.jpg",
+      "color": "#697D67"
     },
     {
       "code": "Q_EMO__FOCUS",
       "word": "FOCUSED",
-      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357356/feel-focus_vngdso.jpg"
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357356/feel-focus_vngdso.jpg",
+      "color": "#476781"
     }
   ]
 }

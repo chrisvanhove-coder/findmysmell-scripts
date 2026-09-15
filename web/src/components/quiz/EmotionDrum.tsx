@@ -35,6 +35,8 @@ interface Item {
   code: string;
   word: string;
   img: string;
+  /** Преобладающий цвет самой фотографии, из Cloudinary. */
+  color: string;
 }
 
 const ITEMS = drum.items as Item[];
@@ -59,6 +61,7 @@ export default function EmotionDrum({
   /** Вызывается с кодом ответа. Навигацию делает QuizScreen. */
   onChoose: (code: string) => void;
 }) {
+  const stage = useRef<HTMLDivElement | null>(null);
   const slot = useRef<HTMLDivElement | null>(null);
   const words = useRef<Array<HTMLDivElement | null>>([]);
   const layers = useRef<Array<HTMLDivElement | null>>([]);
@@ -171,6 +174,11 @@ export default function EmotionDrum({
       if (idx !== shownIdx.current) {
         shownIdx.current = idx;
         setCurrent(idx);
+        /* Цвет эмоции идёт в вуаль и в свечение за словом. Он взят из
+           самой фотографии, а не подобран на глаз, поэтому экран меняет
+           характер вместе с картинкой и не спорит с ней. Слово остаётся
+           белым: цветное на своей же фотографии читалось бы хуже. */
+        stage.current?.style.setProperty('--emo-color', ITEMS[idx].color);
         // Кроссфейд по-настоящему: два слоя, меняем прозрачность.
         const next = shownLayer.current === 0 ? 1 : 0;
         const el = layers.current[next];
@@ -342,7 +350,7 @@ export default function EmotionDrum({
   const chosenWord = picked !== null ? ITEMS[picked].word : null;
 
   return (
-    <div className={styles.stage}>
+    <div ref={stage} className={styles.stage}>
       {/* Два слоя фона под кроссфейд. */}
       <div ref={(el) => { layers.current[0] = el; }} className={styles.backdrop} aria-hidden />
       <div ref={(el) => { layers.current[1] = el; }} className={styles.backdrop} aria-hidden />
