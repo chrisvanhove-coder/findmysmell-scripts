@@ -1,12 +1,28 @@
 {
   "_": "Главная страница. Перенесена с продовой страницы Webflow — там вся вёрстка и текст лежали в одном HTML-эмбеде. Ссылки на картинки хранятся чистыми — трансформацию ставит cld() из src/lib/cloudinary.ts, пресеты там же.",
-  "title": ["THERE", "IS NO", "UNIVERSAL", "SCENT"],
+  "title": [
+    "THERE",
+    "IS NO",
+    "UNIVERSAL",
+    "SCENT"
+  ],
   "tagline": "A 5-minute quiz that finds the perfume that fits who you are right now.",
   "pitch": [
-    { "text": "The fragrance industry spends" },
-    { "text": "billions telling you what to buy." },
-    { "text": "It has never once asked who you are.", "accent": true, "gap": true },
-    { "text": "This quiz does.", "accent": true }
+    {
+      "text": "The fragrance industry spends"
+    },
+    {
+      "text": "billions telling you what to buy."
+    },
+    {
+      "text": "It has never once asked who you are.",
+      "accent": true,
+      "gap": true
+    },
+    {
+      "text": "This quiz does.",
+      "accent": true
+    }
   ],
   "howLabel": "How it works",
   "howBody": "Answer with what you feel right now — not with your mind, but with your current state, mood, point in life.",
@@ -21,8 +37,32 @@
     "hero": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/home/hero.png",
     "heroMobile": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/home/hero.png",
     "side": [
-      { "src": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/home/fireplace.png", "alt": "A fireplace" },
-      { "src": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/home/skiing.png", "alt": "Skiing" }
+      {
+        "src": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/home/fireplace.png",
+        "alt": "A fireplace"
+      },
+      {
+        "src": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/home/skiing.png",
+        "alt": "Skiing"
+      }
     ]
-  }
+  },
+  "steps": [
+    {
+      "num": "01",
+      "label": "Answer Openly",
+      "desc": "{N} questions about mood, memories and emotions — not fragrance notes you've never smelled."
+    },
+    {
+      "num": "02",
+      "label": "Get Matched",
+      "desc": "One main recommendation built for who you are right now, plus a few alternatives, each with five perfume notes you can walk into any shop and ask to smell."
+    },
+    {
+      "num": "03",
+      "label": "Go Smell It",
+      "desc": "Take the names with you. Try them on your own skin. The right one is the one that stops feeling like perfume."
+    }
+  ],
+  "_steps": "Три шага «How it works» с главной прода. {N} подставляется из TOTAL_STEPS: в проде здесь стояло «Twelve», хотя вопросов 17."
 }

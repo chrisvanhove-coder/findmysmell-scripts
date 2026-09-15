@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
 import { getHomeCopy, splitAccent } from '@/lib/home';
-import { FIRST_QUESTION, toSlug } from '@/lib/quiz';
+import { TOTAL_STEPS, FIRST_QUESTION, toSlug } from '@/lib/quiz';
 import styles from './home.module.css';
 import { cld } from '@/lib/cloudinary';
 
@@ -36,7 +36,12 @@ export async function generateMetadata({
   const copy = getHomeCopy(locale);
   return {
     title: 'Find My Smell — Perfume Personality Quiz',
-    description: copy.tagline,
+    // Слоган про «5-minute quiz» — про время, а не про число вопросов,
+    // и в выдаче он не отвечает на вопрос «сколько это займёт шагов».
+    // В проде здесь стояло «Answer 7 questions», хотя их 17.
+    description:
+      `${copy.tagline} ${TOTAL_STEPS} questions about how you feel right now `
+      + '— not notes, not trends. No emails, no sign-ups.',
   };
 }
 
@@ -80,6 +85,21 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <em className={styles.emQuiet}>{noteAccent}</em>
         {noteAfter}
       </p>
+
+      {/* Три шага с главной прода. Число вопросов подставляется из
+          TOTAL_STEPS: в проде здесь было «Twelve», в метаописании «7»,
+          а вопросов 17 — расходиться теперь нечем. */}
+      <ol className={styles.steps}>
+        {copy.steps.map((step) => (
+          <li key={step.num} className={styles.step}>
+            <span className={styles.stepNum}>{step.num}</span>
+            <span className={styles.stepLabel}>{step.label}</span>
+            <p className={styles.stepDesc}>
+              {step.desc.replace('{N}', String(TOTAL_STEPS))}
+            </p>
+          </li>
+        ))}
+      </ol>
     </>
   );
 

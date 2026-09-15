@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Fraunces, Inconsolata, Montserrat } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { LOCALES, isLocale } from '@/lib/i18n';
+import { TOTAL_STEPS } from '@/lib/quiz';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import ConsentGate from '@/components/ConsentGate';
@@ -34,8 +35,13 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: 'Find My Smell',
+  // Число вопросов держим ОДНО на весь сайт: на живом сайте их три разных
+  // (12 в шагах на главной, 7 в метаописании, 17 на самом деле).
+  // Подставляется из TOTAL_STEPS, чтобы разойтись было нечем.
   description:
-    'Answer the quiz and get a personalised perfume match. No emails. No sign-ups. No boring perfume pyramids.',
+    `Answer ${TOTAL_STEPS} questions about how you feel right now — not notes, not trends. `
+    + 'Get a perfume matched to who you are. No emails. No sign-ups. '
+    + 'No boring perfume pyramids.',
 };
 
 export function generateStaticParams() {

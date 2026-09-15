@@ -326,3 +326,51 @@
 @media (prefers-reduced-motion: reduce) {
   .arrow { animation: none; }
 }
+
+/* ── три шага «How it works» ──────────────────────────────────────── */
+/* Перенесено с прода (.s3-steps). Там раскрытие шагов по скроллу было
+   сломано — шаги не показывались вовсе; здесь они просто видны. */
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: 'num label' 'num desc';
+  gap: 2px 12px;
+  align-items: baseline;
+}
+
+.stepNum {
+  grid-area: num;
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  opacity: 0.4;
+}
+
+.stepLabel {
+  grid-area: label;
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.stepDesc {
+  grid-area: desc;
+  margin: 2px 0 0;
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  opacity: 0.5;
+}

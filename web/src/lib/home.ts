@@ -15,6 +15,13 @@ export interface PitchLine {
   gap?: boolean;
 }
 
+/** Шаг «How it works». {N} в desc подставляется из TOTAL_STEPS. */
+export interface HomeStep {
+  num: string;
+  label: string;
+  desc: string;
+}
+
 export interface HomeCopy {
   title: string[];
   tagline: string;
@@ -28,6 +35,7 @@ export interface HomeCopy {
   consent: string;
   consentLink: string;
   scrollHint: string;
+  steps: HomeStep[];
   images: {
     hero: string;
     heroMobile: string;
