@@ -1,0 +1,133 @@
+/**
+ * Проверка раскладки шеринговой карточки.
+ *
+ * Запуск:  cd web && npm run check:share
+ *
+ * Карточка рисуется на canvas абсолютными координатами, поэтому текст,
+ * который не влез, никуда не переносится — он просто наезжает на бутылку
+ * или уходит за край. Проверить это глазами на семи архетипах каждый раз
+ * никто не будет, поэтому арифметика проверяется здесь.
+ */
+import {
+  LAYOUT, parsePunch, punchFits, punchHeight,
+  contrast, punchColor, MIN_PUNCH_CONTRAST,
+} from '../src/lib/share-card.ts';
+import punchLines from '../src/data/punch-lines.en.json' with { type: 'json' };
+import tagLines from '../src/data/tag-lines.en.json' with { type: 'json' };
+import shareCards from '../src/data/share-cards.en.json' with { type: 'json' };
+
+type CardArch = { bg: string; text: string; accent: string };
+
+const KEYS = ['CEO', 'JAPAN', 'HUG', 'OFFGRID', 'OUTOFTIME', 'SUMMER', 'THERAPIST'];
+
+let failed = 0;
+function check(name: string, ok: boolean, detail = '') {
+  if (ok) console.log(`  ok    ${name}`);
+  else {
+    failed += 1;
+    console.log(`  FAIL  ${name}${detail ? `\n        ${detail}` : ''}`);
+  }
+}
+
+console.log('\nФормат');
+check('1080×1350 — это 4:5, вертикаль инстаграма',
+  LAYOUT.W === 1080 && LAYOUT.H === 1350 && LAYOUT.H / LAYOUT.W === 1.25);
+
+console.log('\nПанчлайн влезает в свою полосу у всех семи');
+{
+  const available = LAYOUT.bottleZoneTop - LAYOUT.punchStartY;
+  console.log(`  (полоса ${available}px: от ${LAYOUT.punchStartY} до бутылки на ${LAYOUT.bottleZoneTop})\n`);
+  let tallest = 0;
+  for (const key of KEYS) {
+    const punch = parsePunch((punchLines as Record<string, unknown>)[key]);
+    const h = punchHeight(punch);
+    tallest = Math.max(tallest, h);
+    check(`${key.padEnd(10)} ${String(h).padStart(3)}px в ${punch.length} строк`,
+      punchFits(punch), `не влезает: ${h}px > ${available}px`);
+  }
+  check('запас у самого высокого больше 20px', available - tallest > 20,
+    `запас ${available - tallest}px`);
+}
+
+console.log('\nПорядок сверху вниз без наездов');
+{
+  const steps: Array<[string, number]> = [
+    ['@tag', LAYOUT.tagY],
+    ['линия под @tag', LAYOUT.tagRuleY],
+    ['панчлайн', LAYOUT.punchStartY],
+    ['бутылка', LAYOUT.bottleZoneTop],
+    ['название парфюма', LAYOUT.perfumeNameY],
+    ['дом парфюма', LAYOUT.perfumeBrandY],
+    ['подвал', LAYOUT.footerY],
+  ];
+  for (let i = 1; i < steps.length; i += 1) {
+    check(`${steps[i][0]} ниже, чем ${steps[i - 1][0]}`, steps[i][1] > steps[i - 1][1],
+      `${steps[i][1]} vs ${steps[i - 1][1]}`);
+  }
+  check('бутылка не наезжает на название парфюма',
+    LAYOUT.bottleZoneTop + LAYOUT.bottleH < LAYOUT.perfumeNameY,
+    `${LAYOUT.bottleZoneTop + LAYOUT.bottleH} vs ${LAYOUT.perfumeNameY}`);
+  check('подвал не уходит за край', LAYOUT.footerY + LAYOUT.footerFontSize < LAYOUT.H);
+  check('@tag не наезжает на свою линию',
+    LAYOUT.tagY < LAYOUT.tagRuleY && LAYOUT.tagRuleY - LAYOUT.tagY < LAYOUT.tagFontSize + 20);
+  // Пустоты быть не должно: с карточки ушёл headline, и если ничего не
+  // подвинуть, нижняя треть останется голой.
+  const gap = LAYOUT.footerY - LAYOUT.perfumeBrandY;
+  check('под домом парфюма нет провала больше 200px', gap <= 200, `провал ${gap}px`);
+}
+
+console.log('\nДанные на месте у всех семи');
+for (const key of KEYS) {
+  const tag = (tagLines as Record<string, string>)[key];
+  const card = (shareCards as Record<string, { bg: string; text: string; accent: string }>)[key];
+  check(`${key}: строка @tag начинается с «@tag»`,
+    typeof tag === 'string' && tag.startsWith('@tag'), String(tag));
+  check(`${key}: цвета фона и текста заданы`,
+    Boolean(card?.bg && card?.text && card?.accent));
+  check(`${key}: фон и текст не одного цвета`,
+    card?.bg?.toLowerCase() !== card?.text?.toLowerCase(),
+    `${card?.bg} / ${card?.text}`);
+}
+
+console.log('\nКонтраст: карточку смотрят в ленте, мельком');
+{
+  for (const key of KEYS) {
+    const c = (shareCards as Record<string, CardArch>)[key];
+
+    // Панчлайн — главная надпись, и цвет для него выбирает punchColor:
+    // держит цвет палитры, пока он читается, иначе берёт акцент. У
+    // THERAPIST в проде было 2.6:1, то есть надпись не читалась вовсе.
+    const punchInk = punchColor(c);
+    const main = contrast(punchInk, c.bg);
+    check(`${key.padEnd(10)} панчлайн к фону ${main.toFixed(1)}:1`,
+      main >= MIN_PUNCH_CONTRAST,
+      `ни text (${contrast(c.text, c.bg).toFixed(1)}:1), ни accent `
+      + `(${contrast(c.accent, c.bg).toFixed(1)}:1) не читаются на ${c.bg}`);
+
+    if (punchInk !== c.text) {
+      console.log(`        └ цвет палитры (${c.text}) давал `
+        + `${contrast(c.text, c.bg).toFixed(1)}:1, взят акцент ${punchInk}`);
+    }
+
+    // Акцентом набран дом парфюма — мелким кеглем.
+    const alt = contrast(c.accent, c.bg);
+    check(`${key.padEnd(10)} дом парфюма к фону ${alt.toFixed(1)}:1`, alt >= 3,
+      'этим цветом набран мелкий текст — ниже 3:1 он пропадает');
+  }
+}
+
+console.log('\nБитые данные не роняют рисование');
+{
+  check('не массив → пусто', parsePunch(null).length === 0);
+  check('строка вместо массива → пусто', parsePunch('nope').length === 0);
+  check('строка без кегля отбрасывается', parsePunch([['текст']]).length === 0);
+  check('кегль строкой отбрасывается', parsePunch([['текст', '40']]).length === 0);
+  check('нулевой кегль отбрасывается', parsePunch([['текст', 0]]).length === 0);
+  check('пустой текст отбрасывается', parsePunch([['', 40]]).length === 0);
+  check('целая строка проходит', parsePunch([['текст', 40]]).length === 1);
+  check('лишние элементы в строке не мешают',
+    parsePunch([['текст', 40, 'мусор']]).length === 1);
+}
+
+console.log(failed ? `\n${failed} проверок упало\n` : '\nвсе проверки прошли\n');
+process.exit(failed ? 1 : 0);

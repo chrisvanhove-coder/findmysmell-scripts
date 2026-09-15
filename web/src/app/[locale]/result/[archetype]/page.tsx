@@ -7,6 +7,11 @@ import { match } from '@/lib/matching';
 import Ingredients from './Ingredients';
 import ScentDna from './ScentDna';
 import Flashlight from '@/components/Flashlight';
+import ShareCard from '@/components/ShareCard';
+import { parsePunch } from '@/lib/share-card';
+import shareCards from '@/data/share-cards.en.json';
+import punchLines from '@/data/punch-lines.en.json';
+import tagLines from '@/data/tag-lines.en.json';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
 import SubscribeForm from './SubscribeForm';
@@ -72,6 +77,13 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
   const closer = rest.length > 1 ? rest[rest.length - 1] : null;
   const body = closer ? rest.slice(0, -1) : rest;
 
+  // Данные карточки. Английские на всех локалях: панчлайны и строки @tag
+  // на французский пока не переведены, а показывать пустую карточку хуже,
+  // чем английскую (договорились взяться за локали позже).
+  const card = (shareCards as Record<string, typeof shareCards.CEO>)[parsed.key];
+  const punch = parsePunch((punchLines as Record<string, unknown>)[parsed.key]);
+  const tag = (tagLines as Record<string, string>)[parsed.key] ?? '';
+
   return (
     <main className={styles.page} data-archetype={parsed.key}>
       {/* Старого героя («You are / politely unreachable») здесь нет намеренно:
@@ -105,6 +117,19 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
 
       {/* У каждого архетипа своя музыка. */}
       <VinylPlayer archetype={parsed.key} />
+
+      {/* Всплывает, когда человек дочитал до конца. Каркас: дизайн внутри
+          картинки заказчица будет менять вместе со мной. */}
+      <ShareCard
+        locale={parsed.locale}
+        archetype={parsed.key}
+        arch={card}
+        punch={punch}
+        tagLine={tag}
+        fallbackName={a.main.name}
+        fallbackHouse={a.main.house}
+        fallbackImg={a.main.img}
+      />
 
       {/* Ничего не рисует: пишет прохождение в базу один раз за проход. */}
       <RecordSubmission locale={parsed.locale} />
