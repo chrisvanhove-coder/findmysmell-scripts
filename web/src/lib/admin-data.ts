@@ -9,7 +9,7 @@
  * разных людей. Повторы не выбрасываются — они показаны отдельно, и это
  * свой материал: изменился ли архетип, когда тот же браузер вернулся.
  */
-import { and, desc, eq, gte, sql } from 'drizzle-orm';
+import { and, desc, eq, gte, isNotNull, ne, sql } from 'drizzle-orm';
 import { getDb, schema } from '@/db';
 import { QUESTIONS, EMOTION_BRANCHES } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
@@ -51,6 +51,14 @@ export type RecentRun = {
 
 export type Chain = { runs: string[]; changed: boolean };
 
+export type OpenAnswer = {
+  createdAt: Date;
+  locale: string;
+  winner: string;
+  runIndex: number | null;
+  text: string;
+};
+
 export type AdminData = {
   days: number;
   since: Date;
@@ -59,6 +67,8 @@ export type AdminData = {
   locales: Slice[];
   funnel: FunnelStep[];
   answers: Array<{ step: string; title: string; total: number; options: Slice[] }>;
+  openAnswers: OpenAnswer[];
+  openAnswerTotal: number;
   chains: Chain[];
   chainsSame: number;
   chainsChanged: number;
@@ -105,6 +115,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
     answerRows,
     chainRows,
     recentRows,
+    openRows,
   ] = await Promise.all([
     db
       .select({
@@ -186,6 +197,23 @@ export async function loadAdminData(days: number): Promise<AdminData> {
       .where(inPeriod)
       .orderBy(desc(submissions.createdAt))
       .limit(60),
+
+    // Открытый ответ — то, чего ни один вариант из списка не даёт:
+    // человек пишет своими словами. Поэтому он вынесен отдельным
+    // блоком, а не спрятан внутрь карточки прохождения.
+    db
+      .select({
+        createdAt: submissions.createdAt,
+        locale: submissions.locale,
+        winner: submissions.winner,
+        runIndex: submissions.runIndex,
+        text: submissions.openAnswer,
+      })
+      .from(submissions)
+      .where(and(inPeriod, isNotNull(submissions.openAnswer),
+        ne(submissions.openAnswer, '')))
+      .orderBy(desc(submissions.createdAt))
+      .limit(300),
   ]);
 
   const c = countRows[0] ?? {
@@ -266,6 +294,8 @@ export async function loadAdminData(days: number): Promise<AdminData> {
     locales: toSlices(localeRows),
     funnel,
     answers,
+    openAnswers: openRows.map((r) => ({ ...r, text: r.text ?? '' })),
+    openAnswerTotal: openRows.length,
     chains: chains.slice(0, 40),
     chainsSame: chains.filter((x) => !x.changed).length,
     chainsChanged: chains.filter((x) => x.changed).length,

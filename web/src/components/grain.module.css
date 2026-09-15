@@ -1,0 +1,15 @@
+/* Зерно. Числа из прода: opacity 0.07, mix-blend-mode overlay.
+   z-index 40 — как в проде: выше содержимого, ниже подвала (40 у подвала
+   в site-chrome, поэтому здесь 39, чтобы ссылки подвала не мутнели). */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 39;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  /* Шум должен остаться шумом: без этого браузер сглаживает тайл
+     и текстура превращается в серую муть. */
+  image-rendering: pixelated;
+}

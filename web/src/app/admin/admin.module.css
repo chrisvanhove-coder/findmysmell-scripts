@@ -267,3 +267,41 @@
   .block { overflow-x: auto; }
   .table { min-width: max-content; }
 }
+
+/* ── открытые ответы ──────────────────────────────────────────────── */
+/* Это цитаты живых людей, а не данные в таблице, — поэтому набраны
+   крупнее остального и в одну колонку, чтобы читались. */
+
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quote {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: #fff;
+}
+
+.quoteText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.quoteMeta {
+  margin: 0;
+  color: var(--dim);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}

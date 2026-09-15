@@ -6,6 +6,7 @@ import { LOCALES, isLocale } from '@/lib/i18n';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import ConsentGate from '@/components/ConsentGate';
+import Grain from '@/components/Grain';
 import '@/styles/global.css';
 import '@/styles/archetypes.css';
 
@@ -55,6 +56,9 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${fraunces.variable} ${inconsolata.variable} ${montserrat.variable}`}>
       <body>
         <SiteHeader locale={locale} />
+        {/* Зерно поверх всей страницы — в проде оно лежало копиями
+            на семи страницах. */}
+        <Grain />
         {children}
         <SiteFooter locale={locale} />
         <ConsentGate locale={locale} />

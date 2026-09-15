@@ -69,9 +69,11 @@ const COPY: Record<Locale, Copy> = {
     measureTitle: 'What we measure',
     measureBody:
       'Our own server counts which quiz question you reached, which one you answered, and '
-      + 'which option you chose. No IP address, no browser or device details, no referrer, '
-      + 'no location, and not the text of your open answer. Nothing goes to any other '
-      + 'company. These rows are deleted after 13 months.',
+      + 'which option you chose. These counters carry no IP address, no browser or device '
+      + 'details, no referrer, no location and no free text, and they are deleted after '
+      + '13 months. Your answers themselves — including anything you write in your own '
+      + 'words at the end — are saved separately with your completed run, which is what '
+      + 'the research is about. Nothing goes to any other company.',
     keyTitle: 'This browser',
     keyPresent: (runs) =>
       runs > 1
@@ -108,10 +110,12 @@ const COPY: Record<Locale, Copy> = {
     measureTitle: 'Ce que nous mesurons',
     measureBody:
       'Notre propre serveur compte à quelle question vous êtes arrivé, à laquelle vous avez '
-      + 'répondu et quelle option vous avez choisie. Ni adresse IP, ni navigateur ou '
-      + 'appareil, ni page d’origine, ni localisation, ni le texte de votre réponse '
-      + 'libre. Rien n’est transmis à une autre société. Ces lignes sont supprimées au '
-      + 'bout de 13 mois.',
+      + 'répondu et quelle option vous avez choisie. Ces compteurs ne contiennent ni '
+      + 'adresse IP, ni navigateur ou appareil, ni page d’origine, ni localisation, ni '
+      + 'texte libre, et ils sont supprimés au bout de 13 mois. Vos réponses elles-mêmes '
+      + '— y compris ce que vous écrivez avec vos propres mots à la fin — sont conservées '
+      + 'séparément avec votre passage terminé : c’est l’objet de la recherche. Rien '
+      + 'n’est transmis à une autre société.',
     keyTitle: 'Ce navigateur',
     keyPresent: (runs) =>
       runs > 1
@@ -149,7 +153,9 @@ const COPY: Record<Locale, Copy> = {
     measureTitle: 'What we measure',
     measureBody:
       'Our own server counts which quiz question you reached and which option you chose. '
-      + 'No IP address, no device details, no location. Nothing goes to any other company.',
+      + 'These counters carry no IP address, no device details and no free text. Your '
+      + 'answers themselves are saved with your completed run. Nothing goes to any other '
+      + 'company.',
     keyTitle: 'This browser',
     keyPresent: () =>
       'Your browser holds a random number so a repeat run is not counted as a new person.',

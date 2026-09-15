@@ -28,7 +28,9 @@
     "e2e:consent": "node e2e/consent.mjs",
     "e2e:flashlight": "node e2e/flashlight.mjs",
     "e2e:share": "node e2e/share-card.mjs",
-    "check:share": "tsx scripts/check-share-card.mts"
+    "check:share": "tsx scripts/check-share-card.mts",
+    "e2e:grain": "node e2e/grain.mjs",
+    "import:sheet": "tsx scripts/import-sheet.mts"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

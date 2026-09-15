@@ -117,6 +117,7 @@ export default async function AdminPage({
 
       {/* Страница длинная по существу: 17 распределений короче не станут. */}
       <nav className={styles.jump}>
+        <a href="#open">своими словами</a>
         <a href="#archetypes">архетипы</a>
         <a href="#repeats">повторы</a>
         <a href="#funnel">воронка</a>
@@ -128,6 +129,41 @@ export default async function AdminPage({
         <span>Скачать прохождения таблицей:</span>
         <a href={`/admin/submissions.csv?days=${days}&first=1`}>только первые (выборка)</a>
         <a href={`/admin/submissions.csv?days=${days}`}>все, с повторами</a>
+      </section>
+
+      {/* ── открытые ответы ───────────────────────────────────────────── */}
+      {/* Первым блоком намеренно: это единственное место в квизе, где
+          человек пишет своими словами, и ни одно распределение по
+          вариантам этого не заменит. */}
+      <section className={styles.block} id="open">
+        <h2 className={styles.h2}>
+          Своими словами
+          <small>
+            {data.openAnswerTotal} из {t.runs} прохождений
+            {t.runs ? ` · ${pct(data.openAnswerTotal / t.runs)}` : ''}
+          </small>
+        </h2>
+        {data.openAnswers.length === 0 ? (
+          <p className={styles.empty}>
+            За период никто не написал ничего в последнем вопросе.
+          </p>
+        ) : (
+          <ul className={styles.quotes}>
+            {data.openAnswers.map((o, i) => (
+              <li key={i} className={styles.quote}>
+                <p className={styles.quoteText}>{o.text}</p>
+                <p className={styles.quoteMeta}>
+                  {o.createdAt.toISOString().slice(0, 10)}
+                  {' · '}
+                  <b>{o.winner}</b>
+                  {' · '}
+                  {o.locale}
+                  {o.runIndex && o.runIndex > 1 ? ` · проход №${o.runIndex}` : ''}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       {/* ── архетипы ──────────────────────────────────────────────────── */}
