@@ -88,11 +88,22 @@ export function nextQuestion(currentId: string, answerCode: string): string {
   return MAIN_PATH[i + 1];
 }
 
-/** Сколько шагов проходит пользователь: линейный путь плюс одна ветка эмоции. */
-export const TOTAL_STEPS = MAIN_PATH.length + 1;
+/**
+ * Сколько нумерованных шагов видит человек: 17.
+ *
+ * Считаются 16 вопросов линейного пути плюс одна ветка эмоции. Q_OPEN в это
+ * число не входит — в проде он закрывающий экран без номера и без процента:
+ * на Q_RADIUS прогресс показывает 100%, а на Q_OPEN его нет вовсе. Раньше
+ * здесь было 18, потому что Q_OPEN считался вопросом.
+ */
+export const TOTAL_STEPS = MAIN_PATH.filter((id) => id !== 'Q_OPEN').length + 1;
 
-/** Номер текущего шага, 1-based. Ветки эмоций считаются одним шагом. */
+/**
+ * Номер текущего шага, 1-based. Ветки эмоций считаются одним шагом.
+ * Для Q_OPEN возвращает 0: он не нумерован, счётчик на нём не показывается.
+ */
 export function stepOf(questionId: string): number {
+  if (questionId === 'Q_OPEN') return 0;
   if ((EMOTION_BRANCHES as readonly string[]).includes(questionId)) {
     return MAIN_PATH.indexOf('Q_EMO') + 2;
   }

@@ -104,9 +104,13 @@ export default function QuizScreen({
       </button>
 
       <div className={styles.inner}>
-        <span className={styles.eyebrow}>
-          Question {step} of {TOTAL_STEPS}
-        </span>
+        {/* На закрывающем экране счётчика нет — как в проде: прогресс
+            доходит до 100% на предыдущем вопросе, а здесь уже не номер. */}
+        {step > 0 && (
+          <span className={styles.eyebrow}>
+            Question {step} of {TOTAL_STEPS}
+          </span>
+        )}
         <h1 className={styles.question}>{title}</h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
 
