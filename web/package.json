@@ -32,7 +32,8 @@
     "e2e:grain": "node e2e/grain.mjs",
     "import:sheet": "tsx scripts/import-sheet.mts",
     "check:counts": "tsx scripts/check-counts.mts",
-    "e2e:drum": "node e2e/emotion-drum.mjs"
+    "e2e:drum": "node e2e/emotion-drum.mjs",
+    "e2e:bottle": "node e2e/bottle-slider.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

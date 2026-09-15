@@ -1,0 +1,29 @@
+{
+  "_": "Флаконы-ползунки на Q_SWEET и Q_WILD. Перенесено из q-sweet.footer.html и q-wild.footer.html: те же четыре уровня, те же цвета жидкости, те же фоны страницы и тот же текст вопроса заглавными. Оба экрана в проде устроены одинаково и различались только этими данными — поэтому здесь один компонент и два набора. Коды ответов сверены с quiz.en.json.",
+  "Q_SWEET": {
+    "question": ["HOW DO YOU FEEL ABOUT", "SWEETNESS IN A PERFUME?"],
+    "paper": "#e0d6a2",
+    "ink": "40, 28, 8",
+    "hint": "DRAG UP TO SET YOUR LEVEL",
+    "confirm": "CONFIRM →",
+    "levels": [
+      { "code": "Q_SWEET__NO_SWEET", "label": "NONE — I AVOID SWEET", "fill": 0, "color": "#c8bfa8" },
+      { "code": "Q_SWEET__LITTLE_SW", "label": "A TOUCH OF SWEETNESS", "fill": 0.33, "color": "#8a6e8a" },
+      { "code": "Q_SWEET__MODER_SW", "label": "NOTICEABLE SWEETNESS", "fill": 0.66, "color": "#6e4a72" },
+      { "code": "Q_SWEET__ENJOY_SW", "label": "INTENSELY SWEET", "fill": 1, "color": "#604c65" }
+    ]
+  },
+  "Q_WILD": {
+    "question": ["HOW DO YOU FEEL ABOUT", "RAW, EARTHY NOTES?"],
+    "paper": "#7a8c4a",
+    "ink": "28, 34, 8",
+    "hint": "DRAG UP TO SET YOUR LEVEL",
+    "confirm": "CONFIRM →",
+    "levels": [
+      { "code": "Q_WILD__NO_WILD", "label": "I DON'T ENJOY THOSE NOTES", "fill": 0, "color": "#4a4a42" },
+      { "code": "Q_WILD__LITTLE_WILD", "label": "A LITTLE IS FINE", "fill": 0.33, "color": "#6b5c3e" },
+      { "code": "Q_WILD__SOME_WILD", "label": "I LIKE SOME RAW NOTES", "fill": 0.66, "color": "#7a4e2a" },
+      { "code": "Q_WILD__LOVE_WILD", "label": "I LOVE THAT CHARACTER", "fill": 1, "color": "#5c3318" }
+    ]
+  }
+}

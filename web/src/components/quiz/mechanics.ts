@@ -33,4 +33,8 @@ export interface MechanicProps {
  */
 export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
   Q_EMO: dynamic(() => import('./EmotionDrum'), { ssr: false }),
+  // Оба флакона — один компонент на данных: в проде эти два экрана
+  // различались только уровнями, цветами, фоном и текстом вопроса.
+  Q_SWEET: dynamic(() => import('./SweetSlider'), { ssr: false }),
+  Q_WILD: dynamic(() => import('./WildSlider'), { ssr: false }),
 };
