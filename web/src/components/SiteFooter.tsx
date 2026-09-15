@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { type Locale } from '@/lib/i18n';
+import { ConsentLink } from './ConsentGate';
 import styles from './site-chrome.module.css';
 
 /**
@@ -71,6 +72,11 @@ export default function SiteFooter({ locale }: { locale: Locale }) {
       </a>
       {dot}
       <a href={`mailto:${EMAIL}`}>{copy.contact}</a>
+      {dot}
+      {/* Панель приватности доступна всегда, а не только пока висит баннер:
+          ключ браузера живёт 13 месяцев, и стереть его человек должен
+          иметь возможность в любой момент. */}
+      <ConsentLink locale={locale} />
       {/* Копирайт и его разделитель уходят вместе на самых узких экранах. */}
       <span className={`${styles.dot} ${styles.lastDot}`}>·</span>
       <span className={styles.copyright}>© 2026 Find My Smell</span>

@@ -212,3 +212,35 @@ export function bumpRunIndex(): number {
   try { globalThis.localStorage?.setItem(RUNS_KEY, String(next)); } catch { /* ничего */ }
   return next;
 }
+
+/**
+ * Есть ли у этого браузера ключ прямо сейчас. Отличается от browserKey()
+ * тем, что НЕ создаёт ключ: панель приватности должна показывать
+ * состояние, а не заводить ключ самим фактом того, что её открыли.
+ */
+export function hasBrowserKey(): boolean {
+  return readBrowserMark() !== null;
+}
+
+/** Сколько прохождений этот браузер уже отправил. */
+export function runCount(): number {
+  const raw = read(globalThis.localStorage, RUNS_KEY);
+  const n = Number.parseInt(raw ?? '0', 10);
+  return Number.isFinite(n) && n > 0 ? n : 0;
+}
+
+/**
+ * «Забыть этот браузер». Обязательная кнопка, а не удобство: ключ живёт
+ * 13 месяцев на устройстве человека, и раз мы опираемся на освобождение
+ * CNIL для статистики аудитории, человек должен иметь возможность стереть
+ * ключ, не разбираясь в настройках браузера.
+ *
+ * Стирает только ключ и счётчик. Уже отправленные прохождения останутся
+ * в базе — они анонимны и связать их с человеком нечем; об этом сказано
+ * в панели прямым текстом, чтобы кнопка не обещала большего, чем делает.
+ */
+export function forgetBrowser(): void {
+  for (const key of [BROWSER_KEY, RUNS_KEY]) {
+    try { globalThis.localStorage?.removeItem(key); } catch { /* ничего */ }
+  }
+}

@@ -23,7 +23,9 @@
     "purge:retention": "tsx scripts/purge-retention.mts",
     "funnel:report": "tsx scripts/funnel-report.mts",
     "e2e:repeat": "node e2e/repeat-runs.mjs",
-    "check:admin": "tsx scripts/check-admin.mts"
+    "check:admin": "tsx scripts/check-admin.mts",
+    "check:consent": "tsx scripts/check-consent.mts",
+    "e2e:consent": "node e2e/consent.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

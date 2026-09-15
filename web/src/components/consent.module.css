@@ -1,0 +1,222 @@
+/* Баннер и панель согласия. Палитра общая с подвалом: полоса снизу
+   на том же полупрозрачном чёрном, тот же моно-шрифт в подписях. */
+
+/* ── ссылка в подвале ─────────────────────────────────────────────── */
+
+.footerLink {
+  /* Выглядит как остальные ссылки подвала и ведёт себя как кнопка:
+     она открывает панель, а не переходит на страницу. */
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.45);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.footerLink:hover { color: #fff; }
+.footerLink:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.7); outline-offset: 2px; }
+
+/* ── баннер ───────────────────────────────────────────────────────── */
+
+.banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  /* Над подвалом, а не поверх него: подвал закреплён снизу и в нём
+     лежат обязательные во Франции ссылки — накрывать их нельзя. */
+  bottom: var(--fms-footer-h, 28px);
+  z-index: 60;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+
+  background: rgba(12, 12, 12, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  animation: rise 0.35s ease-out;
+}
+
+@keyframes rise {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner { animation: none; }
+}
+
+.bannerText { max-width: 620px; }
+
+.bannerText strong {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bannerText p { margin: 0; font-size: 13px; line-height: 1.5; }
+
+.bannerButtons { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Обе кнопки одинаковые. Отказаться должно быть не труднее,
+   чем согласиться, — значит и выглядеть они должны одинаково. */
+.btn {
+  padding: 9px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  background: none;
+  color: #fff;
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; }
+.btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.btn:disabled { opacity: 0.35; cursor: default; }
+.btn:disabled:hover { background: none; border-color: rgba(255, 255, 255, 0.5); }
+
+.bannerMore {
+  flex-basis: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.bannerMore:hover { color: #fff; }
+
+/* ── панель ───────────────────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+}
+
+.panel {
+  width: 100%;
+  max-width: 560px;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 22px 24px 24px;
+  border-radius: 4px;
+  background: #f4f2ea;
+  color: #1b1b1b;
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.panelTop {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.panelTop h2 {
+  margin: 0;
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+}
+
+.close {
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  color: #6b6b6b;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+.close:hover { color: #1b1b1b; }
+.close:focus-visible { outline: 2px solid #1b1b1b; outline-offset: 2px; }
+
+.lead {
+  margin: 0 0 18px;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.section {
+  margin: 0 0 18px;
+  padding-top: 14px;
+  border-top: 1px solid #dcdad2;
+}
+
+.section h3 {
+  margin: 0 0 6px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+}
+
+.section p { margin: 0 0 10px; }
+
+/* Кнопки внутри панели на светлом фоне. */
+.panel .btn {
+  border-color: #1b1b1b;
+  color: #1b1b1b;
+}
+.panel .btn:hover { background: rgba(0, 0, 0, 0.08); }
+.panel .btn:focus-visible { outline-color: #1b1b1b; }
+.panel .btn:disabled:hover { background: none; border-color: #1b1b1b; }
+
+.done { margin: 0; color: #a43f35; }
+
+.policyLink {
+  display: inline-block;
+  color: #a43f35;
+  font-family: var(--fms-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  .banner { gap: 10px 12px; padding: 12px 16px; }
+  .bannerText { max-width: none; }
+  .bannerButtons { width: 100%; }
+  .bannerButtons .btn { flex: 1; }
+  .panel { padding: 18px 18px 20px; }
+  .lead { font-size: 15px; }
+}

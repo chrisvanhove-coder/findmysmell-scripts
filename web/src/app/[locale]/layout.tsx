@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { LOCALES, isLocale } from '@/lib/i18n';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import ConsentGate from '@/components/ConsentGate';
 import '@/styles/global.css';
 import '@/styles/archetypes.css';
 
@@ -56,6 +57,7 @@ export default async function LocaleLayout({
         <SiteHeader locale={locale} />
         {children}
         <SiteFooter locale={locale} />
+        <ConsentGate locale={locale} />
       </body>
     </html>
   );
