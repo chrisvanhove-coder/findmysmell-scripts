@@ -38,4 +38,8 @@ export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
   Q_SWEET: dynamic(() => import('./SweetSlider'), { ssr: false }),
   Q_WILD: dynamic(() => import('./WildSlider'), { ssr: false }),
   Q_ENV_CHILD: dynamic(() => import('./ChildhoodBlobs'), { ssr: false }),
+  // Два «живых» экрана: варианты падают горстью на плывущие пятна и
+  // тихо дышат под волнами. Данные обоих — в living-screens.json.
+  Q_DAYTDAY: dynamic(() => import('./PastaOptions'), { ssr: false }),
+  Q_STAYWELL: dynamic(() => import('./WaveOptions'), { ssr: false }),
 };

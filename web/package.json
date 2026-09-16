@@ -37,7 +37,9 @@
     "check:blobs": "tsx scripts/check-blobs.mts",
     "e2e:blobs": "node e2e/childhood-blobs.mjs",
     "check:photos": "tsx scripts/check-answer-photos.mts",
-    "e2e:photos": "node e2e/answer-photos.mjs"
+    "e2e:photos": "node e2e/answer-photos.mjs",
+    "check:living": "tsx scripts/check-living.mts",
+    "e2e:living": "node e2e/living-screens.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

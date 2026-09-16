@@ -1,0 +1,127 @@
+/* Q_DAYTDAY. Числа из прода (q-daytday.footer.html): поле #c0c0ac,
+   отступы 80/20/52, приглушение остальных вариантов 0.15. */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  background: #c0c0ac;
+}
+
+.blobs {
+  position: absolute;
+  inset: 0;
+  /* Пятна только фон; вся мышь достаётся вариантам. */
+  pointer-events: none;
+}
+
+/* Пыль от выбранного варианта — поверх всего на экране вопроса. */
+.dust {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.inner {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Сверху место под шапку и кнопку «назад». */
+  padding: 96px 20px 60px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.question {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 0 24px;
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  font-size: clamp(18px, 3vw, 36px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-align: center;
+  /* Заголовок не перехватывает наведение у вариантов. */
+  pointer-events: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Настоящая кнопка, а не div с обработчиком, как было в проде: иначе по
+   вопросу нельзя пройти ни с клавиатуры, ни читалкой. */
+.option {
+  max-width: 88vw;
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  font-family: var(--fms-mono), monospace;
+  font-size: clamp(13px, 2.8vw, 30px);
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-align: center;
+  word-break: break-word;
+  cursor: pointer;
+  /* Начальное положение: за верхним краем и прозрачное. Дальше падение
+     и отскок задаются из компонента — у каждого варианта свои сдвиг,
+     наклон и задержка. */
+  opacity: 0;
+  transform: translateY(-600px);
+  will-change: transform;
+}
+
+.option:disabled { cursor: default; }
+
+.option:focus-visible {
+  outline: 2px solid rgba(39, 39, 39, 0.8);
+  outline-offset: 4px;
+}
+
+/* !important здесь не лишнее, а необходимое, и в проде стояло по той же
+   причине: падение вариантов ставит opacity ИНЛАЙНОМ, а инлайновый стиль
+   сильнее любого класса. Без !important приглушение просто не
+   срабатывало бы после того, как строка долетела. */
+.dimmed {
+  opacity: 0.15 !important;
+  transition: opacity 0.3s ease;
+}
+
+/* Все варианты гаснут, когда выбранный рассыпается в пыль. */
+.gone {
+  opacity: 0 !important;
+  transition: opacity 0.15s ease;
+}
+
+@media (max-width: 480px) {
+  .inner { padding: 84px 12px 24px; }
+  .question {
+    margin-bottom: 16px;
+    font-size: clamp(13px, 4vw, 18px);
+    letter-spacing: 0.04em;
+  }
+  .option { font-size: clamp(12px, 4.5vw, 20px); }
+  .list { gap: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Варианты не падают и не отпрыгивают: компонент ставит их сразу на
+     место, а переходы здесь сняты, чтобы не осталось следа анимации. */
+  .option { transition: none !important; will-change: auto; }
+  .dimmed { transition: none; }
+}
