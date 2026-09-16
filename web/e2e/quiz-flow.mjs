@@ -71,7 +71,13 @@ for (let i = 0; i < 30; i++) {
     if (!n) throw new Error(`нет вариантов на ${slug}`);
     await options.nth(i % n).click();
   }
-  await page.waitForFunction((prev) => location.href !== prev, url, { timeout: 5000 });
+  /* 15 секунд, а не 5. Экраны с механиками уходят дальше не сразу:
+     варианты на Q_DAYTDAY сначала долетают (до 1.2 с) и только потом
+     становятся нажимаемыми, выбранный рассыпается в пыль (0.9 с), строки
+     Q_STAYWELL уезжают за экран (0.8 с), карточка поколения держит паузу
+     0.6 с. Плюс dev-сервер собирает маршрут при первом заходе. Пяти
+     секунд на это перестало хватать, и проход падал на ровном месте. */
+  await page.waitForFunction((prev) => location.href !== prev, url, { timeout: 15000 });
 }
 
 const finalUrl = page.url();

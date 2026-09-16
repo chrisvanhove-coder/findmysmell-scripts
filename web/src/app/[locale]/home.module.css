@@ -1,376 +1,248 @@
-/* Главная. Раскладка, цвета и размеры перенесены с продовой страницы
-   Webflow (там всё лежало в одном HTML-эмбеде).
-
-   Палитра оттуда же: #272727 фон, #e6e5dd бумага, #f1e09b золото,
-   #8B3A22 ржавчина на подписях и кнопке. */
+/* Главная. Числа и цвета — с живого сайта: webflow/live-pages/home.head.html
+   и home.footer.html. Ничего не придумано: герой 78vh (74vh на телефоне),
+   отступ контента clamp(28px,5vw,72px), заголовок Fraunces 900
+   clamp(40px,9vw,150px) с межстрочным 0.94, абзац Inconsolata 700 капслоком
+   clamp(18px,1.8vw,26px)/1.55, кнопка 18px/40px с золотым свечением
+   0 0 40px 5px rgba(208,61,1,0.45), блок «How it works» на кремовом
+   с отступами clamp(56px,10vh,110px) / clamp(24px,7vw,90px). */
 
 .page {
-  --home-bg: #272727;
-  --home-paper: #e6e5dd;
-  --home-gold: #f1e09b;
-  --home-rust: #8b3a22;
-  background: var(--home-bg);
-  color: var(--home-paper);
+  --charcoal-950: #141917;
+  --charcoal: #26302e;
+  --terracotta: #d03d01;
+  --cream: #ebe4cf;
+  --gold: #bba149;
+
+  background: var(--charcoal-950);
+  overflow-x: hidden;
+
+  /* Фото идёт от самого верха, как на живом сайте: там шапки нет вовсе,
+     а у нас она закреплённая и полупрозрачная. Гасим верхний отступ
+     body, чтобы герой уходил ПОД шапку, а не начинался после неё
+     чёрной полосой. Текст героя прижат к низу, поэтому под шапкой
+     ничего не пропадает. */
+  margin-top: calc(-1 * var(--fms-header-h));
 }
 
-/* ─────────────────────────── широкий экран ─────────────────────────── */
+/* ── Герой ── */
 
-/* Три колонки в один экран. Высота считается с вычетом шапки и подвала —
-   они закреплены, и без вычета колонки уезжали бы под них. */
-.desktop {
-  display: flex;
-  min-height: calc(100dvh - var(--fms-header-h) - var(--fms-footer-h));
-}
-
-.left {
-  width: 26%;
-  flex-shrink: 0;
-  background: var(--home-paper);
-  display: flex;
-  flex-direction: column;
-  padding: 36px 24px 28px;
-  overflow: hidden;
-}
-
-.title {
-  font-family: var(--fms-sans), sans-serif;
-  font-weight: 900;
-  font-size: clamp(30px, 3.6vw, 64px);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  color: var(--home-gold);
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.titleWord { display: block; }
-
-/* Подзаголовок. В проде он лежал отдельным блоком, место которого
-   в эмбеде не видно; поставлен под заголовком как самое очевидное. */
-.tagline {
-  font-family: var(--fms-mono), monospace;
-  font-size: 11px;
-  line-height: 1.6;
-  color: rgba(39, 39, 39, 0.55);
-  margin: 20px 0 0;
-  max-width: 28ch;
-}
-
-.sidePhotos {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding-top: 24px;
-}
-
-.sidePhoto {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  display: block;
-}
-
-.mid {
-  flex: 1;
+.hero {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* 78vh живого сайта плюс то, что мы вернули себе отрицательным
+     отступом: экран героя остаётся той же высоты. */
+  min-height: calc(78vh + var(--fms-header-h));
   overflow: hidden;
-  min-height: 320px;
 }
 
-.midImg {
+.heroBg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transform: scale(1.08);
+  object-position: center;
 }
 
-/* Затемнение снизу, чтобы текст читался на любой фотографии. */
-.midShade {
+.scrim {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to top,
-    rgba(8, 6, 3, 0.95) 0%,
-    rgba(8, 6, 3, 0.4) 35%,
-    rgba(8, 6, 3, 0) 62%
+    180deg,
+    rgba(20, 25, 23, 0.45) 0%,
+    rgba(20, 25, 23, 0.58) 42%,
+    rgba(20, 25, 23, 0.9) 100%
   );
 }
 
-.midCopy {
+.tint {
   position: absolute;
-  bottom: 72px;
-  left: 0;
-  right: 0;
-  padding: 0 36px;
+  inset: 0;
+  background: var(--charcoal);
+  opacity: 0.16;
+  mix-blend-mode: multiply;
 }
 
-.pitchLine {
-  display: block;
-  font-family: var(--fms-mono), monospace;
-  font-weight: 700;
-  font-size: clamp(13px, 1.45vw, 20px);
-  line-height: 1.45;
-  color: var(--home-paper);
-}
-
-.gold { color: var(--home-gold); }
-.gap { margin-top: 0.65em; }
-
-.right {
-  width: 26%;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 36px 24px 28px;
-  overflow: hidden;
-}
-
-.rightFoot { margin-top: auto; padding-top: 24px; }
-
-.howLabel {
-  display: block;
-  font-family: var(--fms-mono), monospace;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--home-rust);
-  margin-bottom: 20px;
-}
-
-.howBody {
-  font-family: var(--fms-mono), monospace;
-  font-size: clamp(11px, 1.05vw, 15px);
-  line-height: 1.82;
-  color: var(--home-paper);
-  margin: 0;
-}
-
-.howNote {
-  font-family: var(--fms-mono), monospace;
-  font-size: clamp(9px, 0.78vw, 12px);
-  line-height: 1.7;
-  color: rgba(230, 229, 221, 0.35);
-  margin: 20px 0 0;
-}
-
-.em { color: var(--home-gold); font-style: normal; }
-.emQuiet { color: rgba(241, 224, 155, 0.55); font-style: normal; }
-
-.begin {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 0;
-  border-radius: 6px;
-  background: rgba(139, 58, 34, 0.42);
-  border: 1px solid rgba(139, 58, 34, 0.88);
-  font-family: var(--fms-mono), monospace;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: #fff;
-  text-decoration: none;
-  transition: background 0.2s ease;
-}
-
-.begin:hover { background: rgba(139, 58, 34, 0.82); }
-.begin:focus-visible { outline: 2px solid var(--home-gold); outline-offset: 3px; }
-
-.consent {
-  font-family: var(--fms-mono), monospace;
-  font-size: 9px;
-  line-height: 1.7;
-  color: rgba(230, 229, 221, 0.3);
-  margin: 14px 0 0;
-}
-
-.consent a { color: rgba(241, 224, 155, 0.6); }
-
-/* ────────────────────────────── телефон ────────────────────────────── */
-
-.mobile { display: none; }
-
-@media (max-width: 768px) {
-  .desktop { display: none; }
-  .mobile { display: block; }
-}
-
-/* Первый экран: заголовок во всю ширину на переходе бумаги в темноту. */
-.mTitleScreen {
-  --home-pad: clamp(16px, 5vw, 28px);
-  min-height: calc(100dvh - var(--fms-header-h) - var(--fms-footer-h));
-  background: linear-gradient(
-    to bottom,
-    var(--home-paper) 0%,
-    var(--home-paper) 58%,
-    var(--home-bg) 100%
-  );
-  padding: clamp(28px, 6vh, 64px) var(--home-pad) 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.mTitle { margin: 0; }
-
-/* Слова выключены по ширине — в проде это приём: каждое слово тянется
-   от края до края, и блок читается как плакат. */
-.mWord {
-  display: block;
-  font-family: var(--fms-sans), sans-serif;
-  font-weight: 900;
-  /* Кегль от длины слова: доступная ширина, делённая на число знаков
-     и на среднюю ширину знака Montserrat Black (подобрана замером
-     на 320/360/390/430/500 — слова занимают 93–98% ширины и нигде
-     не упираются в края). Потолок нужен, чтобы на планшете буквы
-     не разрастались до нелепого. */
-  font-size: min(
-    26vw,
-    calc((100vw - 2 * var(--home-pad)) / (var(--chars) * 0.7))
-  );
-  line-height: 0.92;
-  letter-spacing: -0.025em;
-  text-transform: uppercase;
-  color: var(--home-gold);
-}
-
-/* Последнее слово растворяется в темноте следующего экрана. */
-.mWordFade {
-  background: linear-gradient(
-    to bottom,
-    var(--home-gold) 0%,
-    #c8a94a 32%,
-    rgba(180, 140, 20, 0.03) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-.mTagline {
-  font-family: var(--fms-mono), monospace;
-  font-size: 12px;
-  line-height: 1.6;
-  color: rgba(39, 39, 39, 0.5);
-  margin: 18px 0 0;
-}
-
-.hint {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  padding: 20px 0 14px;
-}
-
-.hint span:first-child {
-  font-family: var(--fms-mono), monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(241, 224, 155, 0.36);
-}
-
-.arrow {
-  width: 12px;
-  height: 12px;
-  border-right: 1.5px solid rgba(241, 224, 155, 0.26);
-  border-bottom: 1.5px solid rgba(241, 224, 155, 0.26);
-  transform: rotate(45deg);
-  animation: bounce 1.8s ease infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: rotate(45deg) translateY(0); }
-  50% { transform: rotate(45deg) translateY(4px); }
-}
-
-.mPitch {
-  min-height: 72vh;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.mPitchCopy {
+.heroContent {
   position: relative;
   z-index: 2;
-  padding: 28px 24px 48px;
+  padding: clamp(28px, 5vw, 72px);
 }
 
-.mPitch .pitchLine { font-size: clamp(16px, 4.5vw, 26px); line-height: 1.38; }
-
-.mHow {
-  border-top: 1px solid rgba(241, 224, 155, 0.09);
-  padding: clamp(32px, 6vh, 56px) clamp(20px, 6vw, 32px);
+.headline {
+  margin: 0 0 clamp(20px, 3.5vh, 34px);
+  color: var(--terracotta);
+  font-family: var(--fms-fraunces), serif;
+  font-size: clamp(40px, 9vw, 150px);
+  font-weight: 900;
+  letter-spacing: -0.008em;
+  line-height: 0.94;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-.mHow .howLabel { font-size: 10px; letter-spacing: 0.24em; margin-bottom: 24px; }
-.mHow .howBody { font-size: clamp(15px, 4.2vw, 20px); line-height: 1.8; }
-.mHow .howNote { font-size: clamp(12px, 3.2vw, 14px); line-height: 1.68; }
-.mHow .begin { margin-top: 32px; padding: 15px 0; font-size: 11px; }
-.mHow .consent { font-size: 10px; }
-
-@media (prefers-reduced-motion: reduce) {
-  .arrow { animation: none; }
+.heroCopy {
+  /* max-width нет — так на живом сайте: абзац идёт во всю ширину,
+     и только на телефоне поджимается до 42 знаков. */
+  margin: 0 0 clamp(22px, 4vh, 38px);
+  color: var(--cream);
+  font-family: var(--fms-mono), monospace;
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.55;
+  text-transform: uppercase;
 }
 
-/* ── три шага «How it works» ──────────────────────────────────────── */
-/* Перенесено с прода (.s3-steps). Там раскрытие шагов по скроллу было
-   сломано — шаги не показывались вовсе; здесь они просто видны. */
+.emphasis {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.heroBegin {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 18px 40px;
+  border: none;
+  border-radius: 2px;
+  background: var(--gold);
+  box-shadow: 0 0 40px 5px rgba(208, 61, 1, 0.45);
+  color: var(--charcoal-950);
+  font-family: var(--fms-mono), monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.heroBegin:hover {
+  background: var(--cream);
+  box-shadow: 0 0 48px 7px rgba(208, 61, 1, 0.6);
+}
+
+.heroBegin:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 4px;
+}
+
+.brMobile { display: none; }
+
+@media (max-width: 600px) {
+  .hero { min-height: calc(74vh + var(--fms-header-h)); }
+  .headline { font-size: clamp(32px, 13vw, 72px); }
+  .heroCopy {
+    max-width: 42ch;
+    font-size: clamp(15px, 4vw, 19px);
+  }
+  .brMobile { display: block; }
+}
+
+@media (max-width: 380px) {
+  .headline { font-size: clamp(28px, 13vw, 54px); }
+}
+
+/* ── «How it works» на кремовом ── */
+
+.how {
+  background: var(--cream);
+  padding: clamp(56px, 10vh, 110px) clamp(24px, 7vw, 90px);
+}
+
+.kicker {
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.howKicker {
+  display: block;
+  margin-bottom: clamp(20px, 3vh, 32px);
+  color: var(--terracotta);
+}
 
 .steps {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin: 28px 0 0;
-  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 48px);
+  margin: 0 0 clamp(40px, 6vh, 64px);
+  padding: clamp(28px, 4vh, 40px) 0 0;
+  border-top: 1px solid rgba(39, 39, 39, 0.15);
+  /* Это нумерованный список по смыслу — номера 01/02/03 идут в разметке
+     как текст, поэтому свою нумерацию браузера убираем. */
   list-style: none;
-  counter-reset: none;
 }
 
-.step {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-areas: 'num label' 'num desc';
-  gap: 2px 12px;
-  align-items: baseline;
+@media (max-width: 720px) {
+  .steps { grid-template-columns: 1fr; }
 }
 
 .stepNum {
-  grid-area: num;
-  font-family: var(--fms-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  opacity: 0.4;
+  margin-bottom: 14px;
+  color: var(--terracotta);
+  font-family: var(--fms-fraunces), serif;
+  font-size: 16px;
+  font-weight: 900;
 }
 
 .stepLabel {
-  grid-area: label;
+  display: block;
+  margin-bottom: 10px;
+  color: var(--charcoal);
   font-family: var(--fms-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.75;
 }
 
 .stepDesc {
-  grid-area: desc;
-  margin: 2px 0 0;
+  margin: 0;
+  color: rgba(39, 39, 39, 0.72);
   font-family: var(--fms-mono), monospace;
-  font-size: 12px;
-  line-height: 1.55;
-  opacity: 0.5;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.howBegin {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 44px;
+  border: none;
+  border-radius: 2px;
+  background: var(--charcoal);
+  box-shadow: 0 6px 28px rgba(208, 61, 1, 0.22);
+  color: var(--cream);
+  font-family: var(--fms-mono), monospace;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.howBegin:hover {
+  background: var(--terracotta);
+  box-shadow: 0 8px 34px rgba(208, 61, 1, 0.34);
+}
+
+.howBegin:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroBegin,
+  .howBegin { transition: none; }
 }

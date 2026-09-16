@@ -2,24 +2,40 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
-import { getHomeCopy, splitAccent } from '@/lib/home';
+import { getHomeCopy, numberWord } from '@/lib/home';
 import { TOTAL_STEPS, FIRST_QUESTION, toSlug } from '@/lib/quiz';
-import styles from './home.module.css';
 import { cld } from '@/lib/cloudinary';
+import styles from './home.module.css';
 
 /**
- * Главная. Перенесена с продовой страницы Webflow, где вся вёрстка и текст
- * лежали в одном HTML-эмбеде.
+ * Главная. ПЕРЕНЕСЕНА С ЖИВОГО САЙТА ОДИН В ОДИН.
  *
- * Это не только вход на сайт: сюда попадает каждый, кто пришёл по
- * шеринговой карточке — на ней напечатан домен, и это единственный путь
- * назад с картинки. Поэтому единственное действие здесь — начать тест,
- * а не смотреть чужие результаты. До этой правки на месте главной стоял
- * технический каркас со ссылками на все семь результатов: ровно то, чего
- * пришедший по карточке видеть не должен.
+ * Заказчица, открыв предыдущую версию: «the start page is not what my
+ * page is now in real time. Everything had to be exactly like my website
+ * live now». Она права: у меня стояла прошлая главная (три колонки,
+ * «The fragrance industry spends billions...»), а она её с тех пор
+ * заменила. Источник правды здесь — `webflow/live-pages/home.footer.html`
+ * (разметка и текст) и `home.head.html` (цвета и кегли).
  *
- * Раскладка прода: на широком экране три колонки в одном экране без
- * прокрутки, на телефоне три экрана подряд.
+ * Раскладка живого сайта: фото-герой на 78vh, текст прижат к низу;
+ * терракотовый заголовок Fraunces 900, длинный абзац капслоком с
+ * золотыми выделениями, золотая кнопка. Ниже — кремовый блок
+ * «How it works»: три шага в строку и тёмная кнопка.
+ *
+ * ЧТО СДЕЛАНО ИНАЧЕ, И ПОЧЕМУ.
+ *
+ * 1. Фото отдаётся ужатым. На живом сайте это исходник 2798×1868 на
+ *    2 413 988 байт — 2.4 МБ на первом же экране, до всего остального.
+ *    Замер explicit API: 505 237 байт на широком экране и 266 923 на
+ *    телефоне вертикальным кропом. Приём не меняется, ждать меньше.
+ * 2. Кнопки — ссылки на внутренний адрес квиза, а не абсолютный
+ *    `https://www.findmysmell.com/q-gender`: иначе с Railway-адреса
+ *    кнопка уводила бы на старый сайт, и переезд нельзя было бы
+ *    проверить.
+ * 3. У фото есть alt. В проде `alt=""`, но это не декорация: фотография
+ *    и есть первый экран.
+ * 4. Мёртвый скрипт прода не переносил: он ищет узлы `fms-s1` и
+ *    `fms-hint`, которых в разметке нет, и сразу выходит.
  */
 
 export function generateStaticParams() {
@@ -35,19 +51,11 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const copy = getHomeCopy(locale);
   return {
-    title: 'Find My Smell — Perfume Personality Quiz',
-    // Слоган про «5-minute quiz» — про время, а не про число вопросов,
-    // и в выдаче он не отвечает на вопрос «сколько это займёт шагов».
-    // В проде здесь стояло «Answer 7 questions», хотя их 17.
-    description:
-      `${copy.tagline} ${TOTAL_STEPS} questions about how you feel right now `
-      + '— not notes, not trends. No emails, no sign-ups.',
+    title: copy.metaTitle,
+    // Число вопросов подставляется из TOTAL_STEPS: на живом сайте оно
+    // в трёх местах было разным, и разойтись здесь нечем.
+    description: copy.metaDescription.replace('{N}', String(TOTAL_STEPS)),
   };
-}
-
-/** Условная длина слова в знаках: пробел считается за половину. */
-function width(word: string): number {
-  return [...word].reduce((n, ch) => n + (ch === ' ' ? 0.5 : 1), 0);
 }
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -57,143 +65,74 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   const copy = getHomeCopy(locale);
   const quizHref = `/${locale}/quiz/${toSlug(FIRST_QUESTION.id)}`;
-
-  const [bodyBefore, bodyAccent, bodyAfter] = splitAccent(copy.howBody, copy.howBodyAccent);
-  const [noteBefore, noteAccent, noteAfter] = splitAccent(copy.howNote, copy.howNoteAccent);
-
-  const pitch = copy.pitch.map((line, i) => (
-    <span
-      key={i}
-      className={[styles.pitchLine, line.accent ? styles.gold : '', line.gap ? styles.gap : '']
-        .filter(Boolean)
-        .join(' ')}
-    >
-      {line.text}
-    </span>
-  ));
-
-  const how = (
-    <>
-      <span className={styles.howLabel}>{copy.howLabel}</span>
-      <p className={styles.howBody}>
-        {bodyBefore}
-        <em className={styles.em}>{bodyAccent}</em>
-        {bodyAfter}
-      </p>
-      <p className={styles.howNote}>
-        {noteBefore}
-        <em className={styles.emQuiet}>{noteAccent}</em>
-        {noteAfter}
-      </p>
-
-      {/* Три шага с главной прода. Число вопросов подставляется из
-          TOTAL_STEPS: в проде здесь было «Twelve», в метаописании «7»,
-          а вопросов 17 — расходиться теперь нечем. */}
-      <ol className={styles.steps}>
-        {copy.steps.map((step) => (
-          <li key={step.num} className={styles.step}>
-            <span className={styles.stepNum}>{step.num}</span>
-            <span className={styles.stepLabel}>{step.label}</span>
-            <p className={styles.stepDesc}>
-              {step.desc.replace('{N}', String(TOTAL_STEPS))}
-            </p>
-          </li>
-        ))}
-      </ol>
-    </>
-  );
-
-  const begin = (
-    <>
-      <Link className={styles.begin} href={quizHref}>
-        {copy.begin}
-      </Link>
-      <p className={styles.consent}>
-        {copy.consent}{' '}
-        <Link href={`/${locale}/privacy-policy`}>{copy.consentLink}</Link>
-      </p>
-    </>
-  );
+  const [first, second, third] = copy.hero.headline;
 
   return (
-    <main className={styles.page}>
-      {/* ── широкий экран: три колонки ── */}
-      <div className={styles.desktop}>
-        <div className={styles.left}>
-          <h1 className={styles.title}>
-            {copy.title.map((word) => (
-              <span key={word} className={styles.titleWord}>
-                {word}
+    <div className={styles.page} data-home="">
+      <section className={styles.hero}>
+        {/* Одно фото, два размера: вертикальный кроп на телефон. */}
+        <picture>
+          <source
+            media="(max-width: 700px)"
+            srcSet={cld(copy.hero.image, 'homeHeroMobile')}
+          />
+          <img
+            className={styles.heroBg}
+            src={cld(copy.hero.image, 'homeHero')}
+            alt="Textured wall in warm light"
+            data-hero-photo=""
+            fetchPriority="high"
+          />
+        </picture>
+        <div className={styles.scrim} />
+        <div className={styles.tint} />
+
+        <div className={styles.heroContent}>
+          <h1 className={styles.headline}>
+            {first}
+            <br />
+            {second}
+            {/* Перенос перед последним словом — только на телефоне,
+                как на живом сайте. */}
+            <br className={styles.brMobile} />
+            {third}
+          </h1>
+
+          <p className={styles.heroCopy}>
+            {copy.hero.copy.map((part, i) => (
+              <span key={i} className={part.accent ? styles.emphasis : undefined}>
+                {part.text}
               </span>
             ))}
-          </h1>
-          <p className={styles.tagline}>{copy.tagline}</p>
-          <div className={styles.sidePhotos}>
-            {copy.images.side.map((photo) => (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                key={photo.src}
-                className={styles.sidePhoto}
-                src={cld(photo.src, 'homeSide')}
-                alt={photo.alt}
-                loading="lazy"
-                decoding="async"
-              />
-            ))}
-          </div>
+          </p>
+
+          <Link className={styles.heroBegin} href={quizHref}>
+            {copy.begin} <span aria-hidden="true">→</span>
+          </Link>
         </div>
+      </section>
 
-        <div className={styles.mid}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.midImg} src={cld(copy.images.hero, 'homeFull')} alt="" />
-          <div className={styles.midShade} />
-          <div className={styles.midCopy}>{pitch}</div>
-        </div>
+      <section className={styles.how}>
+        <span className={`${styles.kicker} ${styles.howKicker}`}>{copy.howLabel}</span>
 
-        <div className={styles.right}>
-          {how}
-          <div className={styles.rightFoot}>{begin}</div>
-        </div>
-      </div>
+        <ol className={styles.steps}>
+          {copy.steps.map((step) => (
+            <li key={step.num}>
+              <div className={styles.stepNum}>{step.num}</div>
+              <span className={styles.stepLabel}>{step.label}</span>
+              {/* {N} → «Seventeen»: слово живого сайта, но число из
+                  TOTAL_STEPS, чтобы текст не разошёлся с квизом. */}
+              <p className={styles.stepDesc}>
+                {step.desc.replace('{N}', numberWord(TOTAL_STEPS))}
+              </p>
+            </li>
+          ))}
+        </ol>
 
-      {/* ── телефон: три экрана подряд ── */}
-      <div className={styles.mobile}>
-        <section className={styles.mTitleScreen}>
-          <h1 className={styles.mTitle}>
-            {copy.title.map((word, i) => (
-              <span
-                key={word}
-                className={`${styles.mWord} ${i === copy.title.length - 1 ? styles.mWordFade : ''}`}
-                // Кегль каждого слова считается от его длины, чтобы строка
-                // шла во всю ширину. В проде для этого стояла выключка по
-                // ширине, но она растягивает только пробелы: «UNIVERSAL»
-                // пробелов не имеет и просто вылезало за край экрана.
-                // Пробел уже узкого символа, поэтому считается за половину.
-                style={{ '--chars': width(word) } as React.CSSProperties}
-              >
-                {word}
-              </span>
-            ))}
-          </h1>
-          <p className={styles.mTagline}>{copy.tagline}</p>
-          <div className={styles.hint} aria-hidden="true">
-            <span>{copy.scrollHint}</span>
-            <span className={styles.arrow} />
-          </div>
-        </section>
-
-        <section className={styles.mPitch}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className={styles.midImg} src={cld(copy.images.heroMobile, 'homeFullMobile')} alt="" />
-          <div className={styles.midShade} />
-          <div className={styles.mPitchCopy}>{pitch}</div>
-        </section>
-
-        <section className={styles.mHow}>
-          {how}
-          {begin}
-        </section>
-      </div>
-    </main>
+        <Link className={styles.howBegin} href={quizHref}>
+          {copy.begin} <span aria-hidden="true">→</span>
+        </Link>
+      </section>
+    </div>
   );
 }

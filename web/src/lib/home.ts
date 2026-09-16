@@ -2,20 +2,28 @@ import en from '@/data/home.en.json';
 import { type Locale } from './i18n';
 
 /**
- * Текст главной страницы. Перенесён с продовой страницы Webflow.
+ * Текст главной страницы. Перенесён с ЖИВОГО сайта один в один — из
+ * `webflow/live-pages/home.footer.html`.
  *
- * Французского и русского пока нет: французский текст главной в Webflow
- * существует, но браться за локали договорились позже (раздел 9.1).
- * До тех пор все локали видят английский — как и на странице результата.
+ * ПОЧЕМУ ЭТО ВАЖНО ОТДЕЛЬНО. До этого здесь лежала прошлая версия
+ * главной: три колонки и текст «The fragrance industry spends billions
+ * telling you what to buy». Заказчица её заменила, а у меня она
+ * осталась — и первое, что она сказала, открыв новую версию, было
+ * «the start page is not what my page is now in real time».
+ * Источник правды для этой страницы — живой сайт, а не прошлые снимки.
+ *
+ * Французского и русского пока нет: браться за локали договорились
+ * позже (HANDOFF 9.1). До тех пор все локали видят английский — как и
+ * страница результата.
  */
 
-export interface PitchLine {
+/** Кусок абзаца: accent — то, что набрано золотым. */
+export interface CopyPart {
   text: string;
   accent?: boolean;
-  gap?: boolean;
 }
 
-/** Шаг «How it works». {N} в desc подставляется из TOTAL_STEPS. */
+/** Шаг «How it works». */
 export interface HomeStep {
   num: string;
   label: string;
@@ -23,24 +31,18 @@ export interface HomeStep {
 }
 
 export interface HomeCopy {
-  title: string[];
-  tagline: string;
-  pitch: PitchLine[];
-  howLabel: string;
-  howBody: string;
-  howBodyAccent: string;
-  howNote: string;
-  howNoteAccent: string;
-  begin: string;
-  consent: string;
-  consentLink: string;
-  scrollHint: string;
-  steps: HomeStep[];
-  images: {
-    hero: string;
-    heroMobile: string;
-    side: { src: string; alt: string }[];
+  hero: {
+    image: string;
+    /** Строки заголовка: так они разбиты на живом сайте. */
+    headline: string[];
+    copy: CopyPart[];
   };
+  begin: string;
+  howLabel: string;
+  steps: HomeStep[];
+  metaTitle: string;
+  /** {N} подставляется из TOTAL_STEPS. */
+  metaDescription: string;
 }
 
 const BY_LOCALE: Record<Locale, HomeCopy> = {
@@ -54,12 +56,25 @@ export function getHomeCopy(locale: Locale): HomeCopy {
 }
 
 /**
- * Разбивает строку по выделенному куску. В проде выделение было тегом <em>
- * внутри текста; хранить в данных разметку не хочется, поэтому храним
- * отдельно сам фрагмент, а делим здесь.
+ * Число словом, с заглавной: «Seventeen».
+ *
+ * ЗАЧЕМ. На живом сайте в шагах написано «Seventeen questions», и это
+ * надо сохранить — но вписывать число руками нельзя: на том же сайте оно
+ * в трёх местах разное (12 в шагах, 7 в метаописании, 17 на самом деле).
+ * Поэтому в данных стоит {N}, а здесь оно превращается в то же слово из
+ * TOTAL_STEPS. Если вопросов станет другое число, текст поправится сам.
+ *
+ * Список короткий намеренно: это не библиотека числительных, а ровно тот
+ * диапазон, в котором может оказаться длина квиза. За его пределами
+ * честнее показать цифру, чем угадать слово.
  */
-export function splitAccent(text: string, accent: string): [string, string, string] {
-  const at = text.indexOf(accent);
-  if (at < 0) return [text, '', ''];
-  return [text.slice(0, at), accent, text.slice(at + accent.length)];
+const WORDS = [
+  'Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight',
+  'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+  'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty',
+  'Twenty-one', 'Twenty-two', 'Twenty-three', 'Twenty-four', 'Twenty-five',
+];
+
+export function numberWord(n: number): string {
+  return WORDS[n] ?? String(n);
 }

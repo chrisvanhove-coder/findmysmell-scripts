@@ -41,7 +41,9 @@
     "check:living": "tsx scripts/check-living.mts",
     "e2e:living": "node e2e/living-screens.mjs",
     "check:generation": "tsx scripts/check-generation.mts",
-    "e2e:generation": "node e2e/generation-cards.mjs"
+    "e2e:generation": "node e2e/generation-cards.mjs",
+    "check:home": "tsx scripts/check-home.mts",
+    "e2e:home": "node e2e/home.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

@@ -44,6 +44,14 @@ export const PRESETS = {
   homeFull: 'c_limit,w_1600/f_auto/q_auto',
   /** Тот же фон на мобильном экране — 1600px там не нужны. */
   homeFullMobile: 'c_limit,w_900/f_auto/q_auto',
+  /**
+   * Фото-герой главной. Замер explicit API на background_home_v16ghx:
+   * 2798×1868, 2 413 988 → 505 237 байт (в 4.8 раза меньше). На живом
+   * сайте оно отдаётся исходником — 2.4 МБ на первом же экране.
+   */
+  homeHero: 'c_limit,w_1800/f_auto/q_auto',
+  /** Тот же герой вертикальным кропом под телефон: 2 413 988 → 266 923. */
+  homeHeroMobile: 'c_fill,g_auto,h_1400,w_900/f_auto/q_auto',
 } as const;
 
 export type Preset = keyof typeof PRESETS;
