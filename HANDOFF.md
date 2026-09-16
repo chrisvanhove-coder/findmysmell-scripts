@@ -854,7 +854,8 @@ Postgres из `ghcr.io/railwayapp-templates/postgres-ssl:16`; том обяза�
 без него база теряет всё при каждом редеплое. `DATABASE_URL` у приложения
 задан **ссылкой** `${{Postgres.DATABASE_URL}}`, а не копией строки — при
 смене пароля базы ничего не разъедется. У `web`: корень сборки `web`,
-healthcheck `/en`, деплой с ветки `claude/web-flow-site-assessment-lctz2k`.
+healthcheck `/en`, деплой с ветки **`main`** (переключено по просьбе
+заказчицы).
 
 **Почему healthcheck `/en`.** Railway не принимает дефисы в пути
 healthcheck, а все адреса вопросов — `q-gender` и подобные. `/en` —
