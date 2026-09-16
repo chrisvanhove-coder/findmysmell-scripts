@@ -58,6 +58,17 @@ interface Blob {
 const CFG = data.Q_DAYTDAY;
 const BLOBS = CFG.blobs as Blob[];
 const ANSWERS = QUESTIONS.Q_DAYTDAY.answers;
+const TEXT = CFG.options as Record<string, string>;
+
+/**
+ * Что показать на экране. Берём текст с живого сайта, а не полную
+ * формулировку из quiz.en.json: заказчица прислала скриншоты и сказала
+ * «возьми там». Код ответа при этом остаётся из квиза — показываем
+ * короткое, записываем то же самое. Если для кода текста нет, честно
+ * показываем полный: молча потерять вариант нельзя.
+ */
+const label = (code: string) =>
+  TEXT[code] ?? ANSWERS.find((a) => a.code === code)?.label ?? code;
 
 /* Пятна: дрожание формы и наклон — как в проде. */
 const WOBBLE_AMP = 0.06;
@@ -386,7 +397,7 @@ export default function PastaOptions({ onChoose }: MechanicProps) {
                 onBlur={() => setLooking(null)}
                 onClick={() => pick(a.code)}
               >
-                {a.label}
+                {label(a.code)}
               </button>
             </li>
           ))}

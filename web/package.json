@@ -39,7 +39,9 @@
     "check:photos": "tsx scripts/check-answer-photos.mts",
     "e2e:photos": "node e2e/answer-photos.mjs",
     "check:living": "tsx scripts/check-living.mts",
-    "e2e:living": "node e2e/living-screens.mjs"
+    "e2e:living": "node e2e/living-screens.mjs",
+    "check:generation": "tsx scripts/check-generation.mts",
+    "e2e:generation": "node e2e/generation-cards.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

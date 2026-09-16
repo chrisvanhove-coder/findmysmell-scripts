@@ -42,4 +42,6 @@ export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
   // тихо дышат под волнами. Данные обоих — в living-screens.json.
   Q_DAYTDAY: dynamic(() => import('./PastaOptions'), { ssr: false }),
   Q_STAYWELL: dynamic(() => import('./WaveOptions'), { ssr: false }),
+  // Четыре карточки-текстуры носителей своего времени.
+  Q_GENERATION: dynamic(() => import('./GenerationCards'), { ssr: false }),
 };

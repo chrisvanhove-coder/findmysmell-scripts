@@ -1,5 +1,5 @@
 {
-  "_": "Два «живых» экрана: Q_DAYTDAY и Q_STAYWELL. Заказчица про них: «Daytoday и staywell backgrounds все шевелятся». Перенесено из q-daytday.footer.html и q-staywell.footer.html — те же цвета, те же пятна, те же волнистые линии, тот же текст вопроса заглавными. ВАЖНО про скорости: в проде они были заданы на КАДР, поэтому на экране 120 Гц всё двигалось вдвое быстрее. Здесь те же числа умножены на 60 и означают единицы В СЕКУНДУ. ТЕКСТ ВАРИАНТОВ здесь не хранится: он берётся из quiz.en.json, чтобы не разойтись с квизом. В проде на этих двух экранах показывался УКОРОЧЕННЫЙ текст (например «My days change a lot» вместо «My days change a lot : different places, roles, or situations»), а полный лежал в скрытых кнопках Webflow. Я оставил полный — заказчица уже просила не терять текст, — и это легко поменять обратно.",
+  "_": "Два «живых» экрана: Q_DAYTDAY и Q_STAYWELL. Заказчица про них: «Daytoday и staywell backgrounds все шевелятся». Перенесено из q-daytday.footer.html и q-staywell.footer.html — те же цвета, те же пятна, те же волнистые линии, тот же текст. ВАЖНО про скорости: в проде они были заданы на КАДР, поэтому на экране 120 Гц всё двигалось вдвое быстрее. Здесь те же числа умножены на 60 и означают единицы В СЕКУНДУ. ТЕКСТ ВАРИАНТОВ взят с живого сайта («Я же тебе скрин присылала что у меня сейчас на сайте. Возьми там») — в проде он короче, чем полные формулировки в quiz.en.json, которые лежали в скрытых кнопках Webflow. Коды ответов при этом сверены с quiz.en.json: показываем короткое, записываем тот же код.",
   "Q_DAYTDAY": {
     "paper": "#c0c0ac",
     "questionInk": "#8B3A22",
@@ -7,12 +7,60 @@
     "question": "WHEN YOU IMAGINE YOUR IDEAL DAY, WHICH FEELS MOST LIKE YOU?",
     "dim": 0.15,
     "blobs": [
-      { "x": 0.15, "y": 0.75, "r": 0.28, "vx": 0.0156, "vy": -0.0078, "phase": 0.0, "rgb": "139, 58, 34" },
-      { "x": 0.85, "y": 0.25, "r": 0.22, "vx": -0.009, "vy": 0.009, "phase": 1.8, "rgb": "61, 61, 32" },
-      { "x": 0.5, "y": 0.1, "r": 0.14, "vx": 0.0114, "vy": 0.0156, "phase": 3.2, "rgb": "139, 58, 34" },
-      { "x": 0.75, "y": 0.88, "r": 0.18, "vx": -0.0114, "vy": -0.0084, "phase": 4.5, "rgb": "139, 58, 34" },
-      { "x": 0.25, "y": 0.4, "r": 0.1, "vx": 0.0162, "vy": 0.0114, "phase": 2.1, "rgb": "61, 61, 32" }
-    ]
+      {
+        "x": 0.15,
+        "y": 0.75,
+        "r": 0.28,
+        "vx": 0.0156,
+        "vy": -0.0078,
+        "phase": 0.0,
+        "rgb": "139, 58, 34"
+      },
+      {
+        "x": 0.85,
+        "y": 0.25,
+        "r": 0.22,
+        "vx": -0.009,
+        "vy": 0.009,
+        "phase": 1.8,
+        "rgb": "61, 61, 32"
+      },
+      {
+        "x": 0.5,
+        "y": 0.1,
+        "r": 0.14,
+        "vx": 0.0114,
+        "vy": 0.0156,
+        "phase": 3.2,
+        "rgb": "139, 58, 34"
+      },
+      {
+        "x": 0.75,
+        "y": 0.88,
+        "r": 0.18,
+        "vx": -0.0114,
+        "vy": -0.0084,
+        "phase": 4.5,
+        "rgb": "139, 58, 34"
+      },
+      {
+        "x": 0.25,
+        "y": 0.4,
+        "r": 0.1,
+        "vx": 0.0162,
+        "vy": 0.0114,
+        "phase": 2.1,
+        "rgb": "61, 61, 32"
+      }
+    ],
+    "options": {
+      "Q_DAYTDAY__FLOW": "I go with the flow",
+      "Q_DAYTDAY__PLANDAY": "I like to have a plan",
+      "Q_DAYTDAY__INTERACT": "I spend my day with people",
+      "Q_DAYTDAY__CHANGDAY": "My days change a lot",
+      "Q_DAYTDAY__ACTIVED": "I don’t like to stay still",
+      "Q_DAYTDAY__CONSIST": "I prefer calm stable days"
+    }
   },
   "Q_STAYWELL": {
     "paper": "#953d27",
@@ -22,6 +70,15 @@
     "question": "WHAT MAKES A SPACE FEEL LIKE YOURS?",
     "dim": 0.2,
     "lineRgb": "255, 235, 190",
-    "lineCount": 12
+    "lineCount": 12,
+    "options": {
+      "Q_STAYWELL__KNOWNEX": "Knowing what comes next",
+      "Q_STAYWELL__FLEXIB": "Staying flexible as things change",
+      "Q_STAYWELL__NOCHANG": "Keeping familiar routines",
+      "Q_STAYWELL__SUPPEAPLE": "Having my people around me",
+      "Q_STAYWELL__GROUND": "Feeling comfortable in my surroundings",
+      "Q_STAYWELL__MENTCLR": "Having a clear, calm mind",
+      "Q_STAYWELL__STIMULT": "Feeling excited by what’s ahead"
+    }
   }
 }

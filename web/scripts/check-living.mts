@@ -125,12 +125,41 @@ console.log('\nQ_STAYWELL: цвета, текст и линии как в про
   }
 }
 
-console.log('\nВарианты берутся из квиза, а не переписаны');
+console.log('\nТекст вариантов — как на живом сайте, код — из квиза');
 {
+  /* Заказчица: «Я же тебе скрин присылала что у меня сейчас на сайте.
+     Возьми там». Поэтому показываем текст прода, а не полные
+     формулировки из quiz.en.json. Сверяем посимвольно с прод-кодом:
+     разойтись это может молча. Апострофы приводим к одному виду —
+     в проде прямой, на сайте типографский. */
+  const apos = (t: string) => t.replace(/[\u2019']/g, "'").trim();
+  for (const [qid, prod] of [['Q_DAYTDAY', prodDay], ['Q_STAYWELL', prodWell]] as Array<[string, string]>) {
+    const prodText: Record<string, string> = {};
+    // В проде часть строк в одинарных кавычках, часть в двойных (там,
+    // где внутри апостроф). Поэтому две группы, и берём непустую.
+    for (const [, code, single, double] of prod.matchAll(
+      /key:\s*'(Q_\w+)',\s*text:\s*(?:'([^']*)'|"([^"]*)")/g,
+    )) {
+      prodText[code] = single ?? double;
+    }
+    const mine = data[qid].options as Record<string, string>;
+    check(`${qid}: текст нашёлся в прод-коде для всех вариантов`,
+      Object.keys(prodText).length === Object.keys(mine).length,
+      `в проде ${Object.keys(prodText).length}, у нас ${Object.keys(mine).length}`);
+    for (const [code, text] of Object.entries(mine)) {
+      check(`${qid} / ${code}: «${text}»`,
+        apos(prodText[code] ?? '') === apos(text),
+        `в проде «${prodText[code]}»`);
+    }
+  }
+
   for (const [qid, src] of [['Q_DAYTDAY', pasta], ['Q_STAYWELL', wave]] as Array<[string, string]>) {
-    check(`${qid}: текст из QUESTIONS, а не свой список`,
+    check(`${qid}: коды берутся из QUESTIONS, а не переписаны`,
       new RegExp(`QUESTIONS\\.${qid}\\.answers`).test(src),
-      'иначе текст разойдётся с квизом, и это не заметит никто');
+      'иначе набор вариантов разойдётся с квизом, и это не заметит никто');
+    check(`${qid}: на экране показывается текст сайта`,
+      /TEXT\[code\] \?\?/.test(src),
+      'с честным откатом на полную формулировку, если текста нет');
     // И все коды прода на месте — ни один вариант не потерян.
     const prod = qid === 'Q_DAYTDAY' ? prodDay : prodWell;
     const prodCodes = [...prod.matchAll(new RegExp(`'(${qid}__\\w+)'`, 'g'))]

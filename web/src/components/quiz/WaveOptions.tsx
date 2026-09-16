@@ -48,6 +48,15 @@ import type { MechanicProps } from './mechanics';
 
 const CFG = data.Q_STAYWELL;
 const ANSWERS = QUESTIONS.Q_STAYWELL.answers;
+const TEXT = CFG.options as Record<string, string>;
+
+/**
+ * Что показать на экране. Текст с живого сайта, код — из квиза: на этом
+ * экране формулировки совпадают, но правило одно для обоих живых
+ * экранов, и держать его в одном виде надёжнее.
+ */
+const label = (code: string) =>
+  TEXT[code] ?? ANSWERS.find((a) => a.code === code)?.label ?? code;
 
 /* Появление, как в проде. */
 const QUESTION_IN_MS = 100;
@@ -272,7 +281,7 @@ export default function WaveOptions({ onChoose }: MechanicProps) {
                   onBlur={() => setLooking(null)}
                   onClick={() => { if (!picked) setPicked(a.code); }}
                 >
-                  <span className={styles.label} data-breathe="">{a.label}</span>
+                  <span className={styles.label} data-breathe="">{label(a.code)}</span>
                 </button>
               </li>
             );
