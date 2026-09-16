@@ -91,34 +91,6 @@
 /* Выбранная карточка остаётся яркой, пока идёт пауза перед переходом. */
 .picked { opacity: 1; }
 
-/* Пятый вариант: на живом сайте его выбрать было нельзя вовсе — карточки
-   под него не сделали, а кнопка Webflow была скрыта. Текстуры у него нет
-   намеренно: придумывать «носитель» для «Other» нечестно. */
-.other {
-  margin: 28px 0 0;
-  padding: 10px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-  background: none;
-  color: rgba(255, 255, 255, 0.75);
-  font-family: var(--fms-mono), monospace;
-  font-size: 13px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity 0.3s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.other:hover {
-  border-color: rgba(255, 255, 255, 0.7);
-  color: #fff;
-}
-
-.other:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 3px;
-}
-
 @media (max-width: 768px) {
   .inner { padding: 84px 24px 30px; }
   .question {
@@ -130,10 +102,8 @@
     gap: 8px;
   }
   .card { height: 80px; }
-  .other { margin-top: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card,
-  .other { transition: none; }
+  .card { transition: none; }
 }

@@ -3,8 +3,8 @@
 // Главное здесь три вещи: текстура закрывает карточку ЦЕЛИКОМ (на этом
 // я уже споткнулся — createImageData не знает про масштаб холста, и шум
 // ложился в левую четверть), выбранная карточка уходит в ответ ТЕМ ЖЕ
-// кодом, и пятый вариант «Other» вообще выбираем — на живом сайте его
-// выбрать было нельзя.
+// кодом, и на экране ровно столько вариантов, сколько в квизе: пятый
+// «Other» убран по решению заказчицы, и его не должно остаться нигде.
 //
 // Запуск: npm run dev (в другом окне), затем npm run e2e:generation
 import { readFile } from 'node:fs/promises';
@@ -47,9 +47,12 @@ const opacities = (page) => page.$$eval('button[data-answer]',
 console.log('\nЭкран на месте');
 {
   const { context, page, errors } = await open();
-  check('кнопок пять — четыре карточки и «Other»',
-    (await page.locator('button[data-answer]').count()) === 5,
-    String(await page.locator('button[data-answer]').count()));
+  check('кнопок четыре — по одной на вариант квиза',
+    (await page.locator('button[data-answer]').count()) === ANSWERS.length
+    && ANSWERS.length === 4,
+    `${await page.locator('button[data-answer]').count()} при ${ANSWERS.length} вариантах`);
+  check('убранного «Other» на экране нет',
+    (await page.locator('button[data-answer="Q_GENERATION__PREF_NOT"]').count()) === 0);
   check('вопрос показан',
     await page.getByText(DATA.question.slice(0, 22), { exact: false }).isVisible());
   const bg = await page.locator('[data-generation-cards]').evaluate((el) =>
@@ -154,20 +157,19 @@ console.log('\nКлавиатура: в проде эти карточки не�
     await first.evaluate((el) => el === document.activeElement));
 
   const reached = new Set();
-  for (let i = 0; i < 10; i += 1) {
+  for (let i = 0; i < 8; i += 1) {
     const code = await page.evaluate(() =>
       document.activeElement?.getAttribute('data-answer'));
     if (code) reached.add(code);
     await page.keyboard.press('Tab');
   }
-  check('Tab обходит все пять вариантов', reached.size === 5, [...reached].join(' '));
+  check('Tab обходит все четыре варианта', reached.size === 4, [...reached].join(' '));
 
   // Читалка обязана знать, что это за карточка: годы-то на холсте.
   for (const a of ANSWERS) {
     const name = await page.locator(`button[data-answer="${a.code}"]`).evaluate((el) =>
       (el.textContent || '').trim());
-    const expected = a.code === DATA.otherCode ? DATA.otherText : a.label;
-    check(`${a.code}: название словами — «${expected}»`, name === expected, `«${name}»`);
+    check(`${a.code}: название словами — «${a.label}»`, name === a.label, `«${name}»`);
   }
 
   await page.locator(`button[data-answer="${CARDS[2].code}"]`).focus();

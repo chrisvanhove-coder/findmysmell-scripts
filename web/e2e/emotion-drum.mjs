@@ -367,6 +367,44 @@ console.log('\nДлинное слово не обрезается на узко
   await context.close();
 }
 
+console.log('\nСемь фотографий — ровно те, что лежат в Cloudinary');
+{
+  /* Сверено с папкой «findmysmell site/Q-EMO» через Cloudinary API
+     16.09.2026: в ней ровно семь файлов, и это они. Здесь имена зашиты
+     нарочно — проверка работает без сети, а подмена или потеря файла
+     иначе обнаружится только глазами на живом сайте.
+
+     Цвета этих файлов тогда же сверены с фотографиями, которые
+     заказчица прислала со своего телефона, и совпали по оттенку и по
+     арифметике чёрной вуали 0.45:
+       feel-myst   #332D35 (black 67%, purple 15%)  → тёмно-сливовый
+       feel-cozy   #B7735A (red 96%)                → терракота
+       feel-sexy   #381D20 (red 97%)                → тёмный бордовый
+       feel-energy #813F19 + #BD9413 (brown+orange) → ржаво-золотой
+       feel-calm   #697D67 (green 93%)              → приглушённый зелёный
+       feel-play   #BC9D60 + #D08E5F (orange+olive) → оливково-коралловый
+     То есть в барабане стоят фотографии с её сайта, а не просто цвета. */
+  const EXPECTED = [
+    'feel-myst_xapckv.jpg',
+    'feel-energy_mn5jgs.png',
+    'feel-sexy_vbcves.png',
+    'feel-cozy_ubq7q8.jpg',
+    'feel-play_ivcoxn.jpg',
+    'feel-calm_flmzez.jpg',
+    'feel-focus_vngdso.jpg',
+  ];
+  const data = JSON.parse(
+    await (await import('node:fs/promises')).readFile('src/data/emotion-drum.json', 'utf8'),
+  );
+  const files = data.items.map((i) => i.img.split('/').pop());
+  check('файлов семь и порядок тот же',
+    JSON.stringify(files) === JSON.stringify(EXPECTED),
+    `${files.join(', ')}\n        против ${EXPECTED.join(', ')}`);
+  check('все ссылки идут из папки Q-EMO в Cloudinary',
+    data.items.every((i) => /^https:\/\/res\.cloudinary\.com\/dcefrxxav\/image\/upload\/v\d+\//.test(i.img)),
+    data.items.map((i) => i.img).join('\n        '));
+}
+
 await browser.close();
 console.log(failed ? `\n${failed} проверок упало\n` : '\nБарабан работает.\n');
 process.exit(failed ? 1 : 0);

@@ -23,12 +23,15 @@ import type { MechanicProps } from './mechanics';
  *
  * ЧТО ИСПРАВЛЕНО ПРОТИВ ПРОДА.
  *
- * 1. ВАРИАНТ «OTHER» НЕЛЬЗЯ БЫЛО ВЫБРАТЬ ВООБЩЕ. В quiz.en.json у этого
- *    вопроса пять вариантов, а карточек на живом сайте четыре: пятый
- *    (Q_GENERATION__PREF_NOT) существовал только как скрытая кнопка
- *    Webflow. То есть человек, не желающий называть возраст, не мог
- *    пройти этот вопрос никак. Добавлен отдельной строкой под сеткой,
- *    без текстуры.
+ * 1. ПЯТЫЙ ВАРИАНТ «OTHER» РАЗОБРАН ДО КОНЦА. В quiz.en.json он был, а
+ *    карточки под него на живом сайте нет — существовал только как
+ *    скрытая кнопка Webflow, то есть выбрать его было нельзя вообще.
+ *    Я сначала добавил его отдельной строкой, заказчица решила иначе:
+ *    «there are no other people different age from the categories I
+ *    already listed». Код выведен из оборота в retired-answers.ts, и
+ *    теперь на экране ровно столько вариантов, сколько в квизе.
+ *    Проверено: в старой таблице (89 прохождений) этого кода нет ни в
+ *    одной строке.
  * 2. Карточки были div'ами с обработчиком click: ни клавиатуры, ни
  *    читалки. А годы нарисованы НА ХОЛСТЕ, то есть для читалки карточка
  *    была пустой. Здесь это кнопки, и у каждой есть название словами.
@@ -323,21 +326,6 @@ export default function GenerationCards({ onChoose }: MechanicProps) {
           ))}
         </ul>
 
-        {/* Пятый вариант. На живом сайте его выбрать было нельзя: карточки
-            под него не было, а кнопка Webflow скрыта. */}
-        <button
-          type="button"
-          className={[styles.other, dimOf(data.otherCode)].filter(Boolean).join(' ')}
-          data-answer={data.otherCode}
-          disabled={picked !== null}
-          onMouseEnter={() => setLooking(data.otherCode)}
-          onMouseLeave={() => setLooking(null)}
-          onFocus={() => setLooking(data.otherCode)}
-          onBlur={() => setLooking(null)}
-          onClick={() => { if (!picked) setPicked(data.otherCode); }}
-        >
-          {data.otherText}
-        </button>
       </div>
     </div>
   );

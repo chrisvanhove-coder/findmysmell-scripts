@@ -8,10 +8,10 @@
  * 1. Годы привязаны к тем же кодам, что на живом сайте: перепутанная
  *    привязка означала бы, что человек выбирает «1965 – 1980», а
  *    записывается бумер.
- * 2. Пятый вариант («Other») на месте. На живом сайте карточки под него
- *    не сделали, а кнопка Webflow была скрыта — то есть выбрать его
- *    было нельзя вообще, и человек, не желающий называть возраст, не мог
- *    пройти этот вопрос никак.
+ * 2. Пятый вариант («Other») убран ДО КОНЦА: и с экрана, и из квиза, и
+ *    занесён в выведенные из оборота. На живом сайте выбрать его было
+ *    нельзя вообще — карточки не сделали, кнопка Webflow скрыта. Решение
+ *    заказчицы: четыре периода покрывают всех.
  */
 import { readFileSync } from 'node:fs';
 
@@ -68,27 +68,38 @@ console.log('\nЦвета как в проде');
     `${data.question}\n        против ${q?.[1]}`);
 }
 
-console.log('\nПятый вариант, которого на сайте выбрать было нельзя');
+console.log('\nПятый вариант «Other» убран, и убран до конца');
 {
+  /* На живом сайте его выбрать было нельзя: карточки под него не
+     сделали, кнопка Webflow скрыта. Я сначала добавил его отдельной
+     строкой, заказчица решила иначе — «there are no other people
+     different age from the categories I already listed». Убрать такой
+     вариант можно только целиком: иначе он останется в квизе как
+     кнопка, которую никто никогда не нажмёт. */
   const quizCodes = quiz.Q_GENERATION.answers.map((a: { code: string }) => a.code);
-  check('в квизе пять вариантов', quizCodes.length === 5, String(quizCodes.length));
-  check('пятый — это Q_GENERATION__PREF_NOT',
-    data.otherCode === 'Q_GENERATION__PREF_NOT' && quizCodes.includes(data.otherCode),
-    data.otherCode);
-  check('в проде карточки под него действительно не было',
-    !new RegExp(`key:\\s*'${data.otherCode}'`).test(prod),
-    'если появилась — надо переносить её, а не мою строку');
-  check('у нас он есть отдельной кнопкой',
-    new RegExp(`data-answer=\\{data\\.otherCode\\}`).test(src));
-  check('и без текстуры — придумывать «носитель» для «Other» нечестно',
-    !/otherCode[\s\S]{0,400}<canvas/.test(src));
+  const retired = readFileSync('src/data/retired-answers.ts', 'utf8');
 
-  // Все пять кодов квиза должны быть достижимы с экрана.
-  const reachable = [...CARDS.map((c) => c.code), data.otherCode];
-  check('все пять кодов квиза выбираемы',
-    quizCodes.every((c: string) => reachable.includes(c))
-    && reachable.length === quizCodes.length,
-    `на экране ${reachable.join(', ')}`);
+  check('в квизе осталось четыре варианта', quizCodes.length === 4, String(quizCodes.length));
+  check('Q_GENERATION__PREF_NOT из квиза убран',
+    !quizCodes.includes('Q_GENERATION__PREF_NOT'), quizCodes.join(', '));
+  check('и занесён в выведенные из оборота, а не просто удалён',
+    /Q_GENERATION__PREF_NOT: '/.test(retired),
+    'иначе это выглядит как потерянная кнопка, а не как решение');
+  check('вес в answer-weights.json не тронут',
+    readFileSync('src/data/answer-weights.json', 'utf8').includes('Q_GENERATION__PREF_NOT'),
+    'таблица весов — точная выгрузка из прода, её не правим');
+  check('на экране его тоже нет',
+    !/otherCode|otherText/.test(src.replace(/\/\*[\s\S]*?\*\//g, '')),
+    'остался бы вариант, которого в квизе уже нет');
+  check('в проде карточки под него действительно не было',
+    !/key:\s*'Q_GENERATION__PREF_NOT'/.test(prod));
+
+  // Ровно столько карточек, сколько вариантов в квизе, и те же коды.
+  check('карточек столько же, сколько вариантов',
+    CARDS.length === quizCodes.length, `${CARDS.length} против ${quizCodes.length}`);
+  check('все коды квиза выбираемы с экрана',
+    quizCodes.every((c: string) => CARDS.some((k) => k.code === c)),
+    CARDS.map((c) => c.code).join(', '));
 }
 
 console.log('\nИсправления против прода на месте');

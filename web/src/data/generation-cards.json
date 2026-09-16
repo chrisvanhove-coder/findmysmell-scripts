@@ -1,15 +1,33 @@
 {
-  "_": "Карточки поколений на Q_GENERATION. Каждая карточка — живая текстура того носителя, на котором это поколение выросло: цифровой шум, киноплёнка с перфорацией, зелёные строчки VHS, чёрно-белое зерно. Перенесено из q-generation.footer.html: то же поле #3d3d20, те же четыре стиля, те же цвета свечения и те же годы. ВАЖНО: в quiz.en.json у этого вопроса ПЯТЬ вариантов, а на живом сайте карточек ЧЕТЫРЕ — пятый, «Other» (Q_GENERATION__PREF_NOT), выбрать было нельзя вообще, кнопка под него в Webflow была скрыта без карточки. Здесь он добавлен отдельной строкой под сеткой, без текстуры: придумывать ему носитель нечестно, а терять вариант нельзя.",
+  "_": "Карточки поколений на Q_GENERATION. Каждая карточка — живая текстура того носителя, на котором это поколение выросло: цифровой шум, киноплёнка с перфорацией, зелёные строчки VHS, чёрно-белое зерно. Перенесено из q-generation.footer.html: то же поле #3d3d20, те же четыре стиля, те же цвета свечения и те же годы. ПЯТЫЙ ВАРИАНТ «Other» УБРАН по решению заказчицы: «there are no other people different age from the categories I already listed». На живом сайте его и так нельзя было выбрать — карточки под него не сделали, а кнопка Webflow была скрыта. Код выведен из оборота в src/data/retired-answers.ts, вес в answer-weights.json остался: та таблица — точная выгрузка из прода, её не правим.",
   "paper": "#3d3d20",
   "questionInk": "#ffffff",
   "question": "WHICH GENERATION DO YOU BELONG TO?",
   "dim": 0.5,
-  "otherCode": "Q_GENERATION__PREF_NOT",
-  "otherText": "Other",
   "cards": [
-    { "code": "Q_GENERATION__GEN_Z", "years": "1997 – 2012", "style": "digital", "ink": "#00cfff" },
-    { "code": "Q_GENERATION__MILLEN", "years": "1981 – 1996", "style": "film", "ink": "#ffcc88" },
-    { "code": "Q_GENERATION__GEN_X", "years": "1965 – 1980", "style": "vhs", "ink": "#aaffaa" },
-    { "code": "Q_GENERATION__BOOMER", "years": "1946 – 1964", "style": "bw", "ink": "#ffffff" }
+    {
+      "code": "Q_GENERATION__GEN_Z",
+      "years": "1997 – 2012",
+      "style": "digital",
+      "ink": "#00cfff"
+    },
+    {
+      "code": "Q_GENERATION__MILLEN",
+      "years": "1981 – 1996",
+      "style": "film",
+      "ink": "#ffcc88"
+    },
+    {
+      "code": "Q_GENERATION__GEN_X",
+      "years": "1965 – 1980",
+      "style": "vhs",
+      "ink": "#aaffaa"
+    },
+    {
+      "code": "Q_GENERATION__BOOMER",
+      "years": "1946 – 1964",
+      "style": "bw",
+      "ink": "#ffffff"
+    }
   ]
 }

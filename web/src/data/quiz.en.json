@@ -37,10 +37,6 @@
       {
         "code": "Q_GENERATION__BOOMER",
         "label": "Boomer (1946–1964)"
-      },
-      {
-        "code": "Q_GENERATION__PREF_NOT",
-        "label": "Other"
       }
     ]
   },

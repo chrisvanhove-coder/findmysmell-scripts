@@ -82,13 +82,24 @@ for (const s of SCREENS) {
       getComputedStyle(el).backgroundColor);
     check('своё поле, а не прозрачный экран', bg === s.paperRgb, bg);
 
-    // Текст вариантов обязан быть тем же, что в квизе: в проде на этих
-    // экранах он был укорочен, и разойтись это может молча.
+    /* Текст на экране — тот, что на живом сайте («возьми там»), а НЕ
+       полная формулировка из quiz.en.json: она лежала в скрытых кнопках
+       Webflow. Код при этом из квиза. Разойтись это может молча, поэтому
+       сверяем каждую строку. */
     for (const a of answers) {
-      check(`вариант «${a.label.slice(0, 26)}…» показан полностью`,
-        (await page.locator(`button[data-answer="${a.code}"]`).textContent())?.trim() === a.label,
-        await page.locator(`button[data-answer="${a.code}"]`).textContent() ?? '');
+      const expected = cfg.options[a.code];
+      const shown = (await page.locator(`button[data-answer="${a.code}"]`).textContent())?.trim();
+      check(`${a.code}: на экране «${expected}»`, shown === expected,
+        `показано «${shown}»`);
     }
+    // На Q_DAYTDAY текст сайта заметно короче квизового — это и есть
+    // то, что заказчица просила взять с сайта. На Q_STAYWELL они
+    // совпадают, там укорачивать было нечего.
+    const shorter = answers.filter((a) => cfg.options[a.code].length < a.label.length).length;
+    check(`строк, укороченных против квиза: ${shorter} из ${answers.length}`,
+      s.id === 'Q_DAYTDAY' ? shorter === answers.length : shorter === 0,
+      'если это изменилось — значит текст правили, и надо сверить с сайтом');
+
     check('все варианты видны после появления',
       (await opacities(page)).every((o) => o > 0.9), (await opacities(page)).join(' '));
     check('ошибок в консоли нет', errors.length === 0, errors.join(' | '));

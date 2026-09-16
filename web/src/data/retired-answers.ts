@@ -17,6 +17,14 @@ export const RETIRED_ANSWERS: Record<string, string> = {
   // Кнопки удалены со страниц, варианты больше не нужны.
   Q_ENERGY__COFFEE: 'удалён из квиза',
   Q_ENV_CHILD__MIXED: 'удалён из квиза',
+
+  /* Решение заказчицы: «I put away other because there are no other
+     people different age from the categories I already listed» — четыре
+     периода покрывают всех. На живом сайте этот вариант и так нельзя
+     было выбрать: карточки под него не сделали, кнопка Webflow была
+     скрыта. Проверено: в старой таблице (89 прохождений) этого кода нет
+     ни в одной строке, так что перенесённые данные не задеты. */
+  Q_GENERATION__PREF_NOT: 'убран заказчицей — четыре периода покрывают всех',
 };
 
 export function isRetired(code: string): boolean {
