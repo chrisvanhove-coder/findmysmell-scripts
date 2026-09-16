@@ -37,4 +37,5 @@ export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
   // различались только уровнями, цветами, фоном и текстом вопроса.
   Q_SWEET: dynamic(() => import('./SweetSlider'), { ssr: false }),
   Q_WILD: dynamic(() => import('./WildSlider'), { ssr: false }),
+  Q_ENV_CHILD: dynamic(() => import('./ChildhoodBlobs'), { ssr: false }),
 };

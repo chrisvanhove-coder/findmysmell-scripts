@@ -108,7 +108,13 @@ export default function QuizScreen({
   if (Mechanic) {
     return (
       <main className={styles.screen}>
-        <button type="button" className={styles.back} onClick={() => router.back()}>
+        {/* Своя плашка и свой слой: механика закреплена на весь экран, и
+            обычная кнопка «назад» оказывалась под ней — не нажималась. */}
+        <button
+          type="button"
+          className={`${styles.back} ${styles.backOverMechanic}`}
+          onClick={() => router.back()}
+        >
           ← Back
         </button>
         <Mechanic onChoose={choose} />

@@ -174,6 +174,25 @@
 
 .back:hover { color: rgba(240, 236, 225, 0.8); }
 
+/* Кнопка «назад» поверх механики вопроса.
+   ЗАЧЕМ ОТДЕЛЬНЫЙ КЛАСС. Механика занимает экран целиком и закреплена на
+   z-index 10, поэтому обычная кнопка оказывалась ПОД ней: она была видна
+   не всегда и не нажималась вовсе — ни мышью, ни пальцем. Проверено
+   elementFromPoint на q-emo, q-sweet и q-env-child: сверху лежала
+   механика. Здесь кнопка поднята на тот же уровень, что счётчик
+   прогресса, и получает свою тёмную плашку — иначе светлый текст пропадал
+   на светлых экранах вроде шалфейного поля шаров. */
+.backOverMechanic {
+  z-index: 20;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.5);
+  color: rgba(240, 236, 225, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+.backOverMechanic:hover { color: #fff; background: rgba(17, 17, 17, 0.7); }
+
 .subtitle {
   font-family: var(--fms-serif);
   font-size: clamp(14px, 1.7vw, 17px);

@@ -33,7 +33,9 @@
     "import:sheet": "tsx scripts/import-sheet.mts",
     "check:counts": "tsx scripts/check-counts.mts",
     "e2e:drum": "node e2e/emotion-drum.mjs",
-    "e2e:bottle": "node e2e/bottle-slider.mjs"
+    "e2e:bottle": "node e2e/bottle-slider.mjs",
+    "check:blobs": "tsx scripts/check-blobs.mts",
+    "e2e:blobs": "node e2e/childhood-blobs.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

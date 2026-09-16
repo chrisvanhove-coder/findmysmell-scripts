@@ -1,0 +1,137 @@
+/* Шары детства (Q_ENV_CHILD). Числа из прода (q-env-child.footer.html):
+   сетка по четырём углам вокруг вопроса, колонка на телефоне от 600px. */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  /* Цвет бумаги приходит из данных, но и без него экран не должен быть
+     прозрачным: под ним лежит общий фон страницы. */
+  background: #b8bfaa;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  /* Холст только рисует; вся мышь достаётся подписям. */
+  pointer-events: none;
+}
+
+/* ── Настольная раскладка: вопрос в центре, ответы по углам ── */
+.cluster {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+  display: grid;
+  grid-template-areas:
+    'tl .  tr'
+    '.  q  .'
+    'bl .  br';
+  grid-template-columns: auto clamp(200px, 36vw, 340px) auto;
+  gap: clamp(14px, 2.4vh, 28px) clamp(18px, 3vw, 42px);
+  align-items: center;
+  justify-items: center;
+  padding: 10px;
+  transform: translate(-50%, -50%);
+}
+
+.question {
+  grid-area: q;
+  margin: 0;
+  color: rgba(30, 24, 14, 0.82);
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  font-size: clamp(20px, 4vw, 42px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-align: center;
+  /* Заголовок не перехватывает клики у подписей под ним. */
+  pointer-events: none;
+}
+
+.line { display: block; }
+
+/* Это настоящая кнопка, а не div с обработчиком, как было в проде:
+   иначе по вопросу нельзя пройти ни с клавиатуры, ни читалкой. */
+.ans {
+  padding: 10px;
+  border: 0;
+  background: none;
+  color: rgba(40, 32, 18, 0.55);
+  font-family: var(--fms-mono), monospace;
+  font-size: clamp(13px, 1.8vw, 18px);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.ans:hover { color: rgba(30, 24, 14, 0.92); }
+.ans:focus-visible {
+  outline: 2px solid rgba(30, 24, 14, 0.75);
+  outline-offset: 4px;
+}
+
+/* Выбранный вариант темнеет и получает галочку — как в проде. */
+.picked {
+  color: rgba(60, 50, 30, 0.9);
+  cursor: default;
+}
+
+.tl { grid-area: tl; text-align: right; }
+.tr { grid-area: tr; text-align: left; }
+.bl { grid-area: bl; text-align: right; }
+.br { grid-area: br; text-align: left; }
+
+/* ── Телефон: вопрос сверху, ответы столбиком ── */
+@media (max-width: 600px) {
+  .cluster {
+    position: absolute;
+    top: var(--fms-header-h, 64px);
+    right: 0;
+    bottom: var(--fms-footer-h, 80px);
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    /* Сверху 56, а не 24: под шапкой стоит кнопка «назад», и вопрос
+       налезал на неё. Проверено скриншотом на 390px. */
+    padding: 56px 28px 80px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    transform: none;
+  }
+
+  .question {
+    order: -1;
+    flex-shrink: 0;
+    width: 100%;
+    margin-bottom: 32px;
+    color: rgba(20, 16, 8, 0.88);
+    font-size: clamp(22px, 8vw, 32px);
+  }
+
+  .ans {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 20px 16px;
+    border-bottom: 1px solid rgba(40, 32, 18, 0.12);
+    color: rgba(40, 32, 18, 0.65);
+    font-size: clamp(14px, 4.5vw, 18px);
+    letter-spacing: 0.14em;
+    text-align: center;
+    white-space: normal;
+  }
+  .ans:last-child { border-bottom: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ans { transition: none; }
+}
