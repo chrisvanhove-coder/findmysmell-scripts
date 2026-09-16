@@ -1,0 +1,185 @@
+/* Ветка эмоции: семь экранов, одна раскладка.
+
+   Числа взяты из самой страницы Webflow через API (стили .heading-20,
+   .quick-stack-15, .cell-90…96, .button-111…117) и из custom code
+   сайта, а не на глаз:
+
+     вопрос     Highcruiser 55px, белый, по центру, margin 8% / 2%;
+                medium 50px + padding 10px по бокам; small 40px +
+                padding-top 20px; tiny 30px/35px, margin-top 15%
+     сетка      один столбец (Quick Stack по умолчанию), разрыв 20px,
+                на tiny 17px, padding-bottom 60px
+     плитка     width 50% по центру, padding 20px 0, радиус 15px,
+                фон #2a343a, line-height 30px; tiny — padding 10px по
+                бокам, 15px/25px
+     подпись    Montserrat 600, 30px (правило [data-answer-key] из
+                custom code сайта)
+     телефон    ≤768px: плитка на всю ширину, не ниже 44px, flex по
+                центру — тоже из custom code сайта
+     движение   наведённая 1.04, остальные 0.4, переход 200ms ease
+
+   ЕДИНСТВЕННОЕ ЧИСЛО НЕ ИЗ ПРОДА — цвет фона экрана. У body этих семи
+   страниц в Webflow нет ни класса, ни тегового стиля с фоном, то есть
+   прочитать его через API нечего; а вопрос там белый, значит фон тёмный.
+   Взят самый тёмный цвет палитры сайта (--charcoal-950 #141917).
+   ЗАКАЗЧИЦЕ: если на живом сайте фон другой — скажите, поменяю одной
+   строкой. */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 0 60px;
+  background: #141917;
+}
+
+.question {
+  flex-shrink: 0;
+  width: 100%;
+  margin: 8% 0 2%;
+  /* Сверху место под шапку и кнопку «назад»: вопрос в проде начинался
+     от верхнего края, а здесь над ним живут обе. */
+  padding-top: calc(var(--fms-header-h, 56px) + 8px);
+  color: #fff;
+  font-family: var(--fms-display), 'Arial Black', Arial, sans-serif;
+  font-size: 55px;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.tiles {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row { text-align: center; }
+
+.tile {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  width: 50%;
+  padding: 20px 0;
+  border: 0;
+  border-radius: 15px;
+  background-color: #2a343a;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-family: var(--fms-sans), sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.tile:focus-visible {
+  outline: 2px solid #f1e09b;
+  outline-offset: 4px;
+}
+
+/* Наведённая плитка выходит вперёд, остальные уходят назад: в проде
+   z-index менялся так же, иначе выросшая плитка подлезала под соседнюю. */
+.lifted {
+  z-index: 2;
+  transform: scale(1.04);
+  opacity: 1;
+}
+
+.dimmed { opacity: 0.4; }
+
+/* Подложка под подпись. В проде её не было, и на светлых кадрах
+   (лимон, морской бриз) белый текст почти терялся. */
+.withPhoto .label {
+  display: inline-block;
+  padding: 0 14px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 8px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.tapAgain {
+  flex-shrink: 0;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--fms-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* ── Брейкпоинты Webflow ── */
+
+/* medium */
+@media (max-width: 991px) {
+  .question {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-size: 50px;
+  }
+}
+
+/* small */
+@media (max-width: 767px) {
+  .question {
+    padding-top: calc(var(--fms-header-h, 56px) + 20px);
+    font-size: 40px;
+  }
+
+  /* Правило из custom code сайта: на телефоне плитка на всю ширину и
+     не ниже 44px. Там оно стоит с !important поверх Webflow — здесь
+     обычным правилом, потому что перебивать нечего. */
+  .tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .tiles { padding: 0 12px; }
+}
+
+/* tiny */
+@media (max-width: 479px) {
+  .question {
+    margin-top: 15%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 30px;
+    line-height: 35px;
+  }
+
+  .tiles { gap: 17px; }
+
+  .tile {
+    padding: 20px 10px;
+    font-size: 15px;
+    line-height: 25px;
+  }
+
+  .withPhoto .label { padding: 0 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile { transition: none; }
+  .lifted { transform: none; }
+}

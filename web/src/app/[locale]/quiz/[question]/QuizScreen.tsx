@@ -228,7 +228,7 @@ export default function QuizScreen({
         >
           ← Back
         </button>
-        <Mechanic onChoose={choose} />
+        <Mechanic questionId={question.id} onChoose={choose} />
         {modal}
         <div className={styles.progress}>
           <span className={styles.count}>{pct}%</span>

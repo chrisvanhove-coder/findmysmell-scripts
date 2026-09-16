@@ -45,7 +45,9 @@
     "check:home": "tsx scripts/check-home.mts",
     "e2e:home": "node e2e/home.mjs",
     "check:open": "tsx scripts/check-open-answers.mts",
-    "e2e:open": "node e2e/open-answer.mjs"
+    "e2e:open": "node e2e/open-answer.mjs",
+    "check:emotion": "tsx scripts/check-emotion-tiles.mts",
+    "e2e:emotion": "node e2e/emotion-tiles.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

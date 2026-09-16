@@ -38,6 +38,13 @@ export const PRESETS = {
   quizBackdrop: 'c_fill,g_auto,h_900,w_1600/f_auto/q_auto',
   /** То же для телефона: вертикаль, вдвое меньше по площади. */
   quizBackdropMobile: 'c_fill,g_auto,h_1280,w_720/f_auto/q_auto',
+  /**
+   * Плитка ответа в ветке эмоции: полоса примерно 720×70 CSS-пикселей,
+   * снимок лежит фоном с cover. Замер explicit API на calm-tea:
+   * 1 328 670 → 24 174 байта (в 55 раз меньше). Таких плиток на экране
+   * шесть-семь, и прод грел все сразу — около 8 МБ на один вопрос.
+   */
+  emotionTile: 'c_fill,g_auto,h_260,w_1000/f_auto/q_auto',
   /** Фото в боковой колонке главной: .sidePhoto, 3/2. */
   homeSide: 'c_fill,g_auto,h_480,w_720/f_auto/q_auto',
   /** Фон на всю колонку или экран, десктоп: .midImg. */

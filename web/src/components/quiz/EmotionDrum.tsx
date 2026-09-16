@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cld } from '@/lib/cloudinary';
 import drum from '@/data/emotion-drum.json';
 import styles from './emotion-drum.module.css';
+import type { MechanicProps } from './mechanics';
 
 /**
  * Барабан эмоций на Q_EMO. Перенесено из q-emo.footer.html.
@@ -63,12 +64,9 @@ const MIN_FONT = 16;
 
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-export default function EmotionDrum({
-  onChoose,
-}: {
-  /** Вызывается с кодом ответа. Навигацию делает QuizScreen. */
-  onChoose: (code: string) => void;
-}) {
+/* Props общие для всех механик: onChoose с кодом ответа, навигацию
+   делает QuizScreen. Код вопроса барабану не нужен — он один. */
+export default function EmotionDrum({ onChoose }: MechanicProps) {
   const slot = useRef<HTMLDivElement | null>(null);
   const words = useRef<Array<HTMLDivElement | null>>([]);
   const layers = useRef<Array<HTMLDivElement | null>>([]);

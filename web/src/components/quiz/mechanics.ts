@@ -23,6 +23,12 @@ import type { ComponentType } from 'react';
  */
 
 export interface MechanicProps {
+  /**
+   * Код вопроса. Нужен тем механикам, которые обслуживают несколько
+   * экранов сразу: семь экранов ветки эмоции различаются только
+   * вопросом, вариантами и снимками, и порознь их писать нечего.
+   */
+  questionId: string;
   onChoose: (code: string) => void;
 }
 
@@ -47,3 +53,14 @@ export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
   // Четыре карточки-текстуры носителей своего времени.
   Q_GENERATION: dynamic(() => import('./GenerationCards'), { ssr: false }),
 };
+
+/**
+ * Семь экранов ветки эмоции — одна механика на всех. Барабан Q_EMO
+ * уводит человека на «свой» экран, и различаются они только вопросом,
+ * вариантами и снимками (src/data/emotion-tiles.json). В проде это семь
+ * копий одного кода в семи подвалах страниц.
+ */
+const EmotionTiles = dynamic(() => import('./EmotionTiles'), { ssr: false });
+for (const id of ['Q_CALM', 'Q_COZY', 'Q_ENERGY', 'Q_FOCUS', 'Q_MYST', 'Q_PLAY', 'Q_SEXY']) {
+  MECHANICS[id] = EmotionTiles;
+}

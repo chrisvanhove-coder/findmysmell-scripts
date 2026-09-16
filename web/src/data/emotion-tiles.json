@@ -1,0 +1,83 @@
+{
+  "_": "Фотографии плиток семи экранов ветки эмоции (calm, cozy, energy, focus, myst, play, sexy). Привязка код ответа → снимок взята из imageMap в подвалах q-calm/q-cozy/q-energy/q-focus/q-myst/q-play/q-sexy — не придумана. В проде это 42 PNG с cdn.prod.website-files.com по 1.2–1.8 МБ, и все шесть-семь страница грела сразу (new Image() на каждый) — около 8 МБ на один экран. Здесь те же снимки из Cloudinary и через трансформацию: замер explicit API на calm-tea — 1 328 670 → 24 174 байта, в 55 раз меньше. Варианты «Other» и Q_FOCUS__NO_SMELL снимка не имеют и в проде не имели.",
+  "prodStyles": {
+    "_": "Числа со самой страницы Webflow, прочитаны через API (стили .heading-20, .quick-stack-15, .cell-90…96, .button-111…117) и из custom code сайта. Проверка check:emotion сверяет с ними CSS — чтобы правка «на глаз» не разошлась с живым сайтом молча.",
+    "questionFontPx": 55,
+    "questionFontMediumPx": 50,
+    "questionFontSmallPx": 40,
+    "questionFontTinyPx": 30,
+    "tileWidthPct": 50,
+    "tilePadPx": 20,
+    "tileRadiusPx": 15,
+    "tileBg": "#2a343a",
+    "tileLineHeightPx": 30,
+    "labelFontPx": 30,
+    "labelFontTinyPx": 15,
+    "labelWeight": 600,
+    "gapPx": 20,
+    "gapTinyPx": 17,
+    "padBottomPx": 60,
+    "mobileMinHeightPx": 44
+  },
+  "dim": 0.4,
+  "scale": 1.04,
+  "transitionMs": 200,
+  "photos": {
+    "Q_CALM": {
+      "Q_CALM__TEA_HERBS": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356519/calm-tea_pw6n7s.png",
+      "Q_CALM__LINENS": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356551/calm-linen_nxapkz.png",
+      "Q_CALM__FIREPLAC": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356504/calm-fire_mnipo2.png",
+      "Q_CALM__MILK_SOFT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356535/calm-milky_dv9yra.png",
+      "Q_CALM__COOL_AIR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356567/calm-breeze_pxuact.png",
+      "Q_CALM__HOT_SHOW": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356488/calm-steam_cbu4tm.png"
+    },
+    "Q_COZY": {
+      "Q_COZY__WARM_SKIN": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356631/cozy-skin_nspig8.png",
+      "Q_COZY__BLANKET": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356662/cozy-blanket_cvfuyi.png",
+      "Q_COZY__BAKING": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356599/cozy-baked_kacqcy.png",
+      "Q_COZY__FIREPLAC": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356647/cozy-candle_afpsmf.png",
+      "Q_COZY__HOT_CHOC": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356615/cozy-sweet_yuhsil.png",
+      "Q_COZY__BUBBLE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356583/cozy-bath_mullf6.png"
+    },
+    "Q_ENERGY": {
+      "Q_ENERGY__CITRUS": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356726/energy-lemon_pglua4.png",
+      "Q_ENERGY__MUSIC": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356694/energy-music_kcs10w.png",
+      "Q_ENERGY__COLD_SHOW": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356742/energy-ice_cqyojm.png",
+      "Q_ENERGY__HERBS": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356678/energy-mint_cgsgp1.png",
+      "Q_ENERGY__HOT_SPICE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356758/energy-spice_ggj0ro.png",
+      "Q_ENERGY__SUN_HEAT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356710/energy-sun_r14eyo.png"
+    },
+    "Q_FOCUS": {
+      "Q_FOCUS__CLEAN_AIR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356790/focus-air_htfl0t.png",
+      "Q_FOCUS__COFFEE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356806/focus-coffee_kijvjx.png",
+      "Q_FOCUS__LIBRARY": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356838/focus-quiet_waiyc8.png",
+      "Q_FOCUS__ICE_WATER": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356822/focus-ice_mo0csm.png",
+      "Q_FOCUS__TEA": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356854/focus-tea_ulm6sl.png",
+      "Q_FOCUS__LEMON_PEEL": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356774/focus-lemon_ohmvt9.png"
+    },
+    "Q_MYST": {
+      "Q_MYST__SMOKE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356917/myst-smoke_kbzwzn.png",
+      "Q_MYST__STARS": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356886/myst-sky_wfqfft.png",
+      "Q_MYST__ANTIQU": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356965/myst-antiq_xjwqqn.png",
+      "Q_MYST__UNFAMIL": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356901/myst-unfamil_x1pvcb.png",
+      "Q_MYST__OLD_BOOK": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356949/myst-books_obpgy2.png",
+      "Q_MYST__MYST_SPICE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356870/myst-spice_slxzt6.png",
+      "Q_MYST__OLD_PLACES": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356934/myst-house_bbjq3k.png"
+    },
+    "Q_PLAY": {
+      "Q_PLAY__FRUIT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356981/play-fruit_otmlul.png",
+      "Q_PLAY__BUBBLE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356997/play-bubble_kowjkc.png",
+      "Q_PLAY__ADVENT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357029/play-adventure_gjkhll.png",
+      "Q_PLAY__BRIGHT_CITR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357045/play-citrus_jf5mio.png",
+      "Q_PLAY__FLIRT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357061/play-flirt_w0juo8.png",
+      "Q_PLAY__GREEN_FRESH": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357013/play-greens_kwfpzq.png"
+    },
+    "Q_SEXY": {
+      "Q_SEXY__SALT_SEX": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357093/sexy-skin_zytcei.png",
+      "Q_SEXY__ESPRESSO": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357125/sexy-coffee_sinfrs.png",
+      "Q_SEXY__JAZZ": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357077/sexy-jazz_ssaebe.png",
+      "Q_SEXY__SMOK_SEX": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357109/sexy-smoke_g1aasu.png",
+      "Q_SEXY__LEATH_SEX": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357141/sexy-leather_sqorp0.png"
+    }
+  }
+}
