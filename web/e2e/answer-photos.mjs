@@ -238,6 +238,70 @@ console.log('\nВес: ни одного исходного PNG не запра�
   await context.close();
 }
 
+/* ─── Ещё три экрана на том же приёме ─────────────────────────────────── */
+
+console.log('\nQ_ATMOS, Q_CELEBRATE и Q_CALM_NOW — тот же приём, свои снимки');
+for (const id of ['Q_ATMOS', 'Q_CELEBRATE', 'Q_CALM_NOW']) {
+  const slug = id.toLowerCase().replace(/_/g, '-');
+  const map = DATA[id];
+  const answers = QUIZ[id].answers;
+
+  const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
+  const page = await context.newPage();
+  const asked = [];
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  page.on('request', (r) => {
+    if (r.url().includes('res.cloudinary.com')) asked.push(r.url());
+  });
+  await page.goto(`${BASE}/en/quiz/${slug}`, { waitUntil: 'networkidle' });
+  await page.locator('ul li button').first().waitFor({ timeout: 8000 });
+  await page.waitForTimeout(400);
+
+  check(`${id}: все ${answers.length} вариантов показаны`,
+    (await page.locator('ul li button').count()) === answers.length,
+    String(await page.locator('ul li button').count()));
+
+  /* По одному снимку на вопрос достаточно: приём один и тот же, а
+     полную привязку всех 25 пар сверяет check:photos по прод-коду. */
+  const [code, source] = Object.entries(map)[0];
+  const name = answers.find((a) => a.code === code).label;
+  await page.locator(`#answer-${code}`).hover();
+  await page.waitForTimeout(900);
+  const now = await visiblePhoto(page);
+  const file = source.split('/').pop();
+  check(`${id}: «${name.slice(0, 26)}…» → ${file}`,
+    !!now.url && now.url.endsWith(file), String(now.url));
+  check(`${id}: адрес ужат трансформацией`,
+    !!now.url && now.url.includes('/c_fill,g_auto,h_900,w_1600/f_auto/q_auto/'),
+    String(now.url));
+  check(`${id}: вуаль под текстом включена`, now.veil > 0.9, String(now.veil));
+
+  const o = await opacities(page);
+  const at = answers.findIndex((a) => a.code === code);
+  check(`${id}: остальные приглушены до 0.4`,
+    o[at] === 1 && o.filter((_, i) => i !== at).every((x) => Math.abs(x - 0.4) < 0.01),
+    o.join(', '));
+
+  // Вариант без снимка гасит фон, а не оставляет чужой кадр.
+  const blank = answers.find((a) => !(a.code in map));
+  await page.locator(`#answer-${blank.code}`).hover();
+  await page.waitForTimeout(1100);
+  check(`${id}: на «${blank.label.slice(0, 22)}…» фон погас`,
+    (await visiblePhoto(page)).veil < 0.1);
+
+  // Вес. Прод грел все снимки страницы сразу в исходном размере:
+  // 30.7 МБ на q-calm-now. Здесь — только ужатые.
+  await page.waitForTimeout(3500);
+  const raw = asked.filter((u) => !u.includes('/c_fill,'));
+  check(`${id}: исходников не запрашивает`, raw.length === 0, raw.slice(0, 2).join(' '));
+  check(`${id}: прогрелись все ${Object.keys(map).length}`,
+    new Set(asked.map((u) => u.split('/').pop())).size === Object.keys(map).length,
+    String(new Set(asked.map((u) => u.split('/').pop())).size));
+  check(`${id}: ошибок в консоли нет`, errors.length === 0, errors.join(' | '));
+  await context.close();
+}
+
 await browser.close();
 console.log(failed ? `\n${failed} проверок упало\n` : '\nФотографии под варианты работают.\n');
 process.exit(failed ? 1 : 0);

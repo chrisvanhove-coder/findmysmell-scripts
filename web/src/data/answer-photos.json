@@ -1,10 +1,41 @@
 {
-  "_": "Фотографии под варианты ответа. Пока такой вопрос один — Q_YOURSELF («где вы чувствуете себя больше всего собой»): в проде наведение на вариант проявляло фотографию этого места на весь экран, а остальные варианты приглушались. Перенесено из q-yourself.footer.html. Ссылки те же снимки, но из Cloudinary, а не из website-files: в проде это были PNG по 2.8–3.0 МБ, и все пять грузились сразу при открытии вопроса — около 14.5 МБ на один экран. Вариант «It changes» (Q_YOURSELF__MIXED) фотографии не имеет и в проде тоже не имел: наведение на него просто гасит фон.",
+  "_": "Фотографии на весь экран под варианты ответа. Четыре вопроса: Q_YOURSELF («где вы чувствуете себя больше всего собой»), Q_ATMOS, Q_CELEBRATE и Q_CALM_NOW. Приём на живом сайте один и тот же: наведение на вариант проявляет за текстом фотографию (0.7 с), остальные варианты приглушаются до 0.4, уход мышью гасит снимок с задержкой 200 мс, на телефоне первое касание показывает, второе выбирает. Привязка код → снимок взята из imageMap в подвалах q-yourself/q-atmos/q-celebrate/q-calm-now — не придумана. Ссылки ведут в Cloudinary, а не на website-files: в проде это PNG 2048×1152 по 2.8–4.2 МБ, и страница грела ВСЕ снимки сразу — 14.5 МБ на q-yourself и 30.7 МБ на q-calm-now. Варианты без снимка («It changes», «No preference», «Coffee», «Other») его и в проде не имели: наведение на них просто гасит фон. Замер explicit API на calmnow-tea: 3 916 457 → 182 427 байт (в 21 раз меньше), то есть весь экран q-calm-now стал легче половины одного прежнего снимка.",
   "Q_YOURSELF": {
     "Q_YOURSELF__NATURE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356374/feel-nature_ibkg6q.png",
     "Q_YOURSELF__CITYURBAN": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356345/feel-city_w0gr58.png",
     "Q_YOURSELF__NEARWATER": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356389/feel-sea_nlvsfh.png",
     "Q_YOURSELF__INDOOR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356359/feel-indoor_cfrjhn.png",
     "Q_YOURSELF__TRANSITION": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356404/feel-transit_ovsxns.png"
+  },
+  "Q_ATMOS": {
+    "Q_ATMOS__WINTER": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356275/atm-winter_a4vdse.png",
+    "Q_ATMOS__FOGGY": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356177/atm-fog_qxg5dr.png",
+    "Q_ATMOS__VILLAGE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356246/atm-smalltown_zbusf2.png",
+    "Q_ATMOS__PARKRAIN": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356218/atm-rain_bzwwg6.png",
+    "Q_ATMOS__SOUTHFR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356190/atm-mediterranean_d1dciq.png",
+    "Q_ATMOS__TROPICS": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356261/atm-tropical_ybjscn.png",
+    "Q_ATMOS__SEA_AIR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356232/atm-sea_jdxp0g.png",
+    "Q_ATMOS__MOUNT_AIR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356204/atm-mountains_ccq6ph.png"
+  },
+  "Q_CELEBRATE": {
+    "Q_CELEBRATE__SWEET": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357820/celeb-sweet_nvmyad.png",
+    "Q_CELEBRATE__FRSH_FRUIT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357803/celeb-fruits_fekby4.png",
+    "Q_CELEBRATE__SPICES": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357816/celeb-spice_mfkpjy.png",
+    "Q_CELEBRATE__PERFUME": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357787/celeb-adult_j0xahg.png",
+    "Q_CELEBRATE__FUZZY": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357811/celeb-soda_w9vkai.png",
+    "Q_CELEBRATE__NIGHT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357807/celeb-night_klf4w2.png",
+    "Q_CELEBRATE__SAVORY": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357791/celeb-bbq_rzvseo.png",
+    "Q_CELEBRATE__DINING_OUT": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357795/celeb-dine_xkkjhs.png"
+  },
+  "Q_CALM_NOW": {
+    "Q_CALM_NOW__CLEAN": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357935/calmnow-clean_jdfia0.png",
+    "Q_CALM_NOW__FLOWER": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357944/calmnow-flowers_af0fzh.png",
+    "Q_CALM_NOW__TEA": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357953/calmnow-tea_xiihxq.png",
+    "Q_CALM_NOW__FRESH_COMF": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357922/calmnow-air_v2zzbg.png",
+    "Q_CALM_NOW__RAIN": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357948/calmnow-rain_rdg4wn.png",
+    "Q_CALM_NOW__FIRE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357939/calmnow-fire_aa0exq.png",
+    "Q_CALM_NOW__SWEET_COMF": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357926/calmnow-baked_c7takf.png",
+    "Q_CALM_NOW__WOOD": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357930/calmnow-books_yibcb2.png",
+    "Q_CALM_NOW__SEA_COMF": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776357957/calmnow-wat_gxxors.png"
   }
 }
