@@ -359,6 +359,9 @@ export default function PastaOptions({ onChoose }: MechanicProps) {
   }, [picked, onChoose]);
 
   function pick(code: string) {
+    // Страховка: до `landed` кнопки и так недоступны (см. disabled),
+    // но программный вызов мимо кнопки не должен уводить с экрана,
+    // пока строки ещё летят.
     if (picked || !landed) return;
     pickedRef.current = code;
     setPicked(code);
@@ -390,7 +393,12 @@ export default function PastaOptions({ onChoose }: MechanicProps) {
                 ].filter(Boolean).join(' ')}
                 style={{ color: CFG.optionInk }}
                 data-answer={a.code}
-                disabled={picked !== null}
+                /* Пока варианты падают, кнопка ДОЛЖНА быть недоступна, а
+                   не просто игнорировать нажатие. Иначе она выглядит
+                   нажимаемой, палец по ней попадает — и ничего не
+                   происходит. Поймано сквозным тестом: он щёлкнул по
+                   доступной кнопке и завис, ожидая перехода. */
+                disabled={picked !== null || !landed}
                 onMouseEnter={() => setLooking(a.code)}
                 onMouseLeave={() => setLooking(null)}
                 onFocus={() => setLooking(a.code)}

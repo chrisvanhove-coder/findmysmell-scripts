@@ -2,6 +2,9 @@
 // подобранному под ответы, а не к запасному варианту по флагу isMain.
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
+import { walkQuiz } from './lib/walk-quiz.mjs';
+
+const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 
 const catalog = JSON.parse(readFileSync('src/data/perfumes.json', 'utf8'))
   .filter((p) => !p.isDraft && !p.isArchived);
@@ -10,28 +13,15 @@ const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH 
 const page = await browser.newPage();
 
 // ── 1. Пустое состояние, когда квиз не пройден ──
-await page.goto('http://localhost:3000/en/result', { waitUntil: 'networkidle' });
+await page.goto(`${BASE}/en/result`, { waitUntil: 'networkidle' });
 await page.waitForSelector('h1', { timeout: 5000 });
 console.log('без ответов /en/result →', JSON.stringify((await page.locator('h1').textContent())?.trim()));
 console.log('  тело страницы уцелело (есть ссылка на квиз):', await page.locator('a[href*="/quiz/"]').count() > 0);
 
 // ── 2. Полный проход ──
-await page.goto('http://localhost:3000/en/quiz/q-gender', { waitUntil: 'networkidle' });
-for (let i = 0; i < 30; i++) {
-  if (page.url().includes('/result/')) break;
-  const url = page.url();
-  if (await page.locator('#country-search').count()) {
-    await page.locator('#country-search').fill('Japan');
-    await page.locator('[role="option"] button').first().click();
-  } else if (await page.locator('textarea').count()) {
-    await page.locator('textarea').fill('wet stone after rain');
-    await page.getByRole('button', { name: 'Agree & continue', exact: true }).click();
-  } else {
-    const o = page.locator('ul li button');
-    await o.nth(i % (await o.count())).click();
-  }
-  await page.waitForFunction((p) => location.href !== p, url, { timeout: 5000 });
-}
+/* Проход живёт в e2e/lib/walk-quiz.mjs: скопированный сюда, он знал
+   только про `ul li button` и падал на первом экране с механикой. */
+await walkQuiz(page, { base: BASE, openText: 'wet stone after rain' });
 
 const archetype = page.url().split('/').pop();
 await page.waitForTimeout(300); // клиентское уточнение подбора

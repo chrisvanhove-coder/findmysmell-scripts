@@ -9,8 +9,9 @@
 // Запуск: собрать приложение, поднять сервер, затем
 //   CHROME_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome node e2e/submission.mjs
 import { chromium } from 'playwright';
+import { walkQuiz } from './lib/walk-quiz.mjs';
 
-const BASE = 'http://localhost:3000';
+const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH });
 
 let failures = 0;
@@ -36,26 +37,16 @@ async function fresh() {
   return { context, page, sent };
 }
 
-/** Проходит квиз до страницы результата. */
+/**
+ * Проходит квиз до страницы результата.
+ *
+ * Сам проход живёт в e2e/lib/walk-quiz.mjs: раньше он был скопирован
+ * сюда, знал только про `ul li button` и падал на первом экране с
+ * механикой — то есть эта проверка молча перестала работать.
+ */
 async function runQuiz(page, { agree = true } = {}) {
-  await page.goto(`${BASE}/en/quiz/q-gender`, { waitUntil: 'networkidle' });
-  for (let i = 0; i < 30; i++) {
-    const url = page.url();
-    if (url.includes('/result/')) break;
-    if (await page.locator('#country-search').count()) {
-      await page.locator('#country-search').fill('Fra');
-      await page.locator('[role="option"] button').first().click();
-    } else if (await page.locator('textarea').count()) {
-      await page.locator('textarea').fill('smells like my grandmother kitchen');
-      const label = agree ? 'Agree & continue' : 'Disagree & continue';
-      await page.getByRole('button', { name: label, exact: true }).click();
-    } else {
-      const options = page.locator('ul li button');
-      await options.nth(i % (await options.count())).click();
-    }
-    await page.waitForFunction((prev) => location.href !== prev, url, { timeout: 5000 });
-  }
-  await page.waitForTimeout(600); // даём отправке уйти
+  await walkQuiz(page, { base: BASE, agree });
+  await page.waitForTimeout(800); // даём отправке уйти
 }
 
 /* --------------- 1. прохождение с согласием отправляется --------------- */

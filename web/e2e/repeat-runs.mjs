@@ -6,6 +6,9 @@
 // browser_key, run_index 1 и 2. Выборка для исследования — run_index = 1.
 import { chromium } from 'playwright';
 import { Client } from 'pg';
+import { walkQuiz } from './lib/walk-quiz.mjs';
+
+const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 
 const DB = process.env.DATABASE_URL;
 if (!DB) {
@@ -25,25 +28,20 @@ const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH 
 const context = await browser.newContext();
 const page = await context.newPage();
 
-/** Один полный проход. `pick` выбирает, какой вариант нажимать. */
+/**
+ * Один полный проход.
+ *
+ * Сам проход живёт в e2e/lib/walk-quiz.mjs. Раньше он был скопирован
+ * сюда и знал только про `ul li button` — то есть эта проверка молча
+ * перестала работать, как только у вопросов появились свои механики.
+ * `pick` сохранён: этой проверке нужны РАЗНЫЕ ответы за два прохода,
+ * иначе оба дадут один архетип и проверка «разные ответы дали разные
+ * архетипы» станет ложной. На экранах со своей механикой вариант
+ * выбирает сама механика — там разброс обеспечить нечем, и это
+ * нормально: ключ браузера и номер прохода от ответов не зависят.
+ */
 async function run(pick) {
-  await page.goto('http://localhost:3000/en/quiz/q-gender', { waitUntil: 'networkidle' });
-  for (let i = 0; i < 30; i++) {
-    if (page.url().includes('/result/')) break;
-    if (await page.locator('#country-search').count()) {
-      await page.locator('#country-search').fill('Japan');
-      await page.locator('[role="option"] button').first().click();
-    } else if (await page.locator('textarea').count()) {
-      await page.locator('textarea').fill(MARK);
-      await page.getByRole('button', { name: 'Agree & continue', exact: true }).click();
-    } else {
-      const options = page.locator('ul li button');
-      const n = await options.count();
-      if (!n) break;
-      await options.nth(pick(n)).click();
-    }
-    await page.waitForTimeout(120);
-  }
+  await walkQuiz(page, { base: BASE, openText: MARK, pick });
   await page.waitForURL(/\/result\//, { timeout: 10000 });
   // Прохождение уезжает из эффекта на странице результата.
   await page.waitForTimeout(1200);
