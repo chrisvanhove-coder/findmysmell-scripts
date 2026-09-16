@@ -1,0 +1,41 @@
+/* Фотография места под вариантами ответа (Q_YOURSELF).
+   Числа из прода (q-yourself.footer.html): cover по центру, плавность
+   0.7s, гашение с задержкой. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  /* Ниже содержимого экрана вопроса, но выше фона страницы. */
+  z-index: 0;
+  pointer-events: none;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  /* В проде плавность стояла на background-image, который не
+     анимируется; здесь — на opacity, поэтому она работает. */
+  transition: opacity 0.7s ease;
+}
+
+/* Вуаль — добавлена, в проде её не было. Там текст вопроса лежал прямо
+   на снимке, а снимки светлые: белые варианты на светлом кадре читались
+   плохо. Здесь под текстом чёрный слой 0.55. */
+.veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.55);
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.backdrop[data-photo='1'] .veil { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  .veil { transition: none; }
+}

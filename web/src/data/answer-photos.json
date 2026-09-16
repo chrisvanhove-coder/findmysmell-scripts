@@ -1,0 +1,10 @@
+{
+  "_": "Фотографии под варианты ответа. Пока такой вопрос один — Q_YOURSELF («где вы чувствуете себя больше всего собой»): в проде наведение на вариант проявляло фотографию этого места на весь экран, а остальные варианты приглушались. Перенесено из q-yourself.footer.html. Ссылки те же снимки, но из Cloudinary, а не из website-files: в проде это были PNG по 2.8–3.0 МБ, и все пять грузились сразу при открытии вопроса — около 14.5 МБ на один экран. Вариант «It changes» (Q_YOURSELF__MIXED) фотографии не имеет и в проде тоже не имел: наведение на него просто гасит фон.",
+  "Q_YOURSELF": {
+    "Q_YOURSELF__NATURE": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356374/feel-nature_ibkg6q.png",
+    "Q_YOURSELF__CITYURBAN": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356345/feel-city_w0gr58.png",
+    "Q_YOURSELF__NEARWATER": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356389/feel-sea_nlvsfh.png",
+    "Q_YOURSELF__INDOOR": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356359/feel-indoor_cfrjhn.png",
+    "Q_YOURSELF__TRANSITION": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776356404/feel-transit_ovsxns.png"
+  }
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { Locale } from '@/lib/i18n';
 import {
   type Question, nextQuestion, stepOf, toSlug, TOTAL_STEPS,
@@ -13,8 +13,27 @@ import { reportFunnel } from '@/lib/funnel';
 import { isCountryQuestion } from '@/data/countries';
 import CountrySearch from './CountrySearch';
 import { MECHANICS } from '@/components/quiz/mechanics';
+import AnswerBackdrop, { photosFor } from '@/components/quiz/AnswerBackdrop';
 import { resolve } from '@/lib/scoring';
 import styles from './quiz.module.css';
+
+/**
+ * Есть ли у устройства наведение. От этого зависит, как показывать
+ * фотографии под вариантами: мышью — по наведению, пальцем — первым
+ * касанием, а выбор уже вторым.
+ *
+ * useSyncExternalStore, а не useState в useEffect: экран предгенерирован,
+ * и первый снимок обязан совпасть с серверным, иначе гидратация ругается.
+ */
+const hoverSubscribe = (cb: () => void) => {
+  const mq = window.matchMedia('(hover: none)');
+  mq.addEventListener('change', cb);
+  return () => mq.removeEventListener('change', cb);
+};
+const noHoverNow = () => window.matchMedia('(hover: none)').matches;
+/* На сервере считаем, что наведение есть: так разметка совпадает с
+   настольным случаем, а телефон уточнит это сразу после гидратации. */
+const noHoverOnServer = () => false;
 
 /**
  * Экран одного вопроса. Переходы клиентские, без перезагрузки страницы:
@@ -35,6 +54,35 @@ export default function QuizScreen({
   const router = useRouter();
   const [chosen, setChosen] = useState<string | null>(null);
   const [openText, setOpenText] = useState('');
+
+  /* Фотографии под варианты — пока только на Q_YOURSELF. Если их у
+     вопроса нет, всё ниже не работает и экран остаётся обычным. */
+  const photos = photosFor(question.id);
+  const noHover = useSyncExternalStore(hoverSubscribe, noHoverNow, noHoverOnServer);
+  // На какой вариант смотрят: наведение мышью, фокус с клавиатуры или
+  // первое касание пальцем.
+  const [looking, setLooking] = useState<string | null>(null);
+  /* Отдельно от looking: какой вариант человек действительно тронул
+     пальцем. Нужно потому, что при касании браузер сначала даёт кнопке
+     фокус и лишь потом click — а фокус тоже показывает снимок. Считать
+     первым касанием сам факт «на этот вариант смотрят» нельзя: тогда
+     на телефоне первый же тап сразу выбирал, и фотографию никто не
+     видел. Проверено эмуляцией касаний. */
+  const [tapped, setTapped] = useState<string | null>(null);
+  /* Гашение с задержкой 200 мс — как в проде. Без неё при переходе
+     мышью с одного варианта на соседний фон успевал мигнуть в ноль. */
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function lookAt(code: string) {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setLooking(code);
+  }
+  function stopLooking() {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    leaveTimer.current = setTimeout(() => setLooking(null), 200);
+  }
+  useEffect(() => () => {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+  }, []);
 
   // Показываем ранее выбранный ответ, если человек вернулся назад.
   // Экран предгенерирован, ответы лежат в storage — прочитать их можно
@@ -75,6 +123,16 @@ export default function QuizScreen({
   }
 
   function choose(code: string) {
+    /* Вопрос с фотографиями на устройстве без наведения: первое касание
+       показывает снимок места, второе выбирает. Так это и было в проде —
+       иначе фотографию на телефоне не увидел бы никто. Вариант без
+       снимка («It changes») выбирается с первого касания: показывать
+       там нечего, и лишний тап был бы просто препятствием. */
+    if (photos && noHover && photos[code] && tapped !== code) {
+      setTapped(code);
+      setLooking(code);
+      return;
+    }
     setChosen(code);
     saveAnswer(question.id, code);
     reportFunnel(locale, runToken(), { step: question.id, event: 'answer', answerCode: code });
@@ -130,6 +188,9 @@ export default function QuizScreen({
 
   return (
     <main className={styles.screen}>
+      {/* Фотография места за текстом — пока только на Q_YOURSELF. */}
+      {photos && <AnswerBackdrop map={photos} active={looking} />}
+
       <button type="button" className={styles.back} onClick={() => router.back()}>
         ← Back
       </button>
@@ -186,22 +247,46 @@ export default function QuizScreen({
             </div>
           </>
         ) : (
-          <ul className={styles.options}>
-            {question.answers.map((a) => (
-              <li key={a.code}>
-                <button
-                  type="button"
-                  id={`answer-${a.code}`}
-                  className={styles.option}
-                  aria-pressed={chosen === a.code}
-                  onClick={() => choose(a.code)}
-                >
-                  {a.label}
-                  {a.hint && <span className={styles.hint}>{a.hint}</span>}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className={styles.options}>
+              {question.answers.map((a) => (
+                <li key={a.code}>
+                  <button
+                    type="button"
+                    id={`answer-${a.code}`}
+                    className={
+                      // Приглушаем остальные, пока смотрят на один: так
+                      // было в проде и так читается тот, что выбирают.
+                      looking && looking !== a.code
+                        ? `${styles.option} ${styles.dimmed}`
+                        : styles.option
+                    }
+                    aria-pressed={chosen === a.code}
+                    onClick={() => choose(a.code)}
+                    {...(photos
+                      ? {
+                        onMouseEnter: () => lookAt(a.code),
+                        onMouseLeave: stopLooking,
+                        // Фокус тоже показывает снимок: в проде человек,
+                        // идущий табом, не видел фотографий вовсе.
+                        onFocus: () => lookAt(a.code),
+                        onBlur: stopLooking,
+                      }
+                      : {})}
+                  >
+                    {a.label}
+                    {a.hint && <span className={styles.hint}>{a.hint}</span>}
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            {/* Подсказка про второе касание. В проде первый тап словно
+                ничего не делал, и об этом нигде не было сказано. */}
+            {photos && noHover && tapped && photos[tapped] && (
+              <p className={styles.tapAgain}>Tap again to choose</p>
+            )}
+          </>
         )}
       </div>
 

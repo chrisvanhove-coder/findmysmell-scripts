@@ -11,7 +11,9 @@
   color: #f0ece1;
 }
 
-.inner { width: 100%; max-width: 760px; margin: 0 auto; }
+/* z-index 1: на вопросе с фотографиями под ответами снимок лежит на
+   слое 0, и без этого текст оказывался под ним. */
+.inner { position: relative; z-index: 1; width: 100%; max-width: 760px; margin: 0 auto; }
 
 .eyebrow {
   font-family: var(--fms-mono), monospace;
@@ -56,10 +58,30 @@
   border: 1px solid rgba(240, 236, 225, 0.16);
   border-radius: 2px;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  /* opacity 0.3s — из прода: там приглушение остальных вариантов на
+     вопросе с фотографиями шло именно так. */
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease,
+    opacity 0.3s ease;
 }
 
 .option:hover { background: rgba(255, 255, 255, 0.09); border-color: rgba(240, 236, 225, 0.4); }
+
+/* Остальные варианты приглушаются, пока смотрят на один — так было в
+   проде. 0.4 — то же значение. Приглушается только видимость, не
+   доступность: кнопка остаётся кнопкой и нажимается. */
+.dimmed { opacity: 0.4; }
+
+/* Подсказка про второе касание. Показывается только на устройстве без
+   наведения и только когда снимок уже на экране. */
+.tapAgain {
+  margin: 14px 0 0;
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(240, 236, 225, 0.7);
+}
 .option:focus-visible { outline: 2px solid #c8a882; outline-offset: 2px; }
 .option[aria-pressed='true'] { background: rgba(200, 168, 130, 0.2); border-color: #c8a882; }
 
