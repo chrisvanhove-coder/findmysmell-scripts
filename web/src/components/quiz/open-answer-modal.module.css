@@ -1,0 +1,117 @@
+/* Окошко «Other». Числа из прода (q-calm.footer.html, строки 33-34):
+   затемнение чёрный 0.6 + blur(4px), панель rgba(255,255,255,0.12) +
+   blur(24px), рамка 0.25, радиус 28px, отступы 48/36/40, ширина 480px /
+   90%, тень 0 8px 40px rgba(0,0,0,0.3); вопрос Georgia 20px с нижним
+   отступом 28px; поле padding 16/20, фон 0.15, рамка 0.35, радиус 50px;
+   кнопка margin-top 16px, padding 16px, фон 0.18 → 0.28 при наведении,
+   рамка 0.4, 14px, letter-spacing 0.14em, uppercase, переход 0.2s. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.panel {
+  width: 90%;
+  max-width: 480px;
+  padding: 48px 36px 40px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 28px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+}
+
+.prompt {
+  margin: 0 0 28px;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50px;
+  outline: none;
+}
+
+.input::placeholder { color: rgba(255, 255, 255, 0.55); }
+.input:focus-visible { border-color: rgba(255, 255, 255, 0.8); }
+
+.submit {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 16px;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit:hover { background: rgba(255, 255, 255, 0.28); }
+.submit:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* Пока не написано ни слова, отправлять нечего. В проде кнопка в этом
+   случае выглядела обычной и молча ничего не делала. */
+.submit:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* Выход из окна. Тише кнопки отправки: это не равный ей выбор, а
+   возможность передумать. */
+.cancel {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cancel:hover { color: #fff; }
+.cancel:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (max-width: 480px) {
+  .panel { padding: 36px 24px 30px; }
+  .prompt { font-size: 18px; margin-bottom: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit { transition: none; }
+}

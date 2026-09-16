@@ -13,8 +13,20 @@ import { and, desc, eq, gte, isNotNull, ne, sql } from 'drizzle-orm';
 import { getDb, schema } from '@/db';
 import { QUESTIONS, EMOTION_BRANCHES } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
+import openPrompts from '@/data/question-open-prompts.json';
 
-const { submissions, subscribers, funnelEvents } = schema;
+const OPEN_PROMPTS = openPrompts.prompts as Record<string, string>;
+
+const { submissions, subscribers, funnelEvents, questionOpenAnswers } = schema;
+
+/**
+ * Вопросы с вариантом «Other», в порядке прохождения квиза. Берётся из
+ * данных (`open: true`), как и проверка на сервере, — руками такой список
+ * разошёлся бы с квизом на первом же изменении.
+ */
+const OPEN_QUESTION_IDS = stepOrder().filter(
+  (id) => QUESTIONS[id]?.answers.some((a) => a.open),
+);
 
 export type Totals = {
   runs: number;
@@ -47,6 +59,8 @@ export type RecentRun = {
   consentResearch: boolean;
   openAnswer: string | null;
   answers: Record<string, string>;
+  /** Что человек написал в «Other»: код вопроса → текст. */
+  opens: Record<string, string>;
 };
 
 export type Chain = { runs: string[]; changed: boolean };
@@ -59,6 +73,27 @@ export type OpenAnswer = {
   text: string;
 };
 
+/**
+ * Ответы «Other» одного вопроса.
+ *
+ * Отдельно от openAnswers (последний вопрос квиза) намеренно: это ответы
+ * на РАЗНЫЕ вопросы, и вместе они читаются как каша. «Что для тебя пахнет
+ * спокойствием» и «что помогает сосредоточиться» — два разных списка.
+ */
+export type QuestionOpens = {
+  questionId: string;
+  /** Вопрос из окошка — тот самый, который человек видел. */
+  prompt: string;
+  title: string;
+  texts: Array<{
+    createdAt: Date;
+    locale: string;
+    winner: string;
+    runIndex: number | null;
+    text: string;
+  }>;
+};
+
 export type AdminData = {
   days: number;
   since: Date;
@@ -69,6 +104,8 @@ export type AdminData = {
   answers: Array<{ step: string; title: string; total: number; options: Slice[] }>;
   openAnswers: OpenAnswer[];
   openAnswerTotal: number;
+  questionOpens: QuestionOpens[];
+  questionOpenTotal: number;
   chains: Chain[];
   chainsSame: number;
   chainsChanged: number;
@@ -116,6 +153,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
     chainRows,
     recentRows,
     openRows,
+    questionOpenRows,
   ] = await Promise.all([
     db
       .select({
@@ -184,6 +222,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
 
     db
       .select({
+        id: submissions.id,
         createdAt: submissions.createdAt,
         locale: submissions.locale,
         winner: submissions.winner,
@@ -214,6 +253,27 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         ne(submissions.openAnswer, '')))
       .orderBy(desc(submissions.createdAt))
       .limit(300),
+
+    /* Тексты «Other» внутри вопросов. Лежат отдельной таблицей, потому
+       что их у одного прохождения может быть до девяти — по одному на
+       вопрос. Архетип и язык берём из самого прохождения: читать ответ
+       «пахнет бабушкиной кухней», не зная, кем человек оказался, — это
+       только половина смысла. */
+    db
+      .select({
+        submissionId: questionOpenAnswers.submissionId,
+        questionId: questionOpenAnswers.questionId,
+        text: questionOpenAnswers.text,
+        createdAt: questionOpenAnswers.createdAt,
+        locale: submissions.locale,
+        winner: submissions.winner,
+        runIndex: submissions.runIndex,
+      })
+      .from(questionOpenAnswers)
+      .innerJoin(submissions, eq(questionOpenAnswers.submissionId, submissions.id))
+      .where(inPeriod)
+      .orderBy(desc(questionOpenAnswers.createdAt))
+      .limit(1200),
   ]);
 
   const c = countRows[0] ?? {
@@ -277,6 +337,29 @@ export async function loadAdminData(days: number): Promise<AdminData> {
     .filter((runs) => runs.length > 1)
     .map((runs) => ({ runs, changed: new Set(runs).size > 1 }));
 
+  // ── «Other» по вопросам ────────────────────────────────────────────────
+  // Порядок вопросов — прохождения квиза, а не тот, в котором строки
+  // легли в базу: заказчица читает это сверху вниз как сам квиз.
+  const byQuestion = new Map<string, QuestionOpens['texts']>();
+  /* Те же строки, разложенные по прохождениям: карточка прохождения
+     должна показывать не только «Other», но и что именно человек
+     написал — иначе в ней на этом месте пустое слово «Other». */
+  const opensByRun = new Map<string, Record<string, string>>();
+  for (const r of questionOpenRows) {
+    byQuestion.set(r.questionId, [...(byQuestion.get(r.questionId) ?? []), r]);
+    const bag = opensByRun.get(r.submissionId) ?? {};
+    bag[r.questionId] = r.text;
+    opensByRun.set(r.submissionId, bag);
+  }
+  const questionOpens: QuestionOpens[] = OPEN_QUESTION_IDS
+    .filter((id) => byQuestion.has(id))
+    .map((id) => ({
+      questionId: id,
+      prompt: OPEN_PROMPTS[id] ?? id,
+      title: QUESTION_COPY[id]?.title ?? id,
+      texts: byQuestion.get(id) ?? [],
+    }));
+
   return {
     days,
     since,
@@ -296,12 +379,17 @@ export async function loadAdminData(days: number): Promise<AdminData> {
     answers,
     openAnswers: openRows.map((r) => ({ ...r, text: r.text ?? '' })),
     openAnswerTotal: openRows.length,
+    questionOpens,
+    questionOpenTotal: questionOpenRows.length,
     chains: chains.slice(0, 40),
     chainsSame: chains.filter((x) => !x.changed).length,
     chainsChanged: chains.filter((x) => x.changed).length,
-    recent: recentRows.map((r) => ({
-      ...r,
-      answers: (r.answers ?? {}) as Record<string, string>,
+    // id прохождения наружу не отдаём: он нужен только чтобы подцепить
+    // тексты «Other», а на странице показывать его нечего.
+    recent: recentRows.map(({ id, answers: raw, ...rest }) => ({
+      ...rest,
+      answers: (raw ?? {}) as Record<string, string>,
+      opens: opensByRun.get(id) ?? {},
     })),
   };
 }
@@ -320,25 +408,53 @@ export async function submissionsCsv(days: number, firstRunsOnly: boolean): Prom
     ? and(gte(submissions.createdAt, since), eq(submissions.runIndex, 1))
     : gte(submissions.createdAt, since);
 
-  const rows = await db
-    .select({
-      createdAt: submissions.createdAt,
-      locale: submissions.locale,
-      winner: submissions.winner,
-      secondary: submissions.secondary,
-      runIndex: submissions.runIndex,
-      consentResearch: submissions.consentResearch,
-      openAnswer: submissions.openAnswer,
-      answers: submissions.answers,
-    })
-    .from(submissions)
-    .where(where)
-    .orderBy(desc(submissions.createdAt));
+  const [rows, openRows] = await Promise.all([
+    db
+      .select({
+        id: submissions.id,
+        createdAt: submissions.createdAt,
+        locale: submissions.locale,
+        winner: submissions.winner,
+        secondary: submissions.secondary,
+        runIndex: submissions.runIndex,
+        consentResearch: submissions.consentResearch,
+        openAnswer: submissions.openAnswer,
+        answers: submissions.answers,
+      })
+      .from(submissions)
+      .where(where)
+      .orderBy(desc(submissions.createdAt)),
+
+    /* Тексты «Other» тем же запросом не взять: их у прохождения до
+       девяти, и join размножил бы строки. Забираем отдельно и
+       раскладываем по колонкам — по одной на вопрос. */
+    db
+      .select({
+        submissionId: questionOpenAnswers.submissionId,
+        questionId: questionOpenAnswers.questionId,
+        text: questionOpenAnswers.text,
+      })
+      .from(questionOpenAnswers)
+      .innerJoin(submissions, eq(questionOpenAnswers.submissionId, submissions.id))
+      .where(where),
+  ]);
+
+  const opensById = new Map<string, Record<string, string>>();
+  for (const r of openRows) {
+    const bag = opensById.get(r.submissionId) ?? {};
+    bag[r.questionId] = r.text;
+    opensById.set(r.submissionId, bag);
+  }
 
   const questionIds = Object.keys(QUESTIONS);
   const header = [
     'created_at', 'locale', 'winner', 'secondary', 'run_index', 'consent_research',
-    ...questionIds, 'open_answer',
+    ...questionIds,
+    // Своими словами внутри вопроса — отдельной колонкой на каждый из
+    // девяти вопросов, где есть «Other». Рядом с кодом ответа: в колонке
+    // Q_CALM будет Q_CALM__OTHER, а в open_Q_CALM — что человек написал.
+    ...OPEN_QUESTION_IDS.map((id) => `open_${id}`),
+    'open_answer',
   ];
 
   const esc = (v: unknown) => {
@@ -349,10 +465,12 @@ export async function submissionsCsv(days: number, firstRunsOnly: boolean): Prom
   const lines = [header.join(',')];
   for (const r of rows) {
     const a = (r.answers ?? {}) as Record<string, string>;
+    const opens = opensById.get(r.id) ?? {};
     lines.push([
       r.createdAt.toISOString(), r.locale, r.winner, r.secondary, r.runIndex,
       r.consentResearch,
       ...questionIds.map((id) => a[id] ?? ''),
+      ...OPEN_QUESTION_IDS.map((id) => opens[id] ?? ''),
       r.openAnswer,
     ].map(esc).join(','));
   }

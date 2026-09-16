@@ -255,6 +255,17 @@
 .answerRow dd { margin: 0; }
 .openRow dd { white-space: pre-wrap; }
 
+/* Написанное в «Other» прямо в карточке прохождения: рядом с вариантом,
+   но видно, что это слова человека, а не подпись варианта. */
+.written {
+  display: block;
+  margin-top: 2px;
+  color: #4a4636;
+  font-size: 13px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
 @media (max-width: 600px) {
   .answerRow { grid-template-columns: 1fr; gap: 0; }
   .runMeta { margin-left: 0; }

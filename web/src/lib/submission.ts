@@ -1,6 +1,20 @@
 import { resolve, type Answers, type Scores } from './scoring';
 import { isLocale, type Locale } from './i18n';
 import { ARCHETYPE_KEYS, type ArchetypeKey } from './archetype-colors';
+import { QUESTIONS } from './quiz';
+
+/**
+ * Вопросы, у которых есть вариант «Other» с текстовым вводом.
+ *
+ * Берётся из данных квиза (`open: true`), а не списком руками: появится
+ * десятый такой вопрос — он попадёт сюда сам, и наоборот, к выдуманному
+ * коду вопроса текст записать не выйдет.
+ */
+const QUESTIONS_WITH_OPEN = new Set(
+  Object.values(QUESTIONS)
+    .filter((q) => q.answers.some((a) => a.open))
+    .map((q) => q.id),
+);
 
 /**
  * Приём прохождения квиза. Заменяет отправку в Google Apps Script,
@@ -24,6 +38,12 @@ const LIMITS = {
   answerKey: 64,
   answerValue: 128,
   openAnswer: 2000,
+  /**
+   * Тексты «Other» внутри вопросов. Девять таких вопросов, десятый —
+   * запас на случай, если появится ещё один; больше — уже не квиз.
+   */
+  questionOpens: 12,
+  questionOpenText: 2000,
   clientToken: 64,
   browserKey: 64,
   /** Больше — либо накрутка, либо ошибка счётчика. Обрезаем, а не верим. */
@@ -34,13 +54,26 @@ export interface SubmissionInput {
   locale: string;
   answers: Answers;
   openAnswer: string;
+  /**
+   * Тексты «Other» по вопросам: код вопроса → написанное. Отдельно от
+   * openAnswer намеренно: в проде и то и другое писалось в одно поле, и
+   * одно затирало другое.
+   */
+  questionOpens: Record<string, string>;
   consentResearch: boolean;
   clientToken: string;
   browserKey: string | null;
   runIndex: number | null;
 }
 
-/** Готовая к вставке строка submissions. */
+/**
+ * Готовая к вставке строка submissions.
+ *
+ * Тексты «Other» по вопросам здесь НЕ лежат намеренно: это другая
+ * таблица, и лишнее поле в этом объекте уехало бы в insert как
+ * несуществующая колонка. Они берутся из `input.questionOpens`
+ * и пишутся отдельной вставкой — см. buildQuestionOpenRows.
+ */
 export interface SubmissionRecord {
   locale: Locale;
   winner: ArchetypeKey;
@@ -98,6 +131,34 @@ export function parseSubmission(body: unknown): Parsed {
   const open = typeof openAnswer === 'string' ? openAnswer : '';
   if (open.length > LIMITS.openAnswer) return { ok: false, error: 'open answer too long' };
 
+  /* Тексты «Other» по вопросам. Принимаем только те коды вопросов, у
+     которых такой вариант вообще есть: иначе в таблицу можно было бы
+     записать текст к любому выдуманному вопросу. */
+  const rawOpens = b.questionOpens;
+  const questionOpens: Record<string, string> = {};
+  if (rawOpens !== undefined && rawOpens !== null) {
+    if (!isPlainObject(rawOpens)) {
+      return { ok: false, error: 'questionOpens must be an object' };
+    }
+    const openEntries = Object.entries(rawOpens);
+    if (openEntries.length > LIMITS.questionOpens) {
+      return { ok: false, error: 'too many question opens' };
+    }
+    for (const [qid, value] of openEntries) {
+      if (!QUESTIONS_WITH_OPEN.has(qid)) {
+        return { ok: false, error: `question ${qid} has no open option` };
+      }
+      if (typeof value !== 'string') {
+        return { ok: false, error: 'question open must be a string' };
+      }
+      if (value.length > LIMITS.questionOpenText) {
+        return { ok: false, error: 'question open too long' };
+      }
+      const text = value.trim();
+      if (text !== '') questionOpens[qid] = text;
+    }
+  }
+
   if (typeof clientToken !== 'string' || clientToken.length === 0) {
     return { ok: false, error: 'clientToken is required' };
   }
@@ -128,6 +189,7 @@ export function parseSubmission(body: unknown): Parsed {
       locale,
       answers: clean,
       openAnswer: open,
+      questionOpens,
       consentResearch,
       clientToken,
       browserKey,
@@ -160,6 +222,21 @@ export function buildRecord(input: SubmissionInput): SubmissionRecord {
     browserKey: input.browserKey !== null && input.runIndex !== null ? input.browserKey : null,
     runIndex: input.browserKey !== null && input.runIndex !== null ? input.runIndex : null,
   };
+}
+
+/**
+ * Строки для question_open_answers под уже вставленное прохождение.
+ *
+ * Вынесено отдельно, чтобы это можно было прогнать тестом без базы,
+ * как и всё остальное в этом файле.
+ */
+export function buildQuestionOpenRows(
+  submissionId: string,
+  questionOpens: Record<string, string>,
+): Array<{ submissionId: string; questionId: string; text: string }> {
+  return Object.entries(questionOpens)
+    .filter(([, text]) => text !== '')
+    .map(([questionId, text]) => ({ submissionId, questionId, text }));
 }
 
 /* ------------------------------- подписка ------------------------------- */

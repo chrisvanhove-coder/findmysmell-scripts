@@ -10,6 +10,20 @@ import { FIRST_QUESTION } from './quiz';
  */
 const KEY = 'quiz_answers';
 const OPEN_KEY = 'quiz_open';
+/**
+ * Тексты, написанные в ответ на «Other» ВНУТРИ вопроса — по одному на
+ * вопрос.
+ *
+ * ЗАЧЕМ ОТДЕЛЬНОЕ ХРАНИЛИЩЕ. На живом сайте девять вопросов (calm, cozy,
+ * energy, focus, play, sexy, myst, celebrate, calm-now) на вариант
+ * «Other» открывают окошко и просят написать своё — «What does calm
+ * smell like to you?». И все девять пишут этот текст в `quiz_open`, то
+ * есть в то же место, что финальный открытый вопрос. Одно затирает
+ * другое: человек написал про спокойствие, потом написал воспоминание —
+ * осталось одно. Заказчица назвала эти ответы самым важным, что есть в
+ * квизе, и выбрала хранить каждый отдельно.
+ */
+const QUESTION_OPEN_KEY = 'quiz_open_by_question';
 
 function read(storage: Storage | undefined, key: string): string | null {
   try { return storage?.getItem(key) ?? null; } catch { return null; }
@@ -51,11 +65,44 @@ export function saveOpenText(value: string) {
   write(OPEN_KEY, value);
 }
 
+/** Все тексты «Other» этого прохождения: код вопроса → текст. */
+export function loadQuestionOpens(): Record<string, string> {
+  const raw = read(globalThis.sessionStorage, QUESTION_OPEN_KEY)
+    ?? read(globalThis.localStorage, QUESTION_OPEN_KEY) ?? '{}';
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return {};
+    const out: Record<string, string> = {};
+    for (const [k, v] of Object.entries(parsed as Record<string, unknown>)) {
+      if (typeof v === 'string' && v !== '') out[k] = v;
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Записать текст «Other» для одного вопроса.
+ *
+ * Пустая строка стирает запись, а не сохраняет пустоту: человек мог
+ * открыть окошко, передумать и выбрать обычный вариант — тогда его
+ * прежний текст к этому вопросу больше не относится.
+ */
+export function saveQuestionOpen(questionId: string, value: string) {
+  const all = loadQuestionOpens();
+  const text = value.trim();
+  if (text === '') delete all[questionId];
+  else all[questionId] = text;
+  write(QUESTION_OPEN_KEY, JSON.stringify(all));
+}
+
 export function clearAnswers() {
   for (const s of [globalThis.sessionStorage, globalThis.localStorage]) {
     try {
       s?.removeItem(KEY);
       s?.removeItem(OPEN_KEY);
+      s?.removeItem(QUESTION_OPEN_KEY);
       // Иначе следующее прохождение уехало бы под старым токеном
       // и база отсекла бы его как повтор.
       s?.removeItem(TOKEN_KEY);

@@ -128,6 +128,30 @@ console.log('\nЗамок стоит на всей ветке /admin');
     'в браузер должна уезжать только сводка, а не ответы и адреса');
 }
 
+console.log('\nОтветы «Other» видны и выгружаются');
+{
+  /* Заказчица назвала эти ответы самым ценным, что есть в квизе. Если
+     они лежат в базе, но их не видно на странице и нет в выгрузке, — их
+     как будто и нет. Поэтому три места проверяются отдельно. */
+  const data = readFileSync('src/lib/admin-data.ts', 'utf8');
+  const page = readFileSync('src/app/admin/page.tsx', 'utf8');
+
+  check('выборка берёт тексты из своей таблицы',
+    /questionOpenAnswers/.test(data) && /questionOpens/.test(data));
+  check('тексты разложены по вопросам, а не свалены в один список',
+    /OPEN_QUESTION_IDS/.test(data) && /byQuestion/.test(data));
+  check('вопрос из окошка показан рядом с ответами',
+    /OPEN_PROMPTS/.test(data) && /prompt:/.test(data),
+    'иначе непонятно, на какой вопрос человек отвечал');
+  check('на странице есть свой раздел', page.includes('id="question-open"'));
+  check('и ссылка на него в навигации', page.includes('#question-open'));
+  check('в карточке прохождения видно написанное, а не слово «Other»',
+    /r\.opens\[id\]/.test(page));
+  check('в CSV своя колонка на каждый такой вопрос',
+    /`open_\$\{id\}`/.test(data),
+    'иначе тексты не попадут в выгрузку вовсе');
+}
+
 console.log('\nАдминка не раскрывает личных данных');
 {
   const data = readFileSync('src/lib/admin-data.ts', 'utf8');

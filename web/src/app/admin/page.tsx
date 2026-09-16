@@ -118,6 +118,7 @@ export default async function AdminPage({
       {/* Страница длинная по существу: 17 распределений короче не станут. */}
       <nav className={styles.jump}>
         <a href="#open">своими словами</a>
+        <a href="#question-open">«Other» по вопросам</a>
         <a href="#archetypes">архетипы</a>
         <a href="#repeats">повторы</a>
         <a href="#funnel">воронка</a>
@@ -168,6 +169,47 @@ export default async function AdminPage({
               </li>
             ))}
           </ul>
+        )}
+      </section>
+
+      {/* ── «Other» внутри вопросов ───────────────────────────────────── */}
+      {/* Сразу за последним открытым вопросом: это тоже слова людей, но
+          сказанные про конкретное — «а как для тебя пахнет спокойствие».
+          Разложено по вопросам, потому что вперемешку это не читается. */}
+      <section className={styles.block} id="question-open">
+        <h2 className={styles.h2}>
+          «Other» по вопросам
+          <small>{data.questionOpenTotal} ответов своими словами внутри вопросов</small>
+        </h2>
+        {data.questionOpens.length === 0 ? (
+          <p className={styles.empty}>
+            За период никто не выбирал «Other» с текстом. Учтите: до 16 сентября
+            2026 года эти ответы писались в то же поле, что и последний вопрос,
+            и там не сохранялись — отдельные поля появились только теперь.
+          </p>
+        ) : (
+          data.questionOpens.map((q) => (
+            <div key={q.questionId} className={styles.question}>
+              <h3 className={styles.h3}>
+                {q.prompt} <small>{q.questionId} · {q.texts.length}</small>
+              </h3>
+              <ul className={styles.quotes}>
+                {q.texts.map((o, i) => (
+                  <li key={i} className={styles.quote}>
+                    <p className={styles.quoteText}>{o.text}</p>
+                    <p className={styles.quoteMeta}>
+                      {o.createdAt.toISOString().slice(0, 10)}
+                      {' · '}
+                      <b>{o.winner}</b>
+                      {' · '}
+                      {o.locale}
+                      {o.runIndex && o.runIndex > 1 ? ` · проход №${o.runIndex}` : ''}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
         )}
       </section>
 
@@ -320,10 +362,18 @@ export default async function AdminPage({
                       const code = r.answers[id];
                       const label =
                         QUESTIONS[id]?.answers.find((a) => a.code === code)?.label ?? code;
+                      // На «Other» показываем написанное, а не слово
+                      // «Other»: в карточке оно ничего не значит.
+                      const written = r.opens[id];
                       return (
                         <div key={id} className={styles.answerRow}>
                           <dt>{QUESTION_COPY[id]?.title ?? id}</dt>
-                          <dd>{label}</dd>
+                          <dd>
+                            {label}
+                            {written && (
+                              <em className={styles.written}>«{written}»</em>
+                            )}
+                          </dd>
                         </div>
                       );
                     })}

@@ -22,7 +22,9 @@ import { drizzle } from 'drizzle-orm/pglite';
 import { migrate } from 'drizzle-orm/pglite/migrator';
 import { sql, eq, isNull } from 'drizzle-orm';
 import * as schema from '../src/db/schema';
-import { parseSubmission, buildRecord, parseSubscriber } from '../src/lib/submission';
+import {
+  parseSubmission, buildRecord, parseSubscriber, buildQuestionOpenRows,
+} from '../src/lib/submission';
 import { emailConfigured, sendResultEmail, buildResultEmail } from '../src/lib/email';
 import { match } from '../src/lib/matching';
 import { resolve } from '../src/lib/scoring';
@@ -303,6 +305,67 @@ console.log('\nЗапись в Postgres (pglite, миграции из drizzle/)
     .from(schema.submissions)
     .where(isNull(schema.submissions.browserKey));
   check('прохождения без ключа тоже в таблице', noKey.length === 3, `есть ${noKey.length}`);
+
+  /* --------------- «Other» внутри вопросов, своим полем --------------- */
+  /* На живом сайте эти тексты писались в то же поле, что и финальный
+     открытый вопрос, и одно затирало другое. Здесь проверяется, что у
+     одного прохождения их может лежать несколько, что второй раз то же
+     самое не удваивается, и что они уходят вместе с прохождением —
+     иначе ежедневная очистка по срокам оставила бы их в базе. */
+  console.log('\n«Other» внутри вопросов');
+  {
+    const p = parseSubmission(base({
+      clientToken: 'token-opens',
+      questionOpens: {
+        Q_CALM: 'cold linen on a window',
+        Q_CELEBRATE: 'mandarins and cold stairwell',
+      },
+    }));
+    if (!p.ok) throw new Error(`неожиданно: прохождение с «Other» не разобралось: ${p.error}`);
+
+    const [run] = await db
+      .insert(schema.submissions)
+      .values(buildRecord(p.input))
+      .returning({ id: schema.submissions.id });
+
+    const rowsToWrite = buildQuestionOpenRows(run.id, p.input.questionOpens);
+    check('строк для базы столько же, сколько текстов', rowsToWrite.length === 2,
+      String(rowsToWrite.length));
+    await db.insert(schema.questionOpenAnswers).values(rowsToWrite);
+
+    const written = await db
+      .select()
+      .from(schema.questionOpenAnswers)
+      .where(eq(schema.questionOpenAnswers.submissionId, run.id));
+    check('два текста у одного прохождения лежат рядом', written.length === 2,
+      String(written.length));
+    check('и каждый под своим вопросом',
+      written.find((r) => r.questionId === 'Q_CALM')?.text === 'cold linen on a window'
+      && written.find((r) => r.questionId === 'Q_CELEBRATE')?.text
+        === 'mandarins and cold stairwell',
+      JSON.stringify(written.map((r) => [r.questionId, r.text])));
+
+    // Повторная отправка того же прохождения не должна удваивать текст.
+    await db
+      .insert(schema.questionOpenAnswers)
+      .values(rowsToWrite)
+      .onConflictDoNothing();
+    const afterRetry = await db
+      .select()
+      .from(schema.questionOpenAnswers)
+      .where(eq(schema.questionOpenAnswers.submissionId, run.id));
+    check('повтор не удвоил тексты', afterRetry.length === 2, String(afterRetry.length));
+
+    // Удаление прохождения обязано уносить тексты: ежедневная очистка по
+    // срокам хранения удаляет строки submissions, и без cascade самые
+    // личные ответы остались бы в базе навсегда.
+    await db.delete(schema.submissions).where(eq(schema.submissions.id, run.id));
+    const orphans = await db
+      .select()
+      .from(schema.questionOpenAnswers)
+      .where(eq(schema.questionOpenAnswers.submissionId, run.id));
+    check('тексты ушли вместе с прохождением', orphans.length === 0, String(orphans.length));
+  }
 
   /* ---------------------------- подписка ---------------------------- */
 

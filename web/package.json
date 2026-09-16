@@ -43,7 +43,9 @@
     "check:generation": "tsx scripts/check-generation.mts",
     "e2e:generation": "node e2e/generation-cards.mjs",
     "check:home": "tsx scripts/check-home.mts",
-    "e2e:home": "node e2e/home.mjs"
+    "e2e:home": "node e2e/home.mjs",
+    "check:open": "tsx scripts/check-open-answers.mts",
+    "e2e:open": "node e2e/open-answer.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

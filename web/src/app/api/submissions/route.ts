@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb, schema } from '@/db';
-import { parseSubmission, buildRecord } from '@/lib/submission';
+import { parseSubmission, buildRecord, buildQuestionOpenRows } from '@/lib/submission';
 
 /**
  * Приём прохождения квиза. Заменяет fetch в Google Apps Script
@@ -33,13 +33,27 @@ export async function POST(request: Request) {
 
   try {
     const db = getDb();
-    const inserted = await db
-      .insert(schema.submissions)
-      .values(record)
-      // Повторная отправка того же прохождения (перезагрузка страницы,
-      // потерянный флаг quiz_sent) не создаёт второй строки.
-      .onConflictDoNothing({ target: schema.submissions.clientToken })
-      .returning({ id: schema.submissions.id });
+    /* Одна транзакция на обе таблицы: тексты «Other» без своего
+       прохождения — мусор, а прохождение без них теряет то, что
+       заказчица назвала самым важным в квизе. Либо оба, либо ничего. */
+    const inserted = await db.transaction(async (tx) => {
+      const rows = await tx
+        .insert(schema.submissions)
+        .values(record)
+        // Повторная отправка того же прохождения (перезагрузка страницы,
+        // потерянный флаг quiz_sent) не создаёт второй строки.
+        .onConflictDoNothing({ target: schema.submissions.clientToken })
+        .returning({ id: schema.submissions.id });
+
+      // Повтор: прохождение уже записано, вместе с его текстами.
+      if (rows.length === 0) return rows;
+
+      const opens = buildQuestionOpenRows(rows[0].id, parsed.input.questionOpens);
+      if (opens.length > 0) {
+        await tx.insert(schema.questionOpenAnswers).values(opens).onConflictDoNothing();
+      }
+      return rows;
+    });
 
     return NextResponse.json({
       stored: inserted.length > 0,

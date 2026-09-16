@@ -98,6 +98,26 @@ const str = (v: unknown) => (v === null || v === undefined ? '' : String(v).trim
 const truthy = (v: unknown) => /^(true|1|yes|да|y)$/i.test(str(v));
 const minuteKey = (d: Date) => d.toISOString().slice(0, 16);
 
+/**
+ * Опечатки прода в кодах ответов.
+ *
+ * Страницы celebration и calm-now на живом сайте писали код варианта
+ * «Other» с ОДНИМ подчёркиванием, а в таблице баллов он с двумя — то
+ * есть такого кода в подсчёте не было вовсе, и балла за этот ответ
+ * человек не получал. На победителя это не влияло: «Other» весит по
+ * одному баллу каждому из семи архетипов, и одинаковая прибавка всем
+ * порядок не меняет.
+ *
+ * Здесь такие коды приводятся к правильным, потому что баллы при
+ * переносе считаются заново: иначе в базе остался бы код, которого нет
+ * ни в квизе, ни в таблице весов, и в админке он показался бы сырой
+ * строкой вместо названия варианта.
+ */
+const LEGACY_CODES: Record<string, string> = {
+  Q_CELEBRATE_OTHER: 'Q_CELEBRATE__OTHER',
+  Q_CALM_NOW_OTHER: 'Q_CALM_NOW__OTHER',
+};
+
 /** answers_json приезжает из таблицы в кавычках и с экранированием. */
 function parseAnswers(v: unknown): Record<string, string> | null {
   let s = str(v);
@@ -113,7 +133,7 @@ function parseAnswers(v: unknown): Record<string, string> | null {
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return null;
   const out: Record<string, string> = {};
   for (const [k, val] of Object.entries(parsed as Record<string, unknown>)) {
-    if (typeof val === 'string' && k && val) out[k] = val;
+    if (typeof val === 'string' && k && val) out[k] = LEGACY_CODES[val] ?? val;
   }
   return Object.keys(out).length ? out : null;
 }

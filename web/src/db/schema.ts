@@ -1,4 +1,6 @@
-import { pgTable, text, integer, boolean, jsonb, timestamp, uuid, index } from 'drizzle-orm/pg-core';
+import {
+  pgTable, text, integer, boolean, jsonb, timestamp, uuid, index, primaryKey,
+} from 'drizzle-orm/pg-core';
 
 /**
  * Каталог парфюма. Переезжает из Webflow CMS, где он дублировал
@@ -65,6 +67,43 @@ export const submissions = pgTable(
     index('submissions_winner_idx').on(t.winner),
     // Для «все прохождения этого браузера по порядку».
     index('submissions_browser_idx').on(t.browserKey, t.createdAt),
+  ],
+);
+
+/**
+ * Тексты, написанные в ответ на «Other» внутри вопроса — по одной строке
+ * на (прохождение, вопрос).
+ *
+ * ЗАЧЕМ ОТДЕЛЬНАЯ ТАБЛИЦА, А НЕ ЕЩЁ ОДНА КОЛОНКА. На живом сайте девять
+ * вопросов просят написать своё, если ни один вариант не подходит —
+ * «What does calm smell like to you?» — и все девять пишут этот текст в
+ * то же поле, что финальный открытый вопрос. Одно затирает другое.
+ * Заказчица назвала эти ответы самым важным в квизе и выбрала хранить
+ * каждый отдельно.
+ *
+ * Своя таблица, потому что вопрос здесь — это данные, а не имя колонки:
+ * «покажи всё, что люди написали про уют» становится обычным запросом,
+ * а добавление десятого такого вопроса не требует менять схему.
+ *
+ * Удаляется вместе с прохождением (on delete cascade), поэтому ночная
+ * очистка по срокам хранения ничего не забудет: она удаляет строки
+ * submissions, а эти уходят за ними.
+ */
+export const questionOpenAnswers = pgTable(
+  'question_open_answers',
+  {
+    submissionId: uuid('submission_id')
+      .notNull()
+      .references(() => submissions.id, { onDelete: 'cascade' }),
+    questionId: text('question_id').notNull(),
+    text: text('text').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    // Один текст на вопрос в рамках одного прохождения.
+    primaryKey({ columns: [t.submissionId, t.questionId] }),
+    // Для «всё, что написали про этот вопрос».
+    index('question_open_question_idx').on(t.questionId, t.createdAt),
   ],
 );
 

@@ -66,6 +66,8 @@ export async function walkQuiz(page, {
     const listbox = await page.locator('[role="listbox"]').count();
     const search = await page.locator('#country-search').count();
     const open = await page.locator('textarea').count();
+    /** Код выбранного варианта — нужен, чтобы узнать «Other». */
+    let code = null;
 
     if (search) {
       await page.locator('#country-search').fill('Fra');
@@ -89,12 +91,30 @@ export async function walkQuiz(page, {
       await page.locator('[role="listbox"]').focus();
       await page.keyboard.press('Enter');
     } else if (tagged) {
-      await page.locator('button[data-answer]').nth(pick(tagged, i) % tagged).click();
+      const chosen = page.locator('button[data-answer]').nth(pick(tagged, i) % tagged);
+      code = await chosen.getAttribute('data-answer');
+      await chosen.click();
     } else {
       const options = page.locator('ul li button');
       const n = await options.count();
       if (!n) throw new Error(`нет вариантов на ${slug}`);
-      await options.nth(pick(n, i) % n).click();
+      const chosen = options.nth(pick(n, i) % n);
+      // id кнопки — `answer-<КОД>`: по нему видно, открывает ли этот
+      // вариант окошко «Other».
+      code = (await chosen.getAttribute('id'))?.replace(/^answer-/, '') ?? null;
+      await chosen.click();
+    }
+
+    /* Вариант «Other» открывает окошко и просит написать своё. Пока в
+       нём не написано, вопрос не отвечен и экран не сменится — то есть
+       без этого шага проход встал бы здесь на таймауте.
+       Ждём окошко только на таких вариантах: ждать его на каждом экране
+       значило бы добавлять паузу ко всем двадцати трём. */
+    if (code?.endsWith('__OTHER')) {
+      const input = page.locator('[data-open-answer] #open-answer-input');
+      await input.waitFor({ timeout: 5000 });
+      await input.fill(openText);
+      await page.locator('#open-answer-submit').click();
     }
 
     /* 15 секунд, а не 5. Экраны с механиками уходят дальше не сразу:

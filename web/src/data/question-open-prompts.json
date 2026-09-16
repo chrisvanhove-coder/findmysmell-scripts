@@ -1,0 +1,16 @@
+{
+  "_": "Вопросы в окошке «Other». Взяты ДОСЛОВНО с живого сайта — из q-calm.footer.html и остальных восьми, а не придуманы. Три из девяти я сначала угадал неверно, и проверка это показала: у celebration прошедшее время («What DID celebration smell like»), у calm-now вопрос вообще другой («Is there a smell that instantly calms you?»), у focus — «What helps you concentrate?» без слова «пахнет». У каждого экрана свой текст, и это и есть смысл варианта «Other»: человек говорит своими словами именно про то, о чём его спросили.",
+  "placeholder": "Type your answer...",
+  "submit": "Continue →",
+  "prompts": {
+    "Q_CALM": "What does calm smell like to you?",
+    "Q_COZY": "What does cozy smell like to you?",
+    "Q_ENERGY": "What does energy smell like to you?",
+    "Q_FOCUS": "What helps you concentrate?",
+    "Q_MYST": "What does mystery smell like to you?",
+    "Q_PLAY": "What does playful smell like to you?",
+    "Q_SEXY": "What does sexy smell like to you?",
+    "Q_CELEBRATE": "What did celebration smell like to you?",
+    "Q_CALM_NOW": "Is there a smell that instantly calms you?"
+  }
+}

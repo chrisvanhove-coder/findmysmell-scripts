@@ -8,11 +8,13 @@ import {
 } from '@/lib/quiz';
 import {
   loadAnswers, saveAnswer, loadOpenText, saveOpenText, saveResearchConsent, runToken,
+  loadQuestionOpens, saveQuestionOpen,
 } from '@/lib/answers-store';
 import { reportFunnel } from '@/lib/funnel';
 import { isCountryQuestion } from '@/data/countries';
 import CountrySearch from './CountrySearch';
 import { MECHANICS } from '@/components/quiz/mechanics';
+import OpenAnswerModal, { openPromptFor } from '@/components/quiz/OpenAnswerModal';
 import AnswerBackdrop, { photosFor } from '@/components/quiz/AnswerBackdrop';
 import { resolve } from '@/lib/scoring';
 import styles from './quiz.module.css';
@@ -55,6 +57,17 @@ export default function QuizScreen({
   const [chosen, setChosen] = useState<string | null>(null);
   const [openText, setOpenText] = useState('');
 
+  /* Вариант «Other» внутри вопроса: у девяти вопросов он открывает
+     окошко «а как для тебя?». Текст вопроса для окошка лежит в данных —
+     у каждого свой, и в этом весь смысл этого варианта. */
+  const openPrompt = openPromptFor(question.id);
+  /** Какой вариант «Other» сейчас спрашивают. null — окошка нет. */
+  const [asking, setAsking] = useState<string | null>(null);
+  /** Уже написанный текст — если человек вернулся на вопрос назад. */
+  const [askedText, setAskedText] = useState('');
+  const answerIsOpen = (code: string) =>
+    question.answers.some((a) => a.code === code && a.open);
+
   /* Фотографии под варианты — пока только на Q_YOURSELF. Если их у
      вопроса нет, всё ниже не работает и экран остаётся обычным. */
   const photos = photosFor(question.id);
@@ -91,6 +104,7 @@ export default function QuizScreen({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setChosen(loadAnswers()[question.id] ?? null);
     if (question.openText) setOpenText(loadOpenText());
+    setAskedText(loadQuestionOpens()[question.id] ?? '');
   }, [question.id, question.openText]);
 
   // Следующий экран заранее подгружаем, чтобы переход был мгновенным.
@@ -122,6 +136,20 @@ export default function QuizScreen({
     router.push(`/${locale}/result/${winner.toLowerCase()}`);
   }
 
+  function commit(code: string) {
+    /* Обычный вариант на вопросе с «Other» стирает прежний текст: человек
+       мог написать своё, вернуться назад и выбрать вариант из списка —
+       тогда его слова к этому вопросу больше не относятся. */
+    if (openPrompt && !answerIsOpen(code)) {
+      saveQuestionOpen(question.id, '');
+      setAskedText('');
+    }
+    setChosen(code);
+    saveAnswer(question.id, code);
+    reportFunnel(locale, runToken(), { step: question.id, event: 'answer', answerCode: code });
+    go(nextQuestion(question.id, code));
+  }
+
   function choose(code: string) {
     /* Вопрос с фотографиями на устройстве без наведения: первое касание
        показывает снимок места, второе выбирает. Так это и было в проде —
@@ -133,10 +161,15 @@ export default function QuizScreen({
       setLooking(code);
       return;
     }
-    setChosen(code);
-    saveAnswer(question.id, code);
-    reportFunnel(locale, runToken(), { step: question.id, event: 'answer', answerCode: code });
-    go(nextQuestion(question.id, code));
+    /* Вариант «Other»: сначала окошко с вопросом «а как для тебя?», и
+       только после написанного текста ответ считается данным. Ответ и
+       текст сохраняются одним шагом — иначе в базе оказался бы выбор
+       «Other» без единого слова, то есть самое ценное поле пустым. */
+    if (openPrompt && answerIsOpen(code)) {
+      setAsking(code);
+      return;
+    }
+    commit(code);
   }
 
   /**
@@ -162,6 +195,26 @@ export default function QuizScreen({
   // Берём из модульной таблицы напрямую: ссылка на компонент стабильна
   // между перерисовками, а вызов функции здесь линтер справедливо
   // принял бы за создание компонента на каждом рендере.
+  /* Окошко «Other». Рисуется и над списком, и над механикой: механики
+     тоже отвечают через choose, и у семи экранов ветки эмоций этот
+     вариант есть. */
+  const modal = asking !== null && openPrompt ? (
+    <OpenAnswerModal
+      prompt={openPrompt}
+      initial={askedText}
+      onSubmit={(text) => {
+        saveQuestionOpen(question.id, text);
+        setAskedText(text);
+        setAsking(null);
+        commit(asking);
+      }}
+      /* Передумал — выбор не сделан, человек остаётся на вопросе.
+         Написанное раньше не стираем: оно ещё относится к ответу,
+         который сохранён. Сотрётся, если он выберет обычный вариант. */
+      onCancel={() => setAsking(null)}
+    />
+  ) : null;
+
   const Mechanic = MECHANICS[question.id];
   if (Mechanic) {
     return (
@@ -176,6 +229,7 @@ export default function QuizScreen({
           ← Back
         </button>
         <Mechanic onChoose={choose} />
+        {modal}
         <div className={styles.progress}>
           <span className={styles.count}>{pct}%</span>
           <div className={styles.track}>
@@ -289,6 +343,8 @@ export default function QuizScreen({
           </>
         )}
       </div>
+
+      {modal}
 
       <div className={styles.progress}>
         <span className={styles.count}>{pct}%</span>

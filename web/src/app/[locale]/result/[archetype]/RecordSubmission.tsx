@@ -5,6 +5,7 @@ import type { Locale } from '@/lib/i18n';
 import {
   loadAnswers,
   loadOpenText,
+  loadQuestionOpens,
   loadResearchConsent,
   runToken,
   wasSent,
@@ -67,6 +68,10 @@ export default function RecordSubmission({ locale }: { locale: Locale }) {
         locale,
         answers,
         openAnswer: loadOpenText(),
+        // Тексты «Other» по вопросам. Отдельным полем, а не внутри
+        // openAnswer: в проде и то и другое лежало в одном ключе, и одно
+        // затирало другое.
+        questionOpens: loadQuestionOpens(),
         consentResearch: consent,
         clientToken: runToken(),
         browserKey: key,
