@@ -90,9 +90,10 @@ console.log('\nБарабан есть и крутится сам с откры�
 
 console.log('\nФон — ФОТОГРАФИЯ из Cloudinary, а не заливка цветом');
 {
-  // Эта проверка стоит здесь потому, что подкраска цветом эмоции может
-  // создать впечатление, будто фотографии нет. Фотография — главное;
-  // цвет только тонирует её сверху. Проверяем именно фотографию.
+  // Эта проверка стоит здесь потому, что фотография — главное на экране,
+  // а сломаться это может молча: адрес не тот, версия не та, поверх
+  // легла заливка. Никакой подкраски цветом эмоции на экране быть не
+  // должно — ниже отдельный блок именно про это.
   const context = await browser.newContext({ viewport: { width: 1200, height: 800 } });
   const seen = [];
   // Не подменяем, а записываем: нужно знать, какие адреса страница
@@ -132,6 +133,74 @@ console.log('\nФон — ФОТОГРАФИЯ из Cloudinary, а не зали
   check('в фоне есть имя файла эмоции',
     bg.some((v) => /feel-(calm|energy|sexy|cozy|play|focus|myst)/.test(v)),
     bg.join(' | '));
+
+  await context.close();
+}
+
+console.log('\nПоверх фотографии нет ничего, кроме чёрного слоя 0.45');
+{
+  /* ЗАЧЕМ ЭТА ПРОВЕРКА. Я дважды подкрашивал этот экран цветом эмоции —
+     сначала вуалью на весь экран, потом свечением за словом, — и
+     заказчица оба раза поправила, прислав скриншоты живого сайта.
+     Смысл экрана в самой фотографии, и любой цветной слой её глушит.
+     Проверка нужна, чтобы это не вернулось в третий раз. */
+  const context = await browser.newContext({ viewport: { width: 1200, height: 800 } });
+  const page = await context.newPage();
+  await page.goto(PAGE, { waitUntil: 'networkidle' });
+  await page.locator('[role="listbox"]').waitFor({ timeout: 8000 });
+  await page.waitForTimeout(1200);
+
+  const layers = await page.evaluate(() => {
+    const out = [];
+    for (const el of document.querySelectorAll('div')) {
+      const cs = getComputedStyle(el);
+      // Окно барабана берём всегда: у него position: relative, и по
+      // фильтру слоёв оно не проходило — из-за этого проверка искала
+      // его впустую.
+      const isSlot = el.getAttribute('role') === 'listbox';
+      const r = el.getBoundingClientRect();
+      const full = (cs.position === 'absolute' || cs.position === 'fixed')
+        && r.width > innerWidth * 0.9 && r.height > innerHeight * 0.9;
+      if (!full && !isSlot) continue;
+      out.push({
+        isSlot,
+        bgColor: cs.backgroundColor,
+        bgImage: cs.backgroundImage,
+      });
+    }
+    return out;
+  });
+
+  // Цветной слой на весь экран: всё, что не прозрачное и не серое.
+  const coloured = layers.filter((l) => {
+    const m = l.bgColor.match(/rgba?\(([^)]+)\)/);
+    if (!m) return false;
+    const [r, g, b, a = '1'] = m[1].split(',').map((x) => Number(x.trim()));
+    if (Number(a) === 0) return false;
+    // Чёрная вуаль и чёрная подложка сцены — это прод. Цвет — нет.
+    return !(r === g && g === b);
+  });
+  check('цветных слоёв поверх фотографии нет', coloured.length === 0,
+    coloured.map((l) => l.bgColor).join(' | '));
+
+  const slot = layers.find((l) => l.isSlot);
+  check('у окна барабана нет своей подложки',
+    !!slot && slot.bgImage === 'none'
+    && /rgba\(0, 0, 0, 0\)|transparent/.test(slot.bgColor),
+    slot ? `${slot.bgColor} / ${slot.bgImage}` : 'окно не найдено');
+
+  // Вуаль — ровно то же значение, что на живом сайте.
+  const veil = layers.find((l) => /^rgba\(0, 0, 0, 0\.4[0-9]*\)$/.test(l.bgColor));
+  check('чёрный слой 0.45 как в проде на месте', !!veil,
+    layers.map((l) => l.bgColor).join(' | '));
+
+  // И в данных цвета быть не должно: раз его не показывают, он сгниёт.
+  const data = JSON.parse(
+    await (await import('node:fs/promises')).readFile('src/data/emotion-drum.json', 'utf8'),
+  );
+  check('в данных барабана нет поля color',
+    data.items.every((i) => !('color' in i)),
+    'неиспользуемые данные однажды снова кто-то «применит»');
 
   await context.close();
 }

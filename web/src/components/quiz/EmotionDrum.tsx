@@ -35,8 +35,6 @@ interface Item {
   code: string;
   word: string;
   img: string;
-  /** Преобладающий цвет самой фотографии, из Cloudinary. */
-  color: string;
 }
 
 const ITEMS = drum.items as Item[];
@@ -61,7 +59,6 @@ export default function EmotionDrum({
   /** Вызывается с кодом ответа. Навигацию делает QuizScreen. */
   onChoose: (code: string) => void;
 }) {
-  const stage = useRef<HTMLDivElement | null>(null);
   const slot = useRef<HTMLDivElement | null>(null);
   const words = useRef<Array<HTMLDivElement | null>>([]);
   const layers = useRef<Array<HTMLDivElement | null>>([]);
@@ -97,13 +94,30 @@ export default function EmotionDrum({
     [],
   );
 
+  /* Какую версию снимка ставить: вертикальную на телефоне или широкую.
+     ЗАЧЕМ REF. Раньше предзагрузка выбирала версию по ширине экрана, а
+     в фон кадровый цикл всегда ставил ШИРОКУЮ. На телефоне это значило
+     две загрузки вместо одной: сначала прогревалась вертикальная, потом
+     скачивалась широкая — и именно она показывалась, обрезанная по
+     горизонтали. Теперь версию выбирает одно и то же место. */
+  const narrow = useRef(false);
+
   /* Предзагрузка: фон должен появиться вместе со словом, а не после. */
   useEffect(() => {
-    const narrow = window.matchMedia('(max-width: 700px)').matches;
-    for (const s of srcs) {
-      const img = new Image();
-      img.src = narrow ? s.narrow : s.wide;
-    }
+    const mq = window.matchMedia('(max-width: 700px)');
+    narrow.current = mq.matches;
+    const warm = () => {
+      for (const s of srcs) {
+        const img = new Image();
+        img.src = narrow.current ? s.narrow : s.wide;
+      }
+    };
+    warm();
+    // Повернули телефон — версия меняется, и следующий снимок должен
+    // приехать уже в новой.
+    const onChange = () => { narrow.current = mq.matches; warm(); };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
   }, [srcs]);
 
   /* Подгонка кегля под ширину окна: самое длинное слово MYSTERIOUS
@@ -174,16 +188,17 @@ export default function EmotionDrum({
       if (idx !== shownIdx.current) {
         shownIdx.current = idx;
         setCurrent(idx);
-        /* Цвет эмоции идёт в вуаль и в свечение за словом. Он взят из
-           самой фотографии, а не подобран на глаз, поэтому экран меняет
-           характер вместе с картинкой и не спорит с ней. Слово остаётся
-           белым: цветное на своей же фотографии читалось бы хуже. */
-        stage.current?.style.setProperty('--emo-color', ITEMS[idx].color);
+        /* НИКАКОЙ ПОДКРАСКИ ЭКРАНА ЦВЕТОМ ЭМОЦИИ ЗДЕСЬ НЕТ И БЫТЬ НЕ
+           ДОЛЖНО. Я дважды пробовал её добавить — сначала вуалью на весь
+           экран, потом свечением за словом — и заказчица оба раза
+           поправила: смысл экрана в самой фотографии, а любой цветной
+           слой поверх её глушит. На живом сайте поверх снимка лежит
+           только чёрный слой 0.45 и тёмные маски окна барабана. */
         // Кроссфейд по-настоящему: два слоя, меняем прозрачность.
         const next = shownLayer.current === 0 ? 1 : 0;
         const el = layers.current[next];
         if (el) {
-          el.style.backgroundImage = `url('${srcs[idx].wide}')`;
+          el.style.backgroundImage = `url('${narrow.current ? srcs[idx].narrow : srcs[idx].wide}')`;
           el.style.opacity = '1';
           const prev = layers.current[shownLayer.current];
           if (prev) prev.style.opacity = '0';
@@ -350,7 +365,7 @@ export default function EmotionDrum({
   const chosenWord = picked !== null ? ITEMS[picked].word : null;
 
   return (
-    <div ref={stage} className={styles.stage}>
+    <div className={styles.stage}>
       {/* Два слоя фона под кроссфейд. */}
       <div ref={(el) => { layers.current[0] = el; }} className={styles.backdrop} aria-hidden />
       <div ref={(el) => { layers.current[1] = el; }} className={styles.backdrop} aria-hidden />
