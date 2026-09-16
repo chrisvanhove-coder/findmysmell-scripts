@@ -1,0 +1,207 @@
+/* Q_GENDER. Числа из прода (q-gender.footer.html): экран поделён 50/50,
+   переход клипа 0.8s, приглушение остальных 0.25, на телефоне полосы по
+   26dvh с видео 0.45 и градиентом чёрный 0.7 → прозрачный к 60%. */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  background: #111;
+}
+
+/* ── Клип на полэкрана (широкий экран) ── */
+
+.videoPanel {
+  position: relative;
+  flex-shrink: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.videoOn { opacity: 1; }
+
+/* ── Вопрос и варианты ── */
+
+.contentPanel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 50%;
+  height: 100%;
+  /* Сверху место под шапку и кнопку «назад». */
+  padding: 96px 48px 60px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.question {
+  margin: 0 0 48px;
+  color: #fff;
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  font-size: clamp(22px, 3.5vw, 48px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+/* Подсказка про касание нужна там, где нет наведения. */
+.hint { display: none; }
+
+.options {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Настоящая кнопка, а не div с обработчиком, как было в проде. */
+.option {
+  display: block;
+  width: 100%;
+  padding: 16px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.options li:last-child .option { border-bottom: none; }
+
+.option:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 4px;
+}
+
+.dimmed { opacity: 0.25; }
+
+.optionText { display: block; }
+
+.label {
+  display: block;
+  color: #fff;
+  font-family: var(--fms-mono), monospace;
+  font-size: clamp(20px, 1.2vw, 24px);
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+}
+
+.sub {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Клип под текстом нужен только на телефоне. */
+.optionMedia { display: none; }
+
+/* ── Телефон: три полосы, в каждой свой клип ── */
+
+@media (max-width: 768px) {
+  .stage { flex-direction: column; }
+
+  .videoPanel { display: none; }
+
+  .contentPanel {
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow-y: hidden;
+  }
+
+  .question {
+    flex-shrink: 0;
+    /* Сверху место под шапку И под кнопку «назад»: на этом экране
+       вопрос стоит у верхнего края, и без запаса кнопка налезала прямо
+       на текст. Поймано скриншотом на 390px. */
+    padding: calc(var(--fms-header-h, 56px) + 46px) 20px 6px;
+    margin: 0;
+    font-size: 15px;
+  }
+
+  .hint {
+    display: block;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0 20px 12px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: var(--fms-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+    pointer-events: none;
+  }
+
+  .options {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-height: 78dvh;
+  }
+
+  .options li { flex: none; }
+
+  .option {
+    position: relative;
+    height: 26dvh;
+    padding: 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: none;
+  }
+
+  /* На телефоне приглушать нечего: полосы не наводят, а нажимают. */
+  .dimmed { opacity: 1; }
+
+  .optionMedia {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.45;
+  }
+
+  .optionText {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 14px 20px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
+  }
+
+  .label {
+    font-size: 14px;
+    letter-spacing: 0.08em;
+  }
+
+  .sub { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video,
+  .option { transition: none; }
+}

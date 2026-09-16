@@ -78,3 +78,56 @@ export function cld(url: string, preset: Preset): string {
 
   return `${head}/upload/${PRESETS[preset]}/${tail}`;
 }
+
+/* ─────────────────────────── видео ─────────────────────────── */
+
+/**
+ * Пресеты видео.
+ *
+ * ЗАЧЕМ. На первом вопросе квиза (Q_GENDER) на живом сайте лежат три
+ * клипа 1920×1080 БЕЗ ЛЮБЫХ ТРАНСФОРМАЦИЙ и все три с preload="auto":
+ * feminine 9 992 535, unisex 8 594 700, masculine 12 084 057 байт —
+ * 30.7 МБ на самом первом экране квиза. На телефоне они ещё и играют
+ * все три одновременно.
+ *
+ * Замеры explicit API (не оценка):
+ *   feminine  1920×1080  9 992 535 → 524 459  (c_limit,w_1280)   19×
+ *   masculine 1920×1080 12 084 057 → 325 176  (c_limit,w_720)    37×
+ */
+export const VIDEO_PRESETS = {
+  /** Клип на полэкрана в квизе. */
+  quizVideo: 'c_limit,w_1280/vc_auto/q_auto',
+  /** Тот же клип на телефоне: там он лежит полосой в четверть экрана. */
+  quizVideoMobile: 'c_limit,w_720/vc_auto/q_auto',
+} as const;
+
+export type VideoPreset = keyof typeof VIDEO_PRESETS;
+
+const CLOUDINARY_VIDEO = /^https:\/\/res\.cloudinary\.com\/[^/]+\/video\/upload\//;
+
+/** Вставляет трансформацию в ссылку на видео Cloudinary. */
+export function cldVideo(url: string, preset: VideoPreset): string {
+  if (!url || !CLOUDINARY_VIDEO.test(url)) return url;
+  const [head, tail] = url.split('/upload/');
+  if (tail === undefined) return url;
+  const first = tail.split('/')[0];
+  if (LOOKS_TRANSFORMED.test(first)) return url;
+  return `${head}/upload/${VIDEO_PRESETS[preset]}/${tail}`;
+}
+
+/**
+ * Первый кадр клипа как картинка.
+ *
+ * Нужен двумя способами: как poster, пока видео не проигралось, и как
+ * замена видео целиком при prefers-reduced-motion — там движение
+ * включать нельзя, а показать кадр можно.
+ */
+export function cldPoster(url: string, width = 1280): string {
+  if (!url || !CLOUDINARY_VIDEO.test(url)) return url;
+  const [head, tail] = url.split('/upload/');
+  if (tail === undefined) return url;
+  // so_0 — нулевая секунда; расширение меняем на jpg, иначе Cloudinary
+  // отдаст видео, а не кадр.
+  const still = tail.replace(/\.(mp4|webm|mov)$/i, '.jpg');
+  return `${head}/upload/so_0/c_limit,w_${width}/f_jpg/q_auto/${still}`;
+}

@@ -69,6 +69,11 @@
   position: relative;
   z-index: 2;
   padding: clamp(28px, 5vw, 72px);
+  /* ПО ЦЕНТРУ — так на живом сайте. В выгруженном коде страницы этого
+     нет: выравнивание задаёт обёртка Webflow вокруг эмбеда, а она в
+     выгрузку не попадает. Видно на скриншоте с её телефона: заголовок,
+     абзац и кнопка стоят по центру, а не у левого края. */
+  text-align: center;
 }
 
 .headline {
@@ -105,6 +110,8 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  /* Кнопка тоже по центру: inline-flex сам по себе не центрируется. */
+  margin: 0 auto;
   width: fit-content;
   padding: 18px 40px;
   border: none;

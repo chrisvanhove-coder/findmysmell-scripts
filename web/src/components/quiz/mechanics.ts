@@ -32,6 +32,8 @@ export interface MechanicProps {
  * бы пустыми и мигали при гидрации.
  */
 export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
+  // Первый вопрос: экран пополам, слева клип, справа три варианта.
+  Q_GENDER: dynamic(() => import('./GenderVideos'), { ssr: false }),
   Q_EMO: dynamic(() => import('./EmotionDrum'), { ssr: false }),
   // Оба флакона — один компонент на данных: в проде эти два экрана
   // различались только уровнями, цветами, фоном и текстом вопроса.

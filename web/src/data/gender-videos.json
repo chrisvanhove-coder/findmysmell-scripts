@@ -1,0 +1,25 @@
+{
+  "_": "Первый вопрос квиза — Q_GENDER. Перенесено из q-gender.footer.html: тот же вопрос, те же три варианта с подписями и те же три клипа. Заказчица про этот экран: «На первом вопросе где видео анимация и где layout который у меня сейчас на моем реальном сайте?» — она права, у меня тут стоял обычный список кнопок. Ссылки на видео хранятся чистыми: трансформацию ставит cldVideo() из src/lib/cloudinary.ts. ВАЖНО про вес: на живом сайте эти три клипа 1920×1080 отдаются БЕЗ трансформаций и все три с preload=auto — 30.7 МБ на самом первом экране квиза.",
+  "question": "HOW DO YOU PREFER YOUR SCENT TO FEEL ON YOU?",
+  "hint": "tap to select and continue →",
+  "options": [
+    {
+      "code": "Q_GENDER__FEMININE",
+      "label": "Softer, warmer, rounder",
+      "sub": "enveloping · skin-close · round",
+      "video": "https://res.cloudinary.com/dcefrxxav/video/upload/v1773935881/feminine_vjqnhb.mp4"
+    },
+    {
+      "code": "Q_GENDER__UNISEX",
+      "label": "Balanced, neither too soft nor too fresh",
+      "sub": "neutral · precise · clean",
+      "video": "https://res.cloudinary.com/dcefrxxav/video/upload/v1773936248/unisex_ml3vxc.mp4"
+    },
+    {
+      "code": "Q_GENDER__MASCULINE",
+      "label": "Fresher, drier, more structured",
+      "sub": "sharp · dry · architectural",
+      "video": "https://res.cloudinary.com/dcefrxxav/video/upload/v1773935883/masculine_l95axl.mp4"
+    }
+  ]
+}
