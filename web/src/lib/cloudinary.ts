@@ -45,6 +45,11 @@ export const PRESETS = {
    * шесть-семь, и прод грел все сразу — около 8 МБ на один вопрос.
    */
   emotionTile: 'c_fill,g_auto,h_260,w_1000/f_auto/q_auto',
+  /**
+   * Картинка для ссылки-превью (og:image). Размер 1200×630 — ровно тот,
+   * что стоит в прод-тегах `og:image:width/height`.
+   */
+  og: 'c_fill,g_auto,h_630,w_1200/f_auto/q_auto',
   /** Фото в боковой колонке главной: .sidePhoto, 3/2. */
   homeSide: 'c_fill,g_auto,h_480,w_720/f_auto/q_auto',
   /** Фон на всю колонку или экран, десктоп: .midImg. */

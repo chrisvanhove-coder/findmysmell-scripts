@@ -53,7 +53,9 @@
     "check:cloud": "tsx scripts/check-scent-cloud.mts",
     "e2e:cloud": "node e2e/scent-cloud.mjs",
     "check:country": "tsx scripts/check-country-picker.mts",
-    "e2e:country": "node e2e/country-picker.mjs"
+    "e2e:country": "node e2e/country-picker.mjs",
+    "check:seo": "tsx scripts/check-seo.mts",
+    "e2e:seo": "node e2e/seo.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

@@ -9,6 +9,9 @@ import ScentDna from './ScentDna';
 import Flashlight from '@/components/Flashlight';
 import ShareCard from '@/components/ShareCard';
 import { parsePunch } from '@/lib/share-card';
+import { cld } from '@/lib/cloudinary';
+import { previewTags } from '@/lib/site';
+import { HOME_HERO } from '@/lib/home';
 import shareCards from '@/data/share-cards.en.json';
 import punchLines from '@/data/punch-lines.en.json';
 import tagLines from '@/data/tag-lines.en.json';
@@ -47,9 +50,35 @@ export async function generateMetadata({
   const parsed = parse(await params);
   if (!parsed) return {};
   const a = getArchetype(parsed.locale, parsed.key);
+  const title = `${a.you} ${a.identity} — Find My Smell`;
+
+  /* ЗАГОЛОВОК КАРТОЧКИ ССЫЛКИ — ПАНЧЛАЙН, а не «You are politely
+     unreachable». Это её правило про всё, чем делятся: «Панчлайн
+     главным, @tag наверх, имя архетипа не надо потому что это
+     внутреннее имя». А «politely unreachable» она к тому же просила
+     стереть со всех архетипов — на самой странице этого героя нет, и
+     тащить его в превью ссылки было бы возвращением убранного.
+     В заголовке вкладки он пока остаётся: это отдельный вопрос к ней. */
+  const punchLine = parsePunch((punchLines as Record<string, unknown>)[parsed.key])
+    .map(([text]) => text)
+    .join(' ');
+  const shareTitle = punchLine || title;
+
+  /* Ссылкой на результат делятся чаще всего — значит она обязана
+     разворачиваться карточкой. Картинка здесь общая, фирменная: у
+     архетипов своих фотографий нет, а шеринговая карточка рисуется на
+     canvas в браузере и серверу недоступна. */
   return {
-    title: `${a.you} ${a.identity} — Find My Smell`,
+    title,
     description: a.descriptor,
+    alternates: { canonical: `/${parsed.locale}/result/${parsed.key.toLowerCase()}` },
+    ...previewTags({
+      title: shareTitle,
+      description: a.descriptor,
+      path: `/${parsed.locale}/result/${parsed.key.toLowerCase()}`,
+      locale: parsed.locale,
+      image: cld(HOME_HERO, 'og'),
+    }),
   };
 }
 

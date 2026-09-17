@@ -56,6 +56,13 @@ export function getHomeCopy(locale: Locale): HomeCopy {
 }
 
 /**
+ * Фото-герой главной. Оно же — картинка в ссылке-превью (og:image) на
+ * всём сайте: в проде в og:image стоит этот же файл. Держим одной
+ * ссылкой, чтобы заменить картинку можно было в одном месте.
+ */
+export const HOME_HERO: string = (en as HomeCopy).hero.image;
+
+/**
  * Число словом, с заглавной: «Seventeen».
  *
  * ЗАЧЕМ. На живом сайте в шагах написано «Seventeen questions», и это

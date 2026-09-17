@@ -5,6 +5,7 @@ import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
 import { getHomeCopy, numberWord } from '@/lib/home';
 import { TOTAL_STEPS, FIRST_QUESTION, toSlug } from '@/lib/quiz';
 import { cld } from '@/lib/cloudinary';
+import { previewTags } from '@/lib/site';
 import styles from './home.module.css';
 
 /**
@@ -50,11 +51,23 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const copy = getHomeCopy(locale);
+  // Число вопросов подставляется из TOTAL_STEPS: на живом сайте оно
+  // в трёх местах было разным, и разойтись здесь нечем.
+  const description = copy.metaDescription.replace('{N}', String(TOTAL_STEPS));
   return {
     title: copy.metaTitle,
-    // Число вопросов подставляется из TOTAL_STEPS: на живом сайте оно
-    // в трёх местах было разным, и разойтись здесь нечем.
-    description: copy.metaDescription.replace('{N}', String(TOTAL_STEPS)),
+    description,
+    alternates: { canonical: `/${locale}` },
+    /* Заголовок и описание карточки — те же, что у страницы. В проде в
+       og:description лежит прошлая версия текста, которую заказчица уже
+       заменила на самой главной; копировать её незачем. */
+    ...previewTags({
+      title: copy.metaTitle,
+      description,
+      path: `/${locale}`,
+      locale,
+      image: cld(copy.hero.image, 'og'),
+    }),
   };
 }
 

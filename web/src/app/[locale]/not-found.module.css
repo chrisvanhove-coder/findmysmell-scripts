@@ -1,0 +1,80 @@
+/* Страница «не найдено». Цвета и шрифты сайта: уголь из палитры главной
+   (--charcoal-950 #141917), кремовый текст (--cream #EBE4CF), терракота
+   на кнопке (--terracotta #D03D01). */
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: clamp(40px, 10vh, 120px) 20px;
+  background: #141917;
+  color: #ebe4cf;
+  text-align: center;
+}
+
+.code {
+  margin: 0;
+  color: rgba(235, 228, 207, 0.35);
+  font-family: var(--fms-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+}
+
+.title {
+  margin: 0;
+  max-width: 22ch;
+  font-family: var(--fms-display), Georgia, serif;
+  font-size: clamp(28px, 6vw, 52px);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.body {
+  margin: 0;
+  max-width: 44ch;
+  color: rgba(235, 228, 207, 0.65);
+  font-family: var(--fms-mono), monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.primary,
+.secondary {
+  padding: 14px 26px;
+  font-family: var(--fms-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 50px;
+}
+
+.primary {
+  background: #d03d01;
+  color: #fff;
+}
+
+.secondary {
+  border: 1px solid rgba(235, 228, 207, 0.35);
+  color: #ebe4cf;
+}
+
+.primary:hover { background: #b83603; }
+.secondary:hover { border-color: #ebe4cf; }
+
+.primary:focus-visible,
+.secondary:focus-visible {
+  outline: 2px solid #f1e09b;
+  outline-offset: 3px;
+}

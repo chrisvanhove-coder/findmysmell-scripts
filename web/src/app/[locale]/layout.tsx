@@ -4,6 +4,9 @@ import { Fraunces, Inconsolata, Montserrat } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { LOCALES, isLocale } from '@/lib/i18n';
 import { TOTAL_STEPS } from '@/lib/quiz';
+import { OG_IMAGE_SIZE, SITE_NAME, TWITTER_SITE, siteUrl } from '@/lib/site';
+import { cld } from '@/lib/cloudinary';
+import { HOME_HERO } from '@/lib/home';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import ConsentGate from '@/components/ConsentGate';
@@ -34,6 +37,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  /* Абсолютный адрес нужен og-тегам и sitemap: относительная ссылка на
+     картинку в карточке превью не разворачивается. */
+  metadataBase: new URL(siteUrl()),
   title: 'Find My Smell',
   // Число вопросов держим ОДНО на весь сайт: на живом сайте их три разных
   // (12 в шагах на главной, 7 в метаописании, 17 на самом деле).
@@ -42,6 +48,20 @@ export const metadata: Metadata = {
     `Answer ${TOTAL_STEPS} questions about how you feel right now — not notes, not trends. `
     + 'Get a perfume matched to who you are. No emails. No sign-ups. '
     + 'No boring perfume pyramids.',
+  /* Ссылка-превью. В проде эти теги есть (девять штук в home.head.html),
+     в порте не было ни одного: ссылка приезжала голой строкой. Здесь
+     основа на весь сайт — её получают экраны квиза и юридические
+     страницы; главная и результат собирают свои через previewTags. */
+  openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    images: [{ ...OG_IMAGE_SIZE, url: cld(HOME_HERO, 'og') }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: TWITTER_SITE,
+    images: [cld(HOME_HERO, 'og')],
+  },
 };
 
 export function generateStaticParams() {

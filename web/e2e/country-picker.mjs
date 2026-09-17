@@ -30,8 +30,7 @@ function toRgb(value) {
       ? value.slice(1).split('').map((c) => c + c).join('')
       : value.slice(1);
     const n = Number.parseInt(h, 16);
-    // eslint-disable-next-line no-bitwise
-    return `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`;
+    return `rgb(${Math.floor(n / 65536)}, ${Math.floor(n / 256) % 256}, ${n % 256})`;
   }
   return value.replace(/\s+/g, ' ');
 }
