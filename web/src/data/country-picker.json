@@ -1,0 +1,54 @@
+{
+  "_": "Поиск по странам на Q_REGION_NOW и Q_REGION_CHILD. Один и тот же виджет с двумя палитрами — так он и сделан в проде: два эмбеда в подвалах q-region-now.footer.html и q-region-child.footer.html, различаются только цветами и текстом вопроса. Числа и цвета взяты из этих эмбедов дословно.",
+  "geometry": {
+    "outerPadPx": 24,
+    "outerPadSmallPx": 20,
+    "maxWidthPx": 480,
+    "questionMarginPx": 24,
+    "inputPadY": 16,
+    "inputPadX": 20,
+    "inputPadYSmall": 14,
+    "inputPadXSmall": 16,
+    "inputFontPx": 16,
+    "inputFontSmallPx": 15,
+    "radiusPx": 3,
+    "listOffsetPx": 6,
+    "listMaxHeightPx": 220,
+    "itemPadY": 12,
+    "itemPadX": 20,
+    "itemPadYSmall": 11,
+    "itemPadXSmall": 16,
+    "itemFontPx": 15,
+    "itemFontSmallPx": 14
+  },
+  "palettes": {
+    "Q_REGION_NOW": {
+      "_": "Золотая палитра: вопрос #f1e09b, список на терракоте #6b2a18.",
+      "question": "#f1e09b",
+      "inputBg": "rgba(255, 255, 255, 0.08)",
+      "inputBorder": "rgba(241, 224, 155, 0.35)",
+      "inputFocus": "#f1e09b",
+      "listBg": "#6b2a18",
+      "listBorder": "rgba(241, 224, 155, 0.2)",
+      "item": "rgba(255, 255, 255, 0.85)",
+      "itemHoverBg": "rgba(241, 224, 155, 0.12)",
+      "itemHover": "#f1e09b",
+      "scrollThumb": "rgba(241, 224, 155, 0.3)"
+    },
+    "Q_REGION_CHILD": {
+      "_": "Белая палитра: вопрос белый, список на тёмной оливе #3d3d20.",
+      "question": "#ffffff",
+      "inputBg": "rgba(255, 255, 255, 0.06)",
+      "inputBorder": "rgba(255, 255, 255, 0.15)",
+      "inputFocus": "rgba(255, 255, 255, 0.5)",
+      "listBg": "#3d3d20",
+      "listBorder": "rgba(255, 255, 255, 0.1)",
+      "item": "rgba(255, 255, 255, 0.8)",
+      "itemHoverBg": "rgba(255, 255, 255, 0.08)",
+      "itemHover": "#ffffff",
+      "scrollThumb": "rgba(255, 255, 255, 0.2)"
+    }
+  },
+  "placeholder": "Search your country…",
+  "empty": "No results"
+}

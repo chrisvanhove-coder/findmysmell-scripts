@@ -12,10 +12,10 @@ import {
 } from '@/lib/answers-store';
 import { reportFunnel } from '@/lib/funnel';
 import { isCountryQuestion } from '@/data/countries';
-import CountrySearch from './CountrySearch';
 import { MECHANICS } from '@/components/quiz/mechanics';
 import OpenAnswerModal, { openPromptFor } from '@/components/quiz/OpenAnswerModal';
 import AnswerBackdrop, { photosFor } from '@/components/quiz/AnswerBackdrop';
+import ScentCloud, { cloudFor } from '@/components/quiz/ScentCloud';
 import { resolve } from '@/lib/scoring';
 import styles from './quiz.module.css';
 
@@ -68,9 +68,16 @@ export default function QuizScreen({
   const answerIsOpen = (code: string) =>
     question.answers.some((a) => a.code === code && a.open);
 
-  /* Фотографии под варианты — пока только на Q_YOURSELF. Если их у
-     вопроса нет, всё ниже не работает и экран остаётся обычным. */
+  /* Украшения обычного экрана. Их два, и оба в проде добавлял скрипт из
+     подвала страницы поверх такого же списка кнопок:
+       photos — фотография на весь экран под наведённый вариант
+                (Q_YOURSELF, Q_ATMOS, Q_CELEBRATE, Q_CALM_NOW);
+       cloud  — облако запаха и пузыри (Q_RADIUS).
+     Если у вопроса нет ни того, ни другого, экран остаётся обычным. */
   const photos = photosFor(question.id);
+  const cloud = cloudFor(question.id);
+  /** Следить ли за тем, на какой вариант смотрят. */
+  const watching = photos !== undefined || cloud;
   const noHover = useSyncExternalStore(hoverSubscribe, noHoverNow, noHoverOnServer);
   // На какой вариант смотрят: наведение мышью, фокус с клавиатуры или
   // первое касание пальцем.
@@ -146,7 +153,14 @@ export default function QuizScreen({
     }
     setChosen(code);
     saveAnswer(question.id, code);
-    reportFunnel(locale, runToken(), { step: question.id, event: 'answer', answerCode: code });
+    /* У вопросов про страну в статистику уходит только факт ответа:
+       название страны — это введённое значение, а не код варианта, и в
+       воронке ему не место (на этом стоит освобождение CNIL). */
+    reportFunnel(locale, runToken(), {
+      step: question.id,
+      event: 'answer',
+      ...(isCountryQuestion(question.id) ? {} : { answerCode: code }),
+    });
     go(nextQuestion(question.id, code));
   }
 
@@ -242,8 +256,11 @@ export default function QuizScreen({
 
   return (
     <main className={styles.screen}>
-      {/* Фотография места за текстом — пока только на Q_YOURSELF. */}
+      {/* Фотография места за текстом. */}
       {photos && <AnswerBackdrop map={photos} active={looking} />}
+      {/* Облако запаха: шарик летит к наведённому варианту и растёт по
+          его «радиусу». */}
+      {cloud && <ScentCloud active={looking} />}
 
       <button type="button" className={styles.back} onClick={() => router.back()}>
         ← Back
@@ -260,19 +277,7 @@ export default function QuizScreen({
         <h1 className={styles.question}>{title}</h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
 
-        {isCountryQuestion(question.id) ? (
-          <CountrySearch
-            value={chosen}
-            onPick={(country) => {
-              setChosen(country);
-              saveAnswer(question.id, country);
-              // Страну в статистику не пишем: это введённое значение, а не
-              // код варианта. Достаточно знать, что на шаге ответили.
-              reportFunnel(locale, runToken(), { step: question.id, event: 'answer' });
-              go(nextQuestion(question.id, country));
-            }}
-          />
-        ) : question.openText ? (
+        {question.openText ? (
           <>
             <textarea
               id="quiz-open-answer"
@@ -317,12 +322,12 @@ export default function QuizScreen({
                     }
                     aria-pressed={chosen === a.code}
                     onClick={() => choose(a.code)}
-                    {...(photos
+                    {...(watching
                       ? {
                         onMouseEnter: () => lookAt(a.code),
                         onMouseLeave: stopLooking,
-                        // Фокус тоже показывает снимок: в проде человек,
-                        // идущий табом, не видел фотографий вовсе.
+                        // Фокус тоже показывает снимок (и облако): в проде
+                        // человек, идущий табом, не видел ни того, ни другого.
                         onFocus: () => lookAt(a.code),
                         onBlur: stopLooking,
                       }

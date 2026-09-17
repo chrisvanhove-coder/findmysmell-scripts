@@ -57,6 +57,16 @@ export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
 };
 
 /**
+ * Два вопроса про страну — один виджет поиска с двумя палитрами. В
+ * проде это два эмбеда в подвалах страниц, различающиеся только цветами
+ * и текстом вопроса (src/data/country-picker.json).
+ */
+const CountryPicker = dynamic(() => import('./CountryPicker'), { ssr: false });
+for (const id of ['Q_REGION_NOW', 'Q_REGION_CHILD']) {
+  MECHANICS[id] = CountryPicker;
+}
+
+/**
  * Семь экранов ветки эмоции — одна механика на всех. Барабан Q_EMO
  * уводит человека на «свой» экран, и различаются они только вопросом,
  * вариантами и снимками (src/data/emotion-tiles.json). В проде это семь

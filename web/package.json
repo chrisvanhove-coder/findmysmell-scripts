@@ -49,7 +49,11 @@
     "check:emotion": "tsx scripts/check-emotion-tiles.mts",
     "e2e:emotion": "node e2e/emotion-tiles.mjs",
     "check:skin": "tsx scripts/check-skin-bottles.mts",
-    "e2e:skin": "node e2e/skin-bottles.mjs"
+    "e2e:skin": "node e2e/skin-bottles.mjs",
+    "check:cloud": "tsx scripts/check-scent-cloud.mts",
+    "e2e:cloud": "node e2e/scent-cloud.mjs",
+    "check:country": "tsx scripts/check-country-picker.mts",
+    "e2e:country": "node e2e/country-picker.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

@@ -1,0 +1,149 @@
+/* Поиск по странам. Числа из эмбедов прода (q-region-now.footer.html и
+   q-region-child.footer.html — они одинаковы):
+
+     блок     fixed inset 0, по центру, padding 24px (20 на ≤480px)
+     колонка  ширина до 480px, Inconsolata
+     вопрос   HIGHCRUISER clamp(22px, 4vw, 36px), капсом,
+              межбуквенное 0.04em, line-height 1.1, отступ снизу 24px
+     поле     padding 16px 20px (14/16 на ≤480), кегль 16px (15),
+              радиус 3px, рамка 1px, переход border-color 0.2s
+     список   на 6px ниже поля, не выше 220px, радиус 3px, слой 200
+     пункт    padding 12px 20px (11/16), кегль 15px (14),
+              переход background 0.15s и color 0.15s
+     пусто    «No results» курсивом
+
+   Цвета приходят переменными: у двух вопросов палитры разные, а
+   разметка и числа одни (см. country-picker.json). */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 24px;
+  /* Фон экрана: у этих двух страниц в Webflow у body нет ни класса, ни
+     тегового стиля, а список в проде нарисован на своём цвете
+     (#6b2a18 и #3d3d20). Берём его же — так список остаётся заодно с
+     экраном, как на живом сайте. */
+  background: var(--cp-list-bg, #16150f);
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  font-family: var(--fms-mono), 'Inconsolata', monospace;
+}
+
+.question {
+  margin: 0 0 24px;
+  color: var(--cp-question, #fff);
+  font-family: var(--fms-display), 'Arial Black', Arial, sans-serif;
+  font-size: clamp(22px, 4vw, 36px);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.field { position: relative; }
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px 20px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  background: var(--cp-input-bg);
+  border: 1px solid var(--cp-input-border);
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input::placeholder { color: rgba(255, 255, 255, 0.35); }
+.input:focus { border-color: var(--cp-input-focus); }
+
+.list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  max-height: 220px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  background: var(--cp-list-bg);
+  border: 1px solid var(--cp-list-border);
+  border-radius: 3px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cp-scroll-thumb) transparent;
+}
+
+.list::-webkit-scrollbar { width: 4px; }
+.list::-webkit-scrollbar-track { background: transparent; }
+.list::-webkit-scrollbar-thumb {
+  background: var(--cp-scroll-thumb);
+  border-radius: 2px;
+}
+
+/* В проде это был div с обработчиком на mousedown: ни клавиатуры, ни
+   читалки. Здесь кнопка, поэтому сбрасываем её вид. */
+.item {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  color: var(--cp-item);
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.item:hover,
+.item[data-active] {
+  background: var(--cp-item-hover-bg);
+  color: var(--cp-item-hover);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--cp-input-focus);
+  outline-offset: -2px;
+}
+
+.empty {
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 14px;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .stage { padding: 20px; }
+
+  .input {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .item {
+    padding: 11px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .item { transition: none; }
+}
