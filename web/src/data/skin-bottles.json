@@ -1,0 +1,41 @@
+{
+  "_": "Флаконы-клипы на Q_SKIN_BEHAVIOR. Привязка код ответа → клип взята из массива bottles в подвале q-skin-behavior.footer.html, ссылки те же (эти клипы и в проде лежали в Cloudinary, а не в Webflow). В проде все пять шли с preload=\"auto\" и autoplay, без ограничения размера: 640×640 по 1.45–1.69 МБ, около 7.9 МБ на экране, где флакон показан квадратиком 56px. Замер explicit API на disappears_bottle: 1 635 951 → 27 899 байт, в 59 раз меньше.",
+  "prodStyles": {
+    "_": "Числа с самой страницы Webflow, прочитаны через API (.bold-text-16, .quick-stack-18, .cell-66…70, .button-87…91) и из <style> в подвале страницы. В Webflow цвет плитки записан как hsla(54.5, 0%, 0%, 1) — это чёрный, здесь он и стоит.",
+    "questionFontPx": 55,
+    "questionFontMediumPx": 40,
+    "questionFontTinyPx": 30,
+    "tileWidthPct": 50,
+    "tileRadiusPx": 20,
+    "tileBg": "#000",
+    "tileLineHeightPx": 70,
+    "tileLineHeightSmallPx": 45,
+    "tileFontPx": 30,
+    "tileFontTinyPx": 15,
+    "tilePadLeftPx": 20,
+    "tilePadRightPx": 220,
+    "tilePadRightMediumPx": 100,
+    "tilePadRightSmallPx": 80,
+    "tilePadRightTinyPx": 35,
+    "gapPx": 20,
+    "gapTinyPx": 16,
+    "padBottomPx": 60,
+    "bottlePx": 56,
+    "bottleSmallPx": 44,
+    "bottleTinyPx": 36,
+    "bottleRightPx": 12,
+    "bottleRightSmallPx": 8,
+    "bottleRadiusPx": 10,
+    "bottleHiddenScale": 0.7,
+    "bottleTransitionMs": 300,
+    "walkStartMs": 1800,
+    "walkEveryMs": 2200
+  },
+  "bottles": {
+    "Q_SKIN_BEHAVIOR__DISAPEAR": "https://res.cloudinary.com/dcefrxxav/video/upload/v1775129746/disappears_bottle_ocb5co.mp4",
+    "Q_SKIN_BEHAVIOR__NORMAL": "https://res.cloudinary.com/dcefrxxav/video/upload/v1775129551/normal_bottle_iw2fsv.mp4",
+    "Q_SKIN_BEHAVIOR__SWEETER": "https://res.cloudinary.com/dcefrxxav/video/upload/v1775129572/sweet_bottle_bklqke.mp4",
+    "Q_SKIN_BEHAVIOR__SHARPER": "https://res.cloudinary.com/dcefrxxav/video/upload/v1775129591/bitter_bottle_inlsov.mp4",
+    "Q_SKIN_BEHAVIOR__NOT_SURE": "https://res.cloudinary.com/dcefrxxav/video/upload/v1775129611/not_sure_bottle_vdb1fs.mp4"
+  }
+}

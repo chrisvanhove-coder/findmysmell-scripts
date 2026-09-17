@@ -52,6 +52,8 @@ export const MECHANICS: Record<string, ComponentType<MechanicProps>> = {
   Q_STAYWELL: dynamic(() => import('./WaveOptions'), { ssr: false }),
   // Четыре карточки-текстуры носителей своего времени.
   Q_GENERATION: dynamic(() => import('./GenerationCards'), { ssr: false }),
+  // Пять вариантов с клипом флакона у правого края плитки.
+  Q_SKIN_BEHAVIOR: dynamic(() => import('./SkinBottles'), { ssr: false }),
 };
 
 /**

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { cld } from '@/lib/cloudinary';
+import { useReducedMotion } from '@/lib/reduced-motion';
 import { QUESTIONS } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
 import data from '@/data/emotion-tiles.json';
@@ -77,21 +78,13 @@ export default function EmotionTiles({ questionId, onChoose }: MechanicProps) {
   const title = QUESTION_COPY[questionId]?.title ?? '';
 
   const noHover = useSyncExternalStore(hoverSubscribe, noHoverNow, noHoverOnServer);
-  const [still, setStill] = useState(false);
+  /* Как и на остальных механиках — ответ нужен в первой же отрисовке. */
+  const still = useReducedMotion();
   /** На какую плитку смотрят: мышь, фокус или первое касание. */
   const [looking, setLooking] = useState<string | null>(null);
   /** Какую плитку тронули пальцем — второе касание по ней выбирает. */
   const [tapped, setTapped] = useState<string | null>(null);
   const root = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setStill(mq.matches);
-    const onChange = () => setStill(mq.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   /* Касание мимо плиток сбрасывает выделение — как в проде. Слушатель
      на своём корне, а не на document: в проде он висел на document

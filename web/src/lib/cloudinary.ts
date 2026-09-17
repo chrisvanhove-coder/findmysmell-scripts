@@ -106,6 +106,13 @@ export const VIDEO_PRESETS = {
   quizVideo: 'c_limit,w_1280/vc_auto/q_auto',
   /** Тот же клип на телефоне: там он лежит полосой в четверть экрана. */
   quizVideoMobile: 'c_limit,w_720/vc_auto/q_auto',
+  /**
+   * Флакон в углу варианта на Q_SKIN_BEHAVIOR — квадратик 56px, то есть
+   * 112 пикселей устройства. Замер explicit API на disappears_bottle:
+   * 1 635 951 → 27 899 байт (в 59 раз меньше). Прод отдавал все пять
+   * клипов 640×640 целиком — около 7.9 МБ на этот экран.
+   */
+  bottleBadge: 'c_limit,w_160/vc_auto/q_auto',
 } as const;
 
 export type VideoPreset = keyof typeof VIDEO_PRESETS;

@@ -1,0 +1,192 @@
+/* Q_SKIN_BEHAVIOR. Числа из самой страницы Webflow (стили
+   .bold-text-16, .quick-stack-18, .cell-66…70, .button-87…91,
+   прочитаны через API) и из <style> в подвале страницы:
+
+     вопрос   Highcruiser 55px белым по центру, margin 10% / 5%;
+              medium 40px, margin-bottom 0, padding-top 20px;
+              small padding 60px сверху и 20px по бокам;
+              tiny 30px/35px, padding-top 40px, 10px по бокам
+     сетка    один столбец, разрыв 20px (16px на tiny),
+              padding-bottom 60px, на medium отступы сняты
+     плитка   50% ширины по центру, чёрная, радиус 20px, Montserrat
+              30px белым, line-height 70px, текст слева, padding
+              слева 20px и справа 220px — место под флакон;
+              medium 100px, small 80px + line-height 45px,
+              tiny 35px + кегль 15px
+     флакон   56px (44 на small, 36 на tiny), справа 12px (8),
+              по центру по вертикали, радиус 10px, чёрный,
+              клип object-fit: contain и mix-blend-mode: screen,
+              скрытый — scale(0.7) и opacity 0, переход 300ms
+
+   Фон экрана — тот же тёмный, что в ветке эмоции, и по той же
+   причине: у body этих страниц в Webflow нет ни класса, ни тегового
+   стиля с фоном, а вопрос белый. См. emotion-tiles.module.css. */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 0 60px;
+  background: #141917;
+}
+
+.question {
+  flex-shrink: 0;
+  width: 100%;
+  margin: 10% 0 5%;
+  /* Сверху место под шапку и кнопку «назад». */
+  padding-top: calc(var(--fms-header-h, 56px) + 8px);
+  color: #fff;
+  font-family: var(--fms-display), 'Arial Black', Arial, sans-serif;
+  font-size: 55px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.tiles {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row { text-align: center; }
+
+.tile {
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  padding: 0 220px 0 20px;
+  border: 0;
+  border-radius: 20px;
+  background-color: #000;
+  color: #fff;
+  font-family: var(--fms-sans), sans-serif;
+  font-size: 30px;
+  line-height: 70px;
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.tile:focus-visible {
+  outline: 2px solid #f1e09b;
+  outline-offset: 4px;
+}
+
+/* ── Квадратик с флаконом ── */
+
+.bottle {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.7);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.bottleOn {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.bottle video,
+.bottle img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Клип снят на чёрном: screen убирает фон и оставляет флакон. */
+  mix-blend-mode: screen;
+}
+
+/* ── Брейкпоинты Webflow ── */
+
+/* medium */
+@media (max-width: 991px) {
+  .question {
+    margin-bottom: 0;
+    padding-top: calc(var(--fms-header-h, 56px) + 20px);
+    font-size: 40px;
+  }
+
+  .tiles { padding-top: 0; }
+  .tile { padding-right: 100px; }
+}
+
+/* small */
+@media (max-width: 767px) {
+  .question {
+    padding-top: calc(var(--fms-header-h, 56px) + 60px);
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Правило из custom code сайта: на телефоне вариант на всю ширину и
+     не ниже 44px. Текст при этом остаётся слева — место справа занято
+     флаконом, и по центру он налезал бы на него. */
+  .tile {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding-right: 80px;
+    line-height: 45px;
+  }
+
+  .tiles { padding-left: 12px; padding-right: 12px; }
+
+  .bottle {
+    right: 8px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* tiny */
+@media (max-width: 479px) {
+  .question {
+    margin-bottom: 0;
+    padding-top: calc(var(--fms-header-h, 56px) + 40px);
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 30px;
+    line-height: 35px;
+  }
+
+  .tiles { gap: 16px; }
+
+  /* 35px справа при флаконе 36px — числа прода: текст на самом узком
+     экране заходит под флакон на несколько пикселей. Оставлено как на
+     живом сайте; подписи здесь короткие («Not sure»), и заметно это
+     только у самой длинной. Скажете — разведу. */
+  .tile {
+    padding-right: 35px;
+    font-size: 15px;
+  }
+
+  .bottle {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottle { transition: none; }
+}

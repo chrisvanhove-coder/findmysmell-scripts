@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { cldVideo, cldPoster } from '@/lib/cloudinary';
+import { useReducedMotion } from '@/lib/reduced-motion';
 import data from '@/data/gender-videos.json';
 import styles from './gender-videos.module.css';
 import type { MechanicProps } from './mechanics';
@@ -68,20 +69,14 @@ const narrowOnServer = () => false;
 
 export default function GenderVideos({ onChoose }: MechanicProps) {
   const narrow = useSyncExternalStore(hoverSubscribe, narrowNow, narrowOnServer);
-  const [still, setStill] = useState(false);
+  /* Ответ про движение нужен УЖЕ в первой отрисовке: через состояние в
+     эффекте он приходил на кадр позже, и за этот кадр браузер успевал
+     начать качать клип, который просили не проигрывать. */
+  const still = useReducedMotion();
   const [looking, setLooking] = useState<string | null>(null);
   /** Какие клипы уже разрешено грузить: сразу только первый. */
   const [loaded, setLoaded] = useState<string[]>([OPTIONS[0].code]);
   const videos = useRef<Record<string, HTMLVideoElement | null>>({});
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setStill(mq.matches);
-    const onChange = () => setStill(mq.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   /* Первый клип проявляется через 300 мс — как в проде. */
   useEffect(() => {

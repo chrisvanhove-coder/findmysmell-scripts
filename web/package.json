@@ -47,7 +47,9 @@
     "check:open": "tsx scripts/check-open-answers.mts",
     "e2e:open": "node e2e/open-answer.mjs",
     "check:emotion": "tsx scripts/check-emotion-tiles.mts",
-    "e2e:emotion": "node e2e/emotion-tiles.mjs"
+    "e2e:emotion": "node e2e/emotion-tiles.mjs",
+    "check:skin": "tsx scripts/check-skin-bottles.mts",
+    "e2e:skin": "node e2e/skin-bottles.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",
