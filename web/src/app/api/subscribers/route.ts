@@ -3,7 +3,7 @@ import { sql } from 'drizzle-orm';
 import { getDb, schema } from '@/db';
 import { parseSubscriber } from '@/lib/submission';
 import { sendResultEmail } from '@/lib/email';
-import { match } from '@/lib/matching';
+import { matchById } from '@/lib/matching';
 
 /**
  * Подписка на письмо с результатом. Форма перенесена со страницы результата
@@ -33,6 +33,10 @@ export async function POST(request: Request) {
   }
 
   const { email, locale, archetype, perfumeId } = parsed.input;
+  const chosen = archetype && perfumeId ? matchById(archetype, perfumeId) : null;
+  if (perfumeId && !chosen) {
+    return NextResponse.json({ error: 'unknown perfume for archetype' }, { status: 400 });
+  }
 
   try {
     const db = getDb();
@@ -48,6 +52,8 @@ export async function POST(request: Request) {
           archetype: sql`excluded.archetype`,
           perfumeId: sql`excluded.perfume_id`,
           consentAt: sql`now()`,
+          consentEmail: true,
+          sentAt: null,
         },
       });
 
@@ -55,14 +61,6 @@ export async function POST(request: Request) {
     if (!archetype) {
       return NextResponse.json({ subscribed: true, sent: false });
     }
-
-    // Флакон присылает браузер; если не прислал или id неизвестен, берём
-    // запасной вариант архетипа — письмо всё равно должно быть цельным.
-    const picked = match(archetype, null);
-    const chosen =
-      perfumeId && picked
-        ? (findById(picked, perfumeId) ?? picked)
-        : picked;
 
     const origin = siteOrigin(request);
     const outcome = await sendResultEmail({
@@ -87,22 +85,6 @@ export async function POST(request: Request) {
     console.error('subscriber insert failed', error);
     return NextResponse.json({ error: 'storage unavailable' }, { status: 503 });
   }
-}
-
-/** Ищет присланный флакон среди главного и альтернатив. */
-function findById(
-  picked: ReturnType<typeof match>,
-  id: string,
-): ReturnType<typeof match> {
-  if (!picked) return null;
-  if (picked.main.id === id) return picked;
-  const alt = picked.alternatives.find((p) => p.id === id);
-  if (!alt) return null;
-  // Подобранный человеку флакон становится главным в письме.
-  return {
-    main: alt,
-    alternatives: [picked.main, ...picked.alternatives.filter((p) => p.id !== id)].slice(0, 3),
-  };
 }
 
 /** Адрес сайта для ссылок в письме — из заголовков запроса, не захардкожен. */

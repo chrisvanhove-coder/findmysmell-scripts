@@ -47,7 +47,9 @@ export async function walkQuiz(page, {
   onStep = null,
   pick = (n, i) => i % n,
 } = {}) {
-  await page.goto(`${base}/en/quiz/q-gender`, { waitUntil: 'networkidle' });
+  await page.goto(`${base}/en`, { waitUntil: 'networkidle' });
+  await page.locator('a[href="/en/quiz/q-gender"]').first().click();
+  await page.waitForURL('**/quiz/q-gender');
 
   const visited = [];
   for (let i = 0; i < 30; i += 1) {

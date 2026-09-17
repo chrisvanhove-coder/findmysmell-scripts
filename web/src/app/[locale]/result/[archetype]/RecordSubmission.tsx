@@ -1,87 +1,75 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { Locale } from '@/lib/i18n';
 import {
-  loadAnswers,
-  loadOpenText,
-  loadQuestionOpens,
-  loadResearchConsent,
-  runToken,
-  wasSent,
-  markSent,
-  browserKey,
-  bumpRunIndex,
+  loadAnswers, loadOpenText, loadQuestionOpens, loadResearchConsent,
+  runToken, revision, wasSent, markSent, browserKey, submissionRunIndex,
 } from '@/lib/answers-store';
+import { missingQuestions } from '@/lib/quiz-state';
 import { reportFunnel } from '@/lib/funnel';
 
-/**
- * Отправляет прохождение в базу — один раз за проход.
- *
- * Ничего не рисует. Отдельным компонентом, а не внутри ResultMatch, потому
- * что это не про подбор флакона: подбор влияет на разметку, а это побочный
- * эффект, который не должен мешать показу результата.
- *
- * Почему на клиенте: ответы живут только в браузере, сервер их не видит.
- * Почему безопасно: победитель и баллы пересчитываются на сервере из ответов,
- * присланным значениям он не верит (см. src/lib/submission.ts).
- */
+// Coalesce StrictMode requests. The database also enforces token + revision ordering.
+const pending = new Map<string, Promise<void>>();
+
 export default function RecordSubmission({ locale }: { locale: Locale }) {
-  // Шаг RESULT в воронке. Отдельным эффектом от записи прохождения: сюда
-  // доходят и те, кто не дал согласия на исследование, и их тоже надо
-  // считать — иначе «дошёл до результата» окажется меньше правды.
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    if (!('Q_RADIUS' in loadAnswers())) return;
-    reportFunnel(locale, runToken(), { step: 'RESULT', event: 'view' });
-  }, [locale]);
-
-  useEffect(() => {
-    // Согласие записывается на последнем экране квиза. Если его нет вовсе,
-    // человек до конца не дошёл — скорее всего пришёл по ссылке на чужой
-    // результат. Такое прохождение не наше.
     const consent = loadResearchConsent();
-    if (consent === null) return;
-
-    if (wasSent()) return;
-
     const answers = loadAnswers();
-    if (!('Q_RADIUS' in answers)) return;
+    if (consent === null || missingQuestions(answers).length || wasSent()) return;
+    const token = runToken();
+    const version = revision();
+    const id = `${token}:${version}`;
+    const payload = {
+      locale, answers, openAnswer: loadOpenText(), questionOpens: loadQuestionOpens(),
+      consentResearch: consent, clientToken: token, revision: version,
+      browserKey: browserKey(), runIndex: submissionRunIndex(),
+    };
+    reportFunnel(locale, token, { step: 'RESULT', event: 'view' });
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    async function send() {
+      let request = pending.get(id);
+      if (!request) {
+        request = (async () => {
+          const response = await fetch('/api/submissions', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload), keepalive: true,
+            signal: AbortSignal.timeout(15000),
+          });
+          if (!response.ok) throw new Error('save failed');
+          const body = await response.json();
+          if (!body.stored && !body.duplicate) throw new Error('save not acknowledged');
+          markSent(token, version);
+        })().finally(() => pending.delete(id));
+        pending.set(id, request);
+      }
+      try {
+        await request;
+        if (!cancelled) setFailed(false);
+      } catch {
+        if (cancelled) return;
+        setFailed(true);
+        if (attempt < 2) timer = setTimeout(() => setAttempt((n) => n + 1), 2000 * (attempt + 1));
+      }
+    }
+    void send();
+    const online = () => setAttempt((n) => n + 1);
+    window.addEventListener('online', online);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+      window.removeEventListener('online', online);
+    };
+  }, [locale, attempt]);
 
-    // Флаг ставим до запроса: в dev StrictMode эффект выполняется дважды,
-    // и второй проход должен увидеть, что отправка уже начата.
-    // От потери самого флага защищает уникальный clientToken на сервере.
-    markSent();
-
-    // Номер прохождения увеличиваем ровно здесь, после markSent(): так
-    // перезагрузка страницы результата его не накрутит, а второй проход
-    // StrictMode отсекается тем же флагом.
-    const key = browserKey();
-    const runIndex = key ? bumpRunIndex() : null;
-
-    // Запрос намеренно не отменяется при размонтировании и идёт с keepalive:
-    // человек может уйти со страницы сразу, прохождение всё равно должно
-    // доехать. Отмена в cleanup здесь бы его просто теряла.
-    fetch('/api/submissions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        locale,
-        answers,
-        openAnswer: loadOpenText(),
-        // Тексты «Other» по вопросам. Отдельным полем, а не внутри
-        // openAnswer: в проде и то и другое лежало в одном ключе, и одно
-        // затирало другое.
-        questionOpens: loadQuestionOpens(),
-        consentResearch: consent,
-        clientToken: runToken(),
-        browserKey: key,
-        runIndex,
-      }),
-      keepalive: true,
-    }).catch(() => {
-      // Аналитика не должна ничего ломать. Человек уже видит свой архетип.
-    });
-  }, [locale]);
-
-  return null;
+  if (!failed) return null;
+  return <p role="status">
+    {locale === 'fr' ? 'Vos réponses ne sont pas encore enregistrées. ' : 'Your answers have not been saved yet. '}
+    <button type="button" onClick={() => { setFailed(false); setAttempt((n) => n + 1); }}>
+      {locale === 'fr' ? 'Réessayer' : 'Try again'}
+    </button>
+  </p>;
 }

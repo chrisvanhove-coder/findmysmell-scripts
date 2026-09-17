@@ -17,6 +17,7 @@ import OpenAnswerModal, { openPromptFor } from '@/components/quiz/OpenAnswerModa
 import AnswerBackdrop, { photosFor } from '@/components/quiz/AnswerBackdrop';
 import ScentCloud, { cloudFor } from '@/components/quiz/ScentCloud';
 import { resolve } from '@/lib/scoring';
+import { missingQuestions } from '@/lib/quiz-state';
 import styles from './quiz.module.css';
 
 /**
@@ -110,9 +111,13 @@ export default function QuizScreen({
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setChosen(loadAnswers()[question.id] ?? null);
+    if (question.emotionDetail) {
+      const active = nextQuestion('Q_EMO', loadAnswers().Q_EMO ?? '');
+      if (active !== question.id) router.replace(`/${locale}/quiz/${toSlug(loadAnswers().Q_EMO ? active : 'Q_EMO')}`);
+    }
     if (question.openText) setOpenText(loadOpenText());
     setAskedText(loadQuestionOpens()[question.id] ?? '');
-  }, [question.id, question.openText]);
+  }, [question.id, question.openText, question.emotionDetail, locale, router]);
 
   // Следующий экран заранее подгружаем, чтобы переход был мгновенным.
   useEffect(() => {
@@ -139,7 +144,13 @@ export default function QuizScreen({
       router.push(`/${locale}/quiz/${toSlug(next)}`);
       return;
     }
-    const { winner } = resolve(loadAnswers());
+    const answers = loadAnswers();
+    const missing = missingQuestions(answers);
+    if (missing.length) {
+      router.push(`/${locale}/quiz/${toSlug(missing[0])}`);
+      return;
+    }
+    const { winner } = resolve(answers);
     router.push(`/${locale}/result/${winner.toLowerCase()}`);
   }
 
@@ -281,6 +292,7 @@ export default function QuizScreen({
           <>
             <textarea
               id="quiz-open-answer"
+              maxLength={2000}
               className={styles.textarea}
               value={openText}
               onChange={(e) => {

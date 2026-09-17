@@ -1,9 +1,13 @@
 'use client';
 
-import Link from 'next/link';
+import StartQuizLink from '@/components/StartQuizLink';
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { Locale } from '@/lib/i18n';
+import { missingQuestions } from '@/lib/quiz-state';
+import { toSlug } from '@/lib/quiz';
+import { loadResearchConsent } from '@/lib/answers-store';
 import { loadAnswers } from '@/lib/answers-store';
 import { resolve } from '@/lib/scoring';
 import styles from './empty.module.css';
@@ -29,6 +33,11 @@ export default function ResultRedirect({ locale }: { locale: Locale }) {
       setEmpty(true);
       return;
     }
+    const missing = missingQuestions(answers);
+    if (missing.length || loadResearchConsent() === null) {
+      router.replace(`/${locale}/quiz/${toSlug(missing[0] ?? 'Q_OPEN')}`);
+      return;
+    }
     const { winner } = resolve(answers);
     router.replace(`/${locale}/result/${winner.toLowerCase()}`);
   }, [locale, router]);
@@ -48,9 +57,9 @@ export default function ResultRedirect({ locale }: { locale: Locale }) {
         Your result is built from your answers, and we don&apos;t have them yet.
         It takes about three minutes.
       </p>
-      <Link className={styles.cta} href={`/${locale}/quiz/q-gender`}>
+      <StartQuizLink className={styles.cta} href={`/${locale}/quiz/q-gender`}>
         Start the quiz
-      </Link>
+      </StartQuizLink>
     </main>
   );
 }

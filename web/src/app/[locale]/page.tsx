@@ -1,5 +1,5 @@
+import StartQuizLink from '@/components/StartQuizLink';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { isLocale, LOCALES, type Locale } from '@/lib/i18n';
 import { getHomeCopy, numberWord } from '@/lib/home';
@@ -119,9 +119,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             ))}
           </p>
 
-          <Link className={styles.heroBegin} href={quizHref}>
+          <StartQuizLink className={styles.heroBegin} href={quizHref}>
             {copy.begin} <span aria-hidden="true">→</span>
-          </Link>
+          </StartQuizLink>
         </div>
       </section>
 
@@ -142,9 +142,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           ))}
         </ol>
 
-        <Link className={styles.howBegin} href={quizHref}>
+        <StartQuizLink className={styles.howBegin} href={quizHref}>
           {copy.begin} <span aria-hidden="true">→</span>
-        </Link>
+        </StartQuizLink>
       </section>
     </div>
   );

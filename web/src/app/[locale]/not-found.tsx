@@ -1,3 +1,4 @@
+import StartQuizLink from '@/components/StartQuizLink';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import styles from './not-found.module.css';
@@ -29,7 +30,7 @@ export default function NotFound() {
       </p>
       <nav className={styles.actions}>
         <Link className={styles.primary} href="/en">Go to the start</Link>
-        <Link className={styles.secondary} href="/en/quiz/q-gender">Take the quiz</Link>
+        <StartQuizLink className={styles.secondary} href="/en/quiz/q-gender">Take the quiz</StartQuizLink>
       </nav>
     </main>
   );

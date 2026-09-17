@@ -133,7 +133,7 @@ console.log('\nПриём: текст можно записать только �
 {
   const base = {
     locale: 'en',
-    answers: { Q_RADIUS: 'Q_RADIUS__CLOSE', Q_CALM: 'Q_CALM__OTHER' },
+    answers: { Q_RADIUS: 'Q_RADIUS__CLOSE', Q_EMO: 'Q_EMO__CALM', Q_CALM: 'Q_CALM__OTHER' },
     openAnswer: 'final words',
     consentResearch: true,
     clientToken: 'token-1',

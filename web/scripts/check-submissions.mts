@@ -1,3 +1,4 @@
+import { completeAnswers } from './lib/quiz-fixture';
 /**
  * Проверка приёма прохождений и подписки.
  *
@@ -38,25 +39,7 @@ function check(label: string, condition: boolean, detail = '') {
 }
 
 /** Ответы полного прохождения: хватает, чтобы получить архетип. */
-const ANSWERS = {
-  Q_GENDER: 'Q_GENDER__WOMAN',
-  Q_REGION_NOW: 'France',
-  Q_GENERATION: 'Q_GENERATION__1990S',
-  Q_DAYTDAY: 'Q_DAYTDAY__CALM',
-  Q_STAYWELL: 'Q_STAYWELL__LONG',
-  Q_ATMOS: 'Q_ATMOS__COSY',
-  Q_YOURSELF: 'Q_YOURSELF__SOFT',
-  Q_EMO: 'Q_EMO__COZY',
-  Q_COZY: 'Q_COZY__BLANKET',
-  Q_ENV_CHILD: 'Q_ENV_CHILD__CITY',
-  Q_REGION_CHILD: 'France',
-  Q_CELEBRATE: 'Q_CELEBRATE__CAKE',
-  Q_CALM_NOW: 'Q_CALM_NOW__TEA',
-  Q_SWEET: 'Q_SWEET__MODER_SW',
-  Q_WILD: 'Q_WILD__LITTLE_WILD',
-  Q_SKIN_BEHAVIOR: 'Q_SKIN_BEHAVIOR__SWEETER',
-  Q_RADIUS: 'Q_RADIUS__SOFT',
-};
+const ANSWERS = completeAnswers();
 
 function base(extra: Record<string, unknown> = {}) {
   return {
@@ -82,7 +65,7 @@ console.log('\nРазбор и проверка входа');
     ['ответ не строка', base({ answers: { ...ANSWERS, Q_GENDER: 7 } })],
     ['согласие не boolean', base({ consentResearch: 'yes' })],
     ['без clientToken', base({ clientToken: '' })],
-    ['квиз не дошёл до конца', base({ answers: { Q_GENDER: 'Q_GENDER__WOMAN' } })],
+    ['несуществующий вариант', base({ answers: { Q_GENDER: 'Q_GENDER__WOMAN' } })],
     ['слишком длинный открытый ответ', base({ openAnswer: 'x'.repeat(2001) })],
     ['слишком много ответов', base({
       answers: Object.fromEntries(
@@ -316,6 +299,7 @@ console.log('\nЗапись в Postgres (pglite, миграции из drizzle/)
   {
     const p = parseSubmission(base({
       clientToken: 'token-opens',
+      answers: { ...ANSWERS, Q_CALM: 'Q_CALM__OTHER', Q_CELEBRATE: 'Q_CELEBRATE__OTHER' },
       questionOpens: {
         Q_CALM: 'cold linen on a window',
         Q_CELEBRATE: 'mandarins and cold stairwell',

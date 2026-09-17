@@ -1,3 +1,4 @@
+import { eq, sql } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { getDb, schema } from '@/db';
 import { parseSubmission, buildRecord, buildQuestionOpenRows } from '@/lib/submission';
@@ -40,14 +41,29 @@ export async function POST(request: Request) {
       const rows = await tx
         .insert(schema.submissions)
         .values(record)
-        // Повторная отправка того же прохождения (перезагрузка страницы,
-        // потерянный флаг quiz_sent) не создаёт второй строки.
-        .onConflictDoNothing({ target: schema.submissions.clientToken })
+        // A newer revision replaces this run. Retries and delayed older requests do not.
+        .onConflictDoUpdate({
+          target: schema.submissions.clientToken,
+          set: {
+            locale: record.locale,
+            winner: record.winner,
+            secondary: record.secondary,
+            scores: record.scores,
+            answers: record.answers,
+            openAnswer: record.openAnswer,
+            consentResearch: record.consentResearch,
+            revision: record.revision,
+          },
+          setWhere: sql`${schema.submissions.revision} < ${record.revision}`,
+        })
         .returning({ id: schema.submissions.id });
 
       // Повтор: прохождение уже записано, вместе с его текстами.
       if (rows.length === 0) return rows;
 
+      // Remove texts from abandoned branches and replaced Other choices atomically.
+      await tx.delete(schema.questionOpenAnswers)
+        .where(eq(schema.questionOpenAnswers.submissionId, rows[0].id));
       const opens = buildQuestionOpenRows(rows[0].id, parsed.input.questionOpens);
       if (opens.length > 0) {
         await tx.insert(schema.questionOpenAnswers).values(opens).onConflictDoNothing();

@@ -44,6 +44,7 @@ export const submissions = pgTable(
     // он терялся при очистке хранилища, и то же прохождение уезжало дважды.
     // Здесь повтор отсекает база, а не клиент.
     clientToken: text('client_token').notNull().unique(),
+    revision: integer('revision').notNull().default(0),
     locale: text('locale').notNull(),
     winner: text('winner').notNull(),
     secondary: text('secondary'),

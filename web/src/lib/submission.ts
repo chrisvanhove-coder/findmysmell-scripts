@@ -2,6 +2,7 @@ import { resolve, type Answers, type Scores } from './scoring';
 import { isLocale, type Locale } from './i18n';
 import { ARCHETYPE_KEYS, type ArchetypeKey } from './archetype-colors';
 import { QUESTIONS } from './quiz';
+import { validAnswer, currentAnswers, selectedOpen } from './quiz-state';
 
 /**
  * Вопросы, у которых есть вариант «Other» с текстовым вводом.
@@ -62,6 +63,7 @@ export interface SubmissionInput {
   questionOpens: Record<string, string>;
   consentResearch: boolean;
   clientToken: string;
+  revision: number;
   browserKey: string | null;
   runIndex: number | null;
 }
@@ -83,6 +85,7 @@ export interface SubmissionRecord {
   openAnswer: string | null;
   consentResearch: boolean;
   clientToken: string;
+  revision: number;
   browserKey: string | null;
   runIndex: number | null;
 }
@@ -116,13 +119,17 @@ export function parseSubmission(body: unknown): Parsed {
     if (key.length > LIMITS.answerKey) return { ok: false, error: 'answer key too long' };
     if (typeof value !== 'string') return { ok: false, error: 'answer must be a string' };
     if (value.length > LIMITS.answerValue) return { ok: false, error: 'answer value too long' };
+    if (!validAnswer(key, value)) return { ok: false, error: `invalid answer for ${key}` };
     clean[key] = value;
   }
 
-  // Последний экран квиза — Q_OPEN, и пройти его можно только ответив на
-  // Q_RADIUS. Без него прохождение не завершено: скорее всего человек пришёл
-  // по ссылке на чужой результат, а не прошёл квиз.
-  if (!('Q_RADIUS' in clean)) return { ok: false, error: 'quiz not finished' };
+  if (Object.keys(currentAnswers(clean)).length !== entries.length) {
+    return { ok: false, error: 'answers contain an inactive branch' };
+  }
+  const revision = b.revision ?? 0;
+  if (!Number.isSafeInteger(revision) || (revision as number) < 0 || (revision as number) > 2147483647) {
+    return { ok: false, error: 'invalid revision' };
+  }
 
   if (typeof consentResearch !== 'boolean') {
     return { ok: false, error: 'consentResearch must be a boolean' };
@@ -147,6 +154,9 @@ export function parseSubmission(body: unknown): Parsed {
     for (const [qid, value] of openEntries) {
       if (!QUESTIONS_WITH_OPEN.has(qid)) {
         return { ok: false, error: `question ${qid} has no open option` };
+      }
+      if (!selectedOpen(qid, clean)) {
+        return { ok: false, error: `open option not selected for ${qid}` };
       }
       if (typeof value !== 'string') {
         return { ok: false, error: 'question open must be a string' };
@@ -192,6 +202,7 @@ export function parseSubmission(body: unknown): Parsed {
       questionOpens,
       consentResearch,
       clientToken,
+      revision: revision as number,
       browserKey,
       runIndex,
     },
@@ -217,6 +228,7 @@ export function buildRecord(input: SubmissionInput): SubmissionRecord {
     openAnswer: input.openAnswer !== '' ? input.openAnswer : null,
     consentResearch: input.consentResearch,
     clientToken: input.clientToken,
+    revision: input.revision,
     // Номер без ключа смысла не имеет: не с чем связать. И наоборот —
     // ключ без номера бесполезен. Поэтому пара, либо ничего.
     browserKey: input.browserKey !== null && input.runIndex !== null ? input.browserKey : null,

@@ -161,6 +161,12 @@ export function match(
   return { main, alternatives: pool.filter((p) => p !== main).slice(0, 3) };
 }
 
+/** Restore the exact bottle shown in the quiz, without recomputing preferences. */
+export function matchById(archetype: ArchetypeKey, id: string): Match | null {
+  const main = PERFUMES.find((p) => p.id === id && p.archetype === archetype);
+  return main ? { main, alternatives: [] } : null;
+}
+
 export function catalogFor(archetype: ArchetypeKey): Perfume[] {
   return PERFUMES.filter((p) => p.archetype === archetype);
 }

@@ -53,20 +53,19 @@ export async function writeRuns(
 
   if (withEmails) {
     for (const r of withEmail) {
-      if (!r.email) continue;
+      if (!r.email || !r.consentEmail) continue;
       const res = await db
         .insert(schema.subscribers)
         .values({
           email: r.email,
           locale: r.locale,
           archetype: r.winner,
-          consentEmail: true,
+          consentEmail: r.consentEmail,
           // Дата согласия ИЗ ТАБЛИЦЫ, а не момент переноса: подменить её
           // значило бы продлить себе срок хранения на полгода.
           consentAt: r.createdAt,
-          // Письмо тогда отправил старый сайт. Помечаем отправленным,
-          // иначе рассылка ушла бы этим людям во второй раз.
-          sentAt: r.createdAt,
+          // Импорт не отправляет письма; без подтверждения доставки дату не выдумываем.
+          sentAt: null,
           createdAt: r.createdAt,
         })
         .onConflictDoNothing({ target: schema.subscribers.email })

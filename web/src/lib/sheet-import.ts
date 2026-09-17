@@ -66,6 +66,7 @@ export interface ParsedRun {
   line: number;
   wasRescored: boolean;
   email: string | null;
+  consentEmail: boolean;
 }
 
 export interface Skipped {
@@ -281,6 +282,7 @@ export function parseSheet(bytes: Uint8Array | string): ParseResult {
         line,
         wasRescored,
         email: str(r.emailresult).toLowerCase() || null,
+        consentEmail: truthy(r.consentemail),
       });
     }
   }

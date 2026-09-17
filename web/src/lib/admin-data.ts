@@ -11,6 +11,7 @@
  */
 import { and, desc, eq, gte, isNotNull, ne, sql } from 'drizzle-orm';
 import { getDb, schema } from '@/db';
+import { missingQuestions } from './quiz-state';
 import { QUESTIONS, EMOTION_BRANCHES } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
 import openPrompts from '@/data/question-open-prompts.json';
@@ -454,7 +455,7 @@ export async function submissionsCsv(days: number, firstRunsOnly: boolean): Prom
     // девяти вопросов, где есть «Other». Рядом с кодом ответа: в колонке
     // Q_CALM будет Q_CALM__OTHER, а в open_Q_CALM — что человек написал.
     ...OPEN_QUESTION_IDS.map((id) => `open_${id}`),
-    'open_answer',
+    'open_answer', 'answers_complete', 'missing_questions',
   ];
 
   const esc = (v: unknown) => {
@@ -471,7 +472,7 @@ export async function submissionsCsv(days: number, firstRunsOnly: boolean): Prom
       r.consentResearch,
       ...questionIds.map((id) => a[id] ?? ''),
       ...OPEN_QUESTION_IDS.map((id) => opens[id] ?? ''),
-      r.openAnswer,
+      r.openAnswer, missingQuestions(a).length === 0, missingQuestions(a).join(' '),
     ].map(esc).join(','));
   }
   // BOM: иначе Excel читает UTF-8 как cp1251 и ломает французские ответы.
