@@ -106,15 +106,33 @@ async function tags(path) {
   check('иконка вкладки есть', !!home.icon, String(home.icon));
 
   const result = await tags('/en/result/ceo');
-  /* Заголовок карточки результата — панчлайн: «Панчлайн главным, имя
-     архетипа не надо». И «politely unreachable» она просила стереть со
-     всех архетипов — в превью ссылки его быть не должно. */
+  /* Заголовок результата — панчлайн, и во вкладке, и в карточке ссылки:
+     «Да, замени панчлайном везде». Плюс «politely unreachable» она
+     просила стереть со всех архетипов — ни там, ни там его быть не должно. */
   check('в превью результата стоит панчлайн',
     (result.meta['og:title'] ?? '').startsWith('You replied to that email'),
     result.meta['og:title']);
   check('и нет текста, который просили убрать',
     !(result.meta['og:title'] ?? '').includes('politely unreachable'),
     result.meta['og:title']);
+  const tabTitle = await page.title();
+  check('в заголовке вкладки тоже панчлайн',
+    tabTitle.startsWith('You replied to that email') && tabTitle.endsWith('Find My Smell'),
+    tabTitle);
+  check('и там его тоже нет', !tabTitle.includes('politely unreachable'), tabTitle);
+  check('в карточке название сайта не дублируется',
+    !(result.meta['og:title'] ?? '').includes('Find My Smell')
+    && result.meta['og:site_name'] === 'Find My Smell',
+    result.meta['og:title']);
+
+  /* И у остальных шести архетипов заголовок тоже панчлайн, а не «You are». */
+  for (const key of ['hug', 'offgrid', 'japan', 'summer', 'outoftime', 'therapist']) {
+    const t = await tags(`/en/result/${key}`);
+    const tab = await page.title();
+    check(`${key}: заголовок не начинается с «You are»`,
+      !(t.meta['og:title'] ?? '').startsWith('You are') && !tab.startsWith('You are'),
+      `${t.meta['og:title']} | ${tab}`);
+  }
   check('описание результата — его дескриптор',
     (result.meta['og:description'] ?? '').includes('left the party'),
     result.meta['og:description']);

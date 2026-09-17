@@ -50,19 +50,24 @@ export async function generateMetadata({
   const parsed = parse(await params);
   if (!parsed) return {};
   const a = getArchetype(parsed.locale, parsed.key);
-  const title = `${a.you} ${a.identity} — Find My Smell`;
 
-  /* ЗАГОЛОВОК КАРТОЧКИ ССЫЛКИ — ПАНЧЛАЙН, а не «You are politely
-     unreachable». Это её правило про всё, чем делятся: «Панчлайн
-     главным, @tag наверх, имя архетипа не надо потому что это
-     внутреннее имя». А «politely unreachable» она к тому же просила
-     стереть со всех архетипов — на самой странице этого героя нет, и
-     тащить его в превью ссылки было бы возвращением убранного.
-     В заголовке вкладки он пока остаётся: это отдельный вопрос к ней. */
+  /* ЗАГОЛОВОК — ПАНЧЛАЙН. И во вкладке, и в карточке ссылки: «Да, замени
+     панчлайном везде». Это то же правило, по которому сделана
+     шеринговая карточка: «Панчлайн главным, @tag наверх, имя архетипа
+     не надо потому что это внутреннее имя». Плюс «You are politely
+     unreachable» она просила стереть со всех архетипов — на странице
+     этого героя нет, и в заголовке ему тоже места нет.
+
+     Запасной вариант (`you` + `identity`) остаётся на случай, если у
+     архетипа почему-то не окажется панчлайна: пустой заголовок хуже
+     старого. Сами тексты живут в данных и больше нигде не показываются. */
   const punchLine = parsePunch((punchLines as Record<string, unknown>)[parsed.key])
     .map(([text]) => text)
     .join(' ');
-  const shareTitle = punchLine || title;
+  const headline = punchLine || `${a.you} ${a.identity}`;
+  /* Во вкладке — с названием сайта, в карточке ссылки — без: там название
+     несёт отдельный тег og:site_name, и дублировать его незачем. */
+  const title = `${headline} — Find My Smell`;
 
   /* Ссылкой на результат делятся чаще всего — значит она обязана
      разворачиваться карточкой. Картинка здесь общая, фирменная: у
@@ -73,7 +78,7 @@ export async function generateMetadata({
     description: a.descriptor,
     alternates: { canonical: `/${parsed.locale}/result/${parsed.key.toLowerCase()}` },
     ...previewTags({
-      title: shareTitle,
+      title: headline,
       description: a.descriptor,
       path: `/${parsed.locale}/result/${parsed.key.toLowerCase()}`,
       locale: parsed.locale,
