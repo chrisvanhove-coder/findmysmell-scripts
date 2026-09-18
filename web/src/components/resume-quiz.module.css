@@ -1,0 +1,131 @@
+/* Вопрос «продолжить или начать заново».
+   ЭТОГО ОКНА НА ЖИВОМ САЙТЕ НЕТ — сверять не с чем. Поэтому числа взяты
+   не из прода, а из уже перенесённого окошка «Other»
+   (components/quiz/open-answer-modal.module.css), чтобы на сайте было одно
+   и то же стекло, а не второй стиль диалога: затемнение чёрный 0.6 +
+   blur(4px), рамка 0.25, радиус 28px, ширина 480px / 90%, тень
+   0 8px 40px rgba(0,0,0,0.3), Georgia, кнопки-пилюли 50px.
+
+   ОДНО ОТЛИЧИЕ ОТ ТОГО ОКОШКА — ФОН ПАНЕЛИ. Там стекло rgba(255,255,255,
+   0.12), и держится оно на backdrop-filter. Это окно, в отличие от того,
+   встаёт поверх ГЛАВНОЙ, где во весь экран стоит заголовок
+   «ThereIsNo UniversalScent». Там, где backdrop-filter не рисуется (нет
+   композиции на GPU, старый браузер), заголовок читается прямо сквозь
+   панель и текст вопроса пропадает — это видно на снимке из проверки.
+   Поэтому панель тёмная и по существу непрозрачная — --charcoal-950
+   (#141917) с 0.9, а размытие оставлено сверху для тех, у кого оно есть. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.panel {
+  width: 90%;
+  max-width: 480px;
+  padding: 48px 36px 40px;
+  text-align: center;
+  background: rgba(20, 25, 23, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 28px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+  margin: 0 0 8px;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+}
+
+/* Что именно потеряется, сказано словами: «начать заново» — действие
+   без отмены, и человек должен понимать это до нажатия. */
+.note {
+  margin: 0 0 28px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.resume {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.resume:hover { background: rgba(255, 255, 255, 0.28); }
+.resume:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* Тише, чем «продолжить»: по умолчанию мы сохраняем работу человека,
+   а не выбрасываем её. */
+.restart {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.restart:hover { color: #fff; border-color: rgba(255, 255, 255, 0.6); }
+.restart:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.cancel {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cancel:hover { color: #fff; }
+.cancel:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (max-width: 480px) {
+  .panel { padding: 36px 24px 30px; }
+  .title { font-size: 18px; }
+  .note { font-size: 14px; margin-bottom: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume, .restart { transition: none; }
+}

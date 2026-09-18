@@ -1,7 +1,7 @@
 'use client';
 
 import type { Answers } from './scoring';
-import { currentAnswers, selectedOpen } from './quiz-state';
+import { currentAnswers, missingQuestions, selectedOpen } from './quiz-state';
 
 /**
  * Ответы живут в браузере до самого результата — как и раньше.
@@ -166,6 +166,19 @@ function changed() {
 export function beginRun() {
   clearAnswers();
   write(TOKEN_KEY, newToken());
+}
+
+/**
+ * Прохождение начато, но ещё не доведено до конца и не сохранено.
+ *
+ * Нужно кнопке BEGIN: она стирает ответы, и делать это молча поверх
+ * начатого нельзя. Завершённое и подтверждённое сервером прохождение
+ * таким не считается — терять там нечего, оно уже в базе.
+ */
+export function unfinishedRun(): boolean {
+  const answers = loadAnswers();
+  if (Object.keys(answers).length === 0) return false;
+  return missingQuestions(answers).length > 0 || !wasSent();
 }
 
 /** Retries and edits keep the run number; only a new run increments it. */

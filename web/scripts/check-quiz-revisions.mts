@@ -67,6 +67,15 @@ assert.deepEqual(store.loadQuestionOpens(), {});
 assert.equal(store.loadOpenText(), '');
 assert.equal(store.loadResearchConsent(), null);
 assert.equal(store.submissionRunIndex(), Number(index) + 1);
+// BEGIN не должен молча стирать начатое: на этом стоит вопрос перед сбросом.
+assert.equal(store.unfinishedRun(), false, 'пустое хранилище — терять нечего');
+store.saveAnswer('Q_GENDER', QUESTIONS.Q_GENDER.answers[0].code);
+assert.equal(store.unfinishedRun(), true, 'один ответ — прохождение уже начато');
+for (const [id, code] of Object.entries(completeAnswers())) store.saveAnswer(id, code);
+assert.equal(store.unfinishedRun(), true, 'дозаполнено, но ещё не сохранено');
+store.markSent(store.runToken(), store.revision());
+assert.equal(store.unfinishedRun(), false, 'завершено и сохранено — терять нечего');
+store.beginRun();
 let bottles = 0;
 for (const arch of ARCHETYPE_KEYS) for (const p of catalogFor(arch)) {
   assert.equal(matchById(arch, p.id)?.main.id, p.id);
@@ -92,4 +101,4 @@ assert.match(record, /failed === 'retry' &&/, 'кнопка повтора — �
 assert.match(record, /styles\.notice/, 'полоса об ошибке должна быть оформлена, а не голым <p>');
 assert.equal(parseSubmission(body(completeAnswers(), { revision: 2147483648 })).ok, false);
 assert.equal(parseSubmission(body({ constructor: 'anything' })).ok, false);
-console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases, retry policy`);
+console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases, retry policy, resume guard`);

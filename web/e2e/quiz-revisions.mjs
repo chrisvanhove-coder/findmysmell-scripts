@@ -84,8 +84,36 @@ try {
   await page.waitForURL('**/quiz/q-gender');
   const fresh = await page.evaluate(() => ({ answers: sessionStorage.getItem('quiz_answers'), opens: sessionStorage.getItem('quiz_open_by_question'), consent: sessionStorage.getItem('consent_aggregate'), open: sessionStorage.getItem('quiz_open') }));
   assert.deepEqual(fresh, { answers: null, opens: null, consent: null, open: null });
+  // A started run is never erased silently: BEGIN asks first.
+  await page.goto(`${BASE}/en/quiz/q-gender`);
+  await page.locator('button[data-answer]').first().waitFor({ timeout: 10000 });
+  await page.locator('button[data-answer]').first().click();
+  await page.waitForURL('**/quiz/q-region-now');
+  const started = await page.evaluate(() => sessionStorage.getItem('quiz_answers'));
+  assert.ok(started && Object.keys(JSON.parse(started)).length === 1);
+
+  await page.goto(`${BASE}/en`);
+  await page.locator('a[href="/en/quiz/q-gender"]').first().click();
+  await page.locator('[data-resume-quiz]').waitFor({ timeout: 10000 });
+  assert.equal(page.url().replace(/\/$/, ''), `${BASE}/en`, 'asking, not navigating');
+  assert.equal(await page.evaluate(() => sessionStorage.getItem('quiz_answers')), started,
+    'the question itself must not touch the answers');
+
+  // Continue returns to the first unanswered question and keeps everything.
+  await page.getByRole('button', { name: 'Continue where I left off', exact: true }).click();
+  await page.waitForURL('**/quiz/q-region-now');
+  assert.equal(await page.evaluate(() => sessionStorage.getItem('quiz_answers')), started);
+
+  // Start over erases — but only on an explicit choice.
+  await page.goto(`${BASE}/en`);
+  await page.locator('a[href="/en/quiz/q-gender"]').first().click();
+  await page.locator('[data-resume-quiz]').waitFor({ timeout: 10000 });
+  await page.getByRole('button', { name: 'Start over', exact: true }).click();
+  await page.waitForURL('**/quiz/q-gender');
+  assert.equal(await page.evaluate(() => sessionStorage.getItem('quiz_answers')), null);
+
   assert.deepEqual(errors, []);
-  console.log(`PASS: 18-screen real journey, failed delivery + retry, Back and same-row edits, branch switching/Other cleanup, completion guard, fresh Start. ${attempts} submissions, no page errors.`);
+  console.log(`PASS: 18-screen real journey, failed delivery + retry, Back and same-row edits, branch switching/Other cleanup, completion guard, fresh Start, resume-or-restart prompt. ${attempts} submissions, no page errors.`);
 } finally {
   await browser.close();
   await db.query('delete from submissions where client_token=any($1)', [[...tokens]]);
