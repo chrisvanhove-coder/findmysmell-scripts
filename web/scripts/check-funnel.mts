@@ -99,5 +99,21 @@ check('срок ключа браузера в коде — 13 месяцев',
   readFileSync('src/lib/answers-store.ts', 'utf8').includes('13 * 30'),
   'потолок CNIL для идентификаторов измерения');
 
+/* Шаг RESULT должен считать всех, кто дошёл до результата, а не только тех,
+   чьё прохождение записалось. Один раз уже случилось обратное: отправку
+   события занесли внутрь эффекта, который выходит по «нет согласия»,
+   «ответы неполные» и «уже отправлено», — и последний шаг воронки стал
+   мерить сохранение, а не приход. Проверяем по исходнику: событие RESULT
+   стоит ВЫШЕ этих условий. */
+const record = readFileSync('src/app/[locale]/result/[archetype]/RecordSubmission.tsx', 'utf8');
+const resultStep = record.indexOf("step: 'RESULT'");
+const consentGuard = record.indexOf('loadResearchConsent()');
+check('шаг RESULT отправляется до проверки согласия',
+  resultStep !== -1 && consentGuard !== -1 && resultStep < consentGuard,
+  'иначе «дошёл до результата» окажется меньше правды');
+check('шаг RESULT не зависит от флага отправки',
+  resultStep !== -1 && resultStep < record.indexOf('wasSent()'),
+  'перезагрузка страницы результата — это тоже приход на шаг');
+
 console.log(failed ? `\n${failed} проверок упало\n` : '\nвсе проверки прошли\n');
 process.exit(failed ? 1 : 0);

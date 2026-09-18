@@ -81,11 +81,12 @@ export default function ImportPage() {
        ни имени файла — только сколько разобрано, сколько записано и была
        ли галочка. */
     console.log(
-      '[import] разобрано %d, записано %s, пропущено %d, с адресами %s, галочка %s',
+      '[import] разобрано %d, записано %s, пропущено %d, с адресами %s, без согласия %s, галочка %s',
       parsed.runs.length,
       written ? String(written.runsInserted) : '—',
       parsed.skipped.length,
       written ? String(written.emailsInserted) : '—',
+      written ? String(written.emailsWithoutConsent) : '—',
       apply ? 'да' : 'нет',
     );
 

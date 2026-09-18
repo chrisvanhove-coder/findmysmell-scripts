@@ -32,11 +32,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
-  const { email, locale, archetype, perfumeId } = parsed.input;
-  const chosen = archetype && perfumeId ? matchById(archetype, perfumeId) : null;
-  if (perfumeId && !chosen) {
-    return NextResponse.json({ error: 'unknown perfume for archetype' }, { status: 400 });
-  }
+  const { email, locale, archetype } = parsed.input;
+  const chosen = archetype && parsed.input.perfumeId
+    ? matchById(archetype, parsed.input.perfumeId)
+    : null;
+  /* Неизвестный id — не повод терять адрес и согласие: письмо уйдёт про
+     один архетип, без флакона (см. порядок выше). Так бывает, если каталог
+     поменялся, а у человека открыта старая вкладка. В базу такой id не
+     пишем: он ни на что не указывает. */
+  const perfumeId = chosen ? parsed.input.perfumeId : null;
 
   try {
     const db = getDb();
@@ -44,7 +48,7 @@ export async function POST(request: Request) {
     // а не падает на уникальном индексе. Согласие переподтверждается.
     await db
       .insert(schema.subscribers)
-      .values(parsed.input)
+      .values({ ...parsed.input, perfumeId })
       .onConflictDoUpdate({
         target: schema.subscribers.email,
         set: {

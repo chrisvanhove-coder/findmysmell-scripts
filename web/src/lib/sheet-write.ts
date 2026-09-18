@@ -12,6 +12,8 @@ export interface WriteResult {
   runsAlreadyThere: number;
   emailsInserted: number;
   emailsSeen: number;
+  /** Адреса без явного согласия на email: они в подписчики не переносятся. */
+  emailsWithoutConsent: number;
   totalHistoric: number;
   totalRuns: number;
 }
@@ -64,7 +66,11 @@ export async function writeRuns(
           // Дата согласия ИЗ ТАБЛИЦЫ, а не момент переноса: подменить её
           // значило бы продлить себе срок хранения на полгода.
           consentAt: r.createdAt,
-          // Импорт не отправляет письма; без подтверждения доставки дату не выдумываем.
+          /* Импорт не отправляет письма; без подтверждения доставки дату не
+             выдумываем. Но письмо этим людям когда-то отправил старый сайт,
+             а метки об этом теперь нет — будущая рассылка НЕ должна считать
+             `sent_at is null` за «ещё не писали». Подробнее — у колонки
+             sent_at в src/db/schema.ts. */
           sentAt: null,
           createdAt: r.createdAt,
         })
@@ -87,6 +93,9 @@ export async function writeRuns(
     runsAlreadyThere: runs.length - runsInserted,
     emailsInserted,
     emailsSeen: withEmail.length,
+    // Считается всегда, даже когда перенос адресов выключен: иначе разрыв
+    // между «адресов в таблице» и «перенесено» выглядел бы сбоем.
+    emailsWithoutConsent: withEmail.filter((r) => !r.consentEmail).length,
     totalHistoric: historic,
     totalRuns: total,
   };

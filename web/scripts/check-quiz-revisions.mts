@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import * as XLSX from 'xlsx';
 import { completeAnswers } from './lib/quiz-fixture';
 import { EMOTION_BRANCHES, QUESTIONS } from '../src/lib/quiz';
@@ -81,6 +82,14 @@ for (const consent of [false, true, undefined, 'false', 'true']) {
   assert.equal(result.runs.length, 1);
   assert.equal(result.runs[0].consentEmail, consent === true || consent === 'true');
 }
+/* Повтор лечит обрыв связи и 5xx, но не отказ по существу: на 4xx сервер уже
+   разобрал тело, и то же тело даст тот же ответ. Кнопка «Try again», которая
+   не может сработать, — обещание, которого не сдержать. Проверяем по
+   исходнику: 4xx выделен в отдельную ветку и уводит в состояние без кнопки. */
+const record = readFileSync('src/app/[locale]/result/[archetype]/RecordSubmission.tsx', 'utf8');
+assert.match(record, /status >= 400 && response\.status < 500/, '4xx должен отличаться от 5xx');
+assert.match(record, /failed === 'retry' &&/, 'кнопка повтора — только там, где повтор поможет');
+assert.match(record, /styles\.notice/, 'полоса об ошибке должна быть оформлена, а не голым <p>');
 assert.equal(parseSubmission(body(completeAnswers(), { revision: 2147483648 })).ok, false);
 assert.equal(parseSubmission(body({ constructor: 'anything' })).ok, false);
-console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases`);
+console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases, retry policy`);

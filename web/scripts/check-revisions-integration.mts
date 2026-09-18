@@ -38,7 +38,11 @@ for (const consent of [true, false, undefined]) {
   const row = { winner: 'CEO', timestamp: '2026-09-17T10:00:00Z', answers_json: JSON.stringify(completeAnswers()), email_result: email, consent_email: consent };
   const parsed = parseSheet(XLSX.utils.sheet_to_csv(XLSX.utils.json_to_sheet([row])));
   parsed.runs[0].clientToken = token + '-import-' + String(consent);
-  await writeRuns(parsed.runs, { withEmails: true });
+  const report = await writeRuns(parsed.runs, { withEmails: true });
+  // Разрыв между «адресов в таблице» и «перенесено» должен быть назван в отчёте.
+  assert.equal(report.emailsSeen, 1);
+  assert.equal(report.emailsWithoutConsent, consent === true ? 0 : 1);
+  assert.equal(report.emailsInserted, consent === true ? 1 : 0);
   const saved = (await db.query('select * from subscribers where email=$1', [email])).rows;
   assert.equal(saved.length, consent === true ? 1 : 0);
   if (saved.length) { assert.equal(saved[0].consent_email, true); assert.equal(saved[0].sent_at, null); }
@@ -64,10 +68,20 @@ try {
   assert.equal(response.status, 200);
   assert.ok(captured?.textContent.includes(perfume.name));
   assert.ok(captured?.subject.includes(perfume.name));
-  assert.equal((await subscribe(request('unknown-id'))).status, 400);
+  /* Неизвестный флакон не должен стоить человеку подписки: адрес и согласие
+     сохраняются, письмо уходит про архетип и без флакона, а несуществующий
+     id в базу не пишется. */
+  captured = undefined;
+  assert.equal((await subscribe(request('unknown-id'))).status, 200);
+  const after = (await db.query('select * from subscribers where email=$1', [email])).rows;
+  assert.equal(after.length, 1);
+  assert.equal(after[0].perfume_id, null);
+  assert.equal(after[0].consent_email, true);
+  assert.ok(captured, 'письмо про архетип всё равно должно уйти');
+  assert.ok(!captured.textContent.includes(perfume.name), 'флакона в письме быть не должно');
 } finally { globalThis.fetch = originalFetch; }
 await db.query('delete from submissions where client_token like $1', [token + '%']);
 await db.query('delete from subscribers where email = any($1)', [[...imports, email]]);
 await db.end();
-console.log('PASS: real HTTP + PostgreSQL revisions/late requests/Other deletion/partial answers; import consent; exact rendered email. No email sent.');
+console.log('PASS: real HTTP + PostgreSQL revisions/late requests/Other deletion/partial answers; import consent and report; exact and unknown-bottle emails. No email sent.');
 process.exit(0);

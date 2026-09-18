@@ -34,8 +34,31 @@ const openCode = (id) => QUIZ[id].answers.find((a) => a.open).code;
 
 const SLUG = (id) => id.toLowerCase().replace(/_/g, '-');
 
+/* Семь вопросов ветки эмоции человек проходит по одному — и экран ветки,
+   которую не выбрали, теперь уводит на Q_EMO. Прямая ссылка на q-calm с
+   пустым хранилищем поэтому до списка ответов не доходит: до неё надо
+   выбрать эмоцию. Список берём из данных, а не руками. */
+const BRANCHES = Object.entries(QUIZ)
+  .filter(([id, q]) => !id.startsWith('_') && q?.emotionDetail)
+  .map(([id]) => id);
+const emoFor = (id) => (BRANCHES.includes(id) ? `Q_EMO__${id.slice(2)}` : null);
+
 async function open(questionId, { viewport = { width: 1200, height: 900 } } = {}) {
   const context = await browser.newContext({ viewport });
+  // Только если эмоция ещё не выбрана: иначе переход внутри одного
+  // контекста стирал бы уже накопленные ответы теста.
+  await context.addInitScript((emo) => {
+    if (!emo) return;
+    try {
+      const raw = sessionStorage.getItem('quiz_answers')
+        ?? localStorage.getItem('quiz_answers') ?? '{}';
+      const answers = JSON.parse(raw);
+      if (answers.Q_EMO) return;
+      answers.Q_EMO = emo;
+      sessionStorage.setItem('quiz_answers', JSON.stringify(answers));
+      localStorage.setItem('quiz_answers', JSON.stringify(answers));
+    } catch { /* приватный режим — переживём */ }
+  }, emoFor(questionId));
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));

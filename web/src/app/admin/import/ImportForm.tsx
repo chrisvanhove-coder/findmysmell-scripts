@@ -42,6 +42,7 @@ export type ImportState =
         runsAlreadyThere: number;
         emailsInserted: number;
         emailsSeen: number;
+        emailsWithoutConsent: number;
         totalHistoric: number;
         totalRuns: number;
       } | null;
@@ -105,6 +106,8 @@ export default function ImportForm({
                   <span className={styles.cardN}>{state.written.emailsInserted}</span>
                   <span className={styles.cardL}>
                     новых адресов из {state.written.emailsSeen}
+                    {state.written.emailsWithoutConsent > 0
+                      && `; без согласия на email пропущено ${state.written.emailsWithoutConsent}`}
                     {!state.withEmails && ' (перенос адресов выключен)'}
                   </span>
                 </div>

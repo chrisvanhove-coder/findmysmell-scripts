@@ -122,7 +122,17 @@ export const subscribers = pgTable('subscribers', {
   // не сохранялось — доказать, что человек его дал, было нечем.
   consentEmail: boolean('consent_email').notNull().default(true),
   consentAt: timestamp('consent_at', { withTimezone: true }).notNull().defaultNow(),
-  // Когда письмо действительно ушло. null — ещё не отправлено.
+  /* Когда письмо действительно ушло ОТСЮДА. null — этот сайт его не
+     отправлял.
+     ВНИМАНИЕ ТОМУ, КТО БУДЕТ ПИСАТЬ РАССЫЛКУ: `sent_at is null` НЕ значит
+     «этому человеку ещё не писали». У перенесённых из старой таблицы
+     подписчиков здесь null, хотя письмо им отправил старый сайт на Webflow
+     (см. src/lib/sheet-write.ts). Раньше импорт ставил им дату переноса
+     именно как метку «не писать второй раз», и её убрали — дата доставки,
+     которой не было, это выдумка. Метки взамен нет: пока рассылки в проекте
+     тоже нет, а придумывать колонку под несуществующий код не стали.
+     Отличить их можно по `consent_at`: у исторических он из таблицы, то есть
+     заметно раньше запуска нового сайта. */
   sentAt: timestamp('sent_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });

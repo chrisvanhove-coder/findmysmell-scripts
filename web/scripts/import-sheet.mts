@@ -94,6 +94,7 @@ const written = await writeRuns(runs, { withEmails: !noEmails });
 console.log(`\nНовых прохождений: ${written.runsInserted}`);
 console.log(`Уже были (повторный запуск): ${written.runsAlreadyThere}`);
 console.log(`Новых адресов: ${written.emailsInserted} из ${written.emailsSeen}`);
+console.log(`Без согласия на email, пропущено: ${written.emailsWithoutConsent}`);
 console.log(`Всего исторических в базе: ${written.totalHistoric}`);
 console.log(`Всего прохождений в базе: ${written.totalRuns}\n`);
 process.exit(0);

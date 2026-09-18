@@ -1,0 +1,38 @@
+/* Полоса «ответы ещё не сохранены». Стоит последним блоком страницы
+   результата, поэтому берёт её же токены — --fms-paper под фон и
+   --fms-ink под текст, как остальные зоны на бумаге. Мелкий моноширинный
+   шрифт с разрядкой — тот же приём, что у служебных строк формы
+   подписки (.message в subscribe.module.css). */
+
+.notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 18px clamp(24px, 8vw, 120px);
+  background: var(--fms-paper);
+  color: var(--fms-ink);
+  font-family: var(--fms-mono), monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.retry {
+  padding: 8px 18px;
+  font: inherit;
+  letter-spacing: 0.18em;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.retry:hover { opacity: 0.7; }
+.retry:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }

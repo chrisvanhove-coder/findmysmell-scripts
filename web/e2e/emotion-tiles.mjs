@@ -28,12 +28,29 @@ function check(name, ok, detail = '') {
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH });
 const slug = (id) => id.toLowerCase().replace(/_/g, '-');
 
+/* Экран ветки, которую не выбрали, уводит на Q_EMO: человек проходит ровно
+   одну из семи. Поэтому перед прямой ссылкой на экран ветки эмоция должна
+   быть уже выбрана — иначе до плиток дело не дойдёт. Ставим только если её
+   ещё нет, чтобы не стирать накопленные ответы. */
+const seedEmotion = (context, id) => context.addInitScript((emo) => {
+  try {
+    const raw = sessionStorage.getItem('quiz_answers')
+      ?? localStorage.getItem('quiz_answers') ?? '{}';
+    const answers = JSON.parse(raw);
+    if (answers.Q_EMO) return;
+    answers.Q_EMO = emo;
+    sessionStorage.setItem('quiz_answers', JSON.stringify(answers));
+    localStorage.setItem('quiz_answers', JSON.stringify(answers));
+  } catch { /* приватный режим — переживём */ }
+}, `Q_EMO__${id.slice(2)}`);
+
 async function open(id, { viewport = { width: 1400, height: 900 }, touch = false } = {}) {
   const context = await browser.newContext({
     viewport,
     deviceScaleFactor: 2,
     ...(touch ? { hasTouch: true, isMobile: true } : {}),
   });
+  await seedEmotion(context, id);
   const page = await context.newPage();
   const errors = [];
   const images = [];
@@ -282,6 +299,7 @@ console.log('\nКнопка «назад» нажимается, а reduced-moti
 
   const ctx2 = await browser.newContext({ viewport: { width: 1400, height: 900 },
     reducedMotion: 'reduce' });
+  await seedEmotion(ctx2, 'Q_CALM');
   const p2 = await ctx2.newPage();
   await p2.goto(`${BASE}/en/quiz/q-calm`, { waitUntil: 'networkidle' });
   await p2.locator('[data-emotion-tiles]').waitFor({ timeout: 10000 });
