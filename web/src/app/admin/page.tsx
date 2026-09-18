@@ -81,7 +81,18 @@ export default async function AdminPage({
       <section className={styles.cards}>
         <div className={styles.card}>
           <span className={styles.cardN}>{t.runs}</span>
-          <span className={styles.cardL}>прохождений всего</span>
+          <span className={styles.cardL}>завершённых прохождений</span>
+        </div>
+        {/* Брошенные считаются отдельно и в распределения не входят: у них
+            тоже есть архетип, но посчитан он по части ответов. */}
+        <div className={styles.card}>
+          <span className={styles.cardN}>{t.abandoned}</span>
+          <span className={styles.cardL}>
+            брошено на полпути
+            {t.runs + t.abandoned
+              ? ` · ${pct(t.abandoned / (t.runs + t.abandoned))}`
+              : ''}
+          </span>
         </div>
         <div className={`${styles.card} ${styles.cardKey}`}>
           <span className={styles.cardN}>{t.firstRuns}</span>
@@ -352,7 +363,9 @@ export default async function AdminPage({
                   {r.secondary && <span className={styles.runSecond}>+ {r.secondary}</span>}
                   <span className={styles.runMeta}>
                     {r.locale}
-                    {missingQuestions(r.answers).length ? ` · неполное: пропущено ${missingQuestions(r.answers).length}` : ' · все вопросы отвечены'}
+                    {r.completed
+                      ? ' · все вопросы отвечены'
+                      : ` · брошено: пропущено ${missingQuestions(r.answers).length}`}
                     {r.runIndex ? ` · проход №${r.runIndex}` : ' · без ключа'}
                     {r.consentResearch ? ' · согласие есть' : ' · без согласия'}
                   </span>

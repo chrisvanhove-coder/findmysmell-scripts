@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, type ComponentProps, type MouseEvent } from 'react';
 import { beginRun, loadAnswers, unfinishedRun } from '@/lib/answers-store';
+import { sendAbandonedRun } from '@/lib/abandoned';
+import { isLocale } from '@/lib/i18n';
 import { missingQuestions } from '@/lib/quiz-state';
 import { toSlug } from '@/lib/quiz';
 import ResumeQuizPrompt from './ResumeQuizPrompt';
@@ -49,6 +51,10 @@ export default function StartQuizLink(props: ComponentProps<typeof Link>) {
   }
 
   function restart() {
+    /* «Начать заново» — это и есть момент, когда прохождение бросают.
+       Сохраняем то, что успели ответить, ДО того как стереть. */
+    const locale = href!.split('/')[1];
+    if (isLocale(locale)) sendAbandonedRun(locale);
     beginRun();
     setAsking(false);
     router.push(href!);

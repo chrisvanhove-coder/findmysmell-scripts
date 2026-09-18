@@ -22,7 +22,7 @@
         },
         {
           "list": [
-            "Quiz responses (your preferences, lifestyle patterns, emotional preferences),",
+            "Quiz responses (your preferences, lifestyle patterns, emotional preferences) \u2014 including the answers of a quiz you start and do not finish,",
             "Your own words, whenever you choose to write them \u2014 in any question that offers an \u201cOther\u201d field, and in the open question at the end,",
             "Email address, only if you ask us to send you your result."
           ]
@@ -67,6 +67,9 @@
         },
         {
           "p": "If you decline the research checkbox, you still see your result: it is calculated in your browser. Your answers are recorded as not consented and are not used in research."
+        },
+        {
+          "p": "If you leave before the end, the answers you have already given are kept as an unfinished run. We ask for the research consent on the last screen, so an unfinished run has never been through it: it is recorded as not consented and is not used in research, exactly like a declined one. We keep it to see where and why people stop, which is the legitimate interest named above. It holds no email address and no name, and you can ask us to delete it at contact@findmysmell.com."
         }
       ]
     },
@@ -74,7 +77,7 @@
       "heading": "4. Cookies and Tracking Technologies",
       "blocks": [
         {
-          "p": "This website sets no cookies. What it does use is your browser's own storage, on your device, to remember your progress through the quiz and your result. Nothing in that storage is sent anywhere except the answers you submit at the end. You can clear it at any time through your browser settings, and doing so removes everything the site has kept on your device."
+          "p": "This website sets no cookies. What it does use is your browser's own storage, on your device, to remember your progress through the quiz and your result. Nothing in that storage is sent anywhere except your answers: the full set when you reach your result, or what you had answered so far if you leave before the end (see section 3). You can clear it at any time through your browser settings, and doing so removes everything the site has kept on your device."
         },
         {
           "sub": "Automated Processing & Profiling"
@@ -89,7 +92,7 @@
           "p": "We measure how the quiz performs: which question a person reached, which question they answered, which answer options get chosen, and how many people reach their result and ask for it by email. This is recorded by our own server in our own database in the European Union. No third party receives it, and nothing is placed on or read from your device in order to collect it."
         },
         {
-          "p": "What is recorded in these counters: the step, whether it was shown or answered, the answer option chosen, the site language, and the time. What is not in them: your IP address, your browser or device, the page you arrived from, your screen size, your location, and any free text. Your answers themselves, including anything you write in your own words, are not part of this measurement — they are stored with your completed quiz run and covered by section 3. Each row is keyed only by the random per-run number described in section 2 — it dies with your browser session and cannot connect two visits."
+          "p": "What is recorded in these counters: the step, whether it was shown or answered, the answer option chosen, the site language, and the time. What is not in them: your IP address, your browser or device, the page you arrived from, your screen size, your location, and any free text. Your answers themselves, including anything you write in your own words, are not part of this measurement — they are stored with your quiz run, finished or not, and covered by section 3. Each row is keyed only by the random per-run number described in section 2 — it dies with your browser session and cannot connect two visits."
         },
         {
           "p": "No consent banner appears on this site because there is nothing to consent to: no cookie is set, nothing is sent to a third party, and the only thing kept on your device for measurement is the random number in section 4.4. For the measurement itself, and for that number, we rely on the exemption from prior consent that the CNIL provides for audience statistics strictly limited to the site owner's own use, first-party, never shared, and kept for a limited period. Measurement rows are deleted after 13 months and the number expires after 13 months — the maximum the CNIL states."

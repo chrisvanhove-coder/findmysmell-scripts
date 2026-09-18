@@ -112,8 +112,32 @@ try {
   await page.waitForURL('**/quiz/q-gender');
   assert.equal(await page.evaluate(() => sessionStorage.getItem('quiz_answers')), null);
 
+  /* Брошенное прохождение доезжает само, когда человек уходит со страницы:
+     в воронке видно, НА КАКОМ вопросе ушли, а здесь — ЧТО успели ответить.
+     Перехват запросов снимаем: маячок уходит уже на закрывающейся странице,
+     и route.continue() его теряет. Дальше он не нужен. */
+  await page.unroute('**/api/submissions');
+  await page.locator('button[data-answer]').first().waitFor({ timeout: 10000 });
+  await page.locator('button[data-answer]').first().click();
+  await page.waitForURL('**/quiz/q-region-now');
+  await page.locator('#country-search').fill('Fra');
+  await page.locator('[role="option"] button').first().click();
+  await page.waitForURL('**/quiz/q-generation');
+  const abandonedToken = await page.evaluate(() => sessionStorage.getItem('quiz_token'));
+  const abandonedAnswers = await page.evaluate(() => JSON.parse(sessionStorage.quiz_answers));
+  assert.equal(Object.keys(abandonedAnswers).length, 2);
+  // Человек закрывает вкладку / уходит на другой сайт — это pagehide.
+  await page.goto('about:blank');
+  await page.waitForTimeout(1500);
+  const abandonedRows = (await db.query('select * from submissions where client_token=$1', [abandonedToken])).rows;
+  tokens.add(abandonedToken);
+  assert.equal(abandonedRows.length, 1, 'брошенное прохождение должно сохраниться');
+  assert.equal(abandonedRows[0].completed, false);
+  assert.equal(abandonedRows[0].consent_research, false, 'согласия не спрашивали — значит его нет');
+  assert.deepEqual(abandonedRows[0].answers, abandonedAnswers);
+
   assert.deepEqual(errors, []);
-  console.log(`PASS: 18-screen real journey, failed delivery + retry, Back and same-row edits, branch switching/Other cleanup, completion guard, fresh Start, resume-or-restart prompt. ${attempts} submissions, no page errors.`);
+  console.log(`PASS: 18-screen real journey, failed delivery + retry, Back and same-row edits, branch switching/Other cleanup, completion guard, fresh Start, resume-or-restart prompt, abandoned run saved on leave. ${attempts} submissions, no page errors.`);
 } finally {
   await browser.close();
   await db.query('delete from submissions where client_token=any($1)', [[...tokens]]);

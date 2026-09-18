@@ -3,6 +3,13 @@
  * но на странице, а не в терминале: заказчице нужно смотреть ответы, не
  * ставя себе клиент Postgres.
  *
+ * Второе правило, появившееся вместе с записью брошенных прохождений:
+ * ВСЕ РАСПРЕДЕЛЕНИЯ СЧИТАЮТСЯ ПО ЗАВЕРШЁННЫМ. У брошенного прохождения тоже
+ * есть winner — он посчитан из тех ответов, что успели дать, — и пустить его
+ * в статистику значило бы сместить архетипы в пользу тех, кто ушёл на
+ * третьем вопросе. Брошенные показаны отдельным числом и лежат в списке
+ * прохождений с пометкой.
+ *
  * Одно правило проходит через весь файл: ВЫБОРКА ДЛЯ ИССЛЕДОВАНИЯ — ЭТО
  * run_index = 1. Распределения архетипов и ответов считаются по первым
  * прохождениям, иначе один человек, прошедший тест сто раз, перевесит сто
@@ -31,6 +38,8 @@ const OPEN_QUESTION_IDS = stepOrder().filter(
 
 export type Totals = {
   runs: number;
+  /** Брошенные на полпути. В runs и распределения не входят. */
+  abandoned: number;
   firstRuns: number;
   repeatRuns: number;
   noKey: number;
@@ -58,6 +67,8 @@ export type RecentRun = {
   secondary: string | null;
   runIndex: number | null;
   consentResearch: boolean;
+  /** Дошёл ли до конца. false — брошено на полпути. */
+  completed: boolean;
   openAnswer: string | null;
   answers: Record<string, string>;
   /** Что человек написал в «Other»: код вопроса → текст. */
@@ -142,10 +153,13 @@ export async function loadAdminData(days: number): Promise<AdminData> {
   since.setUTCDate(since.getUTCDate() - days);
 
   const inPeriod = gte(submissions.createdAt, since);
-  const firstRunsOnly = and(inPeriod, eq(submissions.runIndex, 1));
+  // Завершённые: всё, что описывает прохождения и ответы, считается по ним.
+  const done = and(inPeriod, eq(submissions.completed, true));
+  const firstRunsOnly = and(done, eq(submissions.runIndex, 1));
 
   const [
     countRows,
+    abandonedRows,
     archetypeRows,
     localeRows,
     subscriberRows,
@@ -166,7 +180,12 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         consented: sql<number>`count(*) filter (where ${submissions.consentResearch})::int`,
       })
       .from(submissions)
-      .where(inPeriod),
+      .where(done),
+
+    db
+      .select({ abandoned: sql<number>`count(*)::int` })
+      .from(submissions)
+      .where(and(inPeriod, eq(submissions.completed, false))),
 
     // Архетипы — по первым прохождениям. См. правило в заголовке файла.
     db
@@ -178,7 +197,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
     db
       .select({ label: submissions.locale, n: sql<number>`count(*)::int` })
       .from(submissions)
-      .where(inPeriod)
+      .where(done)
       .groupBy(submissions.locale),
 
     db
@@ -218,7 +237,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         winner: submissions.winner,
       })
       .from(submissions)
-      .where(inPeriod)
+      .where(done)
       .orderBy(submissions.browserKey, submissions.runIndex),
 
     db
@@ -230,6 +249,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         secondary: submissions.secondary,
         runIndex: submissions.runIndex,
         consentResearch: submissions.consentResearch,
+        completed: submissions.completed,
         openAnswer: submissions.openAnswer,
         answers: submissions.answers,
       })
@@ -247,6 +267,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         locale: submissions.locale,
         winner: submissions.winner,
         runIndex: submissions.runIndex,
+        completed: submissions.completed,
         text: submissions.openAnswer,
       })
       .from(submissions)
@@ -269,6 +290,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         locale: submissions.locale,
         winner: submissions.winner,
         runIndex: submissions.runIndex,
+        completed: submissions.completed,
       })
       .from(questionOpenAnswers)
       .innerJoin(submissions, eq(questionOpenAnswers.submissionId, submissions.id))
@@ -366,6 +388,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
     since,
     totals: {
       runs: c.runs,
+      abandoned: abandonedRows[0]?.abandoned ?? 0,
       firstRuns: c.firstRuns,
       repeatRuns: c.repeatRuns,
       noKey: c.noKey,
@@ -419,6 +442,7 @@ export async function submissionsCsv(days: number, firstRunsOnly: boolean): Prom
         secondary: submissions.secondary,
         runIndex: submissions.runIndex,
         consentResearch: submissions.consentResearch,
+        completed: submissions.completed,
         openAnswer: submissions.openAnswer,
         answers: submissions.answers,
       })

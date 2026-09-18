@@ -2,7 +2,7 @@ import { resolve, type Answers, type Scores } from './scoring';
 import { isLocale, type Locale } from './i18n';
 import { ARCHETYPE_KEYS, type ArchetypeKey } from './archetype-colors';
 import { QUESTIONS } from './quiz';
-import { validAnswer, currentAnswers, selectedOpen } from './quiz-state';
+import { validAnswer, currentAnswers, missingQuestions, selectedOpen } from './quiz-state';
 
 /**
  * Вопросы, у которых есть вариант «Other» с текстовым вводом.
@@ -84,6 +84,8 @@ export interface SubmissionRecord {
   answers: Answers;
   openAnswer: string | null;
   consentResearch: boolean;
+  /** Дошёл ли человек до конца. Считается здесь, клиенту не доверяется. */
+  completed: boolean;
   clientToken: string;
   revision: number;
   browserKey: string | null;
@@ -227,6 +229,9 @@ export function buildRecord(input: SubmissionInput): SubmissionRecord {
     answers: input.answers,
     openAnswer: input.openAnswer !== '' ? input.openAnswer : null,
     consentResearch: input.consentResearch,
+    // Брошенное прохождение отличается от завершённого ровно здесь: по
+    // самим ответам, а не по слову клиента.
+    completed: missingQuestions(input.answers).length === 0,
     clientToken: input.clientToken,
     revision: input.revision,
     // Номер без ключа смысла не имеет: не с чем связать. И наоборот —

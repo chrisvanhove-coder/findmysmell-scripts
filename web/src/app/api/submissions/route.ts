@@ -52,6 +52,9 @@ export async function POST(request: Request) {
             answers: record.answers,
             openAnswer: record.openAnswer,
             consentResearch: record.consentResearch,
+            // Брошенное прохождение, которое человек потом всё-таки
+            // доделал, должно перестать быть брошенным.
+            completed: record.completed,
             revision: record.revision,
           },
           setWhere: sql`${schema.submissions.revision} < ${record.revision}`,

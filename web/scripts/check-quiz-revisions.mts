@@ -4,7 +4,7 @@ import * as XLSX from 'xlsx';
 import { completeAnswers } from './lib/quiz-fixture';
 import { EMOTION_BRANCHES, QUESTIONS } from '../src/lib/quiz';
 import { currentAnswers, missingQuestions } from '../src/lib/quiz-state';
-import { parseSubmission } from '../src/lib/submission';
+import { parseSubmission, buildRecord } from '../src/lib/submission';
 import { catalogFor, matchById } from '../src/lib/matching';
 import { ARCHETYPE_KEYS } from '../src/lib/archetype-colors';
 import { parseSheet } from '../src/lib/sheet-import';
@@ -30,6 +30,19 @@ for (const branch of EMOTION_BRANCHES) {
     assert.deepEqual(currentAnswers(dirty), answers);
     assert.equal(parseSubmission(body(dirty)).ok, false);
   }
+}
+// Брошенное прохождение: принимается и помечается незавершённым, целое — нет.
+{
+  const partial = parseSubmission(body({ Q_GENDER: QUESTIONS.Q_GENDER.answers[0].code }));
+  assert.ok(partial.ok);
+  assert.equal(buildRecord(partial.input).completed, false);
+  const whole = parseSubmission(body(completeAnswers()));
+  assert.ok(whole.ok);
+  assert.equal(buildRecord(whole.input).completed, true);
+  // Признак считается из ответов, а не со слов клиента.
+  const lying = parseSubmission(body({ Q_GENDER: QUESTIONS.Q_GENDER.answers[0].code }, { completed: true }));
+  assert.ok(lying.ok);
+  assert.equal(buildRecord(lying.input).completed, false);
 }
 assert.ok(parseSubmission(body({ Q_RADIUS: 'Q_RADIUS__CLOSE' })).ok);
 assert.ok(missingQuestions({ Q_RADIUS: 'Q_RADIUS__CLOSE' }).length > 0);
@@ -101,4 +114,4 @@ assert.match(record, /failed === 'retry' &&/, 'кнопка повтора — �
 assert.match(record, /styles\.notice/, 'полоса об ошибке должна быть оформлена, а не голым <p>');
 assert.equal(parseSubmission(body(completeAnswers(), { revision: 2147483648 })).ok, false);
 assert.equal(parseSubmission(body({ constructor: 'anything' })).ok, false);
-console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases, retry policy, resume guard`);
+console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases, retry policy, resume guard, abandoned runs`);

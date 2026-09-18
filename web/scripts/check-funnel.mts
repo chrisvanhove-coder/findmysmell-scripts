@@ -115,5 +115,29 @@ check('шаг RESULT не зависит от флага отправки',
   resultStep !== -1 && resultStep < record.indexOf('wasSent()'),
   'перезагрузка страницы результата — это тоже приход на шаг');
 
+/* Незавершённые прохождения теперь сохраняются целиком, а не только
+   считаются в воронке. Пока код это делает, обе политики обязаны это
+   называть — иначе мы храним то, о чём людям не сказали. */
+const abandonedInCode = readFileSync('src/lib/abandoned.ts', 'utf8').includes('sendBeacon');
+const policyFr = readFileSync('src/data/privacy.fr.json', 'utf8');
+check('политика (EN) называет незавершённые прохождения',
+  !abandonedInCode || /unfinished run/.test(policy),
+  'код сохраняет брошенные — в разделе 3 должен быть абзац про это');
+check('политика (FR) называет незавершённые прохождения',
+  !abandonedInCode || /passage inachev/.test(policyFr),
+  'то же самое по-французски');
+check('политика не обещает, что уходит только финальный набор',
+  !abandonedInCode || !/except the answers you submit at the end/.test(policy),
+  'раздел 4 обещал обратное — это стало неправдой');
+check('политика не называет хранимые ответы только завершёнными',
+  !abandonedInCode || !/stored with your completed quiz run/.test(policy),
+  'раздел 4.3 обещал обратное');
+
+/* И обратная сторона: брошенное прохождение не должно попасть в
+   исследование. Согласия на нём нет, и код обязан отправлять именно это. */
+check('брошенное прохождение уходит без согласия на исследование',
+  readFileSync('src/lib/abandoned.ts', 'utf8').includes('loadResearchConsent() ?? false'),
+  'иначе запись без спросу оказалась бы согласованной');
+
 console.log(failed ? `\n${failed} проверок упало\n` : '\nвсе проверки прошли\n');
 process.exit(failed ? 1 : 0);

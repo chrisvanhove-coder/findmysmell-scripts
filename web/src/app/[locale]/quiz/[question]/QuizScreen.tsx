@@ -18,6 +18,7 @@ import AnswerBackdrop, { photosFor } from '@/components/quiz/AnswerBackdrop';
 import ScentCloud, { cloudFor } from '@/components/quiz/ScentCloud';
 import { resolve } from '@/lib/scoring';
 import { missingQuestions } from '@/lib/quiz-state';
+import { watchForAbandon } from '@/lib/abandoned';
 import styles from './quiz.module.css';
 
 /**
@@ -104,6 +105,11 @@ export default function QuizScreen({
   useEffect(() => () => {
     if (leaveTimer.current) clearTimeout(leaveTimer.current);
   }, []);
+
+  /* Если человек уйдёт с сайта прямо отсюда, то, что он успел ответить,
+     должно сохраниться: в воронке видно, НА КАКОМ вопросе уходят, а здесь
+     сохраняется ЧТО успели ответить. Подробности — в lib/abandoned.ts. */
+  useEffect(() => watchForAbandon(locale), [locale]);
 
   // Показываем ранее выбранный ответ, если человек вернулся назад.
   // Экран предгенерирован, ответы лежат в storage — прочитать их можно

@@ -1,0 +1,1 @@
+ALTER TABLE "submissions" ADD COLUMN "completed" boolean DEFAULT true NOT NULL;

@@ -31,7 +31,24 @@ assert.deepEqual(rows[0].answers, second);
 assert.equal(rows[0].consent_research, false);
 assert.equal((await db.query('select * from question_open_answers where submission_id=$1', [rows[0].id])).rowCount, 0);
 assert.equal((await post({ answers: { ...second, Q_CALM: 'Q_CALM__LINENS' }, revision: 3 })).status, 400);
-assert.equal((await post({ answers: { Q_RADIUS: 'Q_RADIUS__CLOSE' }, clientToken: token + '-partial', revision: 0 })).status, 200);
+/* Брошенное прохождение: принимается, помечается незавершённым, а когда
+   человек возвращается и доходит до конца — та же строка становится
+   завершённой, а не появляется вторая. */
+const abandonedToken = token + '-partial';
+assert.equal((await post({ answers: { Q_RADIUS: 'Q_RADIUS__CLOSE' }, clientToken: abandonedToken, revision: 0 })).status, 200);
+{
+  const saved = (await db.query('select * from submissions where client_token=$1', [abandonedToken])).rows;
+  assert.equal(saved.length, 1);
+  assert.equal(saved[0].completed, false);
+  assert.equal(saved[0].consent_research, false);
+}
+assert.equal((await post({ answers: completeAnswers(), clientToken: abandonedToken, revision: 1, consentResearch: true })).status, 200);
+{
+  const saved = (await db.query('select * from submissions where client_token=$1', [abandonedToken])).rows;
+  assert.equal(saved.length, 1, 'та же строка, а не вторая');
+  assert.equal(saved[0].completed, true);
+  assert.equal(saved[0].consent_research, true);
+}
 const imports = [];
 for (const consent of [true, false, undefined]) {
   const email = `import-${String(consent)}-${Date.now()}@example.invalid`;
@@ -83,5 +100,5 @@ try {
 await db.query('delete from submissions where client_token like $1', [token + '%']);
 await db.query('delete from subscribers where email = any($1)', [[...imports, email]]);
 await db.end();
-console.log('PASS: real HTTP + PostgreSQL revisions/late requests/Other deletion/partial answers; import consent and report; exact and unknown-bottle emails. No email sent.');
+console.log('PASS: real HTTP + PostgreSQL revisions/late requests/Other deletion/abandoned runs finished later; import consent and report; exact and unknown-bottle emails. No email sent.');
 process.exit(0);

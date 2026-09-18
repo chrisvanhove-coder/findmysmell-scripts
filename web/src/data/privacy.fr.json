@@ -22,7 +22,7 @@
         },
         {
           "list": [
-            "Vos réponses au quiz (vos préférences, modes de vie, préférences émotionnelles),",
+            "Vos réponses au quiz (vos préférences, modes de vie, préférences émotionnelles) — y compris les réponses d'un quiz que vous commencez sans le terminer,",
             "Vos propres mots, chaque fois que vous choisissez de les écrire \u2014 dans toute question proposant un champ « Other », ainsi que dans la question ouverte à la fin,",
             "Votre adresse e-mail, uniquement si vous nous demandez de vous envoyer votre résultat."
           ]
@@ -67,6 +67,9 @@
         },
         {
           "p": "Si vous refusez la case « recherche », vous voyez tout de même votre résultat : il est calculé dans votre navigateur. Vos réponses sont enregistrées comme non consenties et ne sont pas utilisées dans nos recherches."
+        },
+        {
+          "p": "Si vous partez avant la fin, les réponses déjà données sont conservées comme un passage inachevé. La case « recherche » est présentée au dernier écran : un passage inachevé n'y est donc jamais arrivé. Il est enregistré comme non consenti et n'est pas utilisé dans nos recherches, exactement comme un refus. Nous le conservons pour voir où et pourquoi les gens s'arrêtent, ce qui relève de l'intérêt légitime mentionné ci-dessus. Il ne contient ni adresse e-mail ni nom, et vous pouvez en demander la suppression à contact@findmysmell.com."
         }
       ]
     },
@@ -74,7 +77,7 @@
       "heading": "4. Cookies et technologies de suivi",
       "blocks": [
         {
-          "p": "Ce site ne dépose aucun cookie. Il utilise en revanche le stockage propre à votre navigateur, sur votre appareil, pour mémoriser votre progression dans le quiz et votre résultat. Rien de ce stockage n'est transmis ailleurs, à l'exception des réponses que vous envoyez à la fin. Vous pouvez l'effacer à tout moment dans les paramètres de votre navigateur, ce qui supprime tout ce que le site a conservé sur votre appareil."
+          "p": "Ce site ne dépose aucun cookie. Il utilise en revanche le stockage propre à votre navigateur, sur votre appareil, pour mémoriser votre progression dans le quiz et votre résultat. Rien de ce stockage n'est transmis ailleurs, à l'exception de vos réponses : l'ensemble complet lorsque vous atteignez votre résultat, ou ce que vous aviez répondu jusque-là si vous partez avant la fin (voir la section 3). Vous pouvez l'effacer à tout moment dans les paramètres de votre navigateur, ce qui supprime tout ce que le site a conservé sur votre appareil."
         },
         {
           "sub": "Traitement automatisé et profilage"
@@ -89,7 +92,7 @@
           "p": "Nous mesurons le fonctionnement du questionnaire : à quelle question la personne est arrivée, à laquelle elle a répondu, quelles options de réponse sont choisies, et combien de personnes atteignent leur résultat puis le demandent par e-mail. Cet enregistrement est effectué par notre propre serveur, dans notre propre base de données située dans l'Union européenne. Aucun tiers ne le reçoit, et rien n'est déposé sur votre appareil ni lu depuis celui-ci pour le collecter."
         },
         {
-          "p": "Sont enregistrés dans ces compteurs : l'étape, le fait qu'elle ait été affichée ou qu'il y ait été répondu, l'option de réponse choisie, la langue du site et l'horodatage. N'y figurent pas : votre adresse IP, votre navigateur ou votre appareil, la page d'où vous venez, la taille de votre écran, votre localisation, ni aucun texte libre. Vos réponses elles-mêmes, y compris tout ce que vous écrivez avec vos propres mots, ne font pas partie de cette mesure : elles sont conservées avec votre passage terminé et relèvent de la section 3. Chaque ligne n'est rattachée qu'au nombre aléatoire propre au passage décrit à la section 2 — il disparaît avec la session de votre navigateur et ne peut relier deux visites."
+          "p": "Sont enregistrés dans ces compteurs : l'étape, le fait qu'elle ait été affichée ou qu'il y ait été répondu, l'option de réponse choisie, la langue du site et l'horodatage. N'y figurent pas : votre adresse IP, votre navigateur ou votre appareil, la page d'où vous venez, la taille de votre écran, votre localisation, ni aucun texte libre. Vos réponses elles-mêmes, y compris tout ce que vous écrivez avec vos propres mots, ne font pas partie de cette mesure : elles sont conservées avec votre passage, terminé ou non, et relèvent de la section 3. Chaque ligne n'est rattachée qu'au nombre aléatoire propre au passage décrit à la section 2 — il disparaît avec la session de votre navigateur et ne peut relier deux visites."
         },
         {
           "p": "Aucune bannière de consentement n'apparaît sur ce site parce qu'il n'y a rien à consentir : aucun cookie n'est déposé, rien n'est transmis à un tiers, et la seule chose conservée sur votre appareil à des fins de mesure est le nombre aléatoire décrit à la section 4.4. Pour la mesure elle-même, comme pour ce nombre, nous nous appuyons sur l'exemption de consentement préalable prévue par la CNIL pour les statistiques d'audience strictement limitées à l'usage propre de l'éditeur, en première partie, jamais partagées et conservées pour une durée limitée. Les lignes de mesure sont supprimées au bout de 13 mois et le nombre expire au bout de 13 mois — durée maximale indiquée par la CNIL."
