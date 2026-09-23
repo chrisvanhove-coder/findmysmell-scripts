@@ -105,7 +105,11 @@ check('срок ключа браузера в коде — 13 месяцев',
    «ответы неполные» и «уже отправлено», — и последний шаг воронки стал
    мерить сохранение, а не приход. Проверяем по исходнику: событие RESULT
    стоит ВЫШЕ этих условий. */
-const record = readFileSync('src/app/[locale]/result/[archetype]/RecordSubmission.tsx', 'utf8');
+/* Считаем от начала компонента, а не от начала файла: заголовочный
+   комментарий объясняет, как всё устроено, и называет те же имена —
+   по всему файлу indexOf находил бы объяснение, а не код. */
+const recordFile = readFileSync('src/app/[locale]/result/[archetype]/RecordSubmission.tsx', 'utf8');
+const record = recordFile.slice(recordFile.indexOf('export default function'));
 const resultStep = record.indexOf("step: 'RESULT'");
 const consentGuard = record.indexOf('loadResearchConsent()');
 check('шаг RESULT отправляется до проверки согласия',

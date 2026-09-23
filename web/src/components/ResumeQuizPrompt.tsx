@@ -34,7 +34,11 @@ const COPY = {
   note: 'Starting over erases the answers you have given so far, including anything you wrote in your own words.',
   resume: 'Continue where I left off',
   restart: 'Start over',
-  cancel: 'Never mind',
+  /* Не надпись, а подпись для скринридера: закрытие — крестик в углу.
+     Третьей кнопкой в ряду оно стояло зря: «продолжить» и «начать заново» —
+     это выбор, а «закрыть» — не выбор, и в одном столбце с ними читалось
+     как третий равноправный вариант. */
+  close: 'Close',
 } as const;
 
 export default function ResumeQuizPrompt({
@@ -94,6 +98,25 @@ export default function ResumeQuizPrompt({
         aria-modal="true"
         aria-labelledby={titleId}
       >
+        {/* Первым в разметке, чтобы Tab начинал цикл отсюда; фокус при
+            открытии всё равно ставится на «продолжить», ниже. */}
+        <button
+          type="button"
+          className={styles.close}
+          onClick={onCancel}
+          aria-label={COPY.close}
+        >
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+            <path
+              d="M6 6l12 12M18 6L6 18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+
         <p id={titleId} className={styles.title}>{COPY.title}</p>
         <p className={styles.note}>{COPY.note}</p>
 
@@ -103,9 +126,6 @@ export default function ResumeQuizPrompt({
         </button>
         <button type="button" className={styles.restart} onClick={onRestart}>
           {COPY.restart}
-        </button>
-        <button type="button" className={styles.cancel} onClick={onCancel}>
-          {COPY.cancel}
         </button>
       </div>
     </div>

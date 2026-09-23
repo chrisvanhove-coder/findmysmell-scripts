@@ -105,13 +105,21 @@ for (const consent of [false, true, undefined, 'false', 'true']) {
   assert.equal(result.runs[0].consentEmail, consent === true || consent === 'true');
 }
 /* Повтор лечит обрыв связи и 5xx, но не отказ по существу: на 4xx сервер уже
-   разобрал тело, и то же тело даст тот же ответ. Кнопка «Try again», которая
-   не может сработать, — обещание, которого не сдержать. Проверяем по
-   исходнику: 4xx выделен в отдельную ветку и уводит в состояние без кнопки. */
+   разобрал тело, и то же тело даст тот же ответ.
+   А ЧЕЛОВЕКУ ПРО ЭТО НЕ СООБЩАЮТ ВОВСЕ. Полоса «ответы не сохранены» с
+   кнопкой повтора снята: до результата доходит только тот, кто ответил на
+   всё, и запись в нашу базу — не его забота. Взамен стоит отправка на уходе
+   со страницы, которая доставляет надёжнее кнопки, потому что не требует,
+   чтобы её заметили. Проверяем всё это по исходнику. */
 const record = readFileSync('src/app/[locale]/result/[archetype]/RecordSubmission.tsx', 'utf8');
 assert.match(record, /status >= 400 && response\.status < 500/, '4xx должен отличаться от 5xx');
-assert.match(record, /failed === 'retry' &&/, 'кнопка повтора — только там, где повтор поможет');
-assert.match(record, /styles\.notice/, 'полоса об ошибке должна быть оформлена, а не голым <p>');
+assert.match(record, /rejected\.current = true;\s*return;/, 'на 4xx повторять нельзя');
+assert.match(record, /attempt < 2/, '5xx и обрыв связи повторяем сами');
+assert.match(record, /watchForAbandon\(locale\)/, 'страховка на уходе со страницы обязательна');
+/* Ищем не текст, а отсутствие разметки: упомянуть снятую строку в
+   комментарии — можно, вернуть её на страницу — нельзя. */
+assert.doesNotMatch(record, /module\.css/, 'полосе об ошибке больше нечего оформлять');
+assert.match(record, /return null;\s*}\s*$/, 'компонент не показывает человеку ничего');
 assert.equal(parseSubmission(body(completeAnswers(), { revision: 2147483648 })).ok, false);
 assert.equal(parseSubmission(body({ constructor: 'anything' })).ok, false);
 console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases, retry policy, resume guard, abandoned runs`);

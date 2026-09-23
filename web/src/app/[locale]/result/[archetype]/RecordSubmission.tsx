@@ -7,11 +7,11 @@ import {
   runToken, revision, wasSent, markSent, browserKey, submissionRunIndex,
 } from '@/lib/answers-store';
 import { missingQuestions } from '@/lib/quiz-state';
+import { watchForAbandon } from '@/lib/abandoned';
 import { reportFunnel } from '@/lib/funnel';
-import styles from './record.module.css';
 
 /**
- * Отправляет прохождение в базу и показывает правду, если оно не доехало.
+ * Отправляет прохождение в базу — молча, чем бы дело ни кончилось.
  *
  * Отдельным компонентом, а не внутри ResultMatch, потому что это не про
  * подбор флакона: подбор влияет на разметку, а это побочный эффект, который
@@ -20,16 +20,26 @@ import styles from './record.module.css';
  * Почему на клиенте: ответы живут только в браузере, сервер их не видит.
  * Почему безопасно: победитель и баллы пересчитываются на сервере из ответов,
  * присланным значениям он не верит (см. src/lib/submission.ts).
+ *
+ * ПОЧЕМУ ЧЕЛОВЕКУ НИЧЕГО НЕ ПОКАЗЫВАЕМ. Здесь стояла полоса «Your answers
+ * have not been saved yet» с кнопкой повтора. Заказчица её сняла, и по делу:
+ * сюда доходит только тот, кто ответил на всё, запись в нашу базу — наша
+ * забота, а не его, и тревожная строка на странице результата отнимает у
+ * человека то, ради чего он проходил квиз. Хуже того, она загоралась ещё до
+ * того, как отработают автоматические повторы: при первой же неудаче человек
+ * две секунды видел «не сохранено», хотя следующая попытка проходила.
+ *
+ * ЧЕМ ЗАМЕНЕНА. Не тишиной, а второй попыткой доставки. Повторы остались
+ * (5xx и обрыв связи — дважды), а сверху добавлена та же отправка на уходе
+ * со страницы, что и у брошенных прохождений: если ни одна попытка не
+ * прошла, `wasSent()` остаётся false, и sendBeacon добивает запись, когда
+ * человек закрывает вкладку. Набор ответов здесь полный, так что сервер
+ * посчитает `completed = true` — это будет нормальное завершённое
+ * прохождение, а не брошенное.
+ *
+ * В сумме данных сохраняется БОЛЬШЕ, чем с кнопкой: кнопку надо было
+ * заметить и нажать, а маячок уходит сам.
  */
-
-/* Текст английский по той же причине, что и в SubscribeForm: FR и RU для
-   страницы результата ещё не выгружены (HANDOFF, раздел 9.1).
-   НУЖНА ВЫЧИТКА ЗАКАЗЧИЦЕЙ: этих двух строк на живом сайте нет — сверить
-   их не с чем, они написаны здесь. */
-const COPY = {
-  failed: 'Your answers have not been saved yet.',
-  retry: 'Try again',
-} as const;
 
 // Coalesce StrictMode requests. The database also enforces token + revision ordering.
 const pending = new Map<string, Promise<void>>();
@@ -38,7 +48,6 @@ const pending = new Map<string, Promise<void>>();
 class Rejected extends Error {}
 
 export default function RecordSubmission({ locale }: { locale: Locale }) {
-  const [failed, setFailed] = useState<'retry' | 'final' | null>(null);
   const [attempt, setAttempt] = useState(0);
   // Отказ по существу не лечится повтором, в том числе по событию `online`.
   const rejected = useRef(false);
@@ -89,16 +98,13 @@ export default function RecordSubmission({ locale }: { locale: Locale }) {
       }
       try {
         await request;
-        if (!cancelled) setFailed(null);
       } catch (error) {
         if (cancelled) return;
-        // Кнопку повтора показываем только там, где повтор может помочь.
+        // Повторяем только там, где повтор может помочь.
         if (error instanceof Rejected) {
           rejected.current = true;
-          setFailed('final');
           return;
         }
-        setFailed('retry');
         if (attempt < 2) timer = setTimeout(() => setAttempt((n) => n + 1), 2000 * (attempt + 1));
       }
     }
@@ -112,19 +118,12 @@ export default function RecordSubmission({ locale }: { locale: Locale }) {
     };
   }, [locale, attempt]);
 
-  if (!failed) return null;
-  return (
-    <p className={styles.notice} role="status">
-      {COPY.failed}
-      {failed === 'retry' && (
-        <button
-          className={styles.retry}
-          type="button"
-          onClick={() => { setFailed(null); setAttempt((n) => n + 1); }}
-        >
-          {COPY.retry}
-        </button>
-      )}
-    </p>
-  );
+  /* Страховка: если ни одна попытка выше не прошла, `wasSent()` остался
+     false — и та же отправка, что спасает брошенные прохождения, добьёт
+     запись, когда человек уйдёт со страницы. Сама проверяет, что слать
+     есть что и что оно ещё не сохранено (см. lib/abandoned.ts). */
+  useEffect(() => watchForAbandon(locale), [locale]);
+
+  // Ничего не рисует: см. заголовок файла.
+  return null;
 }

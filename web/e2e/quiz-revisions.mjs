@@ -14,7 +14,10 @@ const tokens = new Set();
 let blocked = true; let attempts = 0;
 await page.route('**/api/submissions', async (route) => {
   const body = route.request().postDataJSON(); tokens.add(body.clientToken); attempts++;
-  if (blocked) await route.fulfill({ status: 503, contentType: 'application/json', body: '{}' });
+  /* Роняем ТОЛЬКО первую попытку и тут же снимаем блокировку: дальше
+     проверяем, что повтор случается САМ. Кнопки «Try again» на странице
+     результата больше нет — человеку про неудачу не сообщают. */
+  if (blocked) { blocked = false; await route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }); }
   else await route.continue();
 });
 async function emotion(code) {
@@ -38,11 +41,8 @@ async function waitSaved() {
 try {
   const visited = await walkQuiz(page, { base: BASE, agree: false, openText: 'revision browser original' });
   assert.equal(visited.length, 18);
-  await page.getByRole('button', { name: 'Try again', exact: true }).waitFor();
-  assert.equal(await page.evaluate(() => sessionStorage.getItem('quiz_sent')), null);
-  blocked = false;
-  await page.getByRole('button', { name: 'Try again', exact: true }).click();
   await waitSaved();
+  assert.ok(attempts >= 2, 'после 503 повтор должен уйти сам, без нажатия');
   let rows = await stored(); assert.equal(rows.length, 1); assert.equal(rows[0].consent_research, false);
   const originalId = rows[0].id;
   const originalRevision = rows[0].revision;
