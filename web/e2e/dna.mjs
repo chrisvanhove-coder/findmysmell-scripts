@@ -101,15 +101,25 @@ console.log('\nС ответами');
   );
 
   // ── 3. Река нарисована ──
-  const river = await page.evaluate(() => {
-    const c = document.querySelector('canvas');
+  /* ХОЛСТОВ НА СТРАНИЦЕ ДВА, и до сих пор проверка брала не тот.
+     `document.querySelector('canvas')` возвращает ПЕРВЫЙ в разметке — а
+     это зерно (grain), плёночная текстура во весь экран. Оно всегда
+     размером с окно и закрашено целиком, поэтому «канвас растянут» и
+     «река нарисована» проходили всегда и ни о чём не говорили, а «река
+     перерисована под раскрытую ось» падала: зерно от раскрытия оси
+     действительно не меняется.
+     Река — второй холст, внутри самой диаграммы. Берём его по классу. */
+  const RIVER = '[class*="diagram"] canvas';
+
+  const river = await page.evaluate((sel) => {
+    const c = document.querySelector(sel);
     if (!c) return null;
     const ctx = c.getContext('2d');
     const d = ctx.getImageData(0, 0, c.width, c.height).data;
     let painted = 0;
     for (let i = 3; i < d.length; i += 4) if (d[i] > 0) painted++;
     return { w: c.width, h: c.height, painted };
-  });
+  }, RIVER);
   check('канвас растянут под диаграмму', !!river && river.w > 300, river ? `${river.w}×${river.h}` : 'канваса нет');
   check('река нарисована', !!river && river.painted > 1000, river ? `${river.painted} пикселей` : '');
 
@@ -142,14 +152,14 @@ console.log('\nС ответами');
   check('подсказка ушла после нажатия', hint === 0, `прозрачность ${hint}`);
 
   // Река должна перерисоваться под сдвинутые строки, а не остаться на месте.
-  const after = await page.evaluate(() => {
-    const c = document.querySelector('canvas');
+  const after = await page.evaluate((sel) => {
+    const c = document.querySelector(sel);
     const ctx = c.getContext('2d');
     const d = ctx.getImageData(0, 0, c.width, c.height).data;
     let painted = 0;
     for (let i = 3; i < d.length; i += 4) if (d[i] > 0) painted++;
     return { h: c.height, painted };
-  });
+  }, RIVER);
   check('река перерисована под раскрытую ось', after.h > river.h, `${river.h} → ${after.h}`);
 
   // Повторное нажатие сворачивает.
