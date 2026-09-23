@@ -103,14 +103,30 @@
 
 .dimmed { opacity: 0.4; }
 
-/* Подложка под подпись. В проде её не было, и на светлых кадрах
-   (лимон, морской бриз) белый текст почти терялся. */
+/* ЧИТАЕМОСТЬ ПОДПИСИ БЕЗ ПЛАШКИ. Раньше под текстом стояла чёрная
+   плашка со скруглением — она читалась как рамка вокруг слова, наклеенная
+   поверх фотографии. Вместо неё притемняем САМУ фотографию: плитка целиком
+   получает мягкое затемнение снизу, где лежит подпись. Текст остаётся
+   читаемым и на светлых кадрах (лимон, морской бриз), а коробки вокруг
+   слова больше нет. */
+.withPhoto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.35) 55%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
 .withPhoto .label {
-  display: inline-block;
-  padding: 0 14px;
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 8px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75);
 }
 
 .tapAgain {

@@ -181,7 +181,6 @@ console.log('\nИсправления против прода на месте');
     ['Q_DAYTDAY: варианты — кнопки', pasta, /<button/],
     ['Q_DAYTDAY: учтён prefers-reduced-motion', pasta, /prefers-reduced-motion: reduce/],
     ['Q_DAYTDAY: слушатели снимаются', pasta, /removeEventListener\('resize'/],
-    ['Q_DAYTDAY: пыль складывается по строкам, как на экране', pasta, /function wrap\(/],
     ['Q_STAYWELL: время линий от времени', wave, /lt \+= dt \* LINE_RATE/],
     ['Q_STAYWELL: холст в размере устройства', wave, /setTransform\(dpr/],
     ['Q_STAYWELL: варианты — кнопки', wave, /<button/],
@@ -190,6 +189,15 @@ console.log('\nИсправления против прода на месте');
   ] as Array<[string, string, RegExp]>) {
     check(what, re.test(src));
   }
+
+  /* Рассыпания слова в пыль больше нет: заказчица попросила убрать приём —
+     он выглядел по-детски и задерживал переход почти на секунду. Сторожим
+     обратное: чтобы эффект не вернулся вместе с задержкой. */
+  check('Q_DAYTDAY: выбор уводит дальше без рассыпания в пыль',
+    !/function wrap\(/.test(pasta) && !/data-dust/.test(pasta),
+    'вернулся холст пыли или его разбивка строк');
+  check('Q_DAYTDAY: перехода с задержкой нет',
+    !/LEAVE_MS/.test(pasta), 'вернулась задержка перед переходом');
 
   // Комментарии убираем: они законно упоминают letterSpacing, объясняя,
   // почему его тут нет.

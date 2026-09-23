@@ -16,14 +16,6 @@
   pointer-events: none;
 }
 
-/* Пыль от выбранного варианта — поверх всего на экране вопроса. */
-.dust {
-  position: absolute;
-  inset: 0;
-  z-index: 30;
-  pointer-events: none;
-}
-
 .inner {
   position: absolute;
   inset: 0;

@@ -83,14 +83,12 @@ const FADE_RATE = 1.08;
 /** Рассыпание: 55 кадров прода ≈ 0.92 с. */
 const DUST_MS = 920;
 /** Через столько после выбора идём дальше — как в проде. */
-const LEAVE_MS = 900;
 /* Прод добавлял пылинке 0.12 px/кадр за кадр. В секундах это
    0.12 × 60 × 60 = 432 px/с². */
 const GRAVITY = 432;
 
 export default function PastaOptions({ onChoose }: MechanicProps) {
   const canvas = useRef<HTMLCanvasElement | null>(null);
-  const dust = useRef<HTMLCanvasElement | null>(null);
   const buttons = useRef<Record<string, HTMLButtonElement | null>>({});
   const [looking, setLooking] = useState<string | null>(null);
   const [picked, setPicked] = useState<string | null>(null);
@@ -255,107 +253,15 @@ export default function PastaOptions({ onChoose }: MechanicProps) {
       document.removeEventListener('visibilitychange', onVisibility);
     };
   }, []);
-
-  /* Рассыпание выбранного варианта в пыль и переход. */
+  /* Выбранный вариант просто уводит дальше.
+     РАНЬШЕ ЗДЕСЬ БЫЛО РАССЫПАНИЕ СЛОВА В ПЫЛЬ: буквы варианта снимались с
+     экрана на отдельный холст и разлетались частицами, после чего шёл
+     переход с задержкой 900 мс. Заказчица попросила это убрать — приём
+     выглядел по-детски и задерживал переход почти на секунду. Плавающие
+     пятна на фоне оставлены: это фон экрана, а не эффект выбора. */
   useEffect(() => {
     if (!picked) return;
-    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const leave = setTimeout(() => onChoose(picked), still ? 0 : LEAVE_MS);
-    if (still) return () => clearTimeout(leave);
-
-    const cv = dust.current;
-    const btn = buttons.current[picked];
-    const ctx = cv?.getContext('2d');
-    if (!cv || !btn || !ctx) return () => clearTimeout(leave);
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    cv.width = Math.round(w * dpr);
-    cv.height = Math.round(h * dpr);
-    cv.style.width = `${w}px`;
-    cv.style.height = `${h}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    /* Берём буквы с экрана так, как они там стоят. В проде текст
-       перерисовывался одной строкой по центру рамки — если вариант
-       переносился на две строки, пыль складывалась не из того, что
-       человек видел. Здесь каждая строка рисуется на своём месте. */
-    const rect = btn.getBoundingClientRect();
-    const cs = getComputedStyle(btn);
-    const fontSize = Number.parseFloat(cs.fontSize);
-    const PAD = 40;
-    const off = document.createElement('canvas');
-    off.width = Math.ceil(rect.width + PAD * 2);
-    off.height = Math.ceil(rect.height + PAD * 2);
-    const oc = off.getContext('2d');
-    if (!oc) return () => clearTimeout(leave);
-    oc.font = `${cs.fontWeight} ${fontSize}px ${cs.fontFamily}`;
-    oc.fillStyle = CFG.optionInk;
-    oc.textAlign = 'center';
-    oc.textBaseline = 'middle';
-    const lineH = Number.parseFloat(cs.lineHeight) || fontSize * 1.2;
-    const lines = wrap(oc, btn.textContent ?? '', rect.width);
-    const top = PAD + (rect.height - lines.length * lineH) / 2 + lineH / 2;
-    lines.forEach((line, i) => oc.fillText(line, off.width / 2, top + i * lineH));
-
-    const img = oc.getImageData(0, 0, off.width, off.height);
-    const STEP = Math.max(2, Math.floor(fontSize / 8));
-    const particles: Array<{
-      x: number; y: number; vx: number; vy: number;
-      size: number; spin: number; rot: number;
-    }> = [];
-    for (let y = 0; y < off.height; y += STEP) {
-      for (let x = 0; x < off.width; x += STEP) {
-        if (img.data[(y * off.width + x) * 4 + 3] <= 80) continue;
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 1.5 + Math.random() * 4.5;
-        particles.push({
-          x: rect.left - PAD + x,
-          y: rect.top - PAD + y,
-          // Скорости прода были на кадр — переводим в пиксели в секунду.
-          vx: Math.cos(angle) * speed * 60,
-          vy: (Math.sin(angle) * speed - 1.2) * 60,
-          size: STEP * (0.8 + Math.random() * 1.2),
-          spin: (Math.random() - 0.5) * 0.3 * 60,
-          rot: Math.random() * Math.PI * 2,
-        });
-      }
-    }
-
-    let raf = 0;
-    let started = 0;
-    let prev = 0;
-    const tick = (ts: number) => {
-      if (!started) { started = ts; prev = ts; }
-      const dt = Math.min((ts - prev) / 1000, 0.05);
-      prev = ts;
-      const progress = (ts - started) / DUST_MS;
-
-      ctx.clearRect(0, 0, w, h);
-      const a = Math.max(0, 1 - progress * 1.4);
-      if (a > 0) {
-        ctx.fillStyle = CFG.optionInk;
-        for (const p of particles) {
-          p.x += p.vx * dt;
-          p.y += p.vy * dt;
-          p.vy += GRAVITY * dt;
-          p.vx *= Math.pow(0.97, dt * 60);
-          p.rot += p.spin * dt;
-          ctx.save();
-          ctx.globalAlpha = a;
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.rot);
-          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-          ctx.restore();
-        }
-      }
-      if (progress < 1) raf = requestAnimationFrame(tick);
-      else ctx.clearRect(0, 0, w, h);
-    };
-    raf = requestAnimationFrame(tick);
-
-    return () => { clearTimeout(leave); cancelAnimationFrame(raf); };
+    onChoose(picked);
   }, [picked, onChoose]);
 
   function pick(code: string) {
@@ -412,25 +318,7 @@ export default function PastaOptions({ onChoose }: MechanicProps) {
         </ul>
       </div>
 
-      <canvas ref={dust} className={styles.dust} aria-hidden="true" data-dust="" />
     </div>
   );
 }
 
-/** Разбивка строки по ширине — чтобы пыль совпала с тем, что на экране. */
-function wrap(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
-  const words = text.trim().split(/\s+/);
-  const lines: string[] = [];
-  let line = '';
-  for (const word of words) {
-    const next = line ? `${line} ${word}` : word;
-    if (line && ctx.measureText(next).width > maxWidth) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = next;
-    }
-  }
-  if (line) lines.push(line);
-  return lines;
-}
