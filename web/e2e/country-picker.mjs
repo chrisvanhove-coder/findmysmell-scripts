@@ -235,6 +235,34 @@ for (const id of IDS) {
   await context.close();
 }
 
+/* Выбор мышью не должен зависеть от того, даёт ли браузер кнопке фокус
+   на mousedown. Chromium даёт, Safari и Firefox — нет, и там список
+   закрывался по blur до того, как доходил click: страну нельзя было
+   выбрать вообще. Проверяем инвариант, который одинаков во всех
+   браузерах: после нажатия фокус остался в поле, а список открыт. */
+console.log('\nВыбор мышью не ломается о фокус');
+for (const id of ['Q_REGION_NOW', 'Q_REGION_CHILD']) {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await context.newPage();
+  await page.goto(`${BASE}/en/quiz/${slug(id)}`, { waitUntil: 'networkidle' });
+  await page.locator('#country-search').click();
+  await page.locator('#country-search').fill('Fra');
+  await page.waitForTimeout(200);
+  const box = await page.locator('[role="option"] button').first().boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.waitForTimeout(80);
+  const focused = await page.evaluate(() => document.activeElement?.id);
+  const open = await page.locator('[role="option"]').count();
+  check(`${id}: нажатие не уводит фокус из поля`, focused === 'country-search', String(focused));
+  check(`${id}: список не схлопнулся под нажатием`, open > 0, `вариантов ${open}`);
+  await page.mouse.up();
+  await page.waitForURL((u) => !u.pathname.endsWith(slug(id)), { timeout: 8000 });
+  check(`${id}: страна выбрана мышью`, (await saved(page, id)) === 'France',
+    String(await saved(page, id)));
+  await context.close();
+}
+
 await browser.close();
 console.log(failed ? `\n${failed} проверок упало\n` : '\nПоиск по странам работает.\n');
 process.exit(failed ? 1 : 0);

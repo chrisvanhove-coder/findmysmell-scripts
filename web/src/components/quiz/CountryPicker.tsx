@@ -140,7 +140,22 @@ export default function CountryPicker({ questionId, onChoose }: MechanicProps) {
           />
 
           {open && (
-            <ul className={styles.list} id="country-list" role="listbox">
+            /* preventDefault НА MOUSEDOWN — ИНАЧЕ СТРАНУ НЕЛЬЗЯ ВЫБРАТЬ МЫШЬЮ.
+               Нажатие по кнопке уводит фокус из поля, срабатывает onBlur
+               обёртки и список исчезает ДО того, как браузер дошлёт click —
+               то есть выбор молча не происходит. В Chromium этого не видно:
+               там кнопка получает фокус на mousedown, и relatedTarget в blur
+               указывает внутрь обёртки, так что список остаётся. А в Safari и
+               Firefox кнопки фокус на mousedown НЕ получают, relatedTarget
+               приходит пустым — и там список схлопывался. Отмена mousedown
+               оставляет фокус в поле: blur не случается вовсе, click доходит,
+               и клавиатура продолжает работать как была. */
+            <ul
+              className={styles.list}
+              id="country-list"
+              role="listbox"
+              onMouseDown={(e) => e.preventDefault()}
+            >
               {matches.length === 0 && <li className={styles.empty}>{data.empty}</li>}
               {matches.map((c, i) => (
                 <li key={c} role="option" aria-selected={i === active}>
