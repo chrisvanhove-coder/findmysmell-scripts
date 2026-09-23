@@ -8,6 +8,7 @@
  * или уходит за край. Проверить это глазами на семи архетипах каждый раз
  * никто не будет, поэтому арифметика проверяется здесь.
  */
+import { existsSync, readFileSync } from 'node:fs';
 import {
   LAYOUT, parsePunch, punchFits, punchHeight,
   contrast, punchColor, MIN_PUNCH_CONTRAST,
@@ -15,6 +16,8 @@ import {
 import punchLines from '../src/data/punch-lines.en.json' with { type: 'json' };
 import tagLines from '../src/data/tag-lines.en.json' with { type: 'json' };
 import shareCards from '../src/data/share-cards.en.json' with { type: 'json' };
+import punchLinesFr from '../src/data/punch-lines.fr.json' with { type: 'json' };
+import shareCardsFr from '../src/data/share-cards.fr.json' with { type: 'json' };
 
 type CardArch = { bg: string; text: string; accent: string };
 
@@ -127,6 +130,36 @@ console.log('\nБитые данные не роняют рисование');
   check('целая строка проходит', parsePunch([['текст', 40]]).length === 1);
   check('лишние элементы в строке не мешают',
     parsePunch([['текст', 40, 'мусор']]).length === 1);
+}
+
+console.log('\nФранцузская карточка: те же семь архетипов и та же полоса');
+{
+  const available = LAYOUT.bottleZoneTop - LAYOUT.punchStartY;
+  for (const key of KEYS) {
+    const punch = parsePunch((punchLinesFr as Record<string, unknown>)[key]);
+    const h = punchHeight(punch);
+    check(`${key.padEnd(10)} ${String(h).padStart(3)}px в ${punch.length} строк`,
+      punch.length > 0 && punchFits(punch),
+      punch.length === 0 ? 'нет строк' : `не влезает: ${h}px > ${available}px`);
+  }
+  /* Текст французской карточки взят с живого сайта дословно. Сверяем с
+     источником — `share-cards.fr.json`, который собран из
+     result-shared-fr.js: панчлайн это его headline, разбитый по строкам. */
+  for (const key of KEYS) {
+    const fromCard = String((shareCardsFr as Record<string, { headline: string }>)[key].headline)
+      .split('\n').map((l) => l.trim()).filter(Boolean);
+    const fromPunch = parsePunch((punchLinesFr as Record<string, unknown>)[key]).map(([t]) => t);
+    check(`${key.padEnd(10)} совпадает с headline живого сайта`,
+      fromCard.join('|') === fromPunch.join('|'),
+      `карточка: ${fromCard.join('|')}\n        панчлайн: ${fromPunch.join('|')}`);
+  }
+  // Французских строк @tag на живом сайте нет, и придумывать их нельзя.
+  // Когда заказчица их напишет, файл появится и эта проверка это заметит.
+  const hasFrTags = existsSync('src/data/tag-lines.fr.json');
+  check('французские @tag: либо файла нет, либо он подключён в page.tsx',
+    !hasFrTags || readFileSync('src/app/[locale]/result/[archetype]/page.tsx', 'utf8')
+      .includes('tag-lines.fr.json'),
+    'файл появился, но карточка его не читает');
 }
 
 console.log(failed ? `\n${failed} проверок упало\n` : '\nвсе проверки прошли\n');

@@ -12,14 +12,52 @@ import { parsePunch } from '@/lib/share-card';
 import { cld } from '@/lib/cloudinary';
 import { previewTags } from '@/lib/site';
 import { HOME_HERO } from '@/lib/home';
-import shareCards from '@/data/share-cards.en.json';
-import punchLines from '@/data/punch-lines.en.json';
-import tagLines from '@/data/tag-lines.en.json';
+import shareCardsEn from '@/data/share-cards.en.json';
+import shareCardsFr from '@/data/share-cards.fr.json';
+import punchLinesEn from '@/data/punch-lines.en.json';
+import punchLinesFr from '@/data/punch-lines.fr.json';
+import tagLinesEn from '@/data/tag-lines.en.json';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
 import SubscribeForm from './SubscribeForm';
 import VinylPlayer from './VinylPlayer';
 import styles from './result.module.css';
+
+/**
+ * Данные шеринговой карточки по локали.
+ *
+ * ФРАНЦУЗСКИЙ ЕСТЬ, И ОН НАСТОЯЩИЙ. `share-cards.fr.json` и
+ * `punch-lines.fr.json` собраны из живого французского сайта: страница
+ * `/fr/result` в Webflow подключает `result-shared-fr.js` из ЭТОГО
+ * репозитория через jsDelivr, то есть файл в репозитории и есть прод.
+ * Тексты оттуда взяты дословно, ничего не переведено мной.
+ *
+ * ЧЕГО ВО ФРАНЦУЗСКОМ НЕТ — СТРОКИ «@tag the friend who…». На живом
+ * французском сайте карточка другого, более раннего поколения: у неё в
+ * подвале «découvrez le vôtre sur · findmysmell.com», а строки @tag нет
+ * вовсе (в `result-shared-fr.js` нет ни FMS_TAG_LINES, ни панчлайнов —
+ * они появились только в английском `result-shared15.js`). Придумывать
+ * их за заказчицу нельзя: это её текст и, по её же словам, главный
+ * механизм шеринга. Поэтому на французской карточке строка @tag пустая —
+ * КАК ТОЛЬКО ОНА НАПИШЕТ СЕМЬ ФРАНЦУЗСКИХ СТРОК, сюда добавляется
+ * `tag-lines.fr.json`, и больше ничего менять не нужно.
+ *
+ * КЕГЛИ ФРАНЦУЗСКОГО ПАНЧЛАЙНА ИЗМЕРЕНЫ, А НЕ ПОДОБРАНЫ НА ГЛАЗ:
+ * подобраны наибольшие, при которых самая длинная строка влезает в
+ * ширину карточки, а блок — в полосу до бутылки. Английские кегли
+ * заказчица набирала построчно и по смыслу (у CEO слово «and» крупнее
+ * всех), французские так не набирались — это задача дизайнерского
+ * прохода, а не порта.
+ */
+const CARD_DATA: Record<Locale, {
+  cards: Record<string, unknown>;
+  punch: Record<string, unknown>;
+  tags: Record<string, string>;
+}> = {
+  en: { cards: shareCardsEn, punch: punchLinesEn, tags: tagLinesEn },
+  fr: { cards: shareCardsFr, punch: punchLinesFr, tags: {} },
+  ru: { cards: shareCardsEn, punch: punchLinesEn, tags: tagLinesEn },
+};
 
 interface RouteParams {
   locale: string;
@@ -61,7 +99,8 @@ export async function generateMetadata({
      Запасной вариант (`you` + `identity`) остаётся на случай, если у
      архетипа почему-то не окажется панчлайна: пустой заголовок хуже
      старого. Сами тексты живут в данных и больше нигде не показываются. */
-  const punchLine = parsePunch((punchLines as Record<string, unknown>)[parsed.key])
+  const punchLine = parsePunch(
+    (CARD_DATA[parsed.locale].punch as Record<string, unknown>)[parsed.key])
     .map(([text]) => text)
     .join(' ');
   const headline = punchLine || `${a.you} ${a.identity}`;
@@ -111,12 +150,12 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
   const closer = rest.length > 1 ? rest[rest.length - 1] : null;
   const body = closer ? rest.slice(0, -1) : rest;
 
-  // Данные карточки. Английские на всех локалях: панчлайны и строки @tag
-  // на французский пока не переведены, а показывать пустую карточку хуже,
-  // чем английскую (договорились взяться за локали позже).
-  const card = (shareCards as Record<string, typeof shareCards.CEO>)[parsed.key];
-  const punch = parsePunch((punchLines as Record<string, unknown>)[parsed.key]);
-  const tag = (tagLines as Record<string, string>)[parsed.key] ?? '';
+  /* Данные карточки по локали (см. CARD_DATA). Русского контента нет
+     нигде — там, как и на всей странице, английский. */
+  const data = CARD_DATA[parsed.locale];
+  const card = (data.cards as Record<string, typeof shareCardsEn.CEO>)[parsed.key];
+  const punch = parsePunch((data.punch as Record<string, unknown>)[parsed.key]);
+  const tag = (data.tags as Record<string, string>)[parsed.key] ?? '';
 
   return (
     <main className={styles.page} data-archetype={parsed.key}>

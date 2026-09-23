@@ -189,15 +189,36 @@ function drawTagLine(ctx: Ctx, arch: CardArch, fonts: CardFonts, tagLine: string
   const { PAD, W, tagY, tagFontSize, tagRuleY } = LAYOUT;
 
   ctx.textAlign = 'left';
-  ctx.font = `italic 400 ${tagFontSize}px ${fonts.serif}`;
-  ctx.fillStyle = arch.text;
-  ctx.globalAlpha = 0.9;
-  ctx.fillText(tagLine, PAD, tagY);
+  /* Пустая строка бывает на локалях, где @tag ещё не написан: тогда
+     печатать нечего, но ЛИНИЮ оставляем — она держит верх карточки, и
+     без неё панчлайн повисает в воздухе. Отступ под панчлайн фиксирован,
+     так что раскладка не едет. */
+  if (tagLine) {
+    ctx.font = `italic 400 ${tagFontSize}px ${fonts.serif}`;
+    ctx.fillStyle = arch.text;
+    ctx.globalAlpha = 0.9;
+    ctx.fillText(tagLine, PAD, tagY);
+  }
 
   ctx.globalAlpha = 0.3;
   ctx.fillStyle = arch.text;
   ctx.fillRect(PAD, tagRuleY, W - PAD * 2, 1);
   ctx.globalAlpha = 1;
+}
+
+/**
+ * Наибольший кегль не крупнее желаемого, при котором строка влезает в
+ * ширину карточки. Меряет настоящим шрифтом страницы, а не на глаз.
+ */
+export function fitWidth(ctx: Ctx, text: string, wanted: number, fonts: CardFonts): number {
+  const maxW = LAYOUT.W - LAYOUT.PAD * 2;
+  let size = wanted;
+  while (size > 8) {
+    ctx.font = `700 ${size}px ${fonts.display}`;
+    if (ctx.measureText(text).width <= maxW) break;
+    size -= 1;
+  }
+  return size;
 }
 
 function drawPunch(ctx: Ctx, arch: CardArch, fonts: CardFonts, punch: Array<[string, number]>) {
@@ -206,7 +227,13 @@ function drawPunch(ctx: Ctx, arch: CardArch, fonts: CardFonts, punch: Array<[str
   ctx.textAlign = 'left';
   ctx.globalAlpha = 1;
   ctx.fillStyle = punchColor(arch);
-  for (const [text, size] of punch) {
+  for (const [text, wanted] of punch) {
+    /* Кегль ужимаем, если строка не влезает по ширине. Английские кегли
+       набраны вручную под свой шрифт и сюда не попадают, а вот
+       вычисленные (французские) считаны на запасном Arial Black — когда
+       приедет HIGHCRUISER, буквы станут другой ширины. Пусть лучше строка
+       окажется чуть мельче, чем уедет за край карточки. */
+    const size = fitWidth(ctx, text, wanted, fonts);
     ctx.font = `700 ${size}px ${fonts.display}`;
     ctx.fillText(text, PAD, y + size);
     y += size + punchLineGap;
