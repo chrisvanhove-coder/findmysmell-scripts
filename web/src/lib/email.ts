@@ -52,6 +52,11 @@ export interface ResultEmail {
   match: Match | null;
   /** Адрес сайта для ссылок в письме. */
   origin: string;
+  /* Пропуск на страницу результата — id строки подписки. Без него ссылка
+     из письма не откроется на устройстве, где человек квиз не проходил:
+     результат закрыт (см. components/ResultGate.tsx). null — ссылка
+     останется голой и сработает только там, где ответы уже есть. */
+  pass?: string | null;
 }
 
 export async function sendResultEmail(input: ResultEmail): Promise<SendOutcome> {
@@ -176,7 +181,8 @@ export function buildResultEmail(input: ResultEmail): {
   const copy = COPY[input.locale];
   const a = getArchetype(input.locale, input.archetype);
   const palette = ARCHETYPE_PALETTES[input.archetype];
-  const resultUrl = `${input.origin}/${input.locale}/result/${input.archetype.toLowerCase()}`;
+  const resultUrl = `${input.origin}/${input.locale}/result/${input.archetype.toLowerCase()}`
+    + (input.pass ? `?r=${encodeURIComponent(input.pass)}` : '');
   const main = input.match?.main ?? null;
 
   // Первый абзац desc — главная фраза над диаграммой на странице,

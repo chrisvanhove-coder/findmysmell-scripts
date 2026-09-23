@@ -7,6 +7,7 @@
 //
 // Запуск: npm run dev (в другом окне), затем npm run e2e:flashlight
 import { chromium } from 'playwright';
+import { unlockResult } from './lib/unlock-result.mjs';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:3100';
 const URL = `${BASE}/en/result/hug`;
@@ -38,6 +39,8 @@ console.log('\nДо движения курсора текстуры не вид
 {
   const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await page.goto(URL, { waitUntil: 'networkidle' });
 
   const layer = page.locator('[data-flashlight="texture"]').first();
@@ -65,6 +68,8 @@ let moved;
 {
   const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await page.goto(URL, { waitUntil: 'networkidle' });
 
   // boundingBox даёт координаты относительно ОКНА, а mouse.move ходит
@@ -103,6 +108,8 @@ console.log('\nУход курсора гасит фонарик');
 {
   const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await page.goto(URL, { waitUntil: 'networkidle' });
 
   // boundingBox даёт координаты относительно ОКНА, а mouse.move ходит
@@ -141,6 +148,8 @@ console.log('\nprefers-reduced-motion выключает приём');
     reducedMotion: 'reduce',
   });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await page.goto(URL, { waitUntil: 'networkidle' });
 
   // boundingBox даёт координаты относительно ОКНА, а mouse.move ходит
@@ -168,6 +177,8 @@ console.log('\nТекст лежит поверх текстуры, а не по
 {
   const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await page.goto(URL, { waitUntil: 'networkidle' });
 
   const layers = await page.evaluate(() => {

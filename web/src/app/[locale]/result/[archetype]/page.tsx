@@ -19,6 +19,7 @@ import punchLinesFr from '@/data/punch-lines.fr.json';
 import tagLinesEn from '@/data/tag-lines.en.json';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
+import ResultGate from '@/components/ResultGate';
 import SubscribeForm from './SubscribeForm';
 import VinylPlayer from './VinylPlayer';
 import styles from './result.module.css';
@@ -116,6 +117,12 @@ export async function generateMetadata({
     title,
     description: a.descriptor,
     alternates: { canonical: `/${parsed.locale}/result/${parsed.key.toLowerCase()}` },
+    /* Из выдачи убрано вместе с закрытием страницы: результат виден только
+       прошедшему квиз (components/ResultGate.tsx), и человек, пришедший на
+       неё из поиска, увидел бы пустоту и уехал на вопросы. Ссылку-превью
+       теги ниже по-прежнему собирают: ими пользуются мессенджеры, когда
+       человек делится своим результатом сам. */
+    robots: { index: false, follow: true },
     ...previewTags({
       title: headline,
       description: a.descriptor,
@@ -159,6 +166,9 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
 
   return (
     <main className={styles.page} data-archetype={parsed.key}>
+      {/* Всё содержимое — внутри пропуска: без пройденного квиза оно не
+          отрисуется ни в браузере, ни в HTML, который отдаёт сервер. */}
+      <ResultGate locale={parsed.locale} archetype={parsed.key}>
       {/* Старого героя («You are / politely unreachable») здесь нет намеренно:
           заказчик убрала его со всех архетипов. Результат начинается сразу
           со Scent DNA. Тексты you/identity/descriptor остались в данных —
@@ -206,6 +216,7 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
 
       {/* Ничего не рисует: пишет прохождение в базу один раз за проход. */}
       <RecordSubmission locale={parsed.locale} />
+      </ResultGate>
     </main>
   );
 }

@@ -46,7 +46,11 @@ export async function POST(request: Request) {
     const db = getDb();
     // Повторная подписка тем же адресом обновляет архетип, локаль и флакон,
     // а не падает на уникальном индексе. Согласие переподтверждается.
-    await db
+    /* id строки нужен ссылке в письме: он служит пропуском на страницу
+       результата, если человек откроет письмо на другом устройстве, где
+       в браузере ответов нет (см. api/result-access). returning отдаёт
+       строку и при вставке, и при обновлении — это тот же upsert. */
+    const [subscriber] = await db
       .insert(schema.subscribers)
       .values({ ...parsed.input, perfumeId })
       .onConflictDoUpdate({
@@ -59,7 +63,8 @@ export async function POST(request: Request) {
           consentEmail: true,
           sentAt: null,
         },
-      });
+      })
+      .returning({ id: schema.subscribers.id });
 
     // Без архетипа письму нечего рассказывать — только сохраняем адрес.
     if (!archetype) {
@@ -73,6 +78,7 @@ export async function POST(request: Request) {
       archetype,
       match: chosen,
       origin,
+      pass: subscriber?.id ?? null,
     });
 
     if (outcome === 'sent') {

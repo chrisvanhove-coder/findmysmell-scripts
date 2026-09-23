@@ -120,6 +120,22 @@ assert.match(record, /watchForAbandon\(locale\)/, 'страховка на ух�
    комментарии — можно, вернуть её на страницу — нельзя. */
 assert.doesNotMatch(record, /module\.css/, 'полосе об ошибке больше нечего оформлять');
 assert.match(record, /return null;\s*}\s*$/, 'компонент не показывает человеку ничего');
+/* Фикстура полного прохождения, которой браузерные проверки открывают
+   закрытую страницу результата (e2e/lib/unlock-result.mjs). Если в квизе
+   появится новый вопрос, набор перестанет быть полным, и проверки начнут
+   молча упираться в пропуск вместо того, чтобы проверять страницу.
+   Чиним одной командой: npm run fixture:run */
+const runFixture = JSON.parse(readFileSync('e2e/lib/complete-run.json', 'utf8'));
+assert.deepEqual(Object.keys(runFixture).sort(),
+  QUESTIONS.Q_EMO.answers.map((a) => a.code.replace('Q_EMO__', '')).sort(),
+  'в фикстуре должна быть каждая ветка эмоции — перегенерировать: npm run fixture:run');
+for (const [emotion, answers] of Object.entries(runFixture)) {
+  assert.deepEqual(answers, completeAnswers(emotion),
+    `ветка ${emotion} в e2e/lib/complete-run.json разошлась с квизом — npm run fixture:run`);
+  assert.equal(missingQuestions(answers as Record<string, string>).length, 0,
+    `ветка ${emotion} обязана быть полным прохождением, иначе гейт результата её развернёт`);
+}
+
 assert.equal(parseSubmission(body(completeAnswers(), { revision: 2147483648 })).ok, false);
 assert.equal(parseSubmission(body({ constructor: 'anything' })).ok, false);
 console.log(`PASS: 7 routes, 42 inactive-branch cases, edits/Other/restarts/revisions, ${bottles} exact email bottles, 5 consent cases, retry policy, resume guard, abandoned runs`);

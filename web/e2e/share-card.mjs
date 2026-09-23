@@ -8,6 +8,7 @@
 // Запуск: npm run dev (в другом окне), затем npm run e2e:share
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
+import { unlockResult } from './lib/unlock-result.mjs';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:3100';
 
@@ -42,6 +43,8 @@ console.log('\nКарточка всплывает при прокрутке д�
 {
   const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await page.route('**://res.cloudinary.com/**', (r) =>
     r.fulfill({ status: 200, contentType: 'image/svg+xml', body: Buffer.from(BOTTLE, 'base64') }));
   await page.goto(`${BASE}/en/result/hug`, { waitUntil: 'networkidle' });
@@ -70,6 +73,8 @@ console.log('\nКарточка нарисована и её можно сохр
 {
   const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await open(page);
 
   const canvasInfo = await page.evaluate(() => {
@@ -118,6 +123,8 @@ console.log('\nНа карточке то, что просила заказчи�
 {
   const context = await browser.newContext({ viewport: { width: 1200, height: 900 } });
   const page = await context.newPage();
+  // Результат закрыт без пройденного квиза — выдаём пропуск до первой отрисовки.
+  await unlockResult(page);
   await open(page);
 
   // @tag должен стоять НАВЕРХУ. Конкретные координаты не зашиваем —

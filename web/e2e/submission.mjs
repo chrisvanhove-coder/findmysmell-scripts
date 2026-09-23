@@ -101,8 +101,12 @@ console.log('\nЗаход на результат по ссылке, без пр
 {
   const { context, page, sent } = await fresh();
   await page.goto(`${BASE}/en/result/ceo`, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(700);
+  await page.waitForTimeout(900);
   check('ничего не отправлено', sent.length === 0, `запросов: ${sent.length}`);
+  // Результат закрыт: без пройденного квиза человека уводит на вопросы.
+  check('уводит на квиз', page.url().includes('/quiz/'), page.url());
+  check('разбора архетипа на странице нет',
+    (await page.locator('[data-dot]').count()) === 0);
   await context.close();
 }
 

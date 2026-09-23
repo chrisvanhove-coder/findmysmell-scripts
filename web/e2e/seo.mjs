@@ -7,6 +7,7 @@
 //
 // Запуск: npm run dev (в другом окне), затем npm run e2e:seo
 import { chromium } from 'playwright';
+import { unlockResult } from './lib/unlock-result.mjs';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:3100';
 
@@ -19,6 +20,9 @@ function check(name, ok, detail = '') {
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH });
 const context = await browser.newContext();
 const page = await context.newPage();
+// Мета-теги отдаёт сервер и пропуск на них не влияет, но тело страницы
+// закрыто: без него goto уехал бы на вопросы посреди проверки.
+await unlockResult(page);
 
 /** Идёт по адресу БЕЗ перехода: нужен сам ответ, а не страница. */
 async function head(path) {
@@ -157,19 +161,20 @@ console.log('\nrobots.txt и sitemap.xml');
   const xml = await sitemap.text();
   check('sitemap.xml отдаётся', sitemap.status() === 200, String(sitemap.status()));
   const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-  check('в карте 33 адреса', urls.length === 33, String(urls.length));
+  check('в карте 12 адресов', urls.length === 12, String(urls.length));
   check('главная в карте есть', urls.some((u) => u.endsWith('/en')));
   check('первый экран квиза есть', urls.some((u) => u.endsWith('/en/quiz/q-gender')));
-  check('все семь результатов есть',
-    ['ceo', 'hug', 'offgrid', 'japan', 'summer', 'outoftime', 'therapist']
-      .every((k) => urls.some((u) => u.endsWith(`/en/result/${k}`))),
-    urls.filter((u) => u.includes('/result/')).length + ' штук');
+  /* Страницы результата из карты УБРАНЫ вместе с их закрытием: без
+     пройденного квиза там пусто, и звать туда поисковик незачем. */
+  check('страниц результата в карте НЕТ',
+    !urls.some((u) => u.includes('/result/')),
+    urls.filter((u) => u.includes('/result/')).join(' '));
   check('середины квиза в карте НЕТ — это шаги, а не страницы входа',
     !urls.some((u) => u.includes('/quiz/q-calm')), urls.filter((u) => u.includes('/quiz/')).join(' '));
   check('все адреса абсолютные', urls.every((u) => u.startsWith('http')));
 
   // Адреса из карты должны существовать: карта с 404 внутри хуже, чем без карты.
-  for (const u of [urls[0], urls[1], urls.find((x) => x.includes('/result/'))]) {
+  for (const u of [urls[0], urls[1], urls[urls.length - 1]]) {
     const r = await page.request.get(u.replace(/^https?:\/\/[^/]+/, BASE));
     check(`из карты открывается: ${u.replace(/^https?:\/\/[^/]+/, '')}`, r.status() === 200,
       String(r.status()));

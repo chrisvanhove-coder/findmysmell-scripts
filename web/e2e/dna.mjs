@@ -5,6 +5,9 @@
 // что посчитанное доехало до разметки и не разошлось по дороге.
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
+import { unlockResult } from './lib/unlock-result.mjs';
+
+const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 
 const dna = JSON.parse(readFileSync('src/data/dna.json', 'utf8'));
 const AXES = dna.axes.map((a) => a.key);
@@ -26,19 +29,18 @@ async function dots(page) {
   );
 }
 
-// ── 1. Без ответов — дефолты архетипа, а не пустая диаграмма ──
+// ── 1. Без ответов — страницы нет вовсе ──
+// Раньше здесь проверялись дефолты архетипа: страница открывалась любому,
+// и диаграмма показывала средние значения. Теперь результат закрыт
+// (src/components/ResultGate.tsx), и состояние «страница без ответов»
+// недостижимо — проверять в нём нечего. Проверяем само закрытие.
 console.log('\nБез пройденного квиза');
 {
   const page = await browser.newPage();
-  await page.goto('http://localhost:3000/en/result/ceo', { waitUntil: 'networkidle' });
-  const shown = await dots(page);
-  const want = AXES.map((k) => pct(dna.defaults.CEO[k]));
-  check('пять осей на месте', shown.length === 5, `${shown.length}`);
-  check(
-    'точки стоят по дефолтам CEO',
-    shown.every((v, i) => near(v, want[i])),
-    shown.map((v) => v.toFixed(1)).join(' / '),
-  );
+  await page.goto(`${BASE}/en/result/ceo`, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+  check('уводит на вопросы', page.url().includes('/quiz/'), page.url());
+  check('диаграммы нет', (await dots(page)).length === 0);
   await page.close();
 }
 
@@ -56,15 +58,16 @@ const ANSWERS = {
 console.log('\nС ответами');
 {
   const page = await browser.newPage();
-  await page.addInitScript(
-    (a) => sessionStorage.setItem('quiz_answers', JSON.stringify(a)),
-    ANSWERS,
-  );
-  await page.goto('http://localhost:3000/en/result/ceo', { waitUntil: 'networkidle' });
+  /* Полный набор плюс те же шесть ответов: без полного страница закрыта,
+     а шесть уводят каждую ось со своего дефолта, как и раньше. Считаем
+     ожидаемое по ТОМУ ЖЕ набору, что ушёл в браузер, — иначе остальные
+     ответы, попавшие в карты dna.json, разошлись бы с проверкой. */
+  const seeded = await unlockResult(page, ANSWERS);
+  await page.goto(`${BASE}/en/result/ceo`, { waitUntil: 'networkidle' });
   await page.waitForTimeout(400); // клиентский пересчёт после монтирования
 
   // Считаем ожидаемое здесь же, по выгруженным данным — независимо от кода сайта.
-  const codes = Object.values(ANSWERS);
+  const codes = Object.values(seeded);
   const pickFrom = (map, base) => {
     let v = base;
     for (const c of codes) if (c in map) v = map[c];

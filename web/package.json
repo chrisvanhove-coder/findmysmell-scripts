@@ -59,7 +59,8 @@
     "check:revisions": "tsx scripts/check-quiz-revisions.mts",
     "e2e:revisions": "node e2e/quiz-revisions.mjs",
     "check:revisions:integration": "tsx scripts/check-revisions-integration.mts",
-    "subscribers:report": "node scripts/subscribers-report.mjs"
+    "subscribers:report": "node scripts/subscribers-report.mjs",
+    "fixture:run": "tsx scripts/write-run-fixture.mts"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",
