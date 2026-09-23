@@ -1,5 +1,6 @@
 import en from '@/data/home.en.json';
 import fr from '@/data/home.fr.json';
+import ru from '@/data/home.ru.json';
 import { type Locale } from './i18n';
 
 /**
@@ -13,9 +14,9 @@ import { type Locale } from './i18n';
  * «the start page is not what my page is now in real time».
  * Источник правды для этой страницы — живой сайт, а не прошлые снимки.
  *
- * Французский переведён с английского: французской главной в Webflow
- * нет — страница /fr/home там английская копия. Русского пока нет, ru
- * показывает английский, как и getArchetype в lib/content.ts.
+ * Французский и русский переведены с английского: ни французской, ни
+ * русской главной в Webflow нет — страница /fr/home там английская копия
+ * ПРОШЛОЙ версии главной, а русской главной не существует вовсе.
  */
 
 /** Кусок абзаца: accent — то, что набрано золотым. */
@@ -34,7 +35,8 @@ export interface HomeStep {
 export interface HomeCopy {
   hero: {
     image: string;
-    /** Строки заголовка: так они разбиты на живом сайте. */
+    /** Три строки заголовка: так они разбиты на живом сайте, и ровно
+        три их разбирает разметка (см. page.tsx). */
     headline: string[];
     copy: CopyPart[];
   };
@@ -49,7 +51,7 @@ export interface HomeCopy {
 const BY_LOCALE: Record<Locale, HomeCopy> = {
   en: en as HomeCopy,
   fr: fr as HomeCopy,
-  ru: en as HomeCopy,
+  ru: ru as HomeCopy,
 };
 
 export function getHomeCopy(locale: Locale): HomeCopy {
@@ -76,9 +78,8 @@ export const HOME_HERO: string = (en as HomeCopy).hero.image;
  * диапазон, в котором может оказаться длина квиза. За его пределами
  * честнее показать цифру, чем угадать слово.
  *
- * По-французски то же самое и по той же причине: «Dix-sept questions»
- * вместо «17 questions». Русского словаря нет — ru берёт английские
- * слова вместе с английским текстом главной.
+ * По-французски и по-русски то же самое и по той же причине:
+ * «Dix-sept questions», «Семнадцать вопросов».
  */
 const WORDS = [
   'Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight',
@@ -94,7 +95,18 @@ const WORDS_FR = [
   'Vingt et une', 'Vingt-deux', 'Vingt-trois', 'Vingt-quatre', 'Vingt-cinq',
 ];
 
+const WORDS_RU = [
+  'Ноль', 'Один', 'Два', 'Три', 'Четыре', 'Пять', 'Шесть', 'Семь', 'Восемь',
+  'Девять', 'Десять', 'Одиннадцать', 'Двенадцать', 'Тринадцать', 'Четырнадцать',
+  'Пятнадцать', 'Шестнадцать', 'Семнадцать', 'Восемнадцать', 'Девятнадцать',
+  'Двадцать', 'Двадцать один', 'Двадцать два', 'Двадцать три',
+  'Двадцать четыре', 'Двадцать пять',
+];
+
+const WORDS_BY_LOCALE: Record<Locale, string[]> = {
+  en: WORDS, fr: WORDS_FR, ru: WORDS_RU,
+};
+
 export function numberWord(n: number, locale: Locale = 'en'): string {
-  const words = locale === 'fr' ? WORDS_FR : WORDS;
-  return words[n] ?? String(n);
+  return WORDS_BY_LOCALE[locale][n] ?? String(n);
 }

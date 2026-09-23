@@ -1,0 +1,10 @@
+{
+  "_": "Строки «@tag the friend who…» по-французски. ПЕРЕВЕДЕНЫ С АНГЛИЙСКОГО по прямой просьбе заказчицы: «на Tag your friend, вот эта вся штука, она на английском есть, просто переведи её на французский». На живом французском сайте их не было вовсе — французская карточка там более раннего поколения, без строки @tag (в result-shared-fr.js нет FMS_TAG_LINES).\n\nПОЧЕМУ «la personne», А НЕ «l'ami». По-английски friend не имеет рода, по-французски ami/amie имеет. «l'ami·e» на карточке читается как опечатка, а выбрать мужской род значит обратиться к половине аудитории. «la personne» рода не навязывает и звучит естественно.\n\nПОЧЕМУ КОРОЧЕ АНГЛИЙСКОГО. Строка печатается в одну строчку без переноса, ширина карточки 1080 минус поля — 960 пикселей. Французский длиннее английского примерно на четверть, поэтому дословный перевод самых длинных строк за край выходил. Формулировки поджаты до смысла, а на случай другого шрифта кегль ещё и ужимается по ширине (fitSerifWidth в lib/share-card.ts).",
+  "CEO": "@tague la personne qui a un système pour tout",
+  "JAPAN": "@tague la personne qui ne panique jamais",
+  "HUG": "@tague la personne que tout le monde appelle à 2h du matin",
+  "OFFGRID": "@tague la personne qui disparaîtrait dans les bois sans prévenir",
+  "OUTOFTIME": "@tague la personne toujours ailleurs dans sa tête",
+  "THERAPIST": "@tague la personne qui sait déjà ce qui ne va pas",
+  "SUMMER": "@tague la personne qui améliore tous les plans juste en arrivant"
+}

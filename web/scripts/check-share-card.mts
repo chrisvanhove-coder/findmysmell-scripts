@@ -155,13 +155,25 @@ console.log('\nФранцузская карточка: те же семь ар�
       fromCard.join('|') === fromPunch.join('|'),
       `карточка: ${fromCard.join('|')}\n        панчлайн: ${fromPunch.join('|')}`);
   }
-  // Французских строк @tag на живом сайте нет, и придумывать их нельзя.
-  // Когда заказчица их напишет, файл появится и эта проверка это заметит.
+  /* Строки @tag по-французски переведены с английского по просьбе
+     заказчицы (на живом сайте их не было). Здесь сверяется не текст —
+     его не с чем сверять, — а что набор полный и подключён: пустая
+     строка на карточке не ошибка для движка, она просто не рисуется,
+     и пропажа одного архетипа прошла бы молча. */
   const hasFrTags = existsSync('src/data/tag-lines.fr.json');
-  check('французские @tag: либо файла нет, либо он подключён в page.tsx',
-    !hasFrTags || readFileSync('src/app/[locale]/result/[archetype]/page.tsx', 'utf8')
-      .includes('tag-lines.fr.json'),
-    'файл появился, но карточка его не читает');
+  check('французские строки @tag есть', hasFrTags,
+    'если их снова нет — сюда вернётся прежнее поведение с пустой строкой');
+  if (hasFrTags) {
+    check('и подключены в page.tsx',
+      readFileSync('src/app/[locale]/result/[archetype]/page.tsx', 'utf8')
+        .includes('tag-lines.fr.json'),
+      'файл есть, но карточка его не читает');
+    const frTags = JSON.parse(readFileSync('src/data/tag-lines.fr.json', 'utf8'));
+    const missing = KEYS.filter((k) => !String(frTags[k] ?? '').trim());
+    check('и написаны для всех семи архетипов',
+      missing.length === 0, missing.join(', '));
+    check('и все начинаются с @', KEYS.every((k) => String(frTags[k]).startsWith('@')));
+  }
 }
 
 console.log('\nИмя парфюма и дом — по одному разу');

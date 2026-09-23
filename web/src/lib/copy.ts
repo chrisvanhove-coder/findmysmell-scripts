@@ -1,4 +1,5 @@
 import frRaw from '@/data/copy.fr.json';
+import ruRaw from '@/data/copy.ru.json';
 import { type Locale } from './i18n';
 
 /**
@@ -18,12 +19,13 @@ import { type Locale } from './i18n';
  * не падение страницы. Это важно: французский появился позже кода и
  * будет догонять его ещё не раз.
  *
- * Русского словаря пока нет — ru отдаёт английский, ровно как
- * getArchetype в lib/content.ts.
+ * Наборы ключей у словарей одинаковые — это не соглашение на словах,
+ * это проверяет `npm run check:locale`.
  */
 
 const DICT: Partial<Record<Locale, Record<string, string>>> = {
   fr: frRaw as unknown as Record<string, string>,
+  ru: ruRaw as unknown as Record<string, string>,
 };
 
 /** Строка по ключу. Второй аргумент — английский оригинал и запасной вариант. */

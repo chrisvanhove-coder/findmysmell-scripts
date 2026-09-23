@@ -17,7 +17,10 @@ import shareCardsEn from '@/data/share-cards.en.json';
 import shareCardsFr from '@/data/share-cards.fr.json';
 import punchLinesEn from '@/data/punch-lines.en.json';
 import punchLinesFr from '@/data/punch-lines.fr.json';
+import punchLinesRu from '@/data/punch-lines.ru.json';
 import tagLinesEn from '@/data/tag-lines.en.json';
+import tagLinesFr from '@/data/tag-lines.fr.json';
+import tagLinesRu from '@/data/tag-lines.ru.json';
 import ResultMatch from './ResultMatch';
 import RecordSubmission from './RecordSubmission';
 import ResultGate from '@/components/ResultGate';
@@ -34,15 +37,16 @@ import styles from './result.module.css';
  * репозитория через jsDelivr, то есть файл в репозитории и есть прод.
  * Тексты оттуда взяты дословно, ничего не переведено мной.
  *
- * ЧЕГО ВО ФРАНЦУЗСКОМ НЕТ — СТРОКИ «@tag the friend who…». На живом
- * французском сайте карточка другого, более раннего поколения: у неё в
- * подвале «découvrez le vôtre sur · findmysmell.com», а строки @tag нет
- * вовсе (в `result-shared-fr.js` нет ни FMS_TAG_LINES, ни панчлайнов —
- * они появились только в английском `result-shared15.js`). Придумывать
- * их за заказчицу нельзя: это её текст и, по её же словам, главный
- * механизм шеринга. Поэтому на французской карточке строка @tag пустая —
- * КАК ТОЛЬКО ОНА НАПИШЕТ СЕМЬ ФРАНЦУЗСКИХ СТРОК, сюда добавляется
- * `tag-lines.fr.json`, и больше ничего менять не нужно.
+ * СТРОКИ «@tag the friend who…» ПО-ФРАНЦУЗСКИ — ПЕРЕВЕДЕНЫ, а не взяты
+ * с живого сайта: там их не было вовсе (французская карточка более
+ * раннего поколения, в `result-shared-fr.js` нет ни FMS_TAG_LINES, ни
+ * панчлайнов — они появились только в английском `result-shared15.js`).
+ * Раньше здесь стояло «придумывать их за заказчицу нельзя», и строка на
+ * французской карточке оставалась пустой. Заказчица сняла этот вопрос
+ * прямо: «на Tag your friend, вот эта вся штука, она на английском есть,
+ * просто переведи её на французский». Перевод — в `tag-lines.fr.json`,
+ * там же записано, почему «la personne», а не «l'ami», и почему строки
+ * короче английских.
  *
  * КЕГЛИ ФРАНЦУЗСКОГО ПАНЧЛАЙНА ИЗМЕРЕНЫ, А НЕ ПОДОБРАНЫ НА ГЛАЗ:
  * подобраны наибольшие, при которых самая длинная строка влезает в
@@ -57,8 +61,12 @@ const CARD_DATA: Record<Locale, {
   tags: Record<string, string>;
 }> = {
   en: { cards: shareCardsEn, punch: punchLinesEn, tags: tagLinesEn },
-  fr: { cards: shareCardsFr, punch: punchLinesFr, tags: {} },
-  ru: { cards: shareCardsEn, punch: punchLinesEn, tags: tagLinesEn },
+  fr: { cards: shareCardsFr, punch: punchLinesFr, tags: tagLinesFr },
+  /* Русская карточка берёт ЦВЕТА из английского файла нарочно: bg,
+     text и accent в en и fr совпадают до символа — это палитра
+     архетипа, а не текст. Свой файл ради тех же семи троек цветов
+     завёл бы третье место, которое обязано совпадать с двумя другими. */
+  ru: { cards: shareCardsEn, punch: punchLinesRu, tags: tagLinesRu },
 };
 
 interface RouteParams {

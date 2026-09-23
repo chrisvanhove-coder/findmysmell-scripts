@@ -1,0 +1,520 @@
+{
+  "_": "Русские тексты результата. ИСТОЧНИК — Google Apps Script заказчицы (ARCH_DATA_RU), который отправлял письма со старого сайта; она прислала его целиком. В HANDOFF раньше стояло «русского контента результатов не существует вовсе» — это было неверно.\n\nЧТО ВЗЯТО ИЗ СКРИПТА ДОСЛОВНО: descriptor, desc, описания парфюмов (main и три alts) и все пять ингредиентов каждого архетипа — название, короткая фраза и разбор.\n\nЧЕГО В СКРИПТЕ НЕ БЫЛО И ЧТО ПЕРЕВЕДЕНО С АНГЛИЙСКОГО: you и identity — две половины заголовка «You are / politely unreachable». В письме заголовка нет, поэтому таких полей в скрипте не существует.\n\nССЫЛКИ И КАРТИНКИ взяты из archetypes.en.json, а не из скрипта: парфюмы там те же самые и в том же порядке (сверено по именам), а картинок в скрипте нет вовсе.\n\nПОЛЕЙ inner И scene ИЗ СКРИПТА ЗДЕСЬ НЕТ НАРОЧНО: на странице результата их негде показать — такого блока нет ни в английской версии, ни во французской. Они жили только в письме старого сайта. Если понадобятся — брать из того же скрипта.",
+  "CEO": {
+    "you": "Ты",
+    "identity": "вежливо недоступен.",
+    "descriptor": "Тот, кто ушёл с вечеринки не попрощавшись.",
+    "desc": [
+      "У тебя есть система для твоей личности. Твой календарь — это не календарь. Это аргумент, который ты выигрываешь у времени.",
+      "В этом году ты вышел(а) минимум из трёх групповых чатов — не из-за драмы, а просто ради эффективности. Твой способ расслабиться — это решить что-нибудь. Ты не контролирующий(ая). Ты просто замечаешь, когда что-то могло бы работать лучше, а это происходит всегда, и в этом то и есть проблема.",
+      "Ты даёшь обратную связь в виде задавания правильных вопросов. Ты описываешь отпуск как «хорошую возможность перезагрузиться». Ты не занимаешься многозадачностью. Ты делаешь одно дело со скоростью, которая выглядит как многозадачность. Ты не холодный(ая). Ты просто уже на три решения впереди.",
+      "Твой аромат такой же: чистый, точный, без лишних слов. Вот как пахнет решение."
+    ],
+    "main": {
+      "name": "Concrete",
+      "house": "Comme des Garçons",
+      "desc": "Само решение. Точное, уверенное, идёт с поднятой головой.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1776354725/1_mpedvv.png",
+      "link": "https://noseparis.com/en/concrete"
+    },
+    "alts": [
+      {
+        "name": "Legend",
+        "house": "Montblanc",
+        "desc": "Не удивляет тебя. И не должен. Приходит, делает своё дело, уходит.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/legend.png",
+        "link": "https://www.montblanc-bordeaux.fr/products/legend-eau-de-toilette-100-ml"
+      },
+      {
+        "name": "Escentric 05",
+        "house": "Escentric Molecules",
+        "desc": "Свежий и сосредоточенный, как твой новый бизнес-проект.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/escentric-05.png",
+        "link": "https://www.escentric.com/en-eu/products/escentric-05-refill-30ml"
+      },
+      {
+        "name": "Musky Oakmoss",
+        "house": "Dossier",
+        "desc": "Ещё не на вершине, но точно знает, чего хочет, и идёт к этому.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/musky-oakmoss.png",
+        "link": "https://dossier.eu/fr/products/musky-oakmoss"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Можжевельник",
+        "desc": "Воздух деревни, когда никого ещё нет.",
+        "detail": "Смолистый, сухой, слегка горьковатый. В парфюмерии можжевельник добавляет чёткость и свежесть открытого воздуха. Часто сочетается с кедром, перцем, ветивером или водными нотами.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885115/juniper_piiquy.jpg"
+      },
+      {
+        "name": "Чёрный перец",
+        "desc": "Горячий как ванна, выветривается быстро как тропический ливень.",
+        "detail": "Сухой, горячий, слегка древесный. В парфюмерии используется как открывающая нота. Часто сочетается с кожей, розой, кедром или ветивером.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885163/black_pepper_duelif.png"
+      },
+      {
+        "name": "Кардамон",
+        "desc": "Пряный, но точный. Не тёплый как корица — скорее как очень хороший эспрессо.",
+        "detail": "Зелёный, слегка сладкий и остро ароматный. В парфюмерии кардамон добавляет точность без агрессии.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885181/hf_20260428_134942_a25afcf7-fbd8-4089-94f2-9c1302266430_ncmbhn.png"
+      },
+      {
+        "name": "Берёза",
+        "desc": "Запах холодного воздуха прямо перед приходом бури.",
+        "detail": "Древесный, слегка дымный и сладкий, с сухим почти минеральным краем. В парфюмерии берёза добавляет холодное структурное качество.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885146/hf_20260428_134820_0b287d99-4482-4ad5-b5ca-fa10db72af93_zillk4.png"
+      },
+      {
+        "name": "Кедр",
+        "desc": "Только что заточенный карандаш. Чистый и слегка сухой.",
+        "detail": "Сухой, тёплый и слегка пыльный. В парфюмерии кедр — одна из самых используемых базовых нот. Основа большинства мужских ароматических структур.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885200/hf_20260428_134734_dec13d8e-7f23-4471-9120-820ceb4926b0_xnruu5.png"
+      }
+    ]
+  },
+  "JAPAN": {
+    "you": "Ты",
+    "identity": "настойчиво спокоен.",
+    "descriptor": "Тебе не нужно ничего объяснять.",
+    "desc": [
+      "Ты понял(а), что большинство срочностей надуманы, а большинство шума — не обязательно.",
+      "Ты убрал(а) вещи из своей жизни, не объявляя об этом, не объясняя почему и не нуждаясь в том, чтобы кто-то кроме тебя это понял.",
+      "Тебе не нужно быть самым интересным человеком в комнате. Тебя устраивает быть тем, кто заметил, что на самом деле происходит. Люди описывают тебя как успокаивающего(ую), сами не понимая почему. Потому что ты ничего не изображаешь. Тишина тебя не смущает.",
+      "Твой аромат такой же: чистый, минималистичный, не говорит ничего лишнего."
+    ],
+    "main": {
+      "name": "Dirty Hinoki",
+      "house": "Heretic Parfum",
+      "desc": "Не для всех. Для тех, кто знает, что такое ваби-саби, не ища это в интернете.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/dirty-hinoki.png",
+      "link": "https://hereticparfum.com/products/dirty-hinoki?variant=39270055346240"
+    },
+    "alts": [
+      {
+        "name": "Tokyo",
+        "house": "Gallivant",
+        "desc": "Каждая нота на своём месте. Ничего лишнего. Ничего не не хватает.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/tokyo.png",
+        "link": "https://50-ml.fr/gallivant-tokyo-eau-de-parfum"
+      },
+      {
+        "name": "Shiso",
+        "house": "Roger & Gallet",
+        "desc": "Чистый как дождь на камне. Тихий как уже принятое решение.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/shiso.png",
+        "link": "https://fr.roger-gallet.com/p/RG1013011WW/rg1013011ww-shiso-eau-parfumee-bienfaisante-heritage-100-ml"
+      },
+      {
+        "name": "New Zealand",
+        "house": "Demeter",
+        "desc": "Достаточно далеко от всего, чтобы наконец услышать себя.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/new-zealand.png",
+        "link": "https://demeterfragrance.com/products/new-zealand-cologne-spray"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Зелёный чай",
+        "desc": "Запах воды прямо перед закипанием. Зелёный, слегка горьковатый.",
+        "detail": "Не сладкий. В парфюмерии зелёный чай добавляет чистое, слегка прохладное качество между свежестью и травянистостью. Присутствует, но не громко.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885226/gree-tea_w4toim.jpg"
+      },
+      {
+        "name": "Хиноки",
+        "desc": "Тёплая вода на холодных руках.",
+        "detail": "Древесный, слегка цитрусовый и чистый — так пахнет что-то древнее. Хиноки — японский кипарис, из которого делают традиционные бани и храмы.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885236/Hinoki_kwtliy.jpg"
+      },
+      {
+        "name": "Ирис",
+        "desc": "Начало чего-то великого.",
+        "detail": "Пудровый и слегка землистый. Один из самых дорогих ингредиентов — корень зреет три года до обработки.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885261/iris_zuvmbv.jpg"
+      },
+      {
+        "name": "Бузина",
+        "desc": "Предвкушение хорошего вечера.",
+        "detail": "Деликатная, слегка водянистая. Это ингредиент, который делает аромат ненапряжным. Часто сочетается с фруктами, лавандой или чистым мускусом.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885270/hf_20260428_134353_f762a115-cdd0-4303-b66c-0079aef4b627_v56tww.png"
+      },
+      {
+        "name": "Рис",
+        "desc": "Запах чего-то простого, сделанного идеально.",
+        "detail": "Мягкий, пудровый, слегка сладкий без приторности. В парфюмерии рис создаёт интимность, а не присутствие.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885277/hf_20260428_140116_d0ea1402-bbc7-478b-929c-a066835069d8_gd3pzg.png"
+      }
+    ]
+  },
+  "HUG": {
+    "you": "Ты",
+    "identity": "чей-то любимый человек.",
+    "descriptor": "Ты — причина, по которой люди задерживаются дольше, чем планировали.",
+    "desc": [
+      "Ты выслушал(а) больше признаний, чем священник — а ты просто пытался(ась) пообедать.",
+      "Люди находят тебя и остаются, потому что ты даёшь им ощущение быть собой. Ты слушаешь так, как большинство людей не умеет.",
+      "Ты помнишь мелочи. Имя чьей-то собаки. Какую-нибудь деталь, которую кто-то упомянул однажды шесть месяцев назад. Ты возвращаешь это в разговор, интересуясь развитием событий — и на тебя смотрят как на фокусника.",
+      "Ты тёплый(ая) без притворства, и ты даёшь людям ощущение, что всё будет хорошо.",
+      "Твой аромат оседает близко — как тепло кожи."
+    ],
+    "main": {
+      "name": "Eau Duelle",
+      "house": "Diptyque",
+      "desc": "Пахнет как приглашение войти.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/eau-duelle.png",
+      "link": "https://www.diptyqueparis.com/fr_fr/p/eau-de-toilette-eau-duelle-100ml.html"
+    },
+    "alts": [
+      {
+        "name": "You",
+        "house": "Glossier",
+        "desc": "Пахнет как кто-то, кто помнит, какой твой любимый напиток.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/you-doux.png",
+        "link": "https://www.glossier.com/fr-fr/products/glossier-you-doux"
+      },
+      {
+        "name": "Baby Powder",
+        "house": "Demeter",
+        "desc": "Сначала незнакомый. Потом вдруг единственно правильный.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/baby-powder.png",
+        "link": "https://demeterfragrance.com/products/baby-powder-cologne-spray"
+      },
+      {
+        "name": "By the Fireplace",
+        "house": "Maison Margiela",
+        "desc": "Некуда спешить. Не перед кем играть роль. Просто быть.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/by-the-fireplace.png",
+        "link": "https://www.my-origines.com/fr/by-the-fireplace-59L14132.html"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Бензоин",
+        "desc": "Запах тепла без сладости. Лёгкое напоминание о ванили.",
+        "detail": "Тёплый, слегка ванильный. В парфюмерии бензоин используется как фиксатор — его тяжёлые молекулы медленно испаряются, продлевая жизнь всего вокруг.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885417/benzoin_dijcu9.jpg"
+      },
+      {
+        "name": "Бобы тонка",
+        "desc": "Кожа, которая побыла на солнце и получила от этого удовольствие.",
+        "detail": "Сладкие, слегка пудровые. В парфюмерии тонка добавляет мягкую тёплую сладость, которая не объявляет о себе.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885364/hf_20260428_140101_28111ef5-544f-458d-856b-7a5b238273fb_oooaya.png"
+      },
+      {
+        "name": "Пчелиный воск",
+        "desc": "Свеча, которая только что погасла. Тёплая и сладкая как мёд.",
+        "detail": "Медовый, слегка пудровый. В парфюмерии пчелиный воск добавляет мягкое интимное тепло, которое остаётся очень близко к коже.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885380/hf_20260428_133547_88206f10-7510-47af-bccc-e2b0789a30ce_h02bmw.png"
+      },
+      {
+        "name": "Мирра",
+        "desc": "Что-то древнее, но всё ещё ощущается современным.",
+        "detail": "Тёплая, слегка горьковатая. В парфюмерии мирра добавляет глубокое тёплое качество, заземляющее всё, что над ней.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885410/hf_20260428_133745_7ca73248-3b95-44df-94d4-95b230a54217_gslxyb.png"
+      },
+      {
+        "name": "Какао",
+        "desc": "Не шоколад. Сырой какао-порошок. Тёплый, слегка горький, глубоко успокаивающий.",
+        "detail": "Ореховый, пыльный и слегка горький. В парфюмерии какао добавляет тёплую, слегка гурманскую глубину. Ингредиент, который делает аромат похожим на горячий напиток в уютный вечер.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885403/hf_20260428_141332_1965b4a9-86e6-4d46-9f6b-f96d6dcb17d9_jxmaot.png"
+      }
+    ]
+  },
+  "OFFGRID": {
+    "you": "Ты",
+    "identity": "втайне планирует исчезнуть.",
+    "descriptor": "Природа — твоя кнопка перезагрузки.",
+    "desc": [
+      "Тебе необходимо пространство. Иногда ты думаешь: «Хотел(а) бы жить где-нибудь посреди леса.» И ты не шутишь.",
+      "После двух часов на улице тебе лучше. Долгая прогулка без места назначения. Место без связи. Утро, которое начинается до того, как кто-то просыпается, и оно полностью принадлежит тебе.",
+      "Ты не антисоциальный(ая). У тебя просто очень честные отношения с тем, что реально тебя восстанавливает. Ты ни от чего не убегаешь, ты бежишь к версии своей жизни, где меньше — это больше.",
+      "Ты крепче, чем выглядишь, и мягче, чем показываешь. Оба варианта правда. Ни один не является полной историей тебя.",
+      "Твой аромат — сырая земля, холодный воздух, дым и что-то, прорастающее сквозь кору."
+    ],
+    "main": {
+      "name": "Coven",
+      "house": "Andrea Maack",
+      "desc": "Пахнет как время на улице, достаточно долгое, чтобы вообще забыть о нём. Влажная земля. Корни. Холодный воздух на коже.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/coven.png",
+      "link": "https://www.niche-beauty.com/fr-fr/produits/andrea-maack-coven/844-023"
+    },
+    "alts": [
+      {
+        "name": "Baikal Leather Intense",
+        "house": "Nicolaï",
+        "desc": "Достаточно суровый, чтобы чувствовать себя живым(ой). Достаточно далёкий, чтобы чувствовать себя свободным(ой).",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/baikal-leather.png",
+        "link": "https://nicolaiparis.com/en/products/baikal-leather-intense-1"
+      },
+      {
+        "name": "From the Garden",
+        "house": "Maison Margiela",
+        "desc": "Земля под ногтями. Солнце на шее. Больше некуда идти.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/from-the-garden.png",
+        "link": "https://www.my-origines.com/fr/from-the-garden-59L23139.html"
+      },
+      {
+        "name": "Sandflowers",
+        "house": "Montale",
+        "desc": "Ветер, соль, поле, ничего в календаре. Наконец-то.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/sandflowers.png",
+        "link": "https://montaleparfums.com/en/marine/70-376-sandflowers-argent.html"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Чёрный грецкий орех",
+        "desc": "Тёмный, слегка горький и совершенно уникальный.",
+        "detail": "Насыщенный, землистый. В парфюмерии грецкий орех добавляет землистости в основу аромата.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885496/hf_20260428_133100_047c96e8-8c61-45c4-a73c-65eb468d5730_bm12s4.png"
+      },
+      {
+        "name": "Шалфей",
+        "desc": "Сухой, слегка перечный — как сама медитация.",
+        "detail": "Под ним есть дымность, которая делает его более диким, чем большинство трав. В парфюмерии шалфей добавляет острую травяную ясность.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885503/sage_hame6q.jpg"
+      },
+      {
+        "name": "Опопонакс",
+        "desc": "Костёр, потухший час назад, но дерево ещё тёплое.",
+        "detail": "Сладкий, пряно-тёплый, слегка дымный. В парфюмерии используется как базовая нота и фиксатор.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885531/Opoponax1_qnzzdh.png"
+      },
+      {
+        "name": "Сосна",
+        "desc": "Лес. Холодный воздух. Поход.",
+        "detail": "Острая, смолистая и чистая, но холоднее, чем сосновые шишки. Придаёт ароматам ощущение пространства и высоты.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885536/hf_20260428_132627_ea358af3-7764-49ee-b5e3-4015e19ad4fe_cl3jch.png"
+      },
+      {
+        "name": "Ветивер",
+        "desc": "Корни, вырванные из тёмной земли. В нём есть что-то честное.",
+        "detail": "Приходит из корней травы, произрастающей в Индии. Пахнет самой землёй. В парфюмерии ветивер — одна из самых важных базовых нот.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885580/hf_20260428_140455_e4acec14-5d2c-4118-a1a6-c4e5dda006a0_eowwiz.png"
+      }
+    ]
+  },
+  "OUTOFTIME": {
+    "you": "Ты",
+    "identity": "хронически где-то ещё.",
+    "descriptor": "Телом здесь. Мыслями — совсем в другом месте.",
+    "desc": [
+      "У тебя есть любимый вид тумана.",
+      "Ты романтизируешь дождь. Ты описывал(а) свой идеальный пятничный вечер как «честно говоря, просто остаться дома».",
+      "Ты не антисоциальный(ая). Ты избирательный(ая). Тебе комфортнее в полутьме, чем при ярком свете.",
+      "Ты атмосферный(ая). Ты не следишь за трендами. Ты следишь за настроениями.",
+      "Люди находят тебя безоговорочно интересным(ой), но не могут объяснить почему. Но ты не пытаешься быть интересным(ой). Ты просто где-то в другом пространстве.",
+      "Твой аромат минеральный, тёмный и скрытый. Дым, тень и что-то, что ты не можешь точно назвать."
+    ],
+    "main": {
+      "name": "Gris Clair",
+      "house": "Serge Lutens",
+      "desc": "Пахнет как мысль, о которой ты думал(а) годами и наконец перестал(а) с ней бороться.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/gris-clair.png",
+      "link": "https://sergelutens.fr/products/gris-clair-eau-de-parfum-spray"
+    },
+    "alts": [
+      {
+        "name": "Aromatics Elixir",
+        "house": "Clinique",
+        "desc": "Из эпохи, когда избыток был философией. Ты понимаешь, почему.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/aromatics-elixir.png",
+        "link": "https://www.clinique.fr/product/aromatics-elixir-eau-de-parfum-spray?size=45_ml"
+      },
+      {
+        "name": "Encre Noire",
+        "house": "Lalique",
+        "desc": "Тёмный, намеренный, и совершенно безразличный к твоей реакции.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/encre-noire.png",
+        "link": "https://www.notino.fr/lalique/encre-noire-for-men-eau-de-toilette-pour-homme/p-62724/"
+      },
+      {
+        "name": "Grey Flannel",
+        "house": "Geoffrey Beene",
+        "desc": "Пахнет как остаться дома, когда все ушли. И оказаться в своей тарелке.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/grey-flannel.png",
+        "link": "https://www.my-origines.com/fr/grey-flannel-09118624.html"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Фиалка",
+        "desc": "Пыльная, пудровая и мягкая как прикосновение.",
+        "detail": "Меловая, слегка сладкая. В парфюмерии фиалка добавляет мягкую пудровую глубину. Один из немногих цветочных ингредиентов, который уходит внутрь, а не проецируется.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885635/violet1_tirxvl.png"
+      },
+      {
+        "name": "Ладан",
+        "desc": "Дым чего-то церемониального.",
+        "detail": "Сухой, дымный и слегка сладкий. В парфюмерии ладан добавляет дымную медитативную глубину, которую мало что может воспроизвести.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885644/hf_20260428_132415_f8646aa3-8b2f-4452-986a-0c9744ed4252_jjekcd.png"
+      },
+      {
+        "name": "Корень ириса",
+        "desc": "Пудровый и винтажный. Как торжественный ужин в роскошном месте.",
+        "detail": "Нежный и слегка землистый. Один из самых дорогих и трудоёмких ингредиентов в парфюмерии.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885651/hf_20260428_132444_7a44eefa-413e-4ff4-9a35-9b1c13d09f1d_fu1eem.png"
+      },
+      {
+        "name": "Мокрый камень",
+        "desc": "Минеральный и холодный, но почему-то успокаивающий.",
+        "detail": "Чистый и слегка металлический. В парфюмерии мокрый камень добавляет свежее качество, которое сложно воспроизвести из других ингредиентов.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885655/wet-stone1_dz7ohe.png"
+      },
+      {
+        "name": "Чёрная смородина",
+        "desc": "Тёмная, слегка опасная, и совсем не похожая на сок или варенье.",
+        "detail": "Сырая почка совсем не пахнет ягодой. Темнее, острее. В парфюмерии добавляет тёмный слегка сырой край, который прорезает сладость.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885658/hf_20260428_131925_dd783dbb-36c7-474e-9a4a-3328f6d7df2a_rymcb7.png"
+      }
+    ]
+  },
+  "SUMMER": {
+    "you": "Ты",
+    "identity": "патологически расслаблен.",
+    "descriptor": "В каждом хорошем отпуске есть кто-то вроде тебя.",
+    "desc": [
+      "Ты планировал(а) поездку для группы людей, которые ни о чём не могли договориться, и каким-то образом сделал(а) всех счастливыми.",
+      "Ты легко передвигаешься от плана к плану, от человека к человеку. Держишься налегке, не теряя сути. Ты не наивный(ая) — ты оптимистичный(ая), а это разные вещи.",
+      "Ты поднимаешь энергию комнаты, при этом не повышая громкости. Решаешь сложные ситуации, потому что знаешь к ним подход, и это — лёгкость.",
+      "Тебе не нужна драма, чтобы чувствовать себя живым(ой). Ты замечаешь чувство того самого момента и живёшь в нём.",
+      "Твой аромат — тёплый камень на пляже, обволакивающий воздух и ощущение, что сегодня всё получится."
+    ],
+    "main": {
+      "name": "Solo Vulcan",
+      "house": "Loewe",
+      "desc": "Пахнет как тот самый момент.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/solo-vulcan.png",
+      "link": "https://www.perfumesloewe.com/int/en_FR/men/loewe-solo/loewe-solo-vulcan-edp-100ml-LW80620.html"
+    },
+    "alts": [
+      {
+        "name": "Avgoustos",
+        "house": "Parfums de Marly",
+        "desc": "Жара, соль, время, которое нарочно замедляется.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/avgoustos.png",
+        "link": "https://www.korres.fr/products/eau-de-toilette-avgoustos"
+      },
+      {
+        "name": "Bois de Yuzu",
+        "house": "Karl Lagerfeld",
+        "desc": "Ночь только началась и разговор тоже.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/bois-de-yuzu.png",
+        "link": "https://www.notino.fr/karl-lagerfeld/bois-de-yuzu-eau-de-toilette-pour-homme/p-15791163/"
+      },
+      {
+        "name": "Un Jardin sur le Nil",
+        "house": "Hermès",
+        "desc": "Движется как ты. Лёгкий, неторопливый, и каким-то образом везде одновременно.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/un-jardin-sur-le-nil.png",
+        "link": "https://www.hermes.com/fr/fr/product/un-jardin-sur-le-nil-eau-de-toilette-V26993/"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Тиаре",
+        "desc": "Белый цветок на тёплом ветру. Слегка сладкий и свежий.",
+        "detail": "Сливочный, мягкий и немного экзотический. Один из немногих цветочных ингредиентов, который ощущается по-настоящему тёплым, а не пудровым.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885741/tiare1_xmotv4.png"
+      },
+      {
+        "name": "Морская соль",
+        "desc": "Твоя кожа через час после купания. Минеральная и лёгкая.",
+        "detail": "Чистая, слегка горьковатая и неоспоримо прибрежная. В парфюмерии морская соль добавляет искристое ощущение открытости.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885744/sea-salt1_iwtvlx.png"
+      },
+      {
+        "name": "Семена моркови",
+        "desc": "Тёплые, сухие, и совсем не похожие на овощ.",
+        "detail": "Землистые, слегка пряные. Добавляют тепло камня, который пролежал на солнце весь день.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885747/hf_20260428_131402_8546c5c2-655b-471f-b044-c0f7e4fdaa74_drbx9q.png"
+      },
+      {
+        "name": "Трава",
+        "desc": "Запах лета.",
+        "detail": "Слегка сладкая и мгновенно узнаваемая. На коже становится чище и абстрактнее: меньше газона, больше открытого воздуха.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885751/hf_20260428_131409_f4c0d2a1-c968-49cc-900d-7fee2c9566c9_csz0mi.png"
+      },
+      {
+        "name": "Огурец",
+        "desc": "Прохладный, водянистый, слегка зелёный. Запах чего-то освежающего.",
+        "detail": "Свежий, слегка сладкий и почти прозрачный. В парфюмерии огурец добавляет прохладную водянистую свежесть и остаётся очень близко к коже.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885753/hf_20260428_131017_162611d5-70ae-4e8e-b89f-dcfda00ddbc7_kt2ucz.png"
+      }
+    ]
+  },
+  "THERAPIST": {
+    "you": "Ты",
+    "identity": "опасно чуткий.",
+    "descriptor": "Ты уже знаешь. Ты всегда знаешь.",
+    "desc": [
+      "Ты знаешь о людях то, что они тебе ещё не рассказали. Не потому что лезешь — потому что обращаешь внимание так, как большинство людей не умеет.",
+      "Ты тёплый(ая), но точный(ая). Ты знаешь, когда кому-то нужно услышать трудное, и знаешь как это сказать.",
+      "У тебя есть стандарты для всего — своего пространства, своего времени, разговоров, которые ты готов(а) вести. Потому что знаешь, что тебе подходит, и перестал(а) извиняться за это.",
+      "Люди чувствуют себя увиденными рядом с тобой — что иногда означает, что они избегают тебя, когда не готовы быть увиденными. Ты понимаешь. Ты ждёшь.",
+      "Твой аромат тёплый, глубокий и уже решённый. Что-то, чему не нужно себя объяснять."
+    ],
+    "main": {
+      "name": "Black Tea",
+      "house": "Jil Sander",
+      "desc": "Пахнет как разговор, который ты не хотел(а) заканчивать.",
+      "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/black-tea.png",
+      "link": "https://www.jilsander.com/fr-fr/jil-sander-black-tea-100-ml/J65YX0006JFR001998.html"
+    },
+    "alts": [
+      {
+        "name": "Geranio Imperiale",
+        "house": "Culti Milano",
+        "desc": "Достаточно точный, чтобы замечать всё. Достаточно собранный, чтобы не упоминать большинство из этого.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/geranio-imperiale.png",
+        "link": "https://www.notino.fr/culti/geranio-imperiale-aquae-di-profumo-eau-de-toilette-mixte/"
+      },
+      {
+        "name": "1472 La Divina Commedia",
+        "house": "Histoires de Parfums",
+        "desc": "Точно знает, где заканчивается. Именно поэтому рядом с ним безопасно.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/1472.png",
+        "link": "https://www.notino.fr/histoires-de-parfums/1472-eau-de-parfum-mixte/p-16349773/"
+      },
+      {
+        "name": "702",
+        "house": "Bon Parfumeur",
+        "desc": "Пахнет как кто-то, кто уже всё продумал, чтобы тебе не пришлось.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/findmysmell/perfumes/702.png",
+        "link": "https://www.bonparfumeur.com/fr/products/702-incense-lavender-and-cashmere-wood"
+      }
+    ],
+    "ingredients": [
+      {
+        "name": "Уд",
+        "desc": "Очень обволакивающий запах. Плотный и густой.",
+        "detail": "Тёмный, древесный и глубоко сложный. Происходит из смолы, которая образуется внутри агарового дерева при заражении. Запах древний, многослойный, невозможно забыть.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885775/oud1_bi4wwt.png"
+      },
+      {
+        "name": "Сандаловое дерево",
+        "desc": "Тёплое дерево в свете заката. Сливочное и жидкое.",
+        "detail": "Мягкое, сливочное, слегка сладкое. В парфюмерии сандаловое дерево не соперничает с другими ингредиентами — оно поддерживает их.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885845/sandalwood_szlhj7.png"
+      },
+      {
+        "name": "Пачули",
+        "desc": "Запах корней — не земли, а глубины.",
+        "detail": "Землистый, тёмный и слегка сладкий. Альтернатива тяжёлой версии семидесятых. В небольших количествах добавляет тёмную землистость.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885848/patchouli1_mz9hrh.png"
+      },
+      {
+        "name": "Чёрный чай",
+        "desc": "Чашка, которая настаивалась ровно столько, сколько нужно. Тёплая, слегка горьковатая, внимательная.",
+        "detail": "Сухой, слегка винный и слегка дымный. На коже становится теплее и сложнее. В парфюмерии чёрный чай добавляет тёплую слегка горьковатую утончённость.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885852/hf_20260428_130858_f0573332-8837-41bd-b9d6-b45adb7c73f3_mohca3.png"
+      },
+      {
+        "name": "Свёкла",
+        "desc": "Тёмная, слегка сладкая и совершенно неожиданная на коже.",
+        "detail": "Землистая, слегка сладкая. Сырая свёкла совсем не пахнет варёной. Темнее и сложнее — ближе к влажной земле и железу, чем к чему-то съедобному.",
+        "img": "https://res.cloudinary.com/dcefrxxav/image/upload/v1777885864/hf_20260428_130445_076b2947-292d-4493-9637-1eeb7a7199a5_nkqpoi.png"
+      }
+    ]
+  }
+}

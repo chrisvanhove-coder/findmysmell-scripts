@@ -194,7 +194,12 @@ function drawTagLine(ctx: Ctx, arch: CardArch, fonts: CardFonts, tagLine: string
      без неё панчлайн повисает в воздухе. Отступ под панчлайн фиксирован,
      так что раскладка не едет. */
   if (tagLine) {
-    ctx.font = `italic 400 ${tagFontSize}px ${fonts.serif}`;
+    /* Кегль ужимаем, если строка не влезает: она печатается в одну
+       строчку без переноса, а французские строки длиннее английских
+       примерно на четверть. Меряем настоящим шрифтом, а не на глаз —
+       и когда приедет HIGHCRUISER, ширина букв изменится сама. */
+    const size = fitSerifWidth(ctx, tagLine, tagFontSize, fonts);
+    ctx.font = `italic 400 ${size}px ${fonts.serif}`;
     ctx.fillStyle = arch.text;
     ctx.globalAlpha = 0.9;
     ctx.fillText(tagLine, PAD, tagY);
@@ -204,6 +209,21 @@ function drawTagLine(ctx: Ctx, arch: CardArch, fonts: CardFonts, tagLine: string
   ctx.fillStyle = arch.text;
   ctx.fillRect(PAD, tagRuleY, W - PAD * 2, 1);
   ctx.globalAlpha = 1;
+}
+
+/**
+ * То же для строки @tag: она набрана курсивом другого шрифта, и мерить
+ * её кеглем панчлайна нельзя — ширина букв у них разная.
+ */
+function fitSerifWidth(ctx: Ctx, text: string, wanted: number, fonts: CardFonts): number {
+  const maxW = LAYOUT.W - LAYOUT.PAD * 2;
+  let size = wanted;
+  while (size > 8) {
+    ctx.font = `italic 400 ${size}px ${fonts.serif}`;
+    if (ctx.measureText(text).width <= maxW) break;
+    size -= 1;
+  }
+  return size;
 }
 
 /**
