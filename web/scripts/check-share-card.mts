@@ -18,6 +18,8 @@ import tagLines from '../src/data/tag-lines.en.json' with { type: 'json' };
 import shareCards from '../src/data/share-cards.en.json' with { type: 'json' };
 import punchLinesFr from '../src/data/punch-lines.fr.json' with { type: 'json' };
 import shareCardsFr from '../src/data/share-cards.fr.json' with { type: 'json' };
+import perfumes from '../src/data/perfumes.json' with { type: 'json' };
+import { splitPerfume } from '../src/lib/perfume-name.ts';
 
 type CardArch = { bg: string; text: string; accent: string };
 
@@ -160,6 +162,32 @@ console.log('\nФранцузская карточка: те же семь ар�
     !hasFrTags || readFileSync('src/app/[locale]/result/[archetype]/page.tsx', 'utf8')
       .includes('tag-lines.fr.json'),
     'файл появился, но карточка его не читает');
+}
+
+console.log('\nИмя парфюма и дом — по одному разу');
+{
+  const items = perfumes as Array<{ name: string; house: string }>;
+  let withHouse = 0;
+  let bad = 0;
+  for (const item of items) {
+    const { name, house } = splitPerfume(item.name);
+    // Дом не должен остаться внутри имени: иначе на карточке он
+    // напечатается и в строке имени, и в строке бренда.
+    if (name.includes(' by ')) { bad += 1; console.log(`  FAIL  дом остался в имени: ${name}`); }
+    // И не должен продублироваться между строками.
+    if (house && name.toLowerCase().includes(house.toLowerCase())) {
+      bad += 1;
+      console.log(`  FAIL  дом напечатается дважды: «${name}» + «${house}»`);
+    }
+    if (house) withHouse += 1;
+  }
+  check(`${items.length} позиций каталога разобраны без повторов`, bad === 0);
+  check(`бренд известен у ${withHouse} из ${items.length}`, withHouse >= items.length - 12,
+    'если известных стало заметно меньше — сломался разбор, а не данные');
+  // Слаг из каталога на карточку не попадает ни при каких условиях.
+  const slugs = items.filter((i) => splitPerfume(i.name).house === i.house && i.house.includes('-'));
+  check('слаг из каталога на карточку не попадает', slugs.length === 0,
+    slugs.slice(0, 3).map((i) => i.house).join(', '));
 }
 
 console.log(failed ? `\n${failed} проверок упало\n` : '\nвсе проверки прошли\n');

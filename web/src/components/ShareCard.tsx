@@ -13,6 +13,7 @@ import {
 import { pickFromBrowser } from '@/lib/picked-client';
 import type { Locale } from '@/lib/i18n';
 import type { ArchetypeKey } from '@/lib/archetype-colors';
+import { splitPerfume } from '@/lib/perfume-name';
 import styles from './share-card.module.css';
 
 /**
@@ -150,16 +151,16 @@ export default function ShareCard({
     const picked = typeof window === 'undefined'
       ? null
       : pickFromBrowser(archetype as ArchetypeKey)?.main ?? null;
-    const name = picked?.name ?? fallbackName;
+    const raw = picked?.name ?? fallbackName;
     const img = picked?.imageUrl ?? fallbackImg;
 
-    // ДОМ ПОКАЗЫВАЕМ ТОЛЬКО ВЫВЕРЕННЫЙ. Поле house в perfumes.json — слаг
-    // из Webflow, и он не просто некрасивый: у семи позиций он называет
-    // другой парфюм, а у четырёх чужой дом (подробности в 9.7 HANDOFF).
-    // Страница результата его поэтому не показывает; на карточке, которую
-    // публикуют, ошибка была бы тем хуже. Берём выверенный дом из
-    // archetypes.*.json и только если подобрался именно тот флакон.
-    const house = name === fallbackName ? fallbackHouse : '';
+    /* Имя и дом — по одному разу каждое. В каталоге дом у большинства
+       позиций вписан прямо в название, поэтому разбираем его здесь, а не
+       показываем строку целиком. Выверенный дом архетипа передаём как
+       подсказку: он точно верный, когда подобрался именно тот флакон.
+       Правила и почему не берётся поле house из каталога — в
+       src/lib/perfume-name.ts. */
+    const { name, house } = splitPerfume(raw, raw === fallbackName ? fallbackHouse : '');
 
     return {
       punch,
