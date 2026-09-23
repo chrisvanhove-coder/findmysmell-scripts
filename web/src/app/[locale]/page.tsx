@@ -136,7 +136,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               {/* {N} → «Seventeen»: слово живого сайта, но число из
                   TOTAL_STEPS, чтобы текст не разошёлся с квизом. */}
               <p className={styles.stepDesc}>
-                {step.desc.replace('{N}', numberWord(TOTAL_STEPS))}
+                {step.desc.replace('{N}', numberWord(TOTAL_STEPS, locale))}
               </p>
             </li>
           ))}

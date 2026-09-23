@@ -1,4 +1,5 @@
 import en from '@/data/home.en.json';
+import fr from '@/data/home.fr.json';
 import { type Locale } from './i18n';
 
 /**
@@ -12,9 +13,9 @@ import { type Locale } from './i18n';
  * «the start page is not what my page is now in real time».
  * Источник правды для этой страницы — живой сайт, а не прошлые снимки.
  *
- * Французского и русского пока нет: браться за локали договорились
- * позже (HANDOFF 9.1). До тех пор все локали видят английский — как и
- * страница результата.
+ * Французский переведён с английского: французской главной в Webflow
+ * нет — страница /fr/home там английская копия. Русского пока нет, ru
+ * показывает английский, как и getArchetype в lib/content.ts.
  */
 
 /** Кусок абзаца: accent — то, что набрано золотым. */
@@ -47,7 +48,7 @@ export interface HomeCopy {
 
 const BY_LOCALE: Record<Locale, HomeCopy> = {
   en: en as HomeCopy,
-  fr: en as HomeCopy,
+  fr: fr as HomeCopy,
   ru: en as HomeCopy,
 };
 
@@ -74,6 +75,10 @@ export const HOME_HERO: string = (en as HomeCopy).hero.image;
  * Список короткий намеренно: это не библиотека числительных, а ровно тот
  * диапазон, в котором может оказаться длина квиза. За его пределами
  * честнее показать цифру, чем угадать слово.
+ *
+ * По-французски то же самое и по той же причине: «Dix-sept questions»
+ * вместо «17 questions». Русского словаря нет — ru берёт английские
+ * слова вместе с английским текстом главной.
  */
 const WORDS = [
   'Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight',
@@ -82,6 +87,14 @@ const WORDS = [
   'Twenty-one', 'Twenty-two', 'Twenty-three', 'Twenty-four', 'Twenty-five',
 ];
 
-export function numberWord(n: number): string {
-  return WORDS[n] ?? String(n);
+const WORDS_FR = [
+  'Zéro', 'Une', 'Deux', 'Trois', 'Quatre', 'Cinq', 'Six', 'Sept', 'Huit',
+  'Neuf', 'Dix', 'Onze', 'Douze', 'Treize', 'Quatorze', 'Quinze',
+  'Seize', 'Dix-sept', 'Dix-huit', 'Dix-neuf', 'Vingt',
+  'Vingt et une', 'Vingt-deux', 'Vingt-trois', 'Vingt-quatre', 'Vingt-cinq',
+];
+
+export function numberWord(n: number, locale: Locale = 'en'): string {
+  const words = locale === 'fr' ? WORDS_FR : WORDS;
+  return words[n] ?? String(n);
 }

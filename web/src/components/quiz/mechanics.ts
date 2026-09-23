@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Реестр механик вопросов.
@@ -29,6 +30,12 @@ export interface MechanicProps {
    * вопросом, вариантами и снимками, и порознь их писать нечего.
    */
   questionId: string;
+  /**
+   * Язык экрана. Механики рисуют свой текст сами — вопрос, подсказку,
+   * подписи вариантов, — поэтому перевод нужен им, а не только общему
+   * экрану (см. lib/copy.ts).
+   */
+  locale: Locale;
   onChoose: (code: string) => void;
 }
 

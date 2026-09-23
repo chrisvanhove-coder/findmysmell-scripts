@@ -8,6 +8,7 @@ import { QUESTION_COPY } from '@/data/question-titles';
 import data from '@/data/emotion-tiles.json';
 import styles from './emotion-tiles.module.css';
 import type { MechanicProps } from './mechanics';
+import { t, answerLabel } from '@/lib/copy';
 
 /**
  * Семь экранов ветки эмоции — ОДНА механика: Q_CALM, Q_COZY, Q_ENERGY,
@@ -72,10 +73,10 @@ const hoverSubscribe = (cb: () => void) => {
 const noHoverNow = () => window.matchMedia('(hover: none)').matches;
 const noHoverOnServer = () => false;
 
-export default function EmotionTiles({ questionId, onChoose }: MechanicProps) {
+export default function EmotionTiles({ questionId, locale, onChoose }: MechanicProps) {
   const question = QUESTIONS[questionId];
   const photos = PHOTOS[questionId] ?? {};
-  const title = QUESTION_COPY[questionId]?.title ?? '';
+  const title = t(locale, `q.${questionId}.title`, QUESTION_COPY[questionId]?.title ?? '');
 
   const noHover = useSyncExternalStore(hoverSubscribe, noHoverNow, noHoverOnServer);
   /* Как и на остальных механиках — ответ нужен в первой же отрисовке. */
@@ -151,7 +152,7 @@ export default function EmotionTiles({ questionId, onChoose }: MechanicProps) {
                 {/* Подпись поверх снимка: на светлых кадрах белый текст
                     без этой подложки не читается. В проде подложки не
                     было, и часть подписей тонула в фотографии. */}
-                <span className={styles.label}>{a.label}</span>
+                <span className={styles.label}>{answerLabel(locale, a.code, a.label)}</span>
               </button>
             </li>
           );

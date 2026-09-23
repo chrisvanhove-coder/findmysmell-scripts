@@ -1,0 +1,43 @@
+{
+  "_": "Главная по-французски. Переведена с английской home.en.json — французской главной в Webflow нет: страница /fr/home там английская копия (проверено через MCP 23.09.2026). Структура та же, поле в поле: что не переведено — сразу видно по отсутствию ключа.",
+  "hero": {
+    "image": "https://res.cloudinary.com/dcefrxxav/image/upload/v1787323650/background_home_v16ghx.jpg",
+    "_headline": "Заголовок набран словами без пробелов и разбит на строки — приём живого сайта («ThereIsNo / Universal / Scent»). По-французски фраза короче в словах, поэтому разбита по смыслу: «Aucun parfum n'est universel».",
+    "headline": ["AucunParfum", "N’Est", "Universel"],
+    "copy": [
+      {
+        "text": "POUR CEUX QUI AIMENT LE PARFUM SANS EN PARLER LA LANGUE,",
+        "accent": true
+      },
+      { "text": " FIND MY SMELL EST UN PROFIL OLFACTIF QUI " },
+      { "text": "DÉCHIFFRE VOTRE GOÛT", "accent": true },
+      { "text": " À PARTIR DE QUI VOUS ÊTES, ET NON DE NOTES QUE VOUS NE SAURIEZ NOMMER, ET VOUS DONNE " },
+      {
+        "text": "LE VOCABULAIRE POUR ACHETER N’IMPORTE QUELLE MARQUE, À N’IMPORTE QUEL PRIX, POUR LE RESTE DE VOTRE VIE.",
+        "accent": true
+      }
+    ]
+  },
+  "begin": "Commencer",
+  "howLabel": "Comment ça marche",
+  "_steps": "{N} подставляется из TOTAL_STEPS и пишется словом — по-французски (см. numberWord в src/lib/home.ts).",
+  "steps": [
+    {
+      "num": "01",
+      "label": "Répondez librement",
+      "desc": "{N} questions sur vos humeurs, vos souvenirs et vos émotions — pas sur des notes que vous n’avez jamais senties."
+    },
+    {
+      "num": "02",
+      "label": "Trouvez votre parfum",
+      "desc": "Une recommandation principale, faite pour qui vous êtes aujourd’hui, quelques alternatives, et cinq notes que vous pourrez demander à sentir dans n’importe quelle boutique."
+    },
+    {
+      "num": "03",
+      "label": "Revenez plus tard",
+      "desc": "Refaites le test quand les choses changent. C’est généralement le cas."
+    }
+  ],
+  "metaTitle": "Find My Smell — Quiz de personnalité olfactive | Trouvez votre parfum",
+  "metaDescription": "Répondez à {N} questions sur ce que vous ressentez maintenant — pas sur des notes, pas sur des tendances. Recevez un parfum choisi pour votre personnalité. Gratuit, sans inscription."
+}

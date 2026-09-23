@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { ArchetypeKey } from '@/lib/archetype-colors';
 import { loadAnswers } from '@/lib/answers-store';
 import { AXES, defaultsFor, dnaFrom, dnaPercent, type DnaValues } from '@/lib/dna';
+import { type Locale } from '@/lib/i18n';
+import { t } from '@/lib/copy';
 import styles from './scent-dna.module.css';
 
 /**
@@ -37,9 +39,11 @@ const LAYERS = [
 ];
 
 export default function ScentDna({
+  locale,
   archetype,
   quote,
 }: {
+  locale: Locale;
   archetype: ArchetypeKey;
   quote: string;
 }) {
@@ -141,7 +145,7 @@ export default function ScentDna({
 
   return (
     <section className={styles.zone}>
-      <h2 className={styles.title}>{TITLE}</h2>
+      <h2 className={styles.title}>{t(locale, 'dna.title', TITLE)}</h2>
       <p className={styles.quote}>{quote}</p>
 
       <div className={styles.diagram} ref={diagramRef}>
@@ -150,6 +154,12 @@ export default function ScentDna({
         {AXES.map((axis, i) => {
           const pct = dnaPercent(values[axis.key]);
           const isOpen = open === i;
+          /* Названия и пояснения осей — по локали; английские остаются
+             запасными (см. lib/copy.ts и data/dna.json). */
+          const lo = t(locale, `dna.${axis.key}.lo`, axis.lo);
+          const hi = t(locale, `dna.${axis.key}.hi`, axis.hi);
+          const loDesc = t(locale, `dna.${axis.key}.loDesc`, axis.loDesc);
+          const hiDesc = t(locale, `dna.${axis.key}.hiDesc`, axis.hiDesc);
           return (
             <div key={axis.key} className={styles.row}>
               <button
@@ -158,10 +168,10 @@ export default function ScentDna({
                 data-bar=""
                 onClick={() => toggle(i)}
                 aria-expanded={isOpen}
-                aria-label={`${axis.lo} — ${axis.hi}`}
+                aria-label={`${lo} — ${hi}`}
               >
                 <span className={`${styles.label} ${isOpen ? styles.labelActive : ''}`}>
-                  {axis.lo}
+                  {lo}
                 </span>
                 <span className={styles.track} data-track="">
                   {/* Метки четвертей: показывают, что шкала не бесконечная. */}
@@ -174,20 +184,20 @@ export default function ScentDna({
                 <span
                   className={`${styles.label} ${styles.right} ${isOpen ? styles.labelActive : ''}`}
                 >
-                  {axis.hi}
+                  {hi}
                 </span>
               </button>
 
               <div className={`${styles.expand} ${isOpen ? styles.expandOpen : ''}`}>
                 <div className={styles.explain}>
                   <div className={styles.side}>
-                    <div className={styles.word}>{axis.lo}</div>
-                    <div className={styles.desc}>{axis.loDesc}</div>
+                    <div className={styles.word}>{lo}</div>
+                    <div className={styles.desc}>{loDesc}</div>
                   </div>
                   <div className={styles.divider} />
                   <div className={styles.side}>
-                    <div className={styles.word}>{axis.hi}</div>
-                    <div className={styles.desc}>{axis.hiDesc}</div>
+                    <div className={styles.word}>{hi}</div>
+                    <div className={styles.desc}>{hiDesc}</div>
                   </div>
                 </div>
               </div>
@@ -196,7 +206,7 @@ export default function ScentDna({
         })}
       </div>
 
-      <p className={`${styles.hint} ${touched ? styles.hintGone : ''}`}>{HINT}</p>
+      <p className={`${styles.hint} ${touched ? styles.hintGone : ''}`}>{t(locale, 'dna.hint', HINT)}</p>
     </section>
   );
 }

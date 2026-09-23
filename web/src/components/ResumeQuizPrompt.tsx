@@ -3,6 +3,8 @@
 import { useEffect, useId, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './resume-quiz.module.css';
+import { type Locale } from '@/lib/i18n';
+import { t } from '@/lib/copy';
 
 /**
  * «У вас уже начато прохождение» — вопрос перед тем, как BEGIN сотрёт его.
@@ -18,9 +20,9 @@ import styles from './resume-quiz.module.css';
  * там нечего, оно в базе; BEGIN стирает его как раньше, без вопроса
  * (см. unfinishedRun в src/lib/answers-store.ts).
  *
- * ТЕКСТ. Английский, как и вся остальная страница: французского и русского
- * пока нет нигде (HANDOFF 9.1). Этого окна на живом сайте не существует,
- * сверить его не с чем — ТЕКСТ НУЖНО ВЫЧИТАТЬ ЗАКАЗЧИЦЕ.
+ * ТЕКСТ. Этого окна на живом сайте не существует, сверить его не с чем —
+ * ТЕКСТ НУЖНО ВЫЧИТАТЬ ЗАКАЗЧИЦЕ, и английский, и французский. Русского
+ * словаря пока нет, ru показывает английский (см. lib/copy.ts).
  *
  * ПОЧЕМУ ПОРТАЛ В BODY. Ссылка BEGIN стоит внутри секции главной, у
  * предков которой есть свои преобразования. Отрисованное на месте окно
@@ -42,10 +44,12 @@ const COPY = {
 } as const;
 
 export default function ResumeQuizPrompt({
+  locale,
   onResume,
   onRestart,
   onCancel,
 }: {
+  locale: Locale;
   onResume: () => void;
   onRestart: () => void;
   onCancel: () => void;
@@ -104,7 +108,7 @@ export default function ResumeQuizPrompt({
           type="button"
           className={styles.close}
           onClick={onCancel}
-          aria-label={COPY.close}
+          aria-label={t(locale, 'ui.close', COPY.close)}
         >
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
             <path
@@ -117,15 +121,15 @@ export default function ResumeQuizPrompt({
           </svg>
         </button>
 
-        <p id={titleId} className={styles.title}>{COPY.title}</p>
-        <p className={styles.note}>{COPY.note}</p>
+        <p id={titleId} className={styles.title}>{t(locale, 'ui.resumeTitle', COPY.title)}</p>
+        <p className={styles.note}>{t(locale, 'ui.resumeNote', COPY.note)}</p>
 
         {/* Сохранить работу человека — выбор по умолчанию. */}
         <button ref={first} type="button" className={styles.resume} onClick={onResume}>
-          {COPY.resume}
+          {t(locale, 'ui.resumeContinue', COPY.resume)}
         </button>
         <button type="button" className={styles.restart} onClick={onRestart}>
-          {COPY.restart}
+          {t(locale, 'ui.resumeRestart', COPY.restart)}
         </button>
       </div>
     </div>

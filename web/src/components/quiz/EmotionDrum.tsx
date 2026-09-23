@@ -5,6 +5,8 @@ import { cld } from '@/lib/cloudinary';
 import drum from '@/data/emotion-drum.json';
 import styles from './emotion-drum.module.css';
 import type { MechanicProps } from './mechanics';
+import { t, tLines, shortLabel } from '@/lib/copy';
+import { QUESTION_COPY } from '@/data/question-titles';
 
 /**
  * Барабан эмоций на Q_EMO. Перенесено из q-emo.footer.html.
@@ -65,8 +67,9 @@ const MIN_FONT = 16;
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
 /* Props общие для всех механик: onChoose с кодом ответа, навигацию
-   делает QuizScreen. Код вопроса барабану не нужен — он один. */
-export default function EmotionDrum({ onChoose }: MechanicProps) {
+   делает QuizScreen. Код вопроса барабану не нужен — он один; локаль
+   нужна, весь текст экрана он рисует сам. */
+export default function EmotionDrum({ locale, onChoose }: MechanicProps) {
   const slot = useRef<HTMLDivElement | null>(null);
   const words = useRef<Array<HTMLDivElement | null>>([]);
   const layers = useRef<Array<HTMLDivElement | null>>([]);
@@ -370,7 +373,9 @@ export default function EmotionDrum({ onChoose }: MechanicProps) {
     else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); markTouched(); pick(); }
   };
 
-  const chosenWord = picked !== null ? ITEMS[picked].word : null;
+  /* Слово барабана — по локали; английское остаётся запасным. */
+  const word = (i: number) => shortLabel(locale, ITEMS[i].code, ITEMS[i].word);
+  const chosenWord = picked !== null ? word(picked) : null;
 
   return (
     <div className={styles.stage}>
@@ -381,7 +386,7 @@ export default function EmotionDrum({ onChoose }: MechanicProps) {
 
       <div className={styles.content}>
         <p className={styles.prefix}>
-          {drum.prefix.map((line, i) => (
+          {tLines(locale, 'screen.Q_EMO.prefix', drum.prefix).map((line, i) => (
             <span key={i} className={styles.prefixLine}>{line}</span>
           ))}
         </p>
@@ -391,7 +396,7 @@ export default function EmotionDrum({ onChoose }: MechanicProps) {
             type="button"
             className={`${styles.arrow} ${styles.arrowUp}`}
             onClick={() => step(-1)}
-            aria-label="Previous"
+            aria-label={t(locale, 'ui.previous', 'Previous')}
             tabIndex={-1}
           >
             ↑
@@ -403,7 +408,7 @@ export default function EmotionDrum({ onChoose }: MechanicProps) {
             style={fontSize ? ({ ['--drum-size' as string]: `${fontSize}px` }) : undefined}
             role="listbox"
             tabIndex={0}
-            aria-label="How do you want this perfume to make you feel?"
+            aria-label={t(locale, 'q.Q_EMO.title', QUESTION_COPY.Q_EMO.title)}
             aria-activedescendant={`emo-${ITEMS[current].code}`}
             onKeyDown={onKeyDown}
           >
@@ -416,7 +421,7 @@ export default function EmotionDrum({ onChoose }: MechanicProps) {
                 role="option"
                 aria-selected={i === current}
               >
-                {item.word}
+                {word(i)}
               </div>
             ))}
           </div>
@@ -425,7 +430,7 @@ export default function EmotionDrum({ onChoose }: MechanicProps) {
             type="button"
             className={`${styles.arrow} ${styles.arrowDown}`}
             onClick={() => step(1)}
-            aria-label="Next"
+            aria-label={t(locale, 'ui.next', 'Next')}
             tabIndex={-1}
           >
             ↓
@@ -436,7 +441,7 @@ export default function EmotionDrum({ onChoose }: MechanicProps) {
           className={chosenWord ? `${styles.hint} ${styles.hintPicked}` : styles.hint}
           aria-live="polite"
         >
-          {chosenWord ? `✓  ${chosenWord}` : drum.hint}
+          {chosenWord ? `✓  ${chosenWord}` : t(locale, 'screen.Q_EMO.hint', drum.hint)}
         </p>
       </div>
     </div>

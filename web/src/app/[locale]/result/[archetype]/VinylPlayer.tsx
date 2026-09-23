@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ArchetypeKey } from '@/lib/archetype-colors';
 import vinyl from '@/data/vinyl.json';
+import { type Locale } from '@/lib/i18n';
+import { t } from '@/lib/copy';
 import styles from './vinyl.module.css';
 
 /**
@@ -20,7 +22,13 @@ import styles from './vinyl.module.css';
 
 const DATA = vinyl as Record<string, { color: string; track: string }>;
 
-export default function VinylPlayer({ archetype }: { archetype: ArchetypeKey }) {
+export default function VinylPlayer({
+  locale,
+  archetype,
+}: {
+  locale: Locale;
+  archetype: ArchetypeKey;
+}) {
   const entry = DATA[archetype];
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -66,7 +74,9 @@ export default function VinylPlayer({ archetype }: { archetype: ArchetypeKey }) 
       className={styles.player}
       onClick={toggle}
       aria-pressed={playing}
-      aria-label={playing ? 'Pause the music' : 'Play the music'}
+      aria-label={playing
+        ? t(locale, 'result.pauseMusic', 'Pause the music')
+        : t(locale, 'result.playMusic', 'Play the music')}
     >
       <span className={`${styles.arm} ${playing ? styles.armPlaying : ''}`} aria-hidden="true" />
       <span className={`${styles.record} ${playing ? styles.spinning : ''}`} aria-hidden="true">

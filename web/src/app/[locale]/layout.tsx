@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import { Fraunces, Inconsolata, Montserrat } from 'next/font/google';
 import { notFound } from 'next/navigation';
-import { LOCALES, isLocale } from '@/lib/i18n';
+import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from '@/lib/i18n';
+import { fill, t } from '@/lib/copy';
 import { TOTAL_STEPS } from '@/lib/quiz';
 import { OG_IMAGE_SIZE, SITE_NAME, TWITTER_SITE, siteUrl } from '@/lib/site';
 import { cld } from '@/lib/cloudinary';
@@ -36,7 +37,12 @@ const montserrat = Montserrat({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> },
+): Promise<Metadata> {
+  const { locale } = await params;
+  const lang: Locale = isLocale(locale) ? locale : DEFAULT_LOCALE;
+  return {
   /* Абсолютный адрес нужен og-тегам и sitemap: относительная ссылка на
      картинку в карточке превью не разворачивается. */
   metadataBase: new URL(siteUrl()),
@@ -44,10 +50,13 @@ export const metadata: Metadata = {
   // Число вопросов держим ОДНО на весь сайт: на живом сайте их три разных
   // (12 в шагах на главной, 7 в метаописании, 17 на самом деле).
   // Подставляется из TOTAL_STEPS, чтобы разойтись было нечем.
-  description:
-    `Answer ${TOTAL_STEPS} questions about how you feel right now — not notes, not trends. `
+  description: fill(t(
+    lang,
+    'ui.siteDescription',
+    'Answer {n} questions about how you feel right now — not notes, not trends. '
     + 'Get a perfume matched to who you are. No emails. No sign-ups. '
     + 'No boring perfume pyramids.',
+  ), { n: TOTAL_STEPS }),
   /* Ссылка-превью. В проде эти теги есть (девять штук в home.head.html),
      в порте не было ни одного: ссылка приезжала голой строкой. Здесь
      основа на весь сайт — её получают экраны квиза и юридические
@@ -62,7 +71,8 @@ export const metadata: Metadata = {
     site: TWITTER_SITE,
     images: [cld(HOME_HERO, 'og')],
   },
-};
+  };
+}
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));

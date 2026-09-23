@@ -12,6 +12,7 @@ import { parsePunch } from '@/lib/share-card';
 import { cld } from '@/lib/cloudinary';
 import { previewTags } from '@/lib/site';
 import { HOME_HERO } from '@/lib/home';
+import { t } from '@/lib/copy';
 import shareCardsEn from '@/data/share-cards.en.json';
 import shareCardsFr from '@/data/share-cards.fr.json';
 import punchLinesEn from '@/data/punch-lines.en.json';
@@ -143,6 +144,14 @@ const LABELS = {
   discover: 'Discover →',
 };
 
+/** Те же подписи на языке страницы; английские остаются запасными. */
+const labelsFor = (locale: Locale) => ({
+  main: t(locale, 'result.main', LABELS.main),
+  alternatives: t(locale, 'result.alternatives', LABELS.alternatives),
+  alternativesSub: t(locale, 'result.alternativesSub', LABELS.alternativesSub),
+  discover: t(locale, 'result.discover', LABELS.discover),
+});
+
 export default async function ResultPage({ params }: { params: Promise<RouteParams> }) {
   const parsed = parse(await params);
   if (!parsed) notFound();
@@ -153,6 +162,8 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
 
   // Первый абзац в проде — не начало текста, а фраза над диаграммой ДНК
   // (z1 в result48.js). Поэтому он уходит в ScentDna, а не в блок текста.
+  const labels = labelsFor(parsed.locale);
+
   const [pullQuote, ...rest] = a.desc;
   const closer = rest.length > 1 ? rest[rest.length - 1] : null;
   const body = closer ? rest.slice(0, -1) : rest;
@@ -173,7 +184,7 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
           заказчик убрала его со всех архетипов. Результат начинается сразу
           со Scent DNA. Тексты you/identity/descriptor остались в данных —
           из них собирается заголовок вкладки и превью ссылки. */}
-      <ScentDna archetype={parsed.key} quote={pullQuote} />
+      <ScentDna locale={parsed.locale} archetype={parsed.key} quote={pullQuote} />
 
       {/* Фонарик по штукатурке — как в проде: текстура проявляется под
           курсором и тянется следом. Блок текста внутри, поверх слоя. */}
@@ -188,18 +199,19 @@ export default async function ResultPage({ params }: { params: Promise<RoutePara
         </div>
       </Flashlight>
 
-      <Ingredients ingredients={a.ingredients} band={LABELS.main} />
+      <Ingredients locale={parsed.locale} ingredients={a.ingredients} band={labels.main} />
 
       <ResultMatch
         archetype={parsed.key}
         fallback={fallback}
-        labels={LABELS}
+        labels={labels}
+        locale={parsed.locale}
       />
 
       <SubscribeForm locale={parsed.locale} archetype={parsed.key} />
 
       {/* У каждого архетипа своя музыка. */}
-      <VinylPlayer archetype={parsed.key} />
+      <VinylPlayer locale={parsed.locale} archetype={parsed.key} />
 
       {/* Всплывает, когда человек дочитал до конца. Каркас: дизайн внутри
           картинки заказчица будет менять вместе со мной. */}

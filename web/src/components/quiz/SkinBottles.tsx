@@ -8,6 +8,7 @@ import { QUESTION_COPY } from '@/data/question-titles';
 import data from '@/data/skin-bottles.json';
 import styles from './skin-bottles.module.css';
 import type { MechanicProps } from './mechanics';
+import { t, answerLabel } from '@/lib/copy';
 
 /**
  * Q_SKIN_BEHAVIOR — как духи ведут себя на коже. Перенесено из
@@ -71,9 +72,9 @@ const hoverSubscribe = (cb: () => void) => {
 const noHoverNow = () => window.matchMedia('(hover: none)').matches;
 const noHoverOnServer = () => false;
 
-export default function SkinBottles({ questionId, onChoose }: MechanicProps) {
+export default function SkinBottles({ questionId, locale, onChoose }: MechanicProps) {
   const answers = QUESTIONS[questionId].answers;
-  const title = QUESTION_COPY[questionId]?.title ?? '';
+  const title = t(locale, `q.${questionId}.title`, QUESTION_COPY[questionId]?.title ?? '');
 
   const noHover = useSyncExternalStore(hoverSubscribe, noHoverNow, noHoverOnServer);
   /* Ответ нужен УЖЕ в первой отрисовке: иначе за один кадр до него
@@ -156,7 +157,7 @@ export default function SkinBottles({ questionId, onChoose }: MechanicProps) {
                 }}
                 onClick={() => onChoose(a.code)}
               >
-                {a.label}
+                {answerLabel(locale, a.code, a.label)}
                 {clip && (
                   <span
                     className={on ? `${styles.bottle} ${styles.bottleOn}` : styles.bottle}

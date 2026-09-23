@@ -1,4 +1,6 @@
 import type { Perfume } from '@/lib/matching';
+import { type Locale } from '@/lib/i18n';
+import { t } from '@/lib/copy';
 import styles from './scales.module.css';
 
 /**
@@ -30,9 +32,11 @@ function toPercent(value: number): number {
 }
 
 export default function Scales({
+  locale,
   perfume,
   compact = false,
 }: {
+  locale: Locale;
   perfume: Perfume;
   /** Вариант для карточек альтернатив: подписи и точка мельче. */
   compact?: boolean;
@@ -44,11 +48,13 @@ export default function Scales({
         const value = raw === null ? FALLBACK[axis] : raw;
         return (
           <div key={axis} className={styles.row}>
-            <span className={styles.label}>{left}</span>
+            <span className={styles.label}>{t(locale, `scales.${axis}.left`, left)}</span>
             <div className={styles.track}>
               <span className={styles.dot} style={{ left: `${toPercent(value)}%` }} />
             </div>
-            <span className={`${styles.label} ${styles.right}`}>{right}</span>
+            <span className={`${styles.label} ${styles.right}`}>
+              {t(locale, `scales.${axis}.right`, right)}
+            </span>
           </div>
         );
       })}

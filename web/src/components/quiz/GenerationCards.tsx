@@ -5,6 +5,8 @@ import { QUESTIONS } from '@/lib/quiz';
 import data from '@/data/generation-cards.json';
 import styles from './generation-cards.module.css';
 import type { MechanicProps } from './mechanics';
+import { t, answerLabel } from '@/lib/copy';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Q_GENERATION — «к какому поколению вы себя относите». Перенесено из
@@ -59,8 +61,8 @@ interface Card {
 const CARDS = data.cards as Card[];
 const ANSWERS = QUESTIONS.Q_GENERATION.answers;
 /** Название словами — для читалки: годы нарисованы на холсте. */
-const nameOf = (code: string) =>
-  ANSWERS.find((a) => a.code === code)?.label ?? code;
+const nameOf = (locale: Locale, code: string) =>
+  answerLabel(locale, code, ANSWERS.find((a) => a.code === code)?.label ?? code);
 
 /** Кадров на карточку. Восемь случайных достаточно, чтобы шум не зацикливался на глаз. */
 const FRAMES = 8;
@@ -180,7 +182,7 @@ function paint(
   ctx.shadowBlur = 0;
 }
 
-export default function GenerationCards({ onChoose }: MechanicProps) {
+export default function GenerationCards({ locale, onChoose }: MechanicProps) {
   const canvases = useRef<Record<string, HTMLCanvasElement | null>>({});
   const [looking, setLooking] = useState<string | null>(null);
   const [picked, setPicked] = useState<string | null>(null);
@@ -290,7 +292,7 @@ export default function GenerationCards({ onChoose }: MechanicProps) {
     >
       <div className={styles.inner}>
         <h1 className={styles.question} style={{ color: data.questionInk }}>
-          {data.question}
+          {t(locale, 'screen.Q_GENERATION.question', data.question)}
         </h1>
 
         <ul className={styles.grid}>
@@ -320,7 +322,7 @@ export default function GenerationCards({ onChoose }: MechanicProps) {
                 />
                 {/* Годы нарисованы на холсте, то есть читалке не видны
                     вовсе. Название словами — здесь. */}
-                <span className={styles.name}>{nameOf(card.code)}</span>
+                <span className={styles.name}>{nameOf(locale, card.code)}</span>
               </button>
             </li>
           ))}

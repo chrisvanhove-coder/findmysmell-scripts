@@ -2,6 +2,8 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import prompts from '@/data/question-open-prompts.json';
+import { type Locale } from '@/lib/i18n';
+import { t } from '@/lib/copy';
 import styles from './open-answer-modal.module.css';
 
 /**
@@ -37,17 +39,20 @@ import styles from './open-answer-modal.module.css';
 
 const PROMPTS = prompts.prompts as Record<string, string>;
 
-/** Есть ли у этого вопроса текст для окошка. */
-export function openPromptFor(questionId: string): string | undefined {
-  return PROMPTS[questionId];
+/** Есть ли у этого вопроса текст для окошка, и какой на нужном языке. */
+export function openPromptFor(locale: Locale, questionId: string): string | undefined {
+  const en = PROMPTS[questionId];
+  return en === undefined ? undefined : t(locale, `open.${questionId}`, en);
 }
 
 export default function OpenAnswerModal({
+  locale,
   prompt,
   initial = '',
   onSubmit,
   onCancel,
 }: {
+  locale: Locale;
   prompt: string;
   /** Уже написанный ранее текст — если человек вернулся на вопрос назад. */
   initial?: string;
@@ -122,7 +127,7 @@ export default function OpenAnswerModal({
           type="text"
           value={text}
           maxLength={2000}
-          placeholder={prompts.placeholder}
+          placeholder={t(locale, 'open.placeholder', prompts.placeholder)}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => { if (e.key === 'Enter') submit(); }}
         />
@@ -134,12 +139,12 @@ export default function OpenAnswerModal({
           disabled={!ready}
           onClick={submit}
         >
-          {prompts.submit}
+          {t(locale, 'open.submit', prompts.submit)}
         </button>
 
         {/* Выход. В проде его не было — окно нельзя было закрыть никак. */}
         <button type="button" className={styles.cancel} onClick={onCancel}>
-          Pick from the list instead
+          {t(locale, 'open.cancel', 'Pick from the list instead')}
         </button>
       </div>
     </div>

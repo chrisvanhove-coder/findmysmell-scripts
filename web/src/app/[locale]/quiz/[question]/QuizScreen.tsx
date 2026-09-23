@@ -19,6 +19,7 @@ import ScentCloud, { cloudFor } from '@/components/quiz/ScentCloud';
 import { resolve } from '@/lib/scoring';
 import { missingQuestions } from '@/lib/quiz-state';
 import { watchForAbandon } from '@/lib/abandoned';
+import { t, fill, answerLabel, answerHint } from '@/lib/copy';
 import styles from './quiz.module.css';
 
 /**
@@ -62,7 +63,7 @@ export default function QuizScreen({
   /* Вариант «Other» внутри вопроса: у девяти вопросов он открывает
      окошко «а как для тебя?». Текст вопроса для окошка лежит в данных —
      у каждого свой, и в этом весь смысл этого варианта. */
-  const openPrompt = openPromptFor(question.id);
+  const openPrompt = openPromptFor(locale, question.id);
   /** Какой вариант «Other» сейчас спрашивают. null — окошка нет. */
   const [asking, setAsking] = useState<string | null>(null);
   /** Уже написанный текст — если человек вернулся на вопрос назад. */
@@ -234,7 +235,9 @@ export default function QuizScreen({
      На закрывающем экране step равен нулю и счётчика нет: вопросы там
      кончились. */
   const counter = step > 0 ? (
-    <span className={styles.counter}>Question {step} of {TOTAL_STEPS}</span>
+    <span className={styles.counter}>
+      {fill(t(locale, 'ui.counter', 'Question {n} of {total}'), { n: step, total: TOTAL_STEPS })}
+    </span>
   ) : null;
 
   /* У вопроса может быть своя механика — барабан, шары, ползунок. Тогда
@@ -248,6 +251,7 @@ export default function QuizScreen({
      вариант есть. */
   const modal = asking !== null && openPrompt ? (
     <OpenAnswerModal
+      locale={locale}
       prompt={openPrompt}
       initial={askedText}
       onSubmit={(text) => {
@@ -274,10 +278,10 @@ export default function QuizScreen({
           className={`${styles.back} ${styles.backOverMechanic}`}
           onClick={() => router.back()}
         >
-          ← Back
+          {t(locale, 'ui.back', '← Back')}
         </button>
         {counter}
-        <Mechanic questionId={question.id} onChoose={choose} />
+        <Mechanic questionId={question.id} locale={locale} onChoose={choose} />
         {modal}
       </main>
     );
@@ -292,7 +296,7 @@ export default function QuizScreen({
       {cloud && <ScentCloud active={looking} />}
 
       <button type="button" className={styles.back} onClick={() => router.back()}>
-        ← Back
+        {t(locale, 'ui.back', '← Back')}
       </button>
 
       {counter}
@@ -312,20 +316,28 @@ export default function QuizScreen({
                 setOpenText(e.target.value);
                 saveOpenText(e.target.value);
               }}
-              placeholder="A smell you remember, one you wish you could find again, a place it takes you back to."
+              placeholder={t(
+                locale,
+                'ui.openPlaceholder',
+                'A smell you remember, one you wish you could find again, a place it takes you back to.',
+              )}
             />
             <div className={styles.consent}>
               <p className={styles.consentText}>
-                You just finished the quiz — none of it asked for your name or email.
-                Can we include your anonymous answers in fragrance research?
-                No email or identifying info, ever.
+                {t(
+                  locale,
+                  'ui.consentResearch',
+                  'You just finished the quiz — none of it asked for your name or email. '
+                  + 'Can we include your anonymous answers in fragrance research? '
+                  + 'No email or identifying info, ever.',
+                )}
               </p>
               <div className={styles.actions}>
                 <button type="button" className={styles.primary} onClick={() => finish(true)}>
-                  Agree &amp; continue
+                  {t(locale, 'ui.consentAgree', 'Agree & continue')}
                 </button>
                 <button type="button" className={styles.secondary} onClick={() => finish(false)}>
-                  Disagree &amp; continue
+                  {t(locale, 'ui.consentDisagree', 'Disagree & continue')}
                 </button>
               </div>
             </div>
@@ -358,8 +370,10 @@ export default function QuizScreen({
                       }
                       : {})}
                   >
-                    {a.label}
-                    {a.hint && <span className={styles.hint}>{a.hint}</span>}
+                    {answerLabel(locale, a.code, a.label)}
+                    {answerHint(locale, a.code, a.hint) && (
+                      <span className={styles.hint}>{answerHint(locale, a.code, a.hint)}</span>
+                    )}
                   </button>
                 </li>
               ))}

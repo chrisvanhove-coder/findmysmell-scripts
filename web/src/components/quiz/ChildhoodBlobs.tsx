@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import data from '@/data/childhood-blobs.json';
 import styles from './childhood-blobs.module.css';
 import type { MechanicProps } from './mechanics';
+import { tLines, shortLabel } from '@/lib/copy';
 
 /**
  * Шары детства на Q_ENV_CHILD. Перенесено из q-env-child.footer.html.
@@ -72,7 +73,7 @@ const TIME_RATE = 0.6;
 /** Пауза после выбора: галочку видно до перехода. Как в барабане эмоций. */
 const PAUSE_AFTER_PICK_MS = 500;
 
-export default function ChildhoodBlobs({ onChoose }: MechanicProps) {
+export default function ChildhoodBlobs({ locale, onChoose }: MechanicProps) {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const [picked, setPicked] = useState<string | null>(null);
 
@@ -192,7 +193,7 @@ export default function ChildhoodBlobs({ onChoose }: MechanicProps) {
 
       <div className={styles.cluster}>
         <h1 className={styles.question}>
-          {data.question.map((line) => (
+          {tLines(locale, 'screen.Q_ENV_CHILD.question', data.question).map((line) => (
             <span key={line} className={styles.line}>
               {line}
             </span>
@@ -210,7 +211,9 @@ export default function ChildhoodBlobs({ onChoose }: MechanicProps) {
             disabled={picked !== null}
             onClick={() => setPicked(a.code)}
           >
-            {picked === a.code ? `✓ ${a.label}` : a.label}
+            {picked === a.code
+              ? `✓ ${shortLabel(locale, a.code, a.label)}`
+              : shortLabel(locale, a.code, a.label)}
           </button>
         ))}
       </div>

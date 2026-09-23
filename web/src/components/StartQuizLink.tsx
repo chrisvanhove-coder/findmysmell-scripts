@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState, type ComponentProps, type MouseEvent } from 'react';
 import { beginRun, loadAnswers, unfinishedRun } from '@/lib/answers-store';
 import { sendAbandonedRun } from '@/lib/abandoned';
-import { isLocale } from '@/lib/i18n';
+import { DEFAULT_LOCALE, isLocale, type Locale } from '@/lib/i18n';
 import { missingQuestions } from '@/lib/quiz-state';
 import { toSlug } from '@/lib/quiz';
 import ResumeQuizPrompt from './ResumeQuizPrompt';
@@ -60,11 +60,18 @@ export default function StartQuizLink(props: ComponentProps<typeof Link>) {
     router.push(href!);
   }
 
+  /* Язык окна берём из самой ссылки: она всегда вида /<locale>/quiz/...
+     Если href не строка (такой ссылки в проекте нет), остаёмся на
+     английском — как и вся остальная логика здесь. */
+  const hrefLocale = href?.split('/')[1] ?? '';
+  const locale: Locale = isLocale(hrefLocale) ? hrefLocale : DEFAULT_LOCALE;
+
   return (
     <>
       <Link {...props} onClick={click} />
       {asking && (
         <ResumeQuizPrompt
+          locale={locale}
           onResume={resume}
           onRestart={restart}
           onCancel={() => setAsking(false)}

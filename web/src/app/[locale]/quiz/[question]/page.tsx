@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { isLocale, LOCALES } from '@/lib/i18n';
 import { QUESTIONS, questionBySlug } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
+import { t } from '@/lib/copy';
 import QuizScreen from './QuizScreen';
 
 export function generateStaticParams() {
@@ -21,12 +22,21 @@ export default async function QuestionPage({
   const question = questionBySlug(slug);
   if (!question) notFound();
 
+  const copy = QUESTION_COPY[question.id];
+
   return (
     <QuizScreen
       locale={locale}
       question={question}
-      title={QUESTION_COPY[question.id]?.title ?? question.id}
-      subtitle={QUESTION_COPY[question.id]?.subtitle}
+      /* Заголовок и уточнение — по локали. Английский лежит в
+         question-titles.ts и остаётся запасным вариантом, если
+         перевода для этого вопроса ещё нет (см. lib/copy.ts). */
+      title={t(locale, `q.${question.id}.title`, copy?.title ?? question.id)}
+      subtitle={
+        copy?.subtitle === undefined
+          ? undefined
+          : t(locale, `q.${question.id}.subtitle`, copy.subtitle)
+      }
     />
   );
 }

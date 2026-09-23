@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import type { Ingredient } from '@/lib/content';
 import { cld } from '@/lib/cloudinary';
 import styles from './ingredients.module.css';
+import { type Locale } from '@/lib/i18n';
+import { t } from '@/lib/copy';
 
 /**
  * Ингредиенты с кнопкой «Read more». Порт зоны 2 из result48.js:
@@ -29,9 +31,11 @@ const LABEL = 'Ingredients worth discovering';
 const READ_MORE = 'Read more';
 
 export default function Ingredients({
+  locale,
   ingredients,
   band,
 }: {
+  locale: Locale;
   ingredients: Ingredient[];
   /** Большая строка внизу зоны — «your scent» перед флаконом. */
   band: string;
@@ -65,8 +69,8 @@ export default function Ingredients({
       {/* В проде линейка отделяет блок ингредиентов сверху, до заголовка,
           а не стоит между вводной фразой и списком. */}
       <div className={styles.rule} />
-      <span className={styles.label}>{LABEL}</span>
-      <p className={styles.intro}>{INTRO}</p>
+      <span className={styles.label}>{t(locale, 'result.ingredientsLabel', LABEL)}</span>
+      <p className={styles.intro}>{t(locale, 'result.ingredientsIntro', INTRO)}</p>
 
       <div className={styles.list}>
         {ingredients.map((ing) => (
@@ -88,7 +92,7 @@ export default function Ingredients({
                   className={styles.readMore}
                   onClick={() => setOpen(ing)}
                 >
-                  {READ_MORE}
+                  {t(locale, 'result.readMore', READ_MORE)}
                 </button>
               )}
             </div>
@@ -116,7 +120,7 @@ export default function Ingredients({
               type="button"
               className={styles.close}
               onClick={close}
-              aria-label="Close"
+              aria-label={t(locale, 'ui.close', 'Close')}
             >
               ✕
             </button>

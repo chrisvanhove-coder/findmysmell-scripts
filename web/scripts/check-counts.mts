@@ -65,8 +65,15 @@ console.log('\nЧисло нигде не вписано руками');
   check('в шагах главной стоит подстановка {N}',
     home.steps.some((s) => s.desc.includes('{N}')),
     'иначе число снова разойдётся с TOTAL_STEPS');
+  /* Метаописание переехало в generateMetadata и стало двуязычным:
+     английская строка лежит там же запасным вариантом, а число в неё
+     подставляется через fill({ n: TOTAL_STEPS }). Проверяем оба конца —
+     что в тексте стоит место под число и что туда идёт именно
+     TOTAL_STEPS, а не вписанная руками цифра. */
+  const layout = readFileSync('src/app/[locale]/layout.tsx', 'utf8');
+  check('в метаописании стоит подстановка {n}', layout.includes('{n} questions'));
   check('метаописание собирается из TOTAL_STEPS',
-    readFileSync('src/app/[locale]/layout.tsx', 'utf8').includes('${TOTAL_STEPS} questions'));
+    /\{\s*n:\s*TOTAL_STEPS\s*\}/.test(layout));
 }
 
 console.log('\nШаги главной на месте');

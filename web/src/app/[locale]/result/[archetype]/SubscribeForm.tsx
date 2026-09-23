@@ -7,6 +7,7 @@ import { pickFromBrowser } from '@/lib/picked-client';
 import styles from './subscribe.module.css';
 import { reportFunnel } from '@/lib/funnel';
 import { runToken } from '@/lib/answers-store';
+import { t } from '@/lib/copy';
 
 /**
  * «Хочешь сохранить результат?» — форма подписки со страницы результата.
@@ -18,8 +19,9 @@ import { runToken } from '@/lib/answers-store';
  * попросить прислать свой результат, и наоборот.
  */
 
-// Тексты оставлены английскими: FR и RU для страницы результата ещё не
-// выгружены (см. HANDOFF, раздел 9.1). Как появятся — сюда же, по локали.
+/* Английский оригинал. Французский приходит поверх, по ключам
+   subscribe.* (см. lib/copy.ts); русского словаря пока нет, и ru
+   показывает эти же строки. */
 const COPY = {
   title: 'Want to keep this?',
   sub: 'Your full archetype. The ingredients that chose you. One email, nothing else.',
@@ -47,6 +49,9 @@ export default function SubscribeForm({
   locale: Locale;
   archetype: ArchetypeKey;
 }) {
+  /* Строка по локали: ключ тот же, что имя поля в COPY. */
+  const say = (key: keyof typeof COPY) => t(locale, `subscribe.${key}`, COPY[key]);
+
   const [email, setEmail] = useState('');
   const [consent, setConsent] = useState(false);
   const [state, setState] = useState<State>('idle');
@@ -59,11 +64,11 @@ export default function SubscribeForm({
     const value = email.trim();
     // Те же две проверки и в том же порядке, что в проде.
     if (!value.includes('@')) {
-      setMessage({ text: COPY.invalidEmail, ok: false });
+      setMessage({ text: say('invalidEmail'), ok: false });
       return;
     }
     if (!consent) {
-      setMessage({ text: COPY.needConsent, ok: false });
+      setMessage({ text: say('needConsent'), ok: false });
       return;
     }
 
@@ -91,17 +96,17 @@ export default function SubscribeForm({
       // на этом шаге человек дошёл до конца.
       reportFunnel(locale, runToken(), { step: 'EMAIL_SENT', event: 'answer' });
       setState('done');
-      setMessage({ text: result.sent ? COPY.success : COPY.savedNotSent, ok: true });
+      setMessage({ text: result.sent ? say('success') : say('savedNotSent'), ok: true });
     } catch {
       setState('idle');
-      setMessage({ text: COPY.failure, ok: false });
+      setMessage({ text: say('failure'), ok: false });
     }
   }
 
   return (
     <section className={styles.block}>
-      <h2 className={styles.title}>{COPY.title}</h2>
-      <p className={styles.sub}>{COPY.sub}</p>
+      <h2 className={styles.title}>{say('title')}</h2>
+      <p className={styles.sub}>{say('sub')}</p>
 
       <form className={styles.form} onSubmit={submit} noValidate>
         <div className={styles.row}>
@@ -110,14 +115,14 @@ export default function SubscribeForm({
             type="email"
             inputMode="email"
             autoComplete="email"
-            placeholder={COPY.placeholder}
-            aria-label={COPY.placeholder}
+            placeholder={say('placeholder')}
+            aria-label={say('placeholder')}
             value={email}
             disabled={state === 'done'}
             onChange={(e) => setEmail(e.target.value)}
           />
           <button className={styles.send} type="submit" disabled={state !== 'idle'}>
-            {state === 'sending' ? COPY.sending : state === 'done' ? COPY.sent : COPY.send}
+            {state === 'sending' ? say('sending') : state === 'done' ? say('sent') : say('send')}
           </button>
         </div>
 
@@ -129,9 +134,9 @@ export default function SubscribeForm({
             onChange={(e) => setConsent(e.target.checked)}
           />
           <span>
-            {COPY.consent}{' '}
+            {say('consent')}{' '}
             <a href={`/${locale}/privacy-policy`} target="_blank" rel="noopener noreferrer">
-              {COPY.privacy}
+              {say('privacy')}
             </a>
             .
           </span>

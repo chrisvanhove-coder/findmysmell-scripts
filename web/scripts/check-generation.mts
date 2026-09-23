@@ -110,7 +110,7 @@ console.log('\nИсправления против прода на месте');
     /<button\b[\s\S]*?type="button"/.test(src),
     'в проде это были div с обработчиком click');
   check('у каждой есть название словами',
-    /nameOf\(card\.code\)/.test(src),
+    /nameOf\(locale, card\.code\)/.test(src),
     'годы нарисованы на холсте, то есть читалке карточка была пуста');
   check('название спрятано визуально, но не от читалки',
     /clip-path: inset\(50%\)/.test(css));

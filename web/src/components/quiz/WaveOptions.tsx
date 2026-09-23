@@ -5,6 +5,8 @@ import { QUESTIONS } from '@/lib/quiz';
 import data from '@/data/living-screens.json';
 import styles from './wave-options.module.css';
 import type { MechanicProps } from './mechanics';
+import { t, shortLabel } from '@/lib/copy';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Q_STAYWELL — «что делает пространство своим». Перенесено из
@@ -55,8 +57,8 @@ const TEXT = CFG.options as Record<string, string>;
  * экране формулировки совпадают, но правило одно для обоих живых
  * экранов, и держать его в одном виде надёжнее.
  */
-const label = (code: string) =>
-  TEXT[code] ?? ANSWERS.find((a) => a.code === code)?.label ?? code;
+const label = (locale: Locale, code: string) =>
+  shortLabel(locale, code, TEXT[code] ?? ANSWERS.find((a) => a.code === code)?.label ?? code);
 
 /* Появление, как в проде. */
 const QUESTION_IN_MS = 100;
@@ -84,7 +86,7 @@ interface Line {
   thickness: number;
 }
 
-export default function WaveOptions({ onChoose }: MechanicProps) {
+export default function WaveOptions({ locale, onChoose }: MechanicProps) {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const buttons = useRef<Record<string, HTMLButtonElement | null>>({});
   const [looking, setLooking] = useState<string | null>(null);
@@ -254,7 +256,7 @@ export default function WaveOptions({ onChoose }: MechanicProps) {
           className={questionIn ? `${styles.question} ${styles.questionIn}` : styles.question}
           style={{ color: CFG.questionInk }}
         >
-          {CFG.question}
+          {t(locale, 'screen.Q_STAYWELL.question', CFG.question)}
         </h1>
 
         <ul className={styles.list}>
@@ -281,7 +283,7 @@ export default function WaveOptions({ onChoose }: MechanicProps) {
                   onBlur={() => setLooking(null)}
                   onClick={() => { if (!picked) setPicked(a.code); }}
                 >
-                  <span className={styles.label} data-breathe="">{label(a.code)}</span>
+                  <span className={styles.label} data-breathe="">{label(locale, a.code)}</span>
                 </button>
               </li>
             );

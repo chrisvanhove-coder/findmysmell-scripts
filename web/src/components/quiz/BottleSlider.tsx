@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import sliders from '@/data/bottle-sliders.json';
 import styles from './bottle-slider.module.css';
+import { t, tLines, shortLabel } from '@/lib/copy';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Флакон, в котором уровень жидкости поднимают пальцем. Q_SWEET и Q_WILD.
@@ -92,13 +94,17 @@ function nearestIndex(levels: Level[], frac: number): number {
 
 export default function BottleSlider({
   questionId,
+  locale,
   onChoose,
 }: {
   questionId: string;
+  locale: Locale;
   onChoose: (code: string) => void;
 }) {
   const cfg = (sliders as unknown as Record<string, Config>)[questionId];
   const levels = cfg.levels;
+  /* Подпись уровня — по локали; английская остаётся запасной. */
+  const levelLabel = (i: number) => shortLabel(locale, levels[i].code, levels[i].label);
 
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const bottle = useRef<HTMLDivElement | null>(null);
@@ -431,7 +437,7 @@ export default function BottleSlider({
       data-bottle-slider={questionId}
     >
       <p className={styles.question}>
-        {cfg.question.map((line, i) => (
+        {tLines(locale, `screen.${questionId}.question`, cfg.question).map((line, i) => (
           <span key={i} className={styles.questionLine}>{line}</span>
         ))}
       </p>
@@ -441,11 +447,11 @@ export default function BottleSlider({
         className={styles.bottle}
         role="slider"
         tabIndex={0}
-        aria-label={cfg.question.join(' ')}
+        aria-label={tLines(locale, `screen.${questionId}.question`, cfg.question).join(' ')}
         aria-valuemin={1}
         aria-valuemax={levels.length}
         aria-valuenow={index + 1}
-        aria-valuetext={levels[index].label}
+        aria-valuetext={levelLabel(index)}
         onKeyDown={onKeyDown}
       >
         <canvas ref={canvas} className={styles.canvas} />
@@ -453,7 +459,7 @@ export default function BottleSlider({
 
       {/* Подпись читается вслух при смене уровня. */}
       <p className={styles.level} aria-live="polite">
-        {touched ? levels[index].label : cfg.hint}
+        {touched ? levelLabel(index) : t(locale, `screen.${questionId}.hint`, cfg.hint)}
       </p>
 
       <button
@@ -465,7 +471,7 @@ export default function BottleSlider({
         // фокусируемой, и читалка про неё не знает, хотя она есть.
         disabled={!touched || locked}
       >
-        {cfg.confirm}
+        {t(locale, `screen.${questionId}.confirm`, cfg.confirm)}
       </button>
     </div>
   );

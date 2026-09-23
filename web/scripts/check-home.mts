@@ -100,7 +100,7 @@ console.log('\nБлок «How it works» — те же три шага');
 
   check('число вопросов не вписано руками, а подставляется',
     data.steps.some((s: { desc: string }) => s.desc.includes('{N}'))
-    && /numberWord\(TOTAL_STEPS\)/.test(page),
+    && /numberWord\(TOTAL_STEPS(,\s*locale)?\)/.test(page),
     'на живом сайте это число в трёх местах было разным');
 }
 

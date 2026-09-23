@@ -1,7 +1,5 @@
-import StartQuizLink from '@/components/StartQuizLink';
-import Link from 'next/link';
 import type { Metadata } from 'next';
-import styles from './not-found.module.css';
+import NotFoundScreen from './NotFoundScreen';
 
 /**
  * Страница «не найдено».
@@ -14,6 +12,17 @@ import styles from './not-found.module.css';
  *
  * Тут нет ничего умного: цвета и шрифты сайта, честная фраза и две
  * ссылки — на главную и в начало квиза.
+ *
+ * ПОЧЕМУ САМ ЭКРАН — ОТДЕЛЬНЫЙ КЛИЕНТСКИЙ КОМПОНЕНТ. not-found.tsx не
+ * получает params: его показывают и при опечатке в адресе, и по вызову
+ * notFound() из любого места. Значит языка страницы здесь взять неоткуда,
+ * а он нужен и тексту, и обеим ссылкам — иначе француз с несуществующего
+ * адреса получал бы английский экран и уходил на /en. Внутри язык
+ * читается из самого адреса (usePathname), и это единственное, для чего
+ * там нужен клиент.
+ *
+ * Заголовок вкладки остаётся английским: metadata собирается на сервере,
+ * где адреса ещё нет.
  */
 export const metadata: Metadata = {
   title: 'Page not found — Find My Smell',
@@ -21,17 +30,5 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  return (
-    <main className={styles.page}>
-      <p className={styles.code}>404</p>
-      <h1 className={styles.title}>This page has no smell.</h1>
-      <p className={styles.body}>
-        The link is broken, or the page moved when the site did.
-      </p>
-      <nav className={styles.actions}>
-        <Link className={styles.primary} href="/en">Go to the start</Link>
-        <StartQuizLink className={styles.secondary} href="/en/quiz/q-gender">Take the quiz</StartQuizLink>
-      </nav>
-    </main>
-  );
+  return <NotFoundScreen />;
 }

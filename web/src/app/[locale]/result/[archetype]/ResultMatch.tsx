@@ -6,6 +6,7 @@ import { type Match } from '@/lib/matching';
 import { pickFromBrowser } from '@/lib/picked-client';
 import Scales from './Scales';
 import styles from './result.module.css';
+import { type Locale } from '@/lib/i18n';
 import { cld } from '@/lib/cloudinary';
 
 /**
@@ -23,6 +24,7 @@ export default function ResultMatch({
   archetype,
   fallback,
   labels,
+  locale,
 }: {
   archetype: ArchetypeKey;
   fallback: Match;
@@ -32,6 +34,7 @@ export default function ResultMatch({
     alternativesSub: string;
     discover: string;
   };
+  locale: Locale;
 }) {
   const [picked, setPicked] = useState<Match>(fallback);
 
@@ -63,7 +66,7 @@ export default function ResultMatch({
             Показывать его значило дезинформировать. Подробности в 9.7. */}
         <h2 className={styles.matchName}>{main.name}</h2>
         <p className={styles.matchDesc}>{main.description}</p>
-        <Scales perfume={main} />
+        <Scales locale={locale} perfume={main} />
         <a className={styles.cta} href={main.shopUrl} target="_blank" rel="noopener noreferrer">
           {labels.discover}
         </a>
@@ -93,7 +96,7 @@ export default function ResultMatch({
               <span className={styles.altBody}>
                 <span className={styles.altName}>{alt.name}</span>
                 <span className={styles.altDesc}>{alt.description}</span>
-                <Scales perfume={alt} compact />
+                <Scales locale={locale} perfume={alt} compact />
               </span>
             </a>
           ))}

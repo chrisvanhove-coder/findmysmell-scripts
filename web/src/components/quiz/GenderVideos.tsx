@@ -6,6 +6,7 @@ import { useReducedMotion } from '@/lib/reduced-motion';
 import data from '@/data/gender-videos.json';
 import styles from './gender-videos.module.css';
 import type { MechanicProps } from './mechanics';
+import { t, answerLabel } from '@/lib/copy';
 
 /**
  * Q_GENDER — первый вопрос квиза. Перенесено из q-gender.footer.html.
@@ -67,7 +68,7 @@ const hoverSubscribe = (cb: () => void) => {
 const narrowNow = () => window.matchMedia('(hover: none), (max-width: 768px)').matches;
 const narrowOnServer = () => false;
 
-export default function GenderVideos({ onChoose }: MechanicProps) {
+export default function GenderVideos({ locale, onChoose }: MechanicProps) {
   const narrow = useSyncExternalStore(hoverSubscribe, narrowNow, narrowOnServer);
   /* Ответ про движение нужен УЖЕ в первой отрисовке: через состояние в
      эффекте он приходил на кадр позже, и за этот кадр браузер успевал
@@ -146,9 +147,9 @@ export default function GenderVideos({ onChoose }: MechanicProps) {
       </div>
 
       <div className={styles.contentPanel}>
-        <h1 className={styles.question}>{data.question}</h1>
+        <h1 className={styles.question}>{t(locale, 'screen.Q_GENDER.question', data.question)}</h1>
         {/* Подсказка про касание — на телефоне. */}
-        <p className={styles.hint}>{data.hint}</p>
+        <p className={styles.hint}>{t(locale, 'screen.Q_GENDER.hint', data.hint)}</p>
 
         <ul className={styles.options}>
           {OPTIONS.map((o) => (
@@ -192,8 +193,8 @@ export default function GenderVideos({ onChoose }: MechanicProps) {
                   />
                 )}
                 <span className={styles.optionText}>
-                  <span className={styles.label}>{o.label}</span>
-                  <span className={styles.sub}>{o.sub}</span>
+                  <span className={styles.label}>{answerLabel(locale, o.code, o.label)}</span>
+                  <span className={styles.sub}>{t(locale, `sub.${o.code}`, o.sub)}</span>
                 </span>
               </button>
             </li>

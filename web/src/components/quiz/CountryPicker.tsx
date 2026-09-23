@@ -6,6 +6,7 @@ import { QUESTION_COPY } from '@/data/question-titles';
 import data from '@/data/country-picker.json';
 import styles from './country-picker.module.css';
 import type { MechanicProps } from './mechanics';
+import { t } from '@/lib/copy';
 
 /**
  * Поиск по странам: Q_REGION_NOW («где живёшь сейчас») и
@@ -54,8 +55,8 @@ export function isCountryPicker(questionId: string): boolean {
   return PALETTES[questionId] !== undefined;
 }
 
-export default function CountryPicker({ questionId, onChoose }: MechanicProps) {
-  const title = QUESTION_COPY[questionId]?.title ?? '';
+export default function CountryPicker({ questionId, locale, onChoose }: MechanicProps) {
+  const title = t(locale, `q.${questionId}.title`, QUESTION_COPY[questionId]?.title ?? '');
   const palette = PALETTES[questionId] ?? {};
 
   const [query, setQuery] = useState('');
@@ -132,7 +133,7 @@ export default function CountryPicker({ questionId, onChoose }: MechanicProps) {
             aria-autocomplete="list"
             autoComplete="off"
             spellCheck={false}
-            placeholder={data.placeholder}
+            placeholder={t(locale, 'country.placeholder', data.placeholder)}
             value={query}
             onChange={(e) => { setQuery(e.target.value); setOpen(true); setActive(0); }}
             onFocus={() => setOpen(true)}
@@ -156,7 +157,7 @@ export default function CountryPicker({ questionId, onChoose }: MechanicProps) {
               role="listbox"
               onMouseDown={(e) => e.preventDefault()}
             >
-              {matches.length === 0 && <li className={styles.empty}>{data.empty}</li>}
+              {matches.length === 0 && <li className={styles.empty}>{t(locale, 'country.empty', data.empty)}</li>}
               {matches.map((c, i) => (
                 <li key={c} role="option" aria-selected={i === active}>
                   <button

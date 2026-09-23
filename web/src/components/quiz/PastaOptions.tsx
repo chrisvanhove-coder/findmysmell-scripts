@@ -5,6 +5,8 @@ import { QUESTIONS } from '@/lib/quiz';
 import data from '@/data/living-screens.json';
 import styles from './pasta-options.module.css';
 import type { MechanicProps } from './mechanics';
+import { t, shortLabel } from '@/lib/copy';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Q_DAYTDAY — «идеальный день». Перенесено из q-daytday.footer.html.
@@ -67,8 +69,8 @@ const TEXT = CFG.options as Record<string, string>;
  * короткое, записываем то же самое. Если для кода текста нет, честно
  * показываем полный: молча потерять вариант нельзя.
  */
-const label = (code: string) =>
-  TEXT[code] ?? ANSWERS.find((a) => a.code === code)?.label ?? code;
+const label = (locale: Locale, code: string) =>
+  shortLabel(locale, code, TEXT[code] ?? ANSWERS.find((a) => a.code === code)?.label ?? code);
 
 /* Пятна: дрожание формы и наклон — как в проде. */
 const WOBBLE_AMP = 0.06;
@@ -87,7 +89,7 @@ const DUST_MS = 920;
    0.12 × 60 × 60 = 432 px/с². */
 const GRAVITY = 432;
 
-export default function PastaOptions({ onChoose }: MechanicProps) {
+export default function PastaOptions({ locale, onChoose }: MechanicProps) {
   const canvas = useRef<HTMLCanvasElement | null>(null);
   const buttons = useRef<Record<string, HTMLButtonElement | null>>({});
   const [looking, setLooking] = useState<string | null>(null);
@@ -283,7 +285,7 @@ export default function PastaOptions({ onChoose }: MechanicProps) {
 
       <div className={styles.inner}>
         <h1 className={styles.question} style={{ color: CFG.questionInk }}>
-          {CFG.question}
+          {t(locale, 'screen.Q_DAYTDAY.question', CFG.question)}
         </h1>
 
         <ul className={styles.list}>
@@ -311,7 +313,7 @@ export default function PastaOptions({ onChoose }: MechanicProps) {
                 onBlur={() => setLooking(null)}
                 onClick={() => pick(a.code)}
               >
-                {label(a.code)}
+                {label(locale, a.code)}
               </button>
             </li>
           ))}
