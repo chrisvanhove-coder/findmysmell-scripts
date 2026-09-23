@@ -60,7 +60,8 @@
     "e2e:revisions": "node e2e/quiz-revisions.mjs",
     "check:revisions:integration": "tsx scripts/check-revisions-integration.mts",
     "subscribers:report": "node scripts/subscribers-report.mjs",
-    "fixture:run": "tsx scripts/write-run-fixture.mts"
+    "fixture:run": "tsx scripts/write-run-fixture.mts",
+    "e2e:mobile": "node e2e/mobile.mjs"
   },
   "dependencies": {
     "drizzle-orm": "^0.44.6",

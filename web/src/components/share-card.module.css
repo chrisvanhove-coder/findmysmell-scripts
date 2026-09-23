@@ -80,6 +80,20 @@
   line-height: 1;
   cursor: pointer;
 }
+
+/* ОБЛАСТЬ ПОД ПАЛЕЦ, НЕ МЕНЯЯ ВИД. Сама надпись маленькая по замыслу,
+   а нажимать по ней на телефоне надо уверенно. Невидимый слой вокруг
+   доводит цель до 44px по высоте — порога, ниже которого палец
+   промахивается, — и при этом ни один пиксель на экране не двигается. */
+.close::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  top: -11px;
+  bottom: -11px;
+}
+
 .close:hover { color: #1b1b1b; }
 .close:focus-visible { outline: 2px solid #1b1b1b; outline-offset: 2px; }
 

@@ -46,7 +46,12 @@
      от верхнего края, а здесь над ним живут обе. */
   padding-top: calc(var(--fms-header-h, 56px) + 8px);
   color: #fff;
-  font-family: var(--fms-display), 'Arial Black', Arial, sans-serif;
+  /* ОДИН ШРИФТ ВОПРОСА НА ВЕСЬ КВИЗ — см. quiz.module.css. Заказчица
+     просила, чтобы вопрос выглядел одинаково на всех экранах; размер
+     остаётся свой, его диктует раскладка механики. */
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
   font-size: 55px;
   letter-spacing: 0.08em;
   line-height: 1.1;
@@ -178,10 +183,12 @@
 @media (max-width: 479px) {
   .question {
     margin-top: 15%;
-    margin-bottom: 0;
+    /* Было 0 — и последняя строка вопроса почти касалась первой плитки.
+       Тот же случай, что на экране про кожу. */
+    margin-bottom: 16px;
     padding-bottom: 0;
     font-size: 30px;
-    line-height: 35px;
+    line-height: 1.2;
   }
 
   .tiles { gap: 17px; }

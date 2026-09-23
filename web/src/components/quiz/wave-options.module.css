@@ -40,6 +40,7 @@
   font-size: clamp(20px, 3vw, 36px);
   font-weight: 900;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
   line-height: 1.4;
   opacity: 0;
   transform: translateX(-60px);
@@ -64,7 +65,11 @@
    вопросу нельзя пройти ни с клавиатуры, ни читалкой. */
 .option {
   max-width: 88vw;
-  padding: 6px 0;
+  /* Было 6px сверху и снизу — вся цель выходила 27px высотой, а это
+     ответ на вопрос, то есть главное действие экрана. На телефоне палец
+     по такой полоске промахивается. Отступ вертикальный, надпись на
+     месте: строки стоят свободно, и раздвинуть их некуда не мешает. */
+  padding: 12px 0;
   border: 0;
   background: none;
   font-family: var(--fms-mono), monospace;
@@ -94,11 +99,14 @@
   .inner { padding: 96px 6vw 30px; }
   .question {
     margin-bottom: 20px;
-    font-size: clamp(14px, 5vw, 20px);
+    font-size: clamp(16px, 5vw, 22px);
     line-height: 1.2;
   }
   .option {
-    padding: 4px 0;
+    /* Было 4px — и весь ответ выходил 27px высотой. Это главное действие
+       экрана, а по такой полоске палец промахивается. Надписи стоят
+       свободно, раздвинуть их есть куда. */
+    padding: 12px 0;
     font-size: clamp(11px, 3.8vw, 16px);
     line-height: 1.3;
   }

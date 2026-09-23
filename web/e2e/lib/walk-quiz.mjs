@@ -38,14 +38,39 @@ export const ANY_ANSWER = [
  *   индекс. По умолчанию i % n — разные ответы на разных экранах. Нужен
  *   тем проверкам, которым важно получить РАЗНЫЕ архетипы за два прохода:
  *   без него оба прохода отвечают одинаково и дают один архетип.
+ * @param opts.touch пальцем, а не мышью. На вопросах с фотографиями
+ *   (Q_ATMOS и другие) устройство без наведения устроено так: первое
+ *   касание ПОКАЗЫВАЕТ снимок места и подсказку «Tap again to choose», и
+ *   только второе выбирает — так было и на старом сайте, иначе
+ *   фотографию на телефоне не увидел бы никто. Одиночного нажатия там
+ *   не хватает, и проход вставал бы на таймауте. Включать для мобильных
+ *   проверок.
  * @returns список пройденных слагов
  */
+/**
+ * Второе касание там, где его требует вопрос с фотографиями.
+ * Ждём подсказку, которую экран показывает после первого касания, и
+ * только тогда касаемся снова: так проверка идёт за видимым состоянием
+ * экрана, а не вслепую жмёт дважды — лишнее нажатие на обычном варианте
+ * выбрало бы соседний ответ на следующем экране.
+ */
+async function tapAgain(page, option) {
+  const hint = page.getByText('Tap again to choose', { exact: true });
+  try {
+    await hint.waitFor({ state: 'visible', timeout: 1200 });
+  } catch {
+    return; // подсказки нет — обычный вариант, выбран с первого раза
+  }
+  await option.click();
+}
+
 export async function walkQuiz(page, {
   base = process.env.BASE_URL ?? 'http://localhost:3000',
   agree = true,
   openText = 'smells like my grandmother kitchen',
   onStep = null,
   pick = (n, i) => i % n,
+  touch = false,
 } = {}) {
   await page.goto(`${base}/en`, { waitUntil: 'networkidle' });
   await page.locator('a[href="/en/quiz/q-gender"]').first().click();
@@ -96,6 +121,7 @@ export async function walkQuiz(page, {
       const chosen = page.locator('button[data-answer]').nth(pick(tagged, i) % tagged);
       code = await chosen.getAttribute('data-answer');
       await chosen.click();
+      await tapAgain(page, chosen);
     } else {
       const options = page.locator('ul li button');
       const n = await options.count();
@@ -105,6 +131,7 @@ export async function walkQuiz(page, {
       // вариант окошко «Other».
       code = (await chosen.getAttribute('id'))?.replace(/^answer-/, '') ?? null;
       await chosen.click();
+      await tapAgain(page, chosen);
     }
 
     /* Вариант «Other» открывает окошко и просит написать своё. Пока в

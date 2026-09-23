@@ -42,11 +42,19 @@
   /* Сверху место под шапку и кнопку «назад». */
   padding-top: calc(var(--fms-header-h, 56px) + 8px);
   color: #fff;
-  font-family: var(--fms-display), 'Arial Black', Arial, sans-serif;
-  font-size: 55px;
-  font-weight: 600;
+  /* ТОТ ЖЕ ШРИФТ, ЧТО У ВСЕХ ОСТАЛЬНЫХ ВОПРОСОВ. Здесь стоял
+     var(--fms-display) — это Fraunces, шрифт с засечками, — и экран про
+     кожу выпадал из ряда: соседние вопросы набраны var(--fms-sans) весом
+     900 прописными. Заказчица просила один шрифт вопроса везде; этот
+     экран тогда пропустили, потому что у него своя механика и свои
+     стили. Размеры оставлены свои: справа стоит флакон, и общий
+     clamp сюда не годится. */
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  font-size: 44px;
+  font-weight: 900;
   letter-spacing: 0.08em;
-  line-height: 1.1;
+  line-height: 1.2;
+  text-transform: uppercase;
   text-align: center;
   text-wrap: balance;
 }
@@ -122,9 +130,12 @@
 /* medium */
 @media (max-width: 991px) {
   .question {
-    margin-bottom: 0;
+    /* Было 0 — и нижняя строка заголовка ложилась прямо на первый
+       вариант. Замерено на 390px: низ заголовка совпадал с верхом
+       плитки «It disappears quickly». */
+    margin-bottom: 20px;
     padding-top: calc(var(--fms-header-h, 56px) + 20px);
-    font-size: 40px;
+    font-size: 32px;
   }
 
   .tiles { padding-top: 0; }
@@ -162,12 +173,12 @@
 /* tiny */
 @media (max-width: 479px) {
   .question {
-    margin-bottom: 0;
+    margin-bottom: 18px;
     padding-top: calc(var(--fms-header-h, 56px) + 40px);
     padding-left: 10px;
     padding-right: 10px;
-    font-size: 30px;
-    line-height: 35px;
+    font-size: 24px;
+    line-height: 1.25;
   }
 
   .tiles { gap: 16px; }

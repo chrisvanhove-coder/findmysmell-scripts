@@ -261,12 +261,14 @@ export default function QuizScreen({
         </button>
         <Mechanic questionId={question.id} onChoose={choose} />
         {modal}
-        <div className={styles.progress}>
-          <span className={styles.count}>{pct}%</span>
-          <div className={styles.track}>
-            <div className={styles.fill} style={{ width: `${pct}%` }} />
+        {step > 0 && (
+          <div className={styles.progress}>
+            <span className={styles.count}>{pct}%</span>
+            <div className={styles.track}>
+              <div className={styles.fill} style={{ width: `${pct}%` }} />
+            </div>
           </div>
-        </div>
+        )}
       </main>
     );
   }
@@ -369,12 +371,18 @@ export default function QuizScreen({
 
       {modal}
 
-      <div className={styles.progress}>
-        <span className={styles.count}>{pct}%</span>
-        <div className={styles.track}>
-          <div className={styles.fill} style={{ width: `${pct}%` }} />
+      {/* На закрывающем экране полосы нет: там step равен нулю, и полоса
+          показывала 0% сразу после 100% на последнем вопросе — как будто
+          всё, что человек прошёл, обнулилось. Счётчик «Question N of 17»
+          здесь скрыт по той же причине, см. выше. */}
+      {step > 0 && (
+        <div className={styles.progress}>
+          <span className={styles.count}>{pct}%</span>
+          <div className={styles.track}>
+            <div className={styles.fill} style={{ width: `${pct}%` }} />
+          </div>
         </div>
-      </div>
+      )}
     </main>
   );
 }

@@ -39,6 +39,7 @@
   font-size: clamp(18px, 3vw, 36px);
   font-weight: 900;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
   line-height: 1.4;
   text-align: center;
   /* Заголовок не перехватывает наведение у вариантов. */
@@ -104,7 +105,7 @@
   .inner { padding: 84px 12px 24px; }
   .question {
     margin-bottom: 16px;
-    font-size: clamp(13px, 4vw, 18px);
+    font-size: clamp(16px, 4.5vw, 20px);
     letter-spacing: 0.04em;
   }
   .option { font-size: clamp(12px, 4.5vw, 20px); }

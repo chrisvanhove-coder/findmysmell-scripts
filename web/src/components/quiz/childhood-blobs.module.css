@@ -45,6 +45,7 @@
   font-size: clamp(20px, 4vw, 42px);
   font-weight: 900;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
   line-height: 1.2;
   text-align: center;
   /* Заголовок не перехватывает клики у подписей под ним. */

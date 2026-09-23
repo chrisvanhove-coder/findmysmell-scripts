@@ -42,7 +42,11 @@
 .question {
   margin: 0 0 24px;
   color: var(--cp-question, #fff);
-  font-family: var(--fms-display), 'Arial Black', Arial, sans-serif;
+  /* ОДИН ШРИФТ ВОПРОСА НА ВЕСЬ КВИЗ — см. quiz.module.css. Заказчица
+     просила, чтобы вопрос выглядел одинаково на всех экранах; размер
+     остаётся свой, его диктует раскладка механики. */
+  font-family: var(--fms-sans), system-ui, sans-serif;
+  font-weight: 900;
   font-size: clamp(22px, 4vw, 36px);
   letter-spacing: 0.04em;
   line-height: 1.1;

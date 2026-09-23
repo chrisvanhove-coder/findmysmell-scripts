@@ -69,6 +69,11 @@
   z-index: 1;
 }
 
+.footer a,
+.footer button {
+  pointer-events: auto;
+}
+
 .logo {
   font-family: var(--fms-display);
   font-size: clamp(15px, 2.4vw, 20px);
@@ -76,6 +81,22 @@
   text-transform: uppercase;
   color: inherit;
   text-decoration: none;
+}
+
+
+/* ОБЛАСТЬ ПОД ПАЛЕЦ, НЕ МЕНЯЯ ВИД. Сама надпись маленькая по замыслу,
+   а нажимать по ней на телефоне надо уверенно. Невидимый слой вокруг
+   доводит цель до 44px по высоте — порога, ниже которого палец
+   промахивается, — и при этом ни один пиксель на экране не двигается. */
+.logo { position: relative; }
+
+.logo::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  right: -8px;
+  top: -13px;
+  bottom: -13px;
 }
 
 .logo:hover { color: #fff; }
@@ -94,7 +115,10 @@
   color: inherit;
   background: none;
   border: none;
-  padding: 6px 4px;
+  /* Площадь под палец: сама надпись «EN ▾» мелкая, и без этого цель
+     выходила 26px. Отступ невидим — фона у кнопки нет. */
+  padding: 12px 10px;
+  margin: -12px -10px;
   cursor: pointer;
   opacity: 0.75;
 }
@@ -132,7 +156,11 @@
 
 /* ----------------------------- подвал ----------------------------- */
 
+/* pointer-events: none на самой полосе и auto на её содержимом — чтобы
+   фон полосы и точки-разделители не съедали нажатия по тому, что лежит
+   под ними. Ссылки при этом нажимаются как обычно. */
 .footer {
+  pointer-events: none;
   position: fixed;
   left: 0;
   right: 0;
@@ -167,14 +195,40 @@
    подвал переносится на две строки и накрывает текст страницы. */
 .short { display: none; }
 
+/* ТЕЛЕФОН: подвал уходит из-под ног содержимого.
+   Он перестаёт быть закреплённым и встаёт в конце страницы — тогда он
+   ничего не накрывает, и его ссылкам можно дать нормальную площадь под
+   палец, не отнимая её у ответов квиза (см. global.css). */
 @media (max-width: 768px) {
-  .footer { gap: 8px; padding: 5px 16px; font-size: 9px; }
+  .footer {
+    position: static;
+    pointer-events: auto;
+    gap: 4px 14px;
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+    font-size: 10px;
+    /* Явный тёмный фон: в потоке подвал встаёт на хвост страницы, а он
+       у разных страниц разный — на светлом белые буквы пропали бы. */
+    background: #16150f;
+  }
+
+  /* Затемнение было нужно закреплённой полосе, под которой ехало
+     содержимое. В потоке под ней ничего нет. */
+  .footer::before { display: none; }
+
+  /* Площадь под палец. Подписи маленькие нарочно — увеличиваем не
+     буквы, а область нажатия. */
+  .footer a,
+  .footer button {
+    display: inline-block;
+    padding: 9px 6px;
+  }
+
   .full { display: none; }
   .short { display: inline; }
 }
 
 @media (max-width: 400px) {
-  .footer { gap: 6px; padding: 4px 10px; font-size: 8px; }
+  .footer { gap: 4px 10px; font-size: 9px; }
 }
 
 /* На самых узких экранах (320px) даже короткие подписи не влезают

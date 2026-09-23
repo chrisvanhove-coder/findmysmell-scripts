@@ -101,8 +101,21 @@ console.log('\nЧисла совпадают с продом');
   has(`padding-right: ${P.tilePadRightMediumPx}px`, 'то же на medium');
   has(`padding-right: ${P.tilePadRightSmallPx}px`, 'то же на small');
   has(`padding-right: ${P.tilePadRightTinyPx}px`, 'то же на tiny');
-  has(`font-size: ${P.questionFontPx}px`, 'кегль вопроса');
-  has(`font-size: ${P.questionFontMediumPx}px`, 'кегль вопроса на medium');
+  /* КЕГЛЬ ВОПРОСА НАРОЧНО НЕ ПРОДОВЫЙ. В проде тут 55px и 40px шрифтом
+     с засечками, и этот экран выбивался из ряда: все остальные вопросы
+     набраны var(--fms-sans) весом 900 прописными. Заказчица просила один
+     шрифт вопроса везде, и ради этого продовые числа здесь не
+     соблюдаются. В prodStyles они остаются как запись того, что было.
+     Проверяем не числа, а принадлежность общему стилю. */
+  check('вопрос набран общим шрифтом квиза, а не продовым',
+    css.includes('font-family: var(--fms-sans)') && css.includes('font-weight: 900'),
+    'см. quiz.module.css — один шрифт вопроса на весь квиз');
+  check('и прописными, как остальные вопросы',
+    css.includes('text-transform: uppercase'));
+  check('продовые 55px/40px здесь не применяются',
+    !css.includes(`font-size: ${P.questionFontPx}px`)
+    && !css.includes(`font-size: ${P.questionFontMediumPx}px`),
+    'если вернулись — значит правку про один шрифт откатили');
   has(`gap: ${P.gapPx}px`, 'разрыв сетки');
   has(`gap: ${P.gapTinyPx}px`, 'разрыв на узком экране');
   has(`width: ${P.bottlePx}px`, 'квадратик флакона');
