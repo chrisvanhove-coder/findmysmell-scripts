@@ -218,7 +218,24 @@ export default function QuizScreen({
   }
 
   const step = stepOf(question.id);
-  const pct = Math.round((step / TOTAL_STEPS) * 100);
+
+  /* ОДИН УКАЗАТЕЛЬ ПРОГРЕССА НА ВЕСЬ КВИЗ.
+     Раньше их было два и показывались они по-разному: на экранах без
+     механики — «Question 6 of 17» над вопросом И полоса с процентами
+     внизу, то есть сразу два про одно и то же; на экранах с механикой —
+     только полоса. Заказчица попросила свести к одному и убрать нижнюю
+     полосу совсем.
+     Проценты ушли вместе с полосой и по делу: на семнадцати вопросах они
+     дают 6%, 12%, 35%, 47%, 94% — числа, которые ничего не говорят.
+     «Question 6 of 17» человек читает сразу.
+     Стоит НАД вопросом и закреплён у верха — на одной линии с кнопкой
+     «назад». Внизу теперь не висит ничего: там едут ответы, и полоса
+     ложилась на последний вариант (проверено на первом вопросе).
+     На закрывающем экране step равен нулю и счётчика нет: вопросы там
+     кончились. */
+  const counter = step > 0 ? (
+    <span className={styles.counter}>Question {step} of {TOTAL_STEPS}</span>
+  ) : null;
 
   /* У вопроса может быть своя механика — барабан, шары, ползунок. Тогда
      она занимает экран целиком вместо списка кнопок, а сохранение,
@@ -259,16 +276,9 @@ export default function QuizScreen({
         >
           ← Back
         </button>
+        {counter}
         <Mechanic questionId={question.id} onChoose={choose} />
         {modal}
-        {step > 0 && (
-          <div className={styles.progress}>
-            <span className={styles.count}>{pct}%</span>
-            <div className={styles.track}>
-              <div className={styles.fill} style={{ width: `${pct}%` }} />
-            </div>
-          </div>
-        )}
       </main>
     );
   }
@@ -285,14 +295,9 @@ export default function QuizScreen({
         ← Back
       </button>
 
+      {counter}
+
       <div className={styles.inner}>
-        {/* На закрывающем экране счётчика нет — как в проде: прогресс
-            доходит до 100% на предыдущем вопросе, а здесь уже не номер. */}
-        {step > 0 && (
-          <span className={styles.eyebrow}>
-            Question {step} of {TOTAL_STEPS}
-          </span>
-        )}
         <h1 className={styles.question}>{title}</h1>
         {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
 
@@ -370,19 +375,6 @@ export default function QuizScreen({
       </div>
 
       {modal}
-
-      {/* На закрывающем экране полосы нет: там step равен нулю, и полоса
-          показывала 0% сразу после 100% на последнем вопросе — как будто
-          всё, что человек прошёл, обнулилось. Счётчик «Question N of 17»
-          здесь скрыт по той же причине, см. выше. */}
-      {step > 0 && (
-        <div className={styles.progress}>
-          <span className={styles.count}>{pct}%</span>
-          <div className={styles.track}>
-            <div className={styles.fill} style={{ width: `${pct}%` }} />
-          </div>
-        </div>
-      )}
     </main>
   );
 }
