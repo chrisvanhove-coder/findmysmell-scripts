@@ -6,17 +6,21 @@
 > спросят. Я заполнил его по коду и по живой конфигурации — всё, что здесь
 > написано, проверено, а не предположено.
 >
-> **Что сделать тебе:** прочитать, убедиться, что три обработки описаны
-> верно, и дописать свой адрес рядом с именем, если хочешь указать полный
-> (в mentions légales сейчас только «Paris, France»). Дальше — обновлять,
-> когда что-то меняется: появится оплата, партнёрская программа, рассылка
-> или новый сервис.
+> **Что сделать тебе:** прочитать и убедиться, что три обработки описаны
+> верно. Дальше — обновлять, когда что-то меняется: появится оплата,
+> партнёрская программа, рассылка или новый сервис. И отдельно — когда
+> зарегистрируешь компанию: ответственным за обработку станет она, а не ты
+> как частное лицо, и это меняет первую строку здесь, mentions légales и
+> раздел 13 политики.
 >
 > Дата последнего обновления стоит в заголовке каждой обработки. Держать её
 > в согласии с реальностью — и есть вся работа по этому документу.
 
-**Responsable du traitement :** Kristina Vanhove — Paris, France —
+**Responsable du traitement :** Kristina Vanhove — Lille, France —
 contact@findmysmell.com
+
+*À mettre à jour dès l'immatriculation d'une structure : le responsable
+devient alors la structure, avec sa forme juridique et son numéro SIRET.*
 
 **Délégué à la protection des données (DPO) :** non désigné. La désignation
 n'est pas obligatoire ici : pas d'autorité publique, pas de suivi
