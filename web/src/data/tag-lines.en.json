@@ -1,10 +1,10 @@
 {
-  "_": "Строки «@tag the friend who…» для шеринговой карточки. Перенесены из FMS_TAG_LINES в result-shared15.js без изменений. Заказчица попросила поднять их на карточке наверх: именно они заставляют человека отметить друга, а не название архетипа.",
+  "_": "Строки «@tag the friend who…» для шеринговой карточки. Перенесены из FMS_TAG_LINES в result-shared15.js без изменений, КРОМЕ THERAPIST. Заказчица попросила поднять их на карточке наверх: именно они заставляют человека отметить друга, а не название архетипа.\n\nTHERAPIST ПЕРЕПИСАН 24.09.2026 по её просьбе. Было «@tag the friend who somehow already knows what is wrong» — она сказала, что хочет заменить, и задала направление: не только «знает, что не так», но и «знает, как решить». Стало «@tag the friend who already knows what's wrong and how to fix it». То же изменение внесено во французский и русский наборы. Это единственная строка, которая расходится с result-shared15.js.",
   "CEO": "@tag the friend who has a system for everything",
   "JAPAN": "@tag the friend who never panics, ever",
   "HUG": "@tag the friend everyone calls at 2am",
   "OFFGRID": "@tag the friend who'd disappear into the woods without telling anyone",
   "OUTOFTIME": "@tag the friend who is always somewhere else in their head",
   "SUMMER": "@tag the friend who makes any plan better just by showing up",
-  "THERAPIST": "@tag the friend who somehow already knows what is wrong"
+  "THERAPIST": "@tag the friend who already knows what's wrong and how to fix it"
 }
