@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { Ingredient } from '@/lib/content';
 import { cld } from '@/lib/cloudinary';
 import styles from './ingredients.module.css';
@@ -41,6 +41,40 @@ export default function Ingredients({
   band: string;
 }) {
   const [open, setOpen] = useState<Ingredient | null>(null);
+
+  /* ПОДГОНКА БОЛЬШОЙ СТРОКИ ПОД ШИРИНУ ЭКРАНА.
+     Кегль из CSS считается по числу знаков, и одному алфавиту этого
+     хватает: «YOUR SCENT» и «VOTRE PARFUM» встают одинаково ровно.
+     Кириллица в этом шрифте шире на знак, и «ТВОЙ АРОМАТ» при том же
+     счёте вылезало за края на широком экране (замер: 1635px при 1600px
+     окна). Считать ширину букв в CSS нечем, поэтому строка меряется
+     по-настоящему и ужимается, если не влезла.
+
+     useLayoutEffect, а не useEffect: он отрабатывает ДО отрисовки, и
+     человек не видит, как заголовок во всю ширину прыгает в размере.
+     Увеличивать нельзя — только ужимать: кегль из CSS это потолок,
+     подобранный под прод. */
+  const band$ = useRef<HTMLSpanElement | null>(null);
+  useLayoutEffect(() => {
+    const el = band$.current;
+    if (!el) return;
+    const fit = () => {
+      el.style.fontSize = '';
+      const room = el.getBoundingClientRect().width;
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const ink = range.getBoundingClientRect().width;
+      // Поля по краям: на живом сайте строка не упирается в край экрана.
+      const target = room * 0.95;
+      if (ink <= target) return;
+      const size = parseFloat(getComputedStyle(el).fontSize);
+      el.style.fontSize = `${size * (target / ink)}px`;
+    };
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(document.documentElement);
+    return () => observer.disconnect();
+  }, [band]);
 
   const close = useCallback(() => setOpen(null), []);
 
@@ -101,8 +135,23 @@ export default function Ingredients({
       </div>
 
       {/* Заголовок следующей зоны, как в проде: он стоит внизу светлой зоны
-          и нижней половиной уходит под тёмную сцену с флаконом. */}
-      <span className={styles.band} aria-hidden="true">{band}</span>
+          и нижней половиной уходит под тёмную сцену с флаконом.
+
+          ДЛИНА СТРОКИ ОТДАЁТСЯ В CSS. Кегль в проде подобран под одну
+          конкретную строку — «YOUR SCENT», десять знаков, — и записан
+          как 15.5vw. На французском там «VOTRE PARFUM», двенадцать
+          знаков, и строка уезжала за оба края экрана: она не переносится
+          (white-space: nowrap), поэтому лишнее просто обрезалось.
+          Теперь кегль делится на число знаков: 155/10 даёт прежние
+          15.5vw для английского, 155/12 — 12.9vw для французского. */}
+      <span
+        ref={band$}
+        className={styles.band}
+        style={{ ['--band-len' as string]: band.length }}
+        aria-hidden="true"
+      >
+        {band}
+      </span>
 
       {open && (
         <div

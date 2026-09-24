@@ -21,6 +21,9 @@ import { unlockResult, COMPLETE_RUNS } from './lib/unlock-result.mjs';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:3100';
 const LOCALES = (process.env.LOCALES ?? 'fr,ru').split(',').filter(Boolean);
+/* Большую строку «YOUR SCENT» меряем и по-английски: её кегль задан
+   в CSS под английскую длину, и ломается она как раз на переводах. */
+const BAND_LOCALES = ['en', ...LOCALES];
 const QUIZ = JSON.parse(await readFile('src/data/quiz.en.json', 'utf8'));
 const TITLES = await readFile('src/data/question-titles.ts', 'utf8');
 
@@ -170,7 +173,44 @@ async function audit(locale) {
   }
 }
 
+/**
+ * Заголовок «YOUR SCENT» во всю ширину экрана: он не переносится, и всё,
+ * что не влезло, просто обрезается краем окна. По-французски там «VOTRE
+ * PARFUM», по-русски «ТВОЙ АРОМАТ» — обе длиннее английской, и обе
+ * уезжали за край, пока кегль был записан одним числом.
+ *
+ * Меряем на тех же ширинах, на которых подбирался прод.
+ */
+async function auditBand() {
+  console.log('\n=== БОЛЬШАЯ СТРОКА НАД ФЛАКОНОМ ===');
+  for (const width of [390, 430, 768, 1280, 1600]) {
+    for (const locale of BAND_LOCALES) {
+      const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+      await ctx.route('**://res.cloudinary.com/**', (route) =>
+        route.fulfill({ status: 200, contentType: 'image/svg+xml', body: STUB }));
+      const p = await ctx.newPage();
+      await unlockResult(p);
+      await p.goto(`${BASE}/${locale}/result/ceo`, { waitUntil: 'networkidle' });
+      await p.waitForTimeout(400);
+      const m = await p.locator('[class*="band"]').first().evaluate((n) => {
+        const range = document.createRange();
+        range.selectNodeContents(n);
+        return {
+          text: n.textContent,
+          ink: range.getBoundingClientRect().width,
+          room: n.getBoundingClientRect().width,
+        };
+      });
+      const slack = Math.round(m.room - m.ink);
+      check(`${String(width).padStart(4)} ${locale}: «${m.text}» не выходит за края`,
+        slack >= 0, `вылезает на ${-slack}px`);
+      await ctx.close();
+    }
+  }
+}
+
 for (const locale of LOCALES) await audit(locale);
+await auditBand();
 
 check('ошибок в консоли нет', errors.length === 0, errors.join('\n        '));
 
