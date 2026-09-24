@@ -1,0 +1,222 @@
+<script>
+(function() {
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:0.07;mix-blend-mode:overlay;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  let last = 0;
+  function loop(ts) {
+    if (ts - last > 80) {
+      const img = ctx.createImageData(cvs.width, cvs.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v;
+        d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      last = ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+
+<!--
+  REGION NOW — Country Dropdown Embed
+  ─────────────────────────────────────
+  SETUP IN WEBFLOW:
+  1. Keep the grain canvas script ✅
+  2. Delete the hint script ("tap to select and continue") 🗑️
+  3. Delete radio button answer options in Webflow editor 🗑️
+  4. Paste this embed anywhere on the page — it centers itself ✅
+  ─────────────────────────────────────
+-->
+
+<style>
+#fms-rn-outer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 50;
+  pointer-events: none;
+}
+#fms-rn-wrap {
+  pointer-events: all;
+  width: 100%;
+  max-width: 480px;
+  font-family: 'Inconsolata', monospace;
+  position: relative;
+}
+#fms-rn-question {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial, sans-serif;
+  font-size: clamp(22px, 4vw, 36px);
+  color: #f1e09b;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+#fms-rn-input-wrap {
+  position: relative;
+}
+#fms-rn-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-family: 'Inconsolata', monospace;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(241,224,155,0.35);
+  border-radius: 3px;
+  color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 0.02em;
+}
+#fms-rn-input::placeholder { color: rgba(255,255,255,0.35); }
+#fms-rn-input:focus { border-color: #f1e09b; }
+#fms-rn-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #6b2a18;
+  border: 1px solid rgba(241,224,155,0.2);
+  border-radius: 3px;
+  z-index: 200;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(241,224,155,0.3) transparent;
+}
+#fms-rn-list::-webkit-scrollbar { width: 4px; }
+#fms-rn-list::-webkit-scrollbar-track { background: transparent; }
+#fms-rn-list::-webkit-scrollbar-thumb { background: rgba(241,224,155,0.3); border-radius: 2px; }
+.fms-rn-item {
+  padding: 12px 20px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.02em;
+}
+.fms-rn-item:hover { background: rgba(241,224,155,0.12); color: #f1e09b; }
+.fms-rn-none {
+  padding: 12px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+  font-style: italic;
+}
+@media (max-width: 480px) {
+  #fms-rn-outer { padding: 20px; }
+  #fms-rn-input { font-size: 15px; padding: 14px 16px; }
+  .fms-rn-item { padding: 11px 16px; font-size: 14px; }
+}
+</style>
+
+<div id="fms-rn-outer">
+  <div id="fms-rn-wrap">
+    <div id="fms-rn-question">Где ты живёшь сейчас?</div>
+    <div id="fms-rn-input-wrap">
+      <input id="fms-rn-input" type="text" placeholder="Найти страну…" autocomplete="off" spellcheck="false">
+      <div id="fms-rn-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var ANSWER_KEY = 'Q_REGION_NOW';
+  var NEXT_PAGE = '/ru/q-generation';
+
+var COUNTRIES = [
+    'Австралия','Австрия','Азербайджан','Албания','Алжир','Ангола','Андорра',
+    'Антигуа и Барбуда','Аргентина','Армения','Афганистан','Багамы','Бангладеш',
+    'Барбадос','Бахрейн','Беларусь','Белиз','Бельгия','Бенин','Болгария','Боливия',
+    'Босния и Герцеговина','Ботсвана','Бразилия','Бруней','Буркина-Фасо','Бурунди',
+    'Бутан','Вануату','Ватикан','Великобритания','Венгрия','Венесуэла','Вьетнам',
+    'Габон','Гаити','Гайана','Гамбия','Гана','Гватемала','Гвинея','Гвинея-Бисау',
+    'Германия','Гондурас','Гонконг (САР Китая)','Гренада','Греция','Грузия','Дания','Джибути','Доминика',
+    'Доминиканская Республика','Египет','Замбия','Зимбабве','Израиль','Индия',
+    'Индонезия','Иордания','Ирак','Иран','Ирландия','Исландия','Испания','Италия',
+    'Йемен','Кабо-Верде','Казахстан','Камбоджа','Камерун','Канада','Катар','Кения',
+    'Кипр','Кирибати','Китай','Колумбия','Коморы','Конго','Коста-Рика','Кот-д\'Ивуар',
+    'Куба','Кувейт','Кыргызстан','Лаос','Латвия','Лесото','Либерия','Ливан',
+    'Ливия','Литва','Лихтенштейн','Люксембург','Маврикий','Мавритания','Мадагаскар',
+    'Малави','Малайзия','Мальдивы','Мали','Мальта','Маршалловы острова','Мексика',
+    'Микронезия','Мозамбик','Молдова','Монако','Монголия','Мьянма','Намибия',
+    'Науру','Непал','Нигер','Нигерия','Нидерланды','Никарагуа','Новая Зеландия',
+    'Норвегия','ОАЭ','Оман','Пакистан','Палау','Палестина','Панама',
+    'Папуа — Новая Гвинея','Парагвай','Перу','Польша','Португалия','Республика Корея',
+    'Россия','Руанда','Румыния','Сальвадор','Самоа','Сан-Марино',
+    'Сан-Томе и Принсипи','Саудовская Аравия','Северная Корея','Северная Македония',
+    'Сейшелы','Сенегал','Сент-Винсент и Гренадины','Сент-Китс и Невис',
+    'Сент-Люсия','Сербия','Сингапур','Сирия','Словакия','Словения',
+    'Соломоновы острова','Сомали','Судан','Суринам','США','Сьерра-Леоне',
+    'Таджикистан','Таиланд','Тайвань','Танзания','Того','Тонга',
+    'Тринидад и Тобаго','Тувалу','Тунис','Туркменистан','Турция','Уганда',
+    'Узбекистан','Украина','Уругвай','Фиджи','Филиппины','Финляндия','Франция',
+    'Хорватия','Центральноафриканская Республика','Чад','Черногория',
+    'Чехия','Чили','Швейцария','Швеция','Шри-Ланка','Эквадор',
+    'Экваториальная Гвинея','Эритрея','Эсватини','Эстония','Эфиопия',
+    'Южный Судан','Ямайка','Япония'
+  ];
+
+  var input  = document.getElementById('fms-rn-input');
+  var list   = document.getElementById('fms-rn-list');
+
+  function renderList(filter) {
+    var q = (filter || '').toLowerCase().trim();
+    var matches = q
+      ? COUNTRIES.filter(function(c) { return c.toLowerCase().indexOf(q) !== -1; })
+      : COUNTRIES;
+    list.innerHTML = matches.length
+      ? matches.map(function(c) {
+          return '<div class="fms-rn-item" data-value="' + c + '">' + c + '</div>';
+        }).join('')
+      : '<div class="fms-rn-none">NНичего не найдено</div>';
+    list.style.display = 'block';
+  }
+
+  function saveAndNavigate(country) {
+    var answers = {};
+    try {
+      answers = JSON.parse(
+        sessionStorage.getItem('quiz_answers') ||
+        localStorage.getItem('quiz_answers') || '{}'
+      );
+    } catch(e) {}
+    answers[ANSWER_KEY] = country;
+    var json = JSON.stringify(answers);
+    sessionStorage.setItem('quiz_answers', json);
+    localStorage.setItem('quiz_answers', json);
+    window.location.href = NEXT_PAGE;
+  }
+
+  input.addEventListener('input', function() { renderList(this.value); });
+  input.addEventListener('focus', function() { renderList(this.value); });
+
+  list.addEventListener('mousedown', function(e) {
+    var item = e.target.closest('.fms-rn-item');
+    if (item) saveAndNavigate(item.getAttribute('data-value'));
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('fms-rn-outer').contains(e.target)) {
+      list.style.display = 'none';
+    }
+  });
+})();
+</script>

@@ -1,0 +1,214 @@
+{
+  "pageId": "6a3ba04b3a9975cbe8e2b8c2",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "1eeeda23-e90d-3345-399d-950359cb5819",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "8d665c45-247a-a3f2-dacd-5e56a8f74306",
+      "text": {
+        "html": "<div>Main perfume</div>",
+        "text": "Main perfume"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "image",
+      "id": "cf74a12e-4a0c-d1c0-00f5-e52278a4bcf7",
+      "image": {
+        "alt": "__wf_reserved_inherit"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "7c8b4571-4e7c-76c4-7107-78c8c0b8550f",
+      "text": {
+        "html": "<div>No items found.</div>",
+        "text": "No items found."
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "5cc08353-9487-62fe-7b12-122d35748788",
+      "text": {
+        "html": "<h1 class=\"heading-35\"><strong class=\"bold-text-28\" data-w-id=\"0087c970-8251-ea09-1022-95eb529b4f96\">You aRe pOlitEly UnreachAble</strong></h1>",
+        "text": "You aRe pOlitEly UnreachAble"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "3f0c4ea1-fce1-003d-86e5-b895a96746e0",
+      "text": {
+        "html": "<div class=\"text-block-25\">You don’t need another fragrance recommendation.<br data-w-id=\"fbc3ca87-ffd5-4dbe-c040-eb132528d191\">‍<br data-w-id=\"4391fdb8-aabf-f439-c63d-3f7d7135e5d8\">You need something that works.<br data-w-id=\"c37ddda3-420a-56aa-83c9-97bdae42c917\">A decision. One direction. Forward.<br data-w-id=\"ba7331b3-18a5-c775-2eee-04788d691de9\">No coziness. No backstory. <br data-w-id=\"c4fcf8d8-7d70-c904-c5ca-072166e37d0a\">No “how does this make you feel?”<br data-w-id=\"288172d2-eb08-1d6c-f687-e1f017f668d4\"><br data-w-id=\"f324b52e-9918-8b80-d546-bc30d4beb4ca\">It doesn’t care if you like it.<br data-w-id=\"232228e8-d7fe-fbbc-491b-3f797bd1784f\">It stays clean, architectural, and focused - exactly what you want when you’re building something instead of talking about it. <br data-w-id=\"19e2d5bc-77db-e025-3915-263942641fda\"><br data-w-id=\"974c4b77-22b8-8383-4324-084d05aac2a0\"><strong class=\"bold-text-29\" data-w-id=\"152b0beb-bcf0-5a84-f27f-b446f98cd274\"> &nbsp;THIS&nbsp;IS&nbsp;WHAT&nbsp;A&nbsp;DECISION<br data-w-id=\"5b318338-e0f7-3163-cddd-565e91f0e318\">&nbsp;SMELLS&nbsp;LIKE.<br data-w-id=\"4409a80c-5f22-b93c-b4e5-bb93983d0e51\"></strong></div>",
+        "text": "You don’t need another fragrance recommendation.\n‍\nYou need something that works.\nA decision. One direction. Forward.\nNo coziness. No backstory. \nNo “how does this make you feel?”\n\nIt doesn’t care if you like it.\nIt stays clean, architectural, and focused - exactly what you want when you’re building something instead of talking about it. \n\n  THIS IS WHAT A DECISION\n SMELLS LIKE.\n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "3244a6ca-ddfa-da6c-a6cc-bf1bbeed754f",
+      "text": {
+        "html": "<h1 class=\"heading-42\">Main perfume:<strong data-w-id=\"a799388c-9407-e59c-c303-8c4470614b54\"> </strong><a href=\"https://noseparis.com/en/concrete\" class=\"link-6\" data-w-id=\"7d2abff0-780b-e5ce-5caf-6110290b0f6f\"><strong class=\"bold-text-36\" data-w-id=\"13a6bf01-807d-f177-3ec1-a7a2a5b3c678\">\"Concrete\" by Comme des Garçons </strong></a></h1>",
+        "text": "Main perfume: \"Concrete\" by Comme des Garçons "
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "f74e5c19-36e7-0ea5-340f-9a1b8ca96199",
+      "text": {
+        "html": "<h1 class=\"heading-29\">You Are Insistently Calm</h1>",
+        "text": "You Are Insistently Calm"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "06b06321-0d2a-76ff-e6dd-d594406fe2df",
+      "text": {
+        "html": "<div class=\"text-block-19\">You speak less.<br data-w-id=\"dc446779-498f-8ecf-c611-b8a8124d7708\">You choose better.<br data-w-id=\"2cedecd0-163f-c896-535a-4dffe94319e2\">You move with intention.<br data-w-id=\"2c86aa22-3b3e-8b30-d99e-c30f6eabecac\"><br data-w-id=\"984630a3-c277-3c26-7a50-ff8dad268832\">You've seen enough chaos to know that tranquility is a choice.<br data-w-id=\"0f51c549-85bb-f395-b84a-159242ea82fc\">‍<br data-w-id=\"3f424418-7c30-de04-59aa-e69a7fbf55d0\">You’re polite, but not soft.<br data-w-id=\"cc502e35-9f75-a829-eb5a-ef755dd0f23e\">‍<br data-w-id=\"ca3c1c15-6d0f-8da5-b145-c266e342f719\">Minimal, but not empty.<br data-w-id=\"b5bcfffd-a649-1a9e-6b95-77d9b91abbda\">&nbsp;&nbsp;&nbsp;&nbsp;<br data-w-id=\"bc9708ab-7824-9ab6-34fe-6d864464b5fb\">Calm, because you don’t need to prove anything.<br data-w-id=\"4849d7e9-f4ab-611c-b165-173322afdb81\"><br data-w-id=\"87acc874-18c1-3638-683c-b00c2618b5cd\">You’re not above others.<br data-w-id=\"4cccfe51-f3b2-760b-fd4d-d11d569b959e\">You’re simply above <br data-w-id=\"8c410454-4dc2-298b-9dde-97fe1191f7c5\">the noise.<br data-w-id=\"1bcf6dd3-fb17-c06c-c735-7fb2a046d398\"></div>",
+        "text": "You speak less.\nYou choose better.\nYou move with intention.\n\nYou've seen enough chaos to know that tranquility is a choice.\n‍\nYou’re polite, but not soft.\n‍\nMinimal, but not empty.\n    \nCalm, because you don’t need to prove anything.\n\nYou’re not above others.\nYou’re simply above \nthe noise.\n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "6c9632c4-7081-1684-0cc5-44725878b482",
+      "text": {
+        "html": "<h1 class=\"heading-36\">You don’t need to explain yourself.</h1>",
+        "text": "You don’t need to explain yourself."
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "44bb6c5d-aa53-4e74-a2cc-f0ea7da04907",
+      "text": {
+        "html": "<h1 class=\"heading-43\">Main perfume: <a href=\"https://auphorie.com/products/miyako\" class=\"link-7\" data-w-id=\"4a1a4c2e-296d-d93f-e317-1d0ffde9df32\">\"<strong class=\"bold-text-35\" data-w-id=\"4a1a4c2e-296d-d93f-e317-1d0ffde9df34\">Miyako\" by Auphorie</strong></a><br data-w-id=\"4a1a4c2e-296d-d93f-e317-1d0ffde9df37\"></h1>",
+        "text": "Main perfume: \"Miyako\" by Auphorie\n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "a3cd124b-a3b7-c686-10df-f436281ea473",
+      "text": {
+        "html": "<h1 class=\"heading-30\">You Are a Hug</h1>",
+        "text": "You Are a Hug"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "04dcc09a-523d-25eb-8c23-c63151e97b39",
+      "text": {
+        "html": "<div class=\"text-block-20\">You stand out by being open.<br data-w-id=\"4a1e3c6e-e3d1-7278-501f-21aee34b4822\">‍<br data-w-id=\"abe1bad3-a9f4-a42e-4b97-1d79af39ae0b\">When things feel unstable, people don’t come to you for answers.<br data-w-id=\"f124f74b-58ce-3d34-8564-06c08393e097\">They come for presence.<br data-w-id=\"411e0e4a-ef27-7df0-0dff-5f61c8112c38\"><br data-w-id=\"700c30f8-a8be-107e-1737-19baa9c4da52\">You listen without fixing. <br data-w-id=\"af08e655-dba5-45c5-d58e-7766e64d6693\">You stay without judging.<br data-w-id=\"390f6623-0d38-f6da-e3e3-13c6f305ba3f\">‍<br data-w-id=\"f951c28f-ca5b-4631-dbd3-81d8838d5a58\">You feel familiar even to strangers.<br data-w-id=\"489c92bc-efef-cc2d-6b3c-69e42654c3f0\">Like someone cooked &nbsp;your favourite meal just because they care.<br data-w-id=\"15fdc20d-46d0-17a0-3f2b-2ee2253b6648\">‍<br data-w-id=\"ec5a6568-61b5-c866-6fbd-b4b03148100c\">Warmth, for you, isn’t performance.<br data-w-id=\"13e15dbe-5f63-6f8a-a8ae-0cb00c98cd73\">It’s a state you know how to hold.<br data-w-id=\"2cf2c8d0-ed9f-73af-c501-23455b12538a\">‍<br data-w-id=\"7ada163f-8ef1-6cb2-5a61-7b0b23efa3d2\"></div>",
+        "text": "You stand out by being open.\n‍\nWhen things feel unstable, people don’t come to you for answers.\nThey come for presence.\n\nYou listen without fixing. \nYou stay without judging.\n‍\nYou feel familiar even to strangers.\nLike someone cooked  your favourite meal just because they care.\n‍\nWarmth, for you, isn’t performance.\nIt’s a state you know how to hold.\n‍\n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "5e9b0deb-599f-6d02-c643-ff6c2b5c9655",
+      "text": {
+        "html": "<h1 class=\"heading-44\">Main perfume: <a href=\"https://www.diptyqueparis.com/fr_fr/p/eau-de-toilette-eau-duelle-100ml.html\" class=\"link-8\" data-w-id=\"2512b188-58c5-c604-c160-f04b8dfa4179\"><strong data-w-id=\"2512b188-58c5-c604-c160-f04b8dfa417a\"><em class=\"italic-text-15\" data-w-id=\"2512b188-58c5-c604-c160-f04b8dfa417b\">\"Eau Duelle\" by Diptyque</em></strong></a><strong data-w-id=\"2512b188-58c5-c604-c160-f04b8dfa417d\"><em data-w-id=\"2512b188-58c5-c604-c160-f04b8dfa417e\"> </em></strong></h1>",
+        "text": "Main perfume: \"Eau Duelle\" by Diptyque "
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "c5c9d7de-4fe6-b252-53f5-79791009f894",
+      "text": {
+        "html": "<h1 class=\"heading-37\">‍<strong class=\"bold-text-31\" data-w-id=\"a7291a10-5977-a1a8-7c3b-656dd1cbf6d2\">It smells like being welcomed.</strong></h1>",
+        "text": "‍It smells like being welcomed."
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "7a08762f-deb3-74b0-8c84-cbb04a261dac",
+      "text": {
+        "html": "<h1 class=\"heading-31\">YOU&nbsp;ARE SECRETLY <br data-w-id=\"171623af-72d8-2f05-1fbf-3f156449e2c5\">PLANNING TO DISAPPEAR</h1>",
+        "text": "YOU ARE SECRETLY \nPLANNING TO DISAPPEAR"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "cfe538c9-cc4c-f9f0-caff-f35d8fb751fb",
+      "text": {
+        "html": "<div class=\"text-block-21\">You don’t fantasise about escape. You prepare for it.<br data-w-id=\"626a3b65-3d6a-7bc3-6acc-e84e75e5e829\"><br data-w-id=\"b9ddf8cc-20ea-6437-100b-e3eb06042e2e\">You prefer movement over conversation. &nbsp;<br data-w-id=\"b666e9b2-74dc-fb9b-52f8-bd3da4778c6a\">Silence over explanations.<br data-w-id=\"0d4de707-da33-fc5a-3f57-c404b12b7ae1\">‍<br data-w-id=\"666158ae-c6d4-5384-0b83-1ec8961e942d\">You’re at your best when no one is watching. <br data-w-id=\"f5643b22-281e-71cd-e51f-db0b7d127c05\">When your body decides before your head does.<br data-w-id=\"208cb490-84c7-a1ab-e93f-e564dfb2768d\">When life feels raw, physical, and alive. <br data-w-id=\"f7b54926-2781-5f55-a317-d113174425c6\">‍<br data-w-id=\"f7c718d1-c537-eee5-c706-3372ae34844e\">You don’t need comfort. <br data-w-id=\"63434ab6-3892-123e-426a-9271993203da\">You need space.<br data-w-id=\"c352d23d-6d08-d7ec-9923-5c0ff8b747b3\">Sometimes you think: <em data-w-id=\"85b93a4c-c1ad-ad77-25e7-f1b40dee4ff7\">\"I wish I lived in the middle of nowhere.\" &nbsp;<br data-w-id=\"1febe03f-f71c-a375-6283-5c4c14e368c2\">‍</em>And you mean it.<br data-w-id=\"12cfcb3c-d529-ba70-2f70-a8a4c986ad66\">‍<br data-w-id=\"e73daac3-c6e8-d6ff-39c3-ea5d9b8114d9\"><strong class=\"bold-text-32\" data-w-id=\"489f7d46-a17c-61e6-2eb4-bf0424649996\">Main perfume: </strong><a href=\"https://www.niche-beauty.com/fr-fr/produits/andrea-maack-coven/844-023?glCountry=FR&trac=NB_FR.01.01_Shopping.P_Shopping.Google.22533489496..844-023.online.PM&gad_source=1&gad_campaignid=22533491503&gbraid=0AAAAApWeJm6i3lvF5TagGkwhyaywq_2tH\" class=\"link-9\" data-w-id=\"674ddeee-bfca-1de7-d8ce-b89519c8ae36\"><strong class=\"bold-text-32\" data-w-id=\"674ddeee-bfca-1de7-d8ce-b89519c8ae38\">\"Coven\" by Andrea Maack </strong></a><br data-w-id=\"e6be381c-03d6-9c60-0692-e0e29144447d\"><br data-w-id=\"c8fed663-df2d-702a-7000-6fbfc48af477\">It smells like being outside long enough to forget time. <br data-w-id=\"399fbd1c-8fe1-efda-3a12-a83742c86863\">Wet earth. Roots. <br data-w-id=\"cee22f4a-6333-1c7a-8d92-82d80a228112\">Cold air on skin.<br data-w-id=\"e64a3cb0-4973-8d90-760b-66ab1853d500\">‍<br data-w-id=\"58a16e36-a902-d5bf-8be4-d54cfd1a1e99\">This scent doesn’t soften you. <br data-w-id=\"0c9be813-4db5-1c58-6db4-1cd5962ab0a6\">It lets you stay wild, grounded, and present.<br data-w-id=\"d1c63164-6769-9c1e-2adf-b564eec59233\"></div>",
+        "text": "You don’t fantasise about escape. You prepare for it.\n\nYou prefer movement over conversation.  \nSilence over explanations.\n‍\nYou’re at your best when no one is watching. \nWhen your body decides before your head does.\nWhen life feels raw, physical, and alive. \n‍\nYou don’t need comfort. \nYou need space.\nSometimes you think: \"I wish I lived in the middle of nowhere.\"  \n‍And you mean it.\n‍\nMain perfume: \"Coven\" by Andrea Maack \n\nIt smells like being outside long enough to forget time. \nWet earth. Roots. \nCold air on skin.\n‍\nThis scent doesn’t soften you. \nIt lets you stay wild, grounded, and present.\n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "19c115fe-001d-1a40-3b96-8509b411cbc6",
+      "text": {
+        "html": "<h1 class=\"heading-32\"><strong class=\"bold-text-27\" data-w-id=\"cfe86694-c1f6-23ce-ab1a-452c2d93e2ae\">You Are <br data-w-id=\"6b1581f1-257f-e4e6-c57b-ebbfa62dd551\">Chronically Elsewhere</strong></h1>",
+        "text": "You Are \nChronically Elsewhere"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "b14b057b-ff06-e181-f39b-cac7d882b57b",
+      "text": {
+        "html": "<div class=\"text-block-22\">You’re not behind the world. <br data-w-id=\"09903e01-cd2a-8004-136b-440901eda2a0\">You’re slightly aside from it.<br data-w-id=\"3955fe3d-f3b0-e348-fa8e-b7a70b950a38\"><br data-w-id=\"a3a35874-9c60-a064-2bb2-87d149313c5a\">You don’t rush to be understood. <br data-w-id=\"c93d955a-ff1f-cbe2-4f91-f53120f85d15\">You observe.<br data-w-id=\"2a078b1a-1ba2-81d3-cb1c-142a934361e8\">You wait.<br data-w-id=\"b66c6c60-4488-be0b-c8cc-17aa18b7663a\">You let things reveal themselves.<br data-w-id=\"f47c4825-3ab5-05cc-7091-c2b87d90f6cd\"><br data-w-id=\"2a3b0cf5-553b-b5ec-2540-bbd1288ce406\">Introverted, not insecure.<br data-w-id=\"939eec1d-42ba-cb7c-c87e-e134426b74e9\">Mysterious, not distant.<br data-w-id=\"c0f2fa66-65bb-ab4e-4884-fc835a41eb2d\"><br data-w-id=\"f886a831-177a-7e84-4827-fcdb5f0497ef\">You don’t belong to trends. <br data-w-id=\"55659a7d-bf9b-6b62-3830-ece44f661e34\">You belong to moods, shadows, and pauses.<br data-w-id=\"5f1f0f14-e851-447f-a21c-9bc07e875cd8\"><br data-w-id=\"77f0d7cc-c444-c2c6-30bc-754c4a9be25a\">A little gothic. <br data-w-id=\"a7c14b94-b8db-c64f-83ca-a32e748c1698\">A little melancholic.<br data-w-id=\"d49cb2fc-5870-a13f-3aba-5aac0c8930a2\">Entirely your own.<br data-w-id=\"ffc56e1e-ab17-a2a6-051b-416fddbe0ba5\"><br data-w-id=\"28f0f588-41a9-be19-3781-66391a035263\">Time doesn’t move faster around you. <br data-w-id=\"c42715e7-0fed-2d7f-253a-d500f746ff2a\">It slows down.<br data-w-id=\"573b877c-32ff-8daa-0ff6-372e58dfa57b\"><br data-w-id=\"35fc84d6-7c3e-a562-91c4-7c236f0d0dd6\"><strong class=\"bold-text-33\" data-w-id=\"4293de5f-d965-f9bb-f743-92cfcf337abc\">Main perfume: </strong><a href=\"https://sergelutens.fr/products/gris-clair-eau-de-parfum-spray?variant=40851449970745&gad_source=1&gad_campaignid=23277080800&gbraid=0AAAAAC5qllG21vl6Zio3xWTS7A9tG8Pmx\" class=\"link-10\" data-w-id=\"5a576e38-5c04-dab1-ce9f-a24363457820\"><strong class=\"bold-text-33\" data-w-id=\"5a576e38-5c04-dab1-ce9f-a24363457824\">\"<em class=\"italic-text-16\" data-w-id=\"5a576e38-5c04-dab1-ce9f-a24363457826\">Gris Clair\" by Serge Lutens</em></strong></a><strong class=\"bold-text-33\" data-w-id=\"5a576e38-5c04-dab1-ce9f-a24363457829\"> </strong><br data-w-id=\"0598abd3-06cd-84ff-5cef-d4cd892bd601\"></div>",
+        "text": "You’re not behind the world. \nYou’re slightly aside from it.\n\nYou don’t rush to be understood. \nYou observe.\nYou wait.\nYou let things reveal themselves.\n\nIntroverted, not insecure.\nMysterious, not distant.\n\nYou don’t belong to trends. \nYou belong to moods, shadows, and pauses.\n\nA little gothic. \nA little melancholic.\nEntirely your own.\n\nTime doesn’t move faster around you. \nIt slows down.\n\nMain perfume: \"Gris Clair\" by Serge Lutens \n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "f1da0c16-e4e9-176c-9cfd-7dcaff9d9669",
+      "text": {
+        "html": "<h1 class=\"heading-33\">You aRe PatholoGically ChilL</h1>",
+        "text": "You aRe PatholoGically ChilL"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "9698993a-857e-c22c-522e-74fc065a6f5f",
+      "text": {
+        "html": "<div class=\"text-block-23\">You move easily between people, plans, and shifting priorities.<br data-w-id=\"5513e290-624e-2795-3f5a-a689075072a6\">‍<br data-w-id=\"8696f6fc-f8f7-bc2e-61c0-a8ea975ebce7\">You keep things light without losing control.<br data-w-id=\"34738482-8e5a-b53d-e90c-bf7a120d21c6\">You don’t rush, but you don’t stall either. <br data-w-id=\"9020d1da-eb60-4c58-fcbb-613053f08022\">You trust the process. <br data-w-id=\"ddbf2d93-c269-b75a-d7b8-3e0c2f81a02a\">And you keep it moving.<br data-w-id=\"8aa431fa-de67-b2c8-4256-0e8b4859bb36\"><br data-w-id=\"a7a6fe2b-1c10-0e58-cc72-0ae264759ef6\">For you, scent isn’t escape.<br data-w-id=\"8f735d58-d38c-6f7c-fabe-f07de6b23a00\">It’s the quiet confidence that things will work out.<br data-w-id=\"59e2191d-0060-c54f-f4a1-7884faabb16a\"><br data-w-id=\"2d078b68-8818-6d33-1128-ab6838822ee0\">It supports your rhythm, not your ego.<br data-w-id=\"6174c29f-f458-6e31-afc8-b105d6a81778\">Fresh, warm, and clear, even when the day stretches.<br data-w-id=\"4c47fa86-d992-162f-e560-c1b35624a905\">‍<br data-w-id=\"fd778bf7-1bd5-71e1-c821-f2c79c2f1b95\">No nostalgia.<br data-w-id=\"1e418143-209c-af64-7688-86e00bf43cd2\">No overload.<br data-w-id=\"75ab5848-42fb-73b3-fc0a-d10624294b2d\">No drama.<br data-w-id=\"23dc8a03-145e-8f59-ed07-e95b4a41ed3d\">‍<br data-w-id=\"597d8f2b-e7e1-36dc-5b92-54cb91fb75f9\">Things move when you’re around.<br data-w-id=\"e5dc85f4-daee-7b2f-78e2-977ec6d3dfd6\">‍<br data-w-id=\"64e223ce-7bfb-eb59-28f1-47007d798520\"><br data-w-id=\"ae17284e-7dcf-6bdf-2500-7ff2dd53acc5\"><strong data-w-id=\"98b736e5-57ed-4a85-c8a4-34dec57407ad\"><em class=\"italic-text-10\" data-w-id=\"98b736e5-57ed-4a85-c8a4-34dec57407ae\">Main perfume: </em></strong><a href=\"https://www.perfumesloewe.com/int/en_FR/men/loewe-solo/loewe-solo-vulcan-edp-100ml-LW80620.html\" class=\"link-11\" data-w-id=\"98b736e5-57ed-4a85-c8a4-34dec57407b0\"><strong data-w-id=\"98b736e5-57ed-4a85-c8a4-34dec57407b1\"><em class=\"italic-text-10\" data-w-id=\"98b736e5-57ed-4a85-c8a4-34dec57407b2\">\"Solo Vulcan\" by Loewe</em></strong></a><strong data-w-id=\"98b736e5-57ed-4a85-c8a4-34dec57407b4\"><em class=\"italic-text-10\" data-w-id=\"98b736e5-57ed-4a85-c8a4-34dec57407b5\"> </em></strong></div>",
+        "text": "You move easily between people, plans, and shifting priorities.\n‍\nYou keep things light without losing control.\nYou don’t rush, but you don’t stall either. \nYou trust the process. \nAnd you keep it moving.\n\nFor you, scent isn’t escape.\nIt’s the quiet confidence that things will work out.\n\nIt supports your rhythm, not your ego.\nFresh, warm, and clear, even when the day stretches.\n‍\nNo nostalgia.\nNo overload.\nNo drama.\n‍\nThings move when you’re around.\n‍\n\nMain perfume: \"Solo Vulcan\" by Loewe "
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "3014cf62-d404-8a5e-5836-e8a110b48707",
+      "text": {
+        "html": "<h1 class=\"heading-34\">You are Dangeroesly Empathetic</h1>",
+        "text": "You are Dangeroesly Empathetic"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "9edb4cdf-d7f1-16a0-9b58-6960d090bdf0",
+      "text": {
+        "html": "<div class=\"text-block-24\">You’re present.<br data-w-id=\"c2aeff2a-c8a7-fc06-c8dc-42bc0cb6ac55\">Attentive and selective.<br data-w-id=\"56c9e85d-77ec-4182-8bdf-f19a36088d79\">‍<br data-w-id=\"6724ce48-9bcb-b584-1164-434cb4f0ee54\">You understand people quickly.<br data-w-id=\"7a28e49e-c3e2-f32d-99c5-4970e2060ada\">Not because you analyse them.<br data-w-id=\"5c3d0449-98b3-ee04-2140-f6f0c351ee16\">Because you notice what actually matters.<br data-w-id=\"c0092bfb-5dc8-780a-c74b-38fcb2784f43\">‍<br data-w-id=\"d3a0685c-3bd7-a23b-e25c-4121a8635974\">You don’t rush intimacy.<br data-w-id=\"79eed862-c579-57e5-adaf-0d9ccf59ec1b\">You let things arrive in their own time.<br data-w-id=\"8a7ff57c-dd98-8415-6e67-afdb143616e6\">‍<br data-w-id=\"7c4f7ad5-6c85-5664-7bba-71a6ebc28a6b\">You’re not for everyone. <br data-w-id=\"e2fe2921-97fd-fb03-aa9d-1f5e90c5a0da\">And you’re not trying to be.<br data-w-id=\"cd496732-e13a-746f-89c5-ff29550d6ecb\">You know your worth.<em data-w-id=\"85a84cab-1890-8c22-b3ae-cf837ce847f2\">‍<br data-w-id=\"39a1e7cd-635f-b353-8a40-08c8bcf16435\"><br data-w-id=\"b5483089-abeb-7c2a-7c56-e53df85f909e\"></em>Intentional.<br data-w-id=\"a9687295-d90f-09b8-97c4-b3167966c45a\">Nothing excessive.<br data-w-id=\"8e0b4034-74b1-52a7-bc86-ab1a9f887602\">Nothing random.<br data-w-id=\"1d114a27-e39a-7937-a36f-454cc9520167\">It doesn’t comfort you. <br data-w-id=\"c032a8e5-7343-6366-80eb-f307e269857d\">It holds your standards.<strong data-w-id=\"f6354ebb-f54d-3fd8-cdd0-c3c51442c84f\"><br data-w-id=\"1b98f512-ead7-7b10-fe82-e1e73a6db3f3\"><br data-w-id=\"9cb57d38-6e6f-ec5d-23a3-c95d78ffcec3\">‍<em class=\"italic-text-11\" data-w-id=\"957219cc-05b7-86b1-5f7f-35aa30e259be\">You don’t say it will be fine.<br data-w-id=\"525b3181-c985-585e-682d-cdbc35c8d634\">You make sure it is.<br data-w-id=\"dbe1c8cd-dd8e-68c2-b79f-1a674324ea66\"><br data-w-id=\"a349caf1-610a-51c6-b26d-2dc5a41a3868\">Main Perfume </em></strong><a href=\"https://www.jilsander.com/fr-fr/jil-sander-black-tea-100-ml/J65YX0006JFR001998.html\" class=\"link-12\" data-w-id=\"d93c38d5-cda5-c128-d667-23124c5d3763\"><strong data-w-id=\"d93c38d5-cda5-c128-d667-23124c5d376f\"><em class=\"italic-text-11\" data-w-id=\"d93c38d5-cda5-c128-d667-23124c5d3773\">\"Black Tea\" by Jil Sander</em></strong></a><strong data-w-id=\"d93c38d5-cda5-c128-d667-23124c5d3770\"><em class=\"italic-text-11\" data-w-id=\"d93c38d5-cda5-c128-d667-23124c5d376b\"> </em></strong></div>",
+        "text": "You’re present.\nAttentive and selective.\n‍\nYou understand people quickly.\nNot because you analyse them.\nBecause you notice what actually matters.\n‍\nYou don’t rush intimacy.\nYou let things arrive in their own time.\n‍\nYou’re not for everyone. \nAnd you’re not trying to be.\nYou know your worth.‍\n\nIntentional.\nNothing excessive.\nNothing random.\nIt doesn’t comfort you. \nIt holds your standards.\n\n‍You don’t say it will be fine.\nYou make sure it is.\n\nMain Perfume \"Black Tea\" by Jil Sander "
+      },
+      "attributes": {}
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 23
+  },
+  "lastUpdated": "2026-06-24T09:15:55.583Z"
+}

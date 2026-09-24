@@ -1,0 +1,148 @@
+<!-- ==================== Q_CELEBRATE_EN ==================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const overlay = document.createElement('div');
+  overlay.id = 'open-answer-overlay';
+  overlay.style.cssText = `display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;`;
+  overlay.innerHTML = `<div style="background:rgba(255,255,255,0.12);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.25);border-radius:28px;padding:48px 36px 40px;max-width:480px;width:90%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,0.3);position:relative;"><button id="open-answer-close" style="position:absolute;top:16px;right:20px;background:none;border:none;color:rgba(255,255,255,0.6);font-size:22px;cursor:pointer;line-height:1;padding:4px;">✕</button><p style="font-family:Georgia,serif;font-size:20px;margin-bottom:28px;color:#fff;letter-spacing:0.02em;line-height:1.5;">Quelle odeur avait la fête pour vous ?</p><input id="open-answer-input" type="text" placeholder="Écrivez votre réponse..." style="width:100%;padding:16px 20px;font-size:16px;font-family:Georgia,serif;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);border-radius:50px;outline:none;color:#fff;box-sizing:border-box;letter-spacing:0.03em;"><button id="open-answer-submit" style="margin-top:16px;width:100%;padding:16px;background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:50px;font-size:14px;cursor:pointer;font-family:Georgia,serif;letter-spacing:0.14em;text-transform:uppercase;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.28)'" onmouseout="this.style.background='rgba(255,255,255,0.18)'">Continuer →</button></div>`;
+  document.body.appendChild(overlay);
+  function attachOpenAnswerListener() {
+    const btn = document.querySelector('[data-open-answer="true"]');
+    if (!btn) return;
+    btn.addEventListener('click', function(e) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      overlay.style.display = 'flex';
+      setTimeout(() => document.getElementById('open-answer-input').focus(), 50);
+    });
+  }
+  attachOpenAnswerListener();
+  document.getElementById('open-answer-close').addEventListener('click', function() {
+    overlay.style.display = 'none';
+  });
+  document.getElementById('open-answer-submit').addEventListener('click', function() {
+    const text = document.getElementById('open-answer-input').value.trim();
+    if (!text) return;
+    sessionStorage.setItem('quiz_open', text); localStorage.setItem('quiz_open', text);
+    const answers = JSON.parse(sessionStorage.getItem('quiz_answers') || '{}');
+    answers['Q_CELEBRATE'] = 'Q_CELEBRATE__OTHER';
+    sessionStorage.setItem('quiz_answers', JSON.stringify(answers));
+    localStorage.setItem('quiz_answers', JSON.stringify(answers));
+    const path = window.location.pathname;
+    const prefix = path.startsWith('/fr/') ? '/fr' : path.startsWith('/ru/') ? '/ru' : '';
+    window.location.href = prefix + '/q-calm-now';
+  });
+  document.getElementById('open-answer-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('open-answer-submit').click(); });
+});
+</script>
+
+<script>
+(function() {
+
+  const imageMap = {
+    'Q_CELEBRATE__SWEET':      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939da7ce3d295cd722ea_celeb-sweet%27.png',
+    'Q_CELEBRATE__FRSH_FRUIT': 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939cf8723a31c66923ee_celeb-fruits.png',
+    'Q_CELEBRATE__SPICES':     'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939d4696bd8bc341ee3d_celeb-spice.png',
+    'Q_CELEBRATE__PERFUME':    'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939cdac2a4060f6e0bc3_celeb-adult.png',
+    'Q_CELEBRATE__FUZZY':      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939cf6b6f2fcba6c8416_celeb-soda.png',
+    'Q_CELEBRATE__NIGHT':      'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939c1c62197f3a5ceac3_celeb-night.png',
+    'Q_CELEBRATE__SAVORY':     'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939ccc26d4c02eb7ea59_celeb-bbq.png',
+    'Q_CELEBRATE__DINING_OUT': 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b1939cd11f5f7aa533668f_celeb-dine.png'
+  };
+
+  const bg = document.createElement('div');
+  bg.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    pointer-events: none;
+  `;
+  document.body.appendChild(bg);
+
+  const section = document.querySelector('[data-question-id="Q_CELEBRATE"]');
+  if (section) {
+    section.style.position = 'relative';
+    section.style.zIndex = '1';
+  }
+
+  Object.values(imageMap).forEach(url => {
+    const img = new Image();
+    img.src = url;
+  });
+
+  let currentKey = null;
+  let fadeOutTimer = null;
+  let activeTouchKey = null;
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+
+  const buttons = document.querySelectorAll('[data-answer-key^="Q_CELEBRATE"]');
+
+  function showImage(key) {
+    if (!imageMap[key]) return;
+    clearTimeout(fadeOutTimer);
+    bg.style.backgroundImage = `url('${imageMap[key]}')`;
+    bg.style.opacity = '1';
+    currentKey = key;
+  }
+
+  function hideImage() {
+    fadeOutTimer = setTimeout(() => {
+      bg.style.opacity = '0';
+      currentKey = null;
+    }, 200);
+  }
+
+  function dimOthers(activeBtn) {
+    buttons.forEach(b => {
+      b.style.opacity = b === activeBtn ? '1' : '0.4';
+      b.style.transition = 'opacity 0.3s ease';
+    });
+  }
+
+  function resetAll() {
+    buttons.forEach(b => { b.style.opacity = '1'; });
+  }
+
+  buttons.forEach(btn => {
+    const key = btn.getAttribute('data-answer-key');
+
+    btn.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      showImage(key);
+      dimOthers(btn);
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      resetAll();
+      hideImage();
+    });
+
+    btn.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      if (activeTouchKey !== key) {
+        e.preventDefault();
+        activeTouchKey = key;
+        showImage(key);
+        dimOthers(btn);
+      }
+    }, { passive: false });
+  });
+
+  document.addEventListener('touchstart', (e) => {
+    if (!isMobile()) return;
+    const tappedButton = e.target.closest('[data-answer-key^="Q_CELEBRATE"]');
+    if (!tappedButton) {
+      activeTouchKey = null;
+      resetAll();
+      hideImage();
+    }
+  });
+
+})();
+</script>

@@ -1,0 +1,170 @@
+{
+  "pageId": "6a3b9af53364c89139123dcd",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "7d52a62e-37f8-b40a-9d3f-b1d064b3aecd",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "8a8881d7-4bba-a1f2-88b9-d7c415752563",
+      "text": {
+        "html": "<h1><strong class=\"bold-text-13\" data-w-id=\"807f3315-8bec-64bd-ade6-90e939bd5131\">Quelle est la première odeur qui vous vient à l'esprit quand vous pensez aux fêtes de votre enfance ?</strong><em class=\"italic-text-2\" data-w-id=\"807f3315-8bec-64bd-ade6-90e939bd5137\">(Choisissez celle qui vous semble la plus juste)</em></h1>",
+        "text": "Quelle est la première odeur qui vous vient à l'esprit quand vous pensez aux fêtes de votre enfance ?(Choisissez celle qui vous semble la plus juste)"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "a326040f-effb-4c58-1ce7-2480366b9125",
+      "text": {
+        "html": "<a class=\"button-146\" href=\"#\">Pâtisseries ou desserts sucrés<br data-w-id=\"8e9bded9-6289-a5e3-bbdf-143d0b623dfd\"></a>",
+        "text": "Pâtisseries ou desserts sucrés\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__SWEET"
+      }
+    },
+    {
+      "type": "text",
+      "id": "64fd18fd-88be-45c5-f9b9-8b212e7af523",
+      "text": {
+        "html": "<a class=\"button-147\" href=\"#\">Un dîner de fête au restaurant<br data-w-id=\"ba99105a-f2d4-5b87-7005-236a953b5ecd\"></a>",
+        "text": "Un dîner de fête au restaurant\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__DINING_OUT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c269f64b-a58a-77c6-6da3-01b26f7bec93",
+      "text": {
+        "html": "<a class=\"button-148\" href=\"#\">Fruits frais<br data-w-id=\"431341da-d9e7-264b-c6fa-84d4c53541be\"></a>",
+        "text": "Fruits frais\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__FRSH_FRUIT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "5f226810-813b-f8bf-8237-4e5945f28dc0",
+      "text": {
+        "html": "<a class=\"button-149\" href=\"#\">Épices festives (cannelle, cardamome, clous de girofle, masala)<br data-w-id=\"0394dd84-fc90-cc32-3ed5-f27c32757266\"></a>",
+        "text": "Épices festives (cannelle, cardamome, clous de girofle, masala)\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__SPICES"
+      }
+    },
+    {
+      "type": "text",
+      "id": "6f5685d6-d25f-6fc1-899e-79c6055124c8",
+      "text": {
+        "html": "<a class=\"button-150\" href=\"#\">BBQ (grillades, plaisirs en plein air)<br data-w-id=\"739d0002-48f0-11b8-6412-efe5fc87f7ae\"></a>",
+        "text": "BBQ (grillades, plaisirs en plein air)\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__SAVORY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "a55d7884-1113-ae62-57a2-fc9cbc206cdf",
+      "text": {
+        "html": "<a class=\"button-151\" href=\"#\">Flowers or floral decorations / garlands<br data-w-id=\"628536ea-8fcf-6854-91d5-2acfbf700218\"></a>",
+        "text": "Flowers or floral decorations / garlands\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__FLOWERS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "5cfed334-25e0-8ce5-f169-7f7b9a36f45c",
+      "text": {
+        "html": "<a class=\"button-152\" href=\"#\">Incense, or ritual smoke<br data-w-id=\"3b3614de-bad3-fcbc-e997-cafd095ebd3e\"></a>",
+        "text": "Incense, or ritual smoke\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__INCENSE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "bb0cf5e5-8098-2ddc-11cb-be05383cdb6d",
+      "text": {
+        "html": "<a class=\"button-153\" href=\"#\">Lemonade (fresh citrus)<br data-w-id=\"de91c888-6679-071f-bf4f-f9cc19d072a6\"></a>",
+        "text": "Lemonade (fresh citrus)\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__LEMONAD"
+      }
+    },
+    {
+      "type": "text",
+      "id": "e8805bc8-78a6-a367-7f4b-6ec44db85376",
+      "text": {
+        "html": "<a class=\"button-154\" href=\"#\">Parfum ou huiles (les adultes qui se font beaux)<br data-w-id=\"be13a4ca-d275-dcc2-b644-004a05b4790a\"></a>",
+        "text": "Parfum ou huiles (les adultes qui se font beaux)\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__PERFUME"
+      }
+    },
+    {
+      "type": "text",
+      "id": "9c974e82-28e7-41ad-87cd-229ecfa33dc6",
+      "text": {
+        "html": "<a class=\"button-155\" href=\"#\">Tropical or special fruit (mango, pineapple)</a>",
+        "text": "Tropical or special fruit (mango, pineapple)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__TROPICS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c184ead6-f00c-d27b-5bfb-9b71e4fd7124",
+      "text": {
+        "html": "<a class=\"button-156\" href=\"#\">Air de nuit, feux d'artifice</a>",
+        "text": "Air de nuit, feux d'artifice"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__NIGHT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "acd8ab76-c002-c767-12a2-8545bedf51d8",
+      "text": {
+        "html": "<a class=\"button-157\" href=\"#\">Boissons gazeuses / sodas / limonade</a>",
+        "text": "Boissons gazeuses / sodas / limonade"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__FUZZY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b8f4216b-d0ea-c773-7e2c-2deb9f8bccf4",
+      "text": {
+        "html": "<a class=\"button-158\" href=\"#\">Autre (écrivez le vôtre)</a>",
+        "text": "Autre (écrivez le vôtre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CELEBRATE__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 15
+  },
+  "lastUpdated": "2026-07-02T09:59:45.172Z"
+}

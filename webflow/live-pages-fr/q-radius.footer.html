@@ -1,0 +1,229 @@
+<script>
+(function() {
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:0.07;mix-blend-mode:overlay;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  let last = 0;
+  function loop(ts) {
+    if (ts - last > 80) {
+      const img = ctx.createImageData(cvs.width, cvs.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v;
+        d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      last = ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+<style>
+/* ── SCENT CLOUD BALL ── */
+#scent-ball {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+background: radial-gradient(circle, rgba(241,224,155,0.9) 0%, rgba(241,224,155,0.4) 40%, rgba(241,224,155,0) 70%);
+  transform: translate(-50%, -50%) scale(0);
+  transition: 
+    top 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.4s ease,
+    height 0.4s ease,
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0;
+}
+
+#scent-ball.visible {
+  width: 180px;
+  height: 180px;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (max-width: 640px) {
+  #scent-ball.visible {
+    width: 120px;
+    height: 120px;
+  }
+}
+</style>
+
+<script>
+(function() {
+
+  const keys = [
+    'Q_RADIUS__CLOSE',
+    'Q_RADIUS__SOFT',
+    'Q_RADIUS__NOTICEABLE',
+    'Q_RADIUS__BOLD',
+  ];
+
+  /* Sizes — ball grows bigger per option to suggest projection radius */
+  const sizes = {
+    Q_RADIUS__CLOSE:       { w: 80,  h: 80  },
+    Q_RADIUS__SOFT:        { w: 140, h: 140 },
+    Q_RADIUS__NOTICEABLE:  { w: 220, h: 220 },
+    Q_RADIUS__BOLD:        { w: 320, h: 320 },
+  };
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+
+  function init() {
+    /* Create the single ball element */
+    const ball = document.createElement('div');
+    ball.id = 'scent-ball';
+    document.body.appendChild(ball);
+
+    function moveTo(btn, key) {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const size = sizes[key];
+
+      ball.style.left = cx + 'px';
+      ball.style.top  = cy + 'px';
+      ball.style.width  = size.w + 'px';
+      ball.style.height = size.h + 'px';
+      ball.classList.add('visible');
+    }
+
+    function hide() {
+      ball.classList.remove('visible');
+    }
+
+    keys.forEach(key => {
+      const btn = document.querySelector('[data-answer-key="' + key + '"]');
+      if (!btn) return;
+
+      /* Desktop */
+      btn.addEventListener('mouseenter', () => {
+        if (isMobile()) return;
+        moveTo(btn, key);
+      });
+      btn.addEventListener('mouseleave', () => {
+        if (isMobile()) return;
+        hide();
+      });
+
+      /* Mobile — single tap shows ball, Webflow click fires naturally */
+      let touchStartY = 0;
+      btn.addEventListener('touchstart', (e) => {
+        if (!isMobile()) return;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      btn.addEventListener('touchend', (e) => {
+        if (!isMobile()) return;
+        const movedY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+        if (movedY > 10) return;
+        moveTo(btn, key);
+        /* hide after 1s so user sees the cloud before page navigates */
+        setTimeout(hide, 1000);
+      }, { passive: true });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    requestAnimationFrame(() => requestAnimationFrame(init));
+  }
+
+})();
+</script>
+
+<script>
+(function() {
+
+  const BUBBLE_COLOR = 'rgba(241, 224, 155,'; /* #f1e09b */
+  const BUBBLE_COUNT = 28;
+
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:10;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+
+  let W, H;
+  function resize() {
+    W = cvs.width  = window.innerWidth;
+    H = cvs.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* ── BUBBLE FACTORY ── */
+  function makeBubble(forceY) {
+    const r = 4 + Math.random() * 14; /* radius 4–18px */
+    return {
+      x:       Math.random() * W,
+      y:       forceY !== undefined ? forceY : Math.random() * H,
+      r:       r,
+      speedX:  (Math.random() - 0.5) * 0.4,  /* slow drift */
+      speedY:  -(0.15 + Math.random() * 0.35), /* float upward */
+      opacity: 0.15 + Math.random() * 0.55,
+      wobble:  Math.random() * Math.PI * 2,   /* phase offset */
+      wobbleSpeed: 0.008 + Math.random() * 0.012,
+    };
+  }
+
+  const bubbles = Array.from({ length: BUBBLE_COUNT }, () => makeBubble());
+
+  /* ── DRAW LOOP ── */
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    bubbles.forEach(b => {
+      /* Gentle horizontal wobble */
+      b.wobble += b.wobbleSpeed;
+      b.x += b.speedX + Math.sin(b.wobble) * 0.3;
+      b.y += b.speedY;
+
+      /* Wrap: when bubble floats off top, respawn at bottom */
+      if (b.y + b.r < 0) {
+        Object.assign(b, makeBubble(H + b.r));
+      }
+      /* Wrap sides */
+      if (b.x + b.r < 0) b.x = W + b.r;
+      if (b.x - b.r > W) b.x = -b.r;
+
+      /* Draw bubble — filled circle with soft rim */
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+
+      /* Soft fill */
+      ctx.fillStyle = BUBBLE_COLOR + (b.opacity * 0.5) + ')';
+      ctx.fill();
+
+      /* Rim stroke — slightly more opaque */
+      ctx.strokeStyle = BUBBLE_COLOR + b.opacity + ')';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      /* Small highlight dot — top-left of bubble */
+      ctx.beginPath();
+      ctx.arc(b.x - b.r * 0.3, b.y - b.r * 0.3, b.r * 0.18, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + (b.opacity * 0.7) + ')';
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
+
+})();
+</script>

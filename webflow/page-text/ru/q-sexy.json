@@ -1,0 +1,93 @@
+{
+  "pageId": "6a3bfc97b1284acba7ce1c2e",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "9b0638a5-403c-f0e1-a62b-e406aaa03d80",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "04266dd8-8ed6-d6d0-de20-06376821e69d",
+      "text": {
+        "html": "<h1 class=\"heading-22\">КАК&nbsp;ДЛЯ&nbsp;ТЕБЯ&nbsp;ПАХНЕТ&nbsp;СЕКСУАЛЬНОСТЬ?</h1>",
+        "text": "КАК ДЛЯ ТЕБЯ ПАХНЕТ СЕКСУАЛЬНОСТЬ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "dd46e3d7-32bb-3792-cd29-285a47b594c3",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-125\">Warm skin, mineral salty skin, <br data-w-id=\"583fc8bc-6563-a9dd-c396-2038e01d27e5\">just after dance</a>",
+        "text": "Warm skin, mineral salty skin, \njust after dance"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__SALT_SEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "f7546049-6c0e-7466-beb3-7a7af4f45e01",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-126\">Темный шоколад или эспрессо</a>",
+        "text": "Темный шоколад или эспрессо"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__ESPRESSO"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4c5dcc37-17c0-b5ad-6104-04ce1e6838b9",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-127\">Джаз</a>",
+        "text": "Джаз"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__JAZZ"
+      }
+    },
+    {
+      "type": "text",
+      "id": "e588064e-cfb6-dd08-5adb-5c9231055b55",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-128\">Дым</a>",
+        "text": "Дым"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__SMOK_SEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b6f64c21-b305-3fff-f375-d80d78c3fd77",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-129\">Кожаная &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;одежда</a>",
+        "text": "Кожаная                      одежда"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__LEATH_SEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3b2c92ee-ebe7-a5db-6cd6-eaca397b21c8",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-130\">Другое (напиши свое)</a>",
+        "text": "Другое (напиши свое)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 8
+  },
+  "lastUpdated": "2026-06-24T15:51:09.071Z"
+}

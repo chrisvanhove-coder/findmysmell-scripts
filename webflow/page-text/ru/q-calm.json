@@ -1,0 +1,104 @@
+{
+  "pageId": "6a3bfa9979aa24f19e05d3d2",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "07715ebb-41ca-8719-39e4-3fce856eaab1",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "7dc14bae-233e-664d-39b2-63192cf7c1d1",
+      "text": {
+        "html": "<h1 class=\"heading-20\">КАК&nbsp;ДЛЯ&nbsp;ТЕБЯ&nbsp;ПАХНЕТ&nbsp;СПОКОЙСТВИЕ?</h1>",
+        "text": "КАК ДЛЯ ТЕБЯ ПАХНЕТ СПОКОЙСТВИЕ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "d79b24be-de86-bd87-5326-606e038140db",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-111\">Горячий чай или травы</a>",
+        "text": "Горячий чай или травы"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__TEA_HERBS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1c1ae6eb-0cd0-9397-467f-5b9b37bc3d68",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-112\">Свежее постельное бельё</a>",
+        "text": "Свежее постельное бельё"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__LINENS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "66c79219-c8e4-fba1-745c-e8c01eacb983",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-113\">Камин / костёр</a>",
+        "text": "Камин / костёр"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__FIREPLAC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7c94463e-5598-b3d0-31ce-b292f3375786",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-114\">Сладости</a>",
+        "text": "Сладости"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__MILK_SOFT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "ce49c857-096b-11b7-d191-b3f0b98bdbec",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-115\">Прохладный воздух</a>",
+        "text": "Прохладный воздух"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__COOL_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4094ed9d-4eb8-dc8f-4ddf-57309a35d2cc",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-116\">Горячий душ</a>",
+        "text": "Горячий душ"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__HOT_SHOW"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3d0b7475-b8a8-3397-51f9-ec00dd5f0bf7",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-117\">Другое (напиши свое)</a>",
+        "text": "Другое (напиши свое)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-06-24T15:44:02.580Z"
+}

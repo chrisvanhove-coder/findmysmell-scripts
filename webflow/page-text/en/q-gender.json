@@ -1,0 +1,59 @@
+{
+  "pageId": "69787e8dcbc03af41f4fc6d3",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "9a8b3f49-7124-48a7-ac67-31d382888624",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "552d8a0e-90a5-ae53-f334-f97866758477",
+      "text": {
+        "html": "<h1 class=\"heading-13\"><strong class=\"bold-text\" data-w-id=\"a2b2f73c-3251-ed36-3b9f-f19a80e8e92a\">How dO you Prefer Your sCent To fEel oN you?</strong></h1>",
+        "text": "How dO you Prefer Your sCent To fEel oN you?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "eac9223c-a5c9-3fab-807b-07565ab31b05",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-6\">softer, warmer, rounder</a>",
+        "text": "softer, warmer, rounder"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENDER__FEMININE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1cbde9fc-f93d-f6cc-7414-ac6c9f1ef98c",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-7\">balanced, neither too soft nor too fresh</a>",
+        "text": "balanced, neither too soft nor too fresh"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENDER__UNISEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "de1c4f29-c621-a28c-833c-6bea6e987bb5",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-8\">fresher, drier, more structured</a>",
+        "text": "fresher, drier, more structured"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENDER__MASCULINE"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 5
+  },
+  "lastUpdated": "2026-04-02T09:00:12.369Z"
+}

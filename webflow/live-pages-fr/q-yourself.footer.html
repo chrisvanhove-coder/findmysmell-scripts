@@ -1,0 +1,108 @@
+<script>
+(function() {
+
+  const imageMap = {
+    'Q_YOURSELF__NATURE':     'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b17fa82bbdf4ed022efd3e_feel-nature.png',
+    'Q_YOURSELF__NEARWATER':  'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b17fa80a88bf58f028d22f_feel-sea.png',
+    'Q_YOURSELF__CITYURBAN':  'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b17fa8a8c7cc019574a1bf_feel-city.png',
+    'Q_YOURSELF__TRANSITION': 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b17fa823dadda86c499df9_feel-transit.png',
+    'Q_YOURSELF__INDOOR':     'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b17fa8ba1275239dc5ca0a_feel-indoor.png'
+  };
+
+  const bg = document.createElement('div');
+  bg.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    pointer-events: none;
+  `;
+  document.body.appendChild(bg);
+
+  const section = document.querySelector('[data-question-id="Q_YOURSELF"]');
+  if (section) {
+    section.style.position = 'relative';
+    section.style.zIndex = '1';
+  }
+
+  Object.values(imageMap).forEach(url => {
+    const img = new Image();
+    img.src = url;
+  });
+
+  let currentKey = null;
+  let fadeOutTimer = null;
+  let activeTouchKey = null;
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+
+  const buttons = document.querySelectorAll('[data-answer-key^="Q_YOURSELF"]');
+
+  function showImage(key) {
+    if (!imageMap[key]) return;
+    clearTimeout(fadeOutTimer);
+    bg.style.backgroundImage = `url('${imageMap[key]}')`;
+    bg.style.opacity = '1';
+    currentKey = key;
+  }
+
+  function hideImage() {
+    fadeOutTimer = setTimeout(() => {
+      bg.style.opacity = '0';
+      currentKey = null;
+    }, 200);
+  }
+
+  function dimOthers(activeBtn) {
+    buttons.forEach(b => {
+      b.style.opacity = b === activeBtn ? '1' : '0.4';
+      b.style.transition = 'opacity 0.3s ease';
+    });
+  }
+
+  function resetAll() {
+    buttons.forEach(b => { b.style.opacity = '1'; });
+  }
+
+  buttons.forEach(btn => {
+    const key = btn.getAttribute('data-answer-key');
+
+    btn.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      showImage(key);
+      dimOthers(btn);
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      resetAll();
+      hideImage();
+    });
+
+    btn.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      if (activeTouchKey !== key) {
+        e.preventDefault();
+        activeTouchKey = key;
+        showImage(key);
+        dimOthers(btn);
+      }
+    }, { passive: false });
+  });
+
+  document.addEventListener('touchstart', (e) => {
+    if (!isMobile()) return;
+    const tappedButton = e.target.closest('[data-answer-key^="Q_YOURSELF"]');
+    if (!tappedButton) {
+      activeTouchKey = null;
+      resetAll();
+      hideImage();
+    }
+  });
+
+})();
+</script>

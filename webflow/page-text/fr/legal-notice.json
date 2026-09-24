@@ -1,0 +1,29 @@
+{
+  "pageId": "6a3b8cd24f4a6e02d47f52a2",
+  "nodes": [
+    {
+      "type": "text",
+      "id": "2aebd096-889a-c403-6438-4e2315232fb6",
+      "text": {
+        "html": "<h1 class=\"heading-41\">Mentions Légales (Legal Notice)</h1>",
+        "text": "Mentions Légales (Legal Notice)"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "89daa65c-018c-c4cc-574d-94f99fcef771",
+      "text": {
+        "html": "<div class=\"text-block-27\"><em data-w-id=\"0da41851-cba1-5200-0e95-39b339061651\">Mentions Légales<br data-w-id=\"b2634200-f597-6b29-b93d-b88912c6305e\">‍</em><strong data-w-id=\"0da41851-cba1-5200-0e95-39b339061654\">Éditeur du site</strong> Le site findmysmell.com est édité par : Kristina Vanhove [Paris, France] Email : <a href=\"mailto:contact@findmysmell.com\" data-w-id=\"0da41851-cba1-5200-0e95-39b339061657\">contact@findmysmell.com<br data-w-id=\"b67d3c67-10d5-8b1a-482d-928da1b81701\">‍</a><strong data-w-id=\"0da41851-cba1-5200-0e95-39b33906165a\">Hébergement</strong> Le site est hébergé par : Webflow, Inc. 398 11th Street, Floor 2 San Francisco, CA 94103, États-Unis <a href=\"https://webflow.com/\" data-w-id=\"0da41851-cba1-5200-0e95-39b33906165d\">https://webflow.com<br data-w-id=\"1920372c-93d3-c403-3a08-aadee70b370c\">‍</a><strong data-w-id=\"0da41851-cba1-5200-0e95-39b339061660\">Directeur de la publication</strong> Kristina Vanhove<br data-w-id=\"298fd05a-f30a-a8f7-6ab2-d251d22cd613\">‍<strong data-w-id=\"0da41851-cba1-5200-0e95-39b339061664\">Propriété intellectuelle</strong> L'ensemble des contenus présents sur le site findmysmell.com (textes, visuels, quiz, code, identité graphique) est la propriété exclusive de Kristina Vanhove, sauf mention contraire. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite et constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle.<br data-w-id=\"b1f46c9c-7d34-fa99-e4aa-a2b34df03ac5\">‍<strong data-w-id=\"0da41851-cba1-5200-0e95-39b339061668\">Données personnelles</strong> Pour toute question relative au traitement de vos données personnelles, consultez notre <a data-wf-link-page-id=\"69933a7bc1a0cb7c66a6f30b\" data-w-id=\"0da41851-cba1-5200-0e95-39b33906166b\">Politique de Confidentialité</a> ou contactez-nous à <a href=\"mailto:contact@findmysmell.com\" data-w-id=\"0da41851-cba1-5200-0e95-39b33906166e\">contact@findmysmell.com</a>. Vous pouvez également contacter la CNIL : <a href=\"https://www.cnil.fr/\" data-w-id=\"0da41851-cba1-5200-0e95-39b339061671\">www.cnil.fr</a>.</div>",
+        "text": "Mentions Légales\n‍Éditeur du site Le site findmysmell.com est édité par : Kristina Vanhove [Paris, France] Email : contact@findmysmell.com\n‍Hébergement Le site est hébergé par : Webflow, Inc. 398 11th Street, Floor 2 San Francisco, CA 94103, États-Unis https://webflow.com\n‍Directeur de la publication Kristina Vanhove\n‍Propriété intellectuelle L'ensemble des contenus présents sur le site findmysmell.com (textes, visuels, quiz, code, identité graphique) est la propriété exclusive de Kristina Vanhove, sauf mention contraire. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable est interdite et constitue une contrefaçon sanctionnée par le Code de la propriété intellectuelle.\n‍Données personnelles Pour toute question relative au traitement de vos données personnelles, consultez notre Politique de Confidentialité ou contactez-nous à contact@findmysmell.com. Vous pouvez également contacter la CNIL : www.cnil.fr."
+      },
+      "attributes": {}
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 2
+  },
+  "lastUpdated": "2026-06-24T07:52:50.584Z"
+}

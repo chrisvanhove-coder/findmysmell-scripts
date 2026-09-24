@@ -1,0 +1,92 @@
+{
+  "pageId": "6a3bf3f6ff3207f31325d928",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "fc230068-d145-8485-2aaf-556f7c915a3c",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "7545c43f-adde-56c8-ec24-acab17321a17",
+      "text": {
+        "html": "<h1 class=\"heading-16\"><strong class=\"bold-text-10\" data-w-id=\"c5a4e9ee-29f3-9952-8045-65699df5ace1\">ГДЕ&nbsp;ТЫ&nbsp;БОЛЬШЕ&nbsp;ВСЕГО ЧУВСТВУЕШЬ&nbsp;СЕБЯ&nbsp;СОБОЙ?</strong></h1>",
+        "text": "ГДЕ ТЫ БОЛЬШЕ ВСЕГО ЧУВСТВУЕШЬ СЕБЯ СОБОЙ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "d080149e-159d-3e79-83cb-3d7e2003cd95",
+      "text": {
+        "html": "<a class=\"button-50\" href=\"#\">На природе (в лесу, в горах, на открытом воздухе)</a>",
+        "text": "На природе (в лесу, в горах, на открытом воздухе)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__NATURE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "177f4636-8c64-422c-9a01-acdc041c82f1",
+      "text": {
+        "html": "<a class=\"button-51\" href=\"#\">В большом городе</a>",
+        "text": "В большом городе"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__CITYURBAN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "124a6447-f584-6d5c-5c10-e7b88f10a71a",
+      "text": {
+        "html": "<a class=\"button-52\" href=\"#\">Рядом с водой или морем</a>",
+        "text": "Рядом с водой или морем"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__NEARWATER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "eb33e897-096e-b51e-1ac4-c08d61027878",
+      "text": {
+        "html": "<a class=\"button-53\" href=\"#\">В тихой уютной квартире</a>",
+        "text": "В тихой уютной квартире"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__INDOOR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2786e4cf-8416-c237-467c-9ab0b547f556",
+      "text": {
+        "html": "<a class=\"button-54\" href=\"#\">В переездах (на улицах, в транспорте, в состоянии \"между\")</a>",
+        "text": "В переездах (на улицах, в транспорте, в состоянии \"между\")"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__TRANSITION"
+      }
+    },
+    {
+      "type": "text",
+      "id": "abf10073-4268-c321-c418-8c542fb66183",
+      "text": {
+        "html": "<a class=\"button-55\" href=\"#\">Разное</a>",
+        "text": "Разное"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__MIXED"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 8
+  },
+  "lastUpdated": "2026-06-24T15:27:33.731Z"
+}

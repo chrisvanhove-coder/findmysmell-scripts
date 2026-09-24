@@ -1,0 +1,148 @@
+{
+  "pageId": "6a3b9b7093e70dd6ca31f776",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "8d182c60-2b47-76ea-cbdf-4f62da8d2816",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "c3cdfd54-8b6e-5eab-9640-777e28291b87",
+      "text": {
+        "html": "<h1 class=\"heading-40\"><strong class=\"bold-text-14\" data-w-id=\"9cf30981-1d47-163b-8682-0bed02ddc249\">Y a-t-il une odeur qui vous apaise instantanément aujourd'hui encore ?</strong><em class=\"italic-text-3\" data-w-id=\"9cf30981-1d47-163b-8682-0bed02ddc24b\">(Choisissez la plus proche)</em></h1>",
+        "text": "Y a-t-il une odeur qui vous apaise instantanément aujourd'hui encore ?(Choisissez la plus proche)"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "0014d066-017a-7f4f-4863-0421c70cea35",
+      "text": {
+        "html": "<a class=\"button-68\" href=\"#\">Linge propre ou peau après la douche</a>",
+        "text": "Linge propre ou peau après la douche"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__CLEAN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "176a8f65-1d58-bbda-50bd-9d9b0f54af06",
+      "text": {
+        "html": "<a class=\"button-71\" href=\"#\">Jour de pluie</a>",
+        "text": "Jour de pluie"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__RAIN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3473bd8e-06e0-623e-c3b5-09b95bfa57c7",
+      "text": {
+        "html": "<a class=\"button-70\" href=\"#\">Fleurs</a>",
+        "text": "Fleurs"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__FLOWER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "66916086-cb2c-2352-783b-a65d304eb4d8",
+      "text": {
+        "html": "<a class=\"button-73\" href=\"#\">Douceur réconfortante (dessert chaud)</a>",
+        "text": "Douceur réconfortante (dessert chaud)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__SWEET_COMF"
+      }
+    },
+    {
+      "type": "text",
+      "id": "985c7dad-0b61-36d4-4e53-55686c9404e6",
+      "text": {
+        "html": "<a class=\"button-72\" href=\"#\">Bois, papier ou livres</a>",
+        "text": "Bois, papier ou livres"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__WOOD"
+      }
+    },
+    {
+      "type": "text",
+      "id": "90999829-48e8-86de-d00d-243dfbda9365",
+      "text": {
+        "html": "<a class=\"button-75\" href=\"#\">Être près de l'eau</a>",
+        "text": "Être près de l'eau"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__SEA_COMF"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7b2a62ea-e7d1-847c-9b61-1fc5ad9c4a91",
+      "text": {
+        "html": "<a class=\"button-69\" href=\"#\">Thé chaud, cacao, boisson chaude</a>",
+        "text": "Thé chaud, cacao, boisson chaude"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__TEA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2dabe35b-abda-76c1-5099-0879be3c6534",
+      "text": {
+        "html": "<a class=\"button-74\" href=\"#\">Feu de cheminée ou feu de camp</a>",
+        "text": "Feu de cheminée ou feu de camp"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__FIRE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4d2b0c97-4620-51ad-1f76-7f0fd7db2fa4",
+      "text": {
+        "html": "<a class=\"button-77\" href=\"#\">Air frais ou nature</a>",
+        "text": "Air frais ou nature"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__FRESH_COMF"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2b3fbc77-265c-dc6c-f110-638dbb7c70d7",
+      "text": {
+        "html": "<a class=\"button-76\" href=\"#\">Coffee (the smell)</a>",
+        "text": "Coffee (the smell)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM_NOW__COFFEE_COMF"
+      }
+    },
+    {
+      "type": "text",
+      "id": "0341f062-b42e-54cd-ef9d-eb2ea601be52",
+      "text": {
+        "html": "<a class=\"button-78\" href=\"#\">Pas sûr(e) / Autre (écrivez le vôtre)</a>",
+        "text": "Pas sûr(e) / Autre (écrivez le vôtre)"
+      },
+      "attributes": {
+        "data-open-answer": "true",
+        "data-answer-key": "Q_CALM_NOW__OTHER"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 13
+  },
+  "lastUpdated": "2026-06-24T09:03:55.785Z"
+}

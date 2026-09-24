@@ -1,0 +1,146 @@
+{
+  "pageId": "6a3b998ccb8cfd908cd3f41a",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "c65cd99b-3e12-1531-36e5-a5f30bc36d1e",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "e3f56023-9c4f-812f-2da8-beb34a42230f",
+      "text": {
+        "html": "<h1 class=\"heading-10\"><strong class=\"bold-text-21\" data-w-id=\"7498c9dd-aa02-771c-3091-afed66bd5d55\">Where did you grow up?<em data-w-id=\"a963ba50-ced6-0d31-d1c2-e83132bad081\"> <br data-w-id=\"81cab897-e786-8069-1b1e-99d280383479\"></em></strong></h1>",
+        "text": "Where did you grow up? \n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "05692c70-b00d-cfc2-1ea9-754f22942353",
+      "text": {
+        "html": "<div class=\"text-block-12\"><strong data-w-id=\"7f76fb5d-6f62-f73f-3314-b80598b9976a\"><em class=\"italic-text-8\" data-w-id=\"7f76fb5d-6f62-f73f-3314-b80598b9976b\">(Choose the area that best fits most of your childhood)</em><br data-w-id=\"7f76fb5d-6f62-f73f-3314-b80598b9976d\"></strong></div>",
+        "text": "(Choose the area that best fits most of your childhood)\n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "19924271-c6b1-ff2b-28bf-7d8e8b1e58aa",
+      "text": {
+        "html": "<a class=\"button-159\" href=\"#\">Europe</a>",
+        "text": "Europe"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__EUROPE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7448d865-f835-ebf0-07c0-bab7a4553233",
+      "text": {
+        "html": "<a class=\"button-160\" href=\"#\">South Asia</a>",
+        "text": "South Asia"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__SOUTH_ASIA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "0796c176-2f00-1a41-bb33-3462609a0c16",
+      "text": {
+        "html": "<a class=\"button-161\" href=\"#\">North America</a>",
+        "text": "North America"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__NORTH_AMER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "643ecdb4-f0c2-dc35-9630-4aa07b05ac82",
+      "text": {
+        "html": "<a class=\"button-162\" href=\"#\">East Asia</a>",
+        "text": "East Asia"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__EAST_ASIA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "01f4ebd2-1f84-05c0-c54f-3250a19ca47a",
+      "text": {
+        "html": "<a class=\"button-163\" href=\"#\">Middle East</a>",
+        "text": "Middle East"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__MIDDL_EAST"
+      }
+    },
+    {
+      "type": "text",
+      "id": "0e26a006-f920-dc1a-bc1d-8495bbb4ccd8",
+      "text": {
+        "html": "<a class=\"button-164\" href=\"#\">South America</a>",
+        "text": "South America"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__SOUTH_AMER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "f1ce7f88-2cf5-fd0a-688b-9fb67c381a50",
+      "text": {
+        "html": "<a class=\"button-165\" href=\"#\">Southeast Asia</a>",
+        "text": "Southeast Asia"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__SE_ASIA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "319f9c16-48f0-83d0-c645-1cfce20d267b",
+      "text": {
+        "html": "<a class=\"button-166\" href=\"#\">Africa</a>",
+        "text": "Africa"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__AFRICA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "5e3be934-b8f9-9aa7-c448-392b26885877",
+      "text": {
+        "html": "<a class=\"button-167\" href=\"#\">Australia / Oceania</a>",
+        "text": "Australia / Oceania"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__AUS_OCEAN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "173b1317-4ab3-ae67-aa52-121da9e4bb6d",
+      "text": {
+        "html": "<a class=\"button-168\" href=\"#\">Other</a>",
+        "text": "Other"
+      },
+      "attributes": {
+        "data-answer-key": "Q_REGION_CHILD__PREF_NOT",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 13
+  },
+  "lastUpdated": "2026-06-24T08:47:08.845Z"
+}

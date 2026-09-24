@@ -1,0 +1,115 @@
+{
+  "pageId": "6979decb0a9101569754f098",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "dfd5985b-86bf-c26a-7b9b-5fe84be2a193",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "0bc11614-c102-2190-1383-159720584078",
+      "text": {
+        "html": "<h1 class=\"heading-24\">What does mystery smell like to you?</h1>",
+        "text": "What does mystery smell like to you?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "06a765c8-395a-407f-209d-5e11509125de",
+      "text": {
+        "html": "<a class=\"button-138\" href=\"#\">Smoke or incense</a>",
+        "text": "Smoke or incense"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__SMOKE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "06128b59-ab97-0708-0255-312e869568f9",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-139\">Night (stars, dark night)</a>",
+        "text": "Night (stars, dark night)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__STARS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "10a58fca-4ed8-5d58-803e-991732e8f282",
+      "text": {
+        "html": "<a class=\"button-140\" href=\"#\">Antique wooden furniture</a>",
+        "text": "Antique wooden furniture"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__ANTIQU"
+      }
+    },
+    {
+      "type": "text",
+      "id": "cc307357-efcb-b042-5eb6-b8941eb47bd1",
+      "text": {
+        "html": "<a class=\"button-141\" href=\"#\">Something unfamiliar</a>",
+        "text": "Something unfamiliar"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__UNFAMIL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1c6ea3fa-c44c-852f-b053-1fe87610869e",
+      "text": {
+        "html": "<a class=\"button-142\" href=\"#\">Old books</a>",
+        "text": "Old books"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__OLD_BOOK"
+      }
+    },
+    {
+      "type": "text",
+      "id": "5f6f0673-92d1-506c-f884-e5e70452bda7",
+      "text": {
+        "html": "<a class=\"button-143\" href=\"#\">Spices</a>",
+        "text": "Spices"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__MYST_SPICE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "adc116a5-9be9-653d-7cbb-a1079b5f4547",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-144\">Abandoned places</a>",
+        "text": "Abandoned places"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__OLD_PLACES"
+      }
+    },
+    {
+      "type": "text",
+      "id": "f96bcc04-7f88-321a-8800-59ff1d1300c7",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-145\">Other (open answer)</a>",
+        "text": "Other (open answer)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 10
+  },
+  "lastUpdated": "2026-07-15T07:25:45.975Z"
+}

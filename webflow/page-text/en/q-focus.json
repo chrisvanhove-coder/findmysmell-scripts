@@ -1,0 +1,115 @@
+{
+  "pageId": "6979dee89c26e51952be7688",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "4eb06fa7-71b3-57f0-24a9-a6310aefbf3a",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "b0ad277f-0b89-93f6-d5ca-762b6b325ae5",
+      "text": {
+        "html": "<h1 class=\"heading-18\">What helps you concentrate?</h1>",
+        "text": "What helps you concentrate?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "333346be-8fa8-4497-9015-726633ea836e",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-96\">clean, cool air</a>",
+        "text": "clean, cool air"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__CLEAN_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7744ecfe-3237-3afc-1bbb-8d97843d2296",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-97\">quiet spaces / library&nbsp;</a>",
+        "text": "quiet spaces / library "
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__LIBRARY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2308412b-aecf-ad42-835e-9b13fac44ea3",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-98\">coffee</a>",
+        "text": "coffee"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__COFFEE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "111fe065-5681-c9bf-1a03-ab2aec89c117",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-99\">ice water</a>",
+        "text": "ice water"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__ICE_WATER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "885c6282-1e62-5f58-386e-021f10fd53d6",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-100\"> hot tea</a>",
+        "text": " hot tea"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__TEA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "01839990-0442-8f04-50db-93de7454a131",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-101\">no smell at all</a>",
+        "text": "no smell at all"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__NO_SMELL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b77ef772-cf78-b601-4265-cd068e0700cc",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-102\">lemon peel</a>",
+        "text": "lemon peel"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__LEMON_PEEL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "65480539-15d5-09ba-f2fa-c11c5ac40233",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-103\">other (open answer)</a>",
+        "text": "other (open answer)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 10
+  },
+  "lastUpdated": "2026-04-02T07:35:50.771Z"
+}

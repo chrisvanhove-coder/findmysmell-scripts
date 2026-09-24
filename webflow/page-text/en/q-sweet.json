@@ -1,0 +1,70 @@
+{
+  "pageId": "6979fe584caa02d2669329a4",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "5f534005-e355-4395-46dd-12c941e66d6d",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "6cae838e-8e8b-8446-02cd-1eee90555b1e",
+      "text": {
+        "html": "<h1 class=\"heading-11\"><strong class=\"bold-text-15\" data-w-id=\"66cdea9a-2a6e-6a67-ae00-bf4c20371885\">How do yOu feeL aboUt sweEtness <br data-w-id=\"ee5d41ce-8aaa-f774-ebe3-38659be00fc2\">‍<em data-w-id=\"66cdea9a-2a6e-6a67-ae00-bf4c2037188d\">in a perfume </em>On yoUr skiN?</strong></h1>",
+        "text": "How do yOu feeL aboUt sweEtness \n‍in a perfume On yoUr skiN?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "9dd9d019-1dd2-c8d4-8500-5407b35ba173",
+      "text": {
+        "html": "<a class=\"button-83\" href=\"#\">I avoid sweet scents<br data-w-id=\"6081ae36-5111-94ca-95d5-1675a0749468\"></a>",
+        "text": "I avoid sweet scents\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SWEET__NO_SWEET"
+      }
+    },
+    {
+      "type": "text",
+      "id": "969b1464-3c12-4278-9987-a691ca73b9fb",
+      "text": {
+        "html": "<a class=\"button-84\" href=\"#\">A slight&nbsp;touch of sweetness is okay</a>",
+        "text": "A slight touch of sweetness is okay"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SWEET__LITTLE_SW"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4a107ae4-b259-979a-1e75-b83e940d8e90",
+      "text": {
+        "html": "<a class=\"button-85\" href=\"#\">I enjoy a noticeable level of sweetness</a>",
+        "text": "I enjoy a noticeable level of sweetness"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SWEET__MODER_SW"
+      }
+    },
+    {
+      "type": "text",
+      "id": "10f7f94d-3df2-720c-2662-63a6fc4524fb",
+      "text": {
+        "html": "<a class=\"button-86\" href=\"#\">I really enjoy sweet scents on my skin</a>",
+        "text": "I really enjoy sweet scents on my skin"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SWEET__ENJOY_SW"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 6
+  },
+  "lastUpdated": "2026-03-25T15:17:51.493Z"
+}

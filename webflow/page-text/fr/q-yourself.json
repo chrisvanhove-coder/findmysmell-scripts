@@ -1,0 +1,92 @@
+{
+  "pageId": "6a3b93040f1f5d6397021ec9",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "fc230068-d145-8485-2aaf-556f7c915a3c",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "7545c43f-adde-56c8-ec24-acab17321a17",
+      "text": {
+        "html": "<h1 class=\"heading-16\"><strong class=\"bold-text-10\" data-w-id=\"c5a4e9ee-29f3-9952-8045-65699df5ace1\">Où vous sentez-vous le plus vous-même ?</strong></h1>",
+        "text": "Où vous sentez-vous le plus vous-même ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "d080149e-159d-3e79-83cb-3d7e2003cd95",
+      "text": {
+        "html": "<a class=\"button-50\" href=\"#\">Dans la nature (forêt, montagnes, grand air)</a>",
+        "text": "Dans la nature (forêt, montagnes, grand air)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__NATURE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "177f4636-8c64-422c-9a01-acdc041c82f1",
+      "text": {
+        "html": "<a class=\"button-51\" href=\"#\">Dans un environnement urbain</a>",
+        "text": "Dans un environnement urbain"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__CITYURBAN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "124a6447-f584-6d5c-5c10-e7b88f10a71a",
+      "text": {
+        "html": "<a class=\"button-52\" href=\"#\">Près de l'eau ou de la mer</a>",
+        "text": "Près de l'eau ou de la mer"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__NEARWATER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "eb33e897-096e-b51e-1ac4-c08d61027878",
+      "text": {
+        "html": "<a class=\"button-53\" href=\"#\">Dans un espace intérieur calme et tranquille</a>",
+        "text": "Dans un espace intérieur calme et tranquille"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__INDOOR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2786e4cf-8416-c237-467c-9ab0b547f556",
+      "text": {
+        "html": "<a class=\"button-54\" href=\"#\">En mouvement ou en transition (voyage, rues, entre-deux)</a>",
+        "text": "En mouvement ou en transition (voyage, rues, entre-deux)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__TRANSITION"
+      }
+    },
+    {
+      "type": "text",
+      "id": "abf10073-4268-c321-c418-8c542fb66183",
+      "text": {
+        "html": "<a class=\"button-55\" href=\"#\">Ça change</a>",
+        "text": "Ça change"
+      },
+      "attributes": {
+        "data-answer-key": "Q_YOURSELF__MIXED"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 8
+  },
+  "lastUpdated": "2026-06-24T08:20:28.159Z"
+}

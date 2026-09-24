@@ -1,0 +1,103 @@
+{
+  "pageId": "6a3be435deaec9bad0881392",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "7b58ec98-4576-ad8e-c20a-a31231f9c83f",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "1c3e0be2-f218-5452-86a3-7151c90c6037",
+      "text": {
+        "html": "<h1 class=\"heading-14\"><strong class=\"bold-text-8\" data-w-id=\"50ec6c34-86d8-9bb7-d04f-96996f05436c\">What mAkes a Space Feel lIkE yoUrs?</strong></h1>",
+        "text": "What mAkes a Space Feel lIkE yoUrs?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "229751d6-24ec-ae59-a0e5-5070722ceeb3",
+      "text": {
+        "html": "<a class=\"button-34\" href=\"#\">Knowing what comes next</a>",
+        "text": "Knowing what comes next"
+      },
+      "attributes": {
+        "data-answer-key": "Q_STAYWELL__KNOWNEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "d43a4548-1fbe-634a-2a11-defce5973277",
+      "text": {
+        "html": "<a class=\"button-35\" href=\"#\">Staying flexible as things change</a>",
+        "text": "Staying flexible as things change"
+      },
+      "attributes": {
+        "data-answer-key": "Q_STAYWELL__FLEXIB"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4e6f1346-f763-972c-98fe-6170e76fea25",
+      "text": {
+        "html": "<a class=\"button-36\" href=\"#\">Keeping familiar routines </a>",
+        "text": "Keeping familiar routines "
+      },
+      "attributes": {
+        "data-answer-key": "Q_STAYWELL__NOCHANG"
+      }
+    },
+    {
+      "type": "text",
+      "id": "aba96250-7033-dab6-001d-3125b6b41ec4",
+      "text": {
+        "html": "<a class=\"button-37\" href=\"#\">Having my people around me</a>",
+        "text": "Having my people around me"
+      },
+      "attributes": {
+        "data-answer-key": "Q_STAYWELL__SUPPEAPLE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "d107b27a-e80d-87f2-7e05-2524ec66c1f0",
+      "text": {
+        "html": "<a class=\"button-38\" href=\"#\">Feeling comfortable in my surroundings</a>",
+        "text": "Feeling comfortable in my surroundings"
+      },
+      "attributes": {
+        "data-answer-key": "Q_STAYWELL__GROUND"
+      }
+    },
+    {
+      "type": "text",
+      "id": "62608d88-986f-06cd-865c-229ea59304f5",
+      "text": {
+        "html": "<a class=\"button-39\" href=\"#\">Having a clear, calm mind</a>",
+        "text": "Having a clear, calm mind"
+      },
+      "attributes": {
+        "data-answer-key": "Q_STAYWELL__MENTCLR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "36e676ff-e38d-46b3-0df9-b1125fb888e1",
+      "text": {
+        "html": "<a class=\"button-40\" href=\"#\">Feeling excited by what’s ahead</a>",
+        "text": "Feeling excited by what’s ahead"
+      },
+      "attributes": {
+        "data-answer-key": "Q_STAYWELL__STIMULT"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-06-24T14:05:41.884Z"
+}

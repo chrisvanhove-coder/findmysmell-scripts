@@ -1,0 +1,70 @@
+{
+  "siteId": "69773aa3fded0e0107b28cbd",
+  "exported": "2026-09-24",
+  "locales": {
+    "primary": { "id": "69a98cf53a8601ad66e703fb", "cmsLocaleId": "69a98cf53a8601ad66e703e8", "tag": "en", "displayName": "English" },
+    "secondary": [
+      { "id": "69e0e9ba711b9d5d89b4b2c1", "cmsLocaleId": "69e0e9ba711b9d5d89b4b2c6", "tag": "fr-FR", "displayName": "French (France)", "subdirectory": "fr-fr", "enabled": false }
+    ]
+  },
+  "folders": { "fr": "6a3b8a1a3e81b81ac2c3b1e4", "ru": "6a3b8a4eab5257fc87860060" },
+  "pages": {
+    "fr": [
+      ["6a3bad4439182129f50dc1e6", "home"],
+      ["6a3ba04b3a9975cbe8e2b8c2", "result"],
+      ["6a3b9fa952eb77df8c8da4eb", "q-open"],
+      ["6a3b9f57485a4fd2ae8c219c", "q-radius"],
+      ["6a3b9eb10e53c714b94c1ac8", "q-skin-behavior"],
+      ["6a3b9e265e8d2b778a578029", "q-wild"],
+      ["6a3b9d962b43ea9d3679c519", "q-sweet"],
+      ["6a3b9b7093e70dd6ca31f776", "q-calm-now"],
+      ["6a3b9af53364c89139123dcd", "q-celebrate"],
+      ["6a3b998ccb8cfd908cd3f41a", "q-region-child"],
+      ["6a3b96e6965f6c15f31f7aa4", "q-env-child"],
+      ["6a3b9686c822f6f0f49cba90", "q-myst"],
+      ["6a3b9631926d49f9605b8790", "q-cozy"],
+      ["6a3b95d922ca1d46c0fc2aba", "q-sexy"],
+      ["6a3b959684da7649832a1b12", "q-energy"],
+      ["6a3b9534c7607a5271f25e6f", "q-calm"],
+      ["6a3b94d2965f6c15f31dd813", "q-play"],
+      ["6a3b946582c415efabc3f19b", "q-focus"],
+      ["6a3b936d51e884448a8a1a3b", "q-emo"],
+      ["6a3b93040f1f5d6397021ec9", "q-yourself"],
+      ["6a3b9167c6f80f520fa6b72a", "q-atmos"],
+      ["6a3b90b9cb8cfd908ccd1b95", "q-staywell"],
+      ["6a3b9035a9749af3cb677844", "q-daytday"],
+      ["6a3b8ffc89065710e541a336", "q-generation"],
+      ["6a3b8d040f1f5d6397fd2bc2", "q-region-now"],
+      ["6a3b8cf584da764983237ed1", "q-gender"],
+      ["6a3b8cd24f4a6e02d47f52a2", "legal-notice"],
+      ["6a3b8a7f40ae628b11b7827b", "privacy-policy"]
+    ],
+    "ru": [
+      ["6a3bfc97b1284acba7ce1c2e", "q-sexy"],
+      ["6a3bfb5f7b6b3f15b54ce620", "q-energy"],
+      ["6a3bfa9979aa24f19e05d3d2", "q-calm"],
+      ["6a3bf99ece1c210d602eb795", "q-play"],
+      ["6a3bf923fa28362202261d94", "q-focus"],
+      ["6a3bf7e1cb2d781313482512", "q-emo"],
+      ["6a3bf3f6ff3207f31325d928", "q-yourself"],
+      ["6a3be600fdc1dc0f5800529b", "q-atmos"],
+      ["6a3be435deaec9bad0881392", "q-staywell"],
+      ["6a3be324c8d937cf35b649aa", "q-daytday"],
+      ["6a3be2e687003725012af32c", "q-generation"],
+      ["6a3be0c2be1f45cb01e7f836", "q-region-now"],
+      ["6a3bdf3df74a28da9c791095", "q-gender"],
+      ["6a3bd76f10889567671fb9e2", "privacy-policy"],
+      ["69787ec510cc6699f1e84196", "q-gender-ru"]
+    ],
+    "misc": [
+      ["69ce66df1da99c17766e8a94", "legal-notice"],
+      ["69a98cf69fdd29cc57912031", "detail-perfumes-template"],
+      ["69a5a6144110dc3de4d6c292", "404"],
+      ["69933a7bc1a0cb7c66a6f30b", "privacy-policy"],
+      ["69787c7ad186a605844401a9", "quiz-ru"],
+      ["69773aa5fded0e0107b28cf3", "old-home"],
+      ["699812ef6054e1bf72e20920", "result"],
+      ["697a031af92d326f91b60299", "q-open"]
+    ]
+  }
+}

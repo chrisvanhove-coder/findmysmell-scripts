@@ -1,0 +1,203 @@
+<script>
+(function() {
+  const cvs = document.createElement('canvas');
+  cvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9997;opacity:0.07;mix-blend-mode:overlay;';
+  document.body.appendChild(cvs);
+  const ctx = cvs.getContext('2d');
+  function resize(){ cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  let last = 0;
+  function loop(ts) {
+    if (ts - last > 80) {
+      const img = ctx.createImageData(cvs.width, cvs.height);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = d[i+1] = d[i+2] = v;
+        d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      last = ts;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+<style>
+/* Bottle container injected into each existing Webflow button */
+.skin-bottle-wrap {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.skin-bottle-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: screen;
+}
+
+.skin-bottle-wrap.visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+@media (max-width: 640px) {
+  .skin-bottle-wrap {
+    width: 44px;
+    height: 44px;
+    right: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .skin-bottle-wrap {
+    width: 36px;
+    height: 36px;
+  }
+}
+</style>
+
+<script>
+(function() {
+
+  const bottles = [
+    {
+      key:   'Q_SKIN_BEHAVIOR__DISAPEAR',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/q_auto/f_auto/v1775129746/disappears_bottle_ocb5co.mp4'
+    },
+    {
+      key:   'Q_SKIN_BEHAVIOR__NORMAL',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/q_auto/f_auto/v1775129551/normal_bottle_iw2fsv.mp4'
+    },
+    {
+      key:   'Q_SKIN_BEHAVIOR__SWEETER',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/q_auto/f_auto/v1775129572/sweet_bottle_bklqke.mp4'
+    },
+    {
+      key:   'Q_SKIN_BEHAVIOR__SHARPER',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/q_auto/f_auto/v1775129591/bitter_bottle_inlsov.mp4'
+    },
+    {
+      key:   'Q_SKIN_BEHAVIOR__NOT_SURE',
+      video: 'https://res.cloudinary.com/dcefrxxav/video/upload/q_auto/f_auto/v1775129611/not_sure_bottle_vdb1fs.mp4'
+    },
+  ];
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+
+  function init() {
+    const wraps = [];
+    const vids  = [];
+
+    bottles.forEach((b, idx) => {
+      /* Find the existing Webflow button */
+      const btn = document.querySelector('[data-answer-key="' + b.key + '"]');
+      if (!btn) return;
+
+      /* Make sure the button is position:relative so absolute child works */
+      const pos = getComputedStyle(btn).position;
+      if (pos === 'static') btn.style.position = 'relative';
+
+      /* Build bottle video wrapper */
+      const wrap = document.createElement('div');
+      wrap.className = 'skin-bottle-wrap';
+
+      const vid = document.createElement('video');
+      vid.src = b.video;
+      vid.autoplay = true;
+      vid.muted = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      vid.preload = 'auto';
+
+      wrap.appendChild(vid);
+      btn.appendChild(wrap);
+      wraps.push(wrap);
+      vids.push(vid);
+
+      /* Desktop hover — show bottle, don't interfere with click */
+      btn.addEventListener('mouseenter', () => {
+        if (isMobile()) return;
+        moveTo(idx, wraps, vids);
+      });
+      btn.addEventListener('mouseleave', () => {
+        if (isMobile()) return;
+        hideAll(wraps);
+      });
+
+      /* Mobile — single tap shows bottle, Webflow handles the click/select */
+      let touchStartY = 0;
+      btn.addEventListener('touchstart', (e) => {
+        if (!isMobile()) return;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      btn.addEventListener('touchend', (e) => {
+        if (!isMobile()) return;
+        const movedY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+        if (movedY > 10) return; /* scroll */
+        moveTo(idx, wraps, vids);
+        /* Webflow's own click fires naturally — no need to trigger it */
+      }, { passive: true });
+    });
+
+    /* Auto-walk on load */
+    let currentIdx = 0;
+    let autoTimer;
+
+    function autoWalk() {
+      autoTimer = setInterval(() => {
+        currentIdx = (currentIdx + 1) % wraps.length;
+        moveTo(currentIdx, wraps, vids);
+      }, 2200);
+    }
+
+    /* Stop auto-walk on first interaction */
+    document.addEventListener('touchstart', () => clearInterval(autoTimer), { once: true, passive: true });
+    document.addEventListener('mouseenter', () => clearInterval(autoTimer), { once: true });
+
+    /* Init — show first bottle, start auto-walk */
+    if (wraps.length > 0) {
+      moveTo(0, wraps, vids);
+      setTimeout(autoWalk, 1800);
+    }
+  }
+
+  function moveTo(idx, wraps, vids) {
+    wraps.forEach((w, i) => {
+      w.classList.remove('visible');
+    });
+    if (wraps[idx]) {
+      wraps[idx].classList.add('visible');
+      vids[idx].play();
+    }
+  }
+
+  function hideAll(wraps) {
+    wraps.forEach(w => w.classList.remove('visible'));
+  }
+
+  /* Wait for Webflow buttons to be in DOM */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    requestAnimationFrame(() => requestAnimationFrame(init));
+  }
+
+})();
+</script>

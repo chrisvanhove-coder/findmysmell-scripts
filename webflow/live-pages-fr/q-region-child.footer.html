@@ -1,0 +1,191 @@
+<!--
+  REGION CHILD — Country Dropdown Embed
+  ─────────────────────────────────────
+  SETUP IN WEBFLOW:
+  1. Delete the entire existing overlay script 🗑️
+  2. Delete any radio button / answer option elements 🗑️
+  3. Paste this embed anywhere on the page — it centers itself ✅
+  ─────────────────────────────────────
+-->
+
+<style>
+#fms-rc-outer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 50;
+  pointer-events: none;
+}
+#fms-rc-wrap {
+  pointer-events: all;
+  width: 100%;
+  max-width: 480px;
+  font-family: 'Inconsolata', monospace;
+  position: relative;
+}
+#fms-rc-question {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial, sans-serif;
+  font-size: clamp(22px, 4vw, 36px);
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+#fms-rc-input-wrap {
+  position: relative;
+}
+#fms-rc-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-family: 'Inconsolata', monospace;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+  color: #ffffff;
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 0.02em;
+}
+#fms-rc-input::placeholder { color: rgba(255,255,255,0.35); }
+#fms-rc-input:focus { border-color: rgba(255,255,255,0.5); }
+#fms-rc-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #3d3d20;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 3px;
+  z-index: 200;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+#fms-rc-list::-webkit-scrollbar { width: 4px; }
+#fms-rc-list::-webkit-scrollbar-track { background: transparent; }
+#fms-rc-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+.fms-rc-item {
+  padding: 12px 20px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.02em;
+}
+.fms-rc-item:hover { background: rgba(255,255,255,0.08); color: #ffffff; }
+.fms-rc-none {
+  padding: 12px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.35);
+  font-style: italic;
+}
+@media (max-width: 480px) {
+  #fms-rc-outer { padding: 20px; }
+  #fms-rc-input { font-size: 15px; padding: 14px 16px; }
+  .fms-rc-item { padding: 11px 16px; font-size: 14px; }
+}
+</style>
+
+<div id="fms-rc-outer">
+  <div id="fms-rc-wrap">
+    <div id="fms-rc-question">Où avez-vous grandi ?</div>
+    <div id="fms-rc-input-wrap">
+      <input id="fms-rc-input" type="text" placeholder="Rechercher votre pays…" autocomplete="off" spellcheck="false">
+      <div id="fms-rc-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var ANSWER_KEY = 'Q_REGION_CHILD';
+var NEXT_PAGE = '/fr/q-celebrate';
+
+var COUNTRIES = [
+    'Afghanistan','Albanie','Algérie','Andorre','Angola','Antigua-et-Barbuda',
+    'Argentine','Arménie','Australie','Autriche','Azerbaïdjan','Bahamas','Bahreïn',
+    'Bangladesh','Barbade','Biélorussie','Belgique','Belize','Bénin','Bhoutan','Bolivie',
+    'Bosnie-Herzégovine','Botswana','Brésil','Brunéi','Bulgarie','Burkina Faso',
+    'Burundi','Cap-Vert','Cambodge','Cameroun','Canada','République centrafricaine',
+    'Tchad','Chili','Chine','Colombie','Comores','Congo','Costa Rica','Croatie','Cuba',
+    'Chypre','République tchèque','Danemark','Djibouti','Dominique','République dominicaine',
+    'Équateur','Égypte','Salvador','Guinée équatoriale','Érythrée','Estonie',
+    'Eswatini','Éthiopie','Fidji','Finlande','France','Gabon','Gambie','Géorgie',
+    'Allemagne','Hong Kong (RAS Chine)','Ghana','Grèce','Grenade','Guatemala','Guinée','Guinée-Bissau',
+    'Guyana','Haïti','Honduras','Hongrie','Islande','Inde','Indonésie','Iran','Irak',
+    'Irlande','Israël','Italie','Jamaïque','Japon','Jordanie','Kazakhstan','Kenya',
+    'Kiribati','Koweït','Kirghizistan','Laos','Lettonie','Liban','Lesotho','Libéria',
+    'Libye','Liechtenstein','Lituanie','Luxembourg','Madagascar','Malawi','Malaisie',
+    'Maldives','Mali','Malte','Îles Marshall','Mauritanie','Maurice','Mexique',
+    'Micronésie','Moldavie','Monaco','Mongolie','Monténégro','Maroc','Mozambique',
+    'Myanmar','Namibie','Nauru','Népal','Pays-Bas','Nouvelle-Zélande','Nicaragua',
+    'Niger','Nigéria','Corée du Nord','Macédoine du Nord','Norvège','Oman','Pakistan',
+    'Palaos','Palestine','Panama','Papouasie-Nouvelle-Guinée','Paraguay','Pérou','Philippines',
+    'Pologne','Portugal','Qatar','Roumanie','Russie','Rwanda','Saint-Kitts-et-Nevis',
+    'Sainte-Lucie','Saint-Vincent-et-les-Grenadines','Samoa','Saint-Marin',
+    'Sao Tomé-et-Principe','Arabie saoudite','Sénégal','Serbie','Seychelles',
+    'Sierra Leone','Singapour','Slovaquie','Slovénie','Îles Salomon','Somalie',
+    'Afrique du Sud','Corée du Sud','Soudan du Sud','Espagne','Sri Lanka','Soudan',
+    'Suriname','Suède','Suisse','Syrie','Taïwan','Tadjikistan','Tanzanie',
+    'Thaïlande','Timor oriental','Togo','Tonga','Trinité-et-Tobago','Tunisie',
+    'Turquie','Turkménistan','Tuvalu','Ouganda','Ukraine','Émirats arabes unis',
+    'Royaume-Uni','États-Unis','Uruguay','Ouzbékistan','Vanuatu','Vatican',
+    'Venezuela','Viêt Nam','Yémen','Zambie','Zimbabwe'
+  ];
+
+  var input = document.getElementById('fms-rc-input');
+  var list  = document.getElementById('fms-rc-list');
+
+  function renderList(filter) {
+    var q = (filter || '').toLowerCase().trim();
+    var matches = q
+      ? COUNTRIES.filter(function(c) { return c.toLowerCase().indexOf(q) !== -1; })
+      : COUNTRIES;
+    list.innerHTML = matches.length
+      ? matches.map(function(c) {
+          return '<div class="fms-rc-item" data-value="' + c + '">' + c + '</div>';
+        }).join('')
+      : '<div class="fms-rc-none">No results</div>';
+    list.style.display = 'block';
+  }
+
+  function saveAndNavigate(country) {
+    var answers = {};
+    try {
+      answers = JSON.parse(
+        sessionStorage.getItem('quiz_answers') ||
+        localStorage.getItem('quiz_answers') || '{}'
+      );
+    } catch(e) {}
+    answers[ANSWER_KEY] = country;
+    var json = JSON.stringify(answers);
+    sessionStorage.setItem('quiz_answers', json);
+    localStorage.setItem('quiz_answers', json);
+    window.location.href = NEXT_PAGE;
+  }
+
+  input.addEventListener('input', function() { renderList(this.value); });
+  input.addEventListener('focus', function() { renderList(this.value); });
+
+  list.addEventListener('mousedown', function(e) {
+    var item = e.target.closest('.fms-rc-item');
+    if (item) saveAndNavigate(item.getAttribute('data-value'));
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('fms-rc-outer').contains(e.target)) {
+      list.style.display = 'none';
+    }
+  });
+})();
+</script>

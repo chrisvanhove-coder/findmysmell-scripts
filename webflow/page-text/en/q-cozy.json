@@ -1,0 +1,104 @@
+{
+  "pageId": "6979deb8a5ce0a3bf7c3dcbc",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "5f4c0753-995f-c5c4-993f-389f06f906ee",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "63305748-c7c1-d6aa-0190-b8cf479a7e91",
+      "text": {
+        "html": "<h1 class=\"heading-23\">wHat does cozy smell like to you?</h1>",
+        "text": "wHat does cozy smell like to you?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "222a6f8b-e571-f171-c4aa-75a8eb0fdb49",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-131\">Warm skin or a hug</a>",
+        "text": "Warm skin or a hug"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__WARM_SKIN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4544488f-45db-efdb-da69-b2300dff7983",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-132\">Soft fabric (blanket)</a>",
+        "text": "Soft fabric (blanket)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__BLANKET"
+      }
+    },
+    {
+      "type": "text",
+      "id": "15c0c7cd-6da9-04a2-f33f-868cd8f8d6b6",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-133\">Baking or warm food</a>",
+        "text": "Baking or warm food"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__BAKING"
+      }
+    },
+    {
+      "type": "text",
+      "id": "6861ec39-4edd-01dc-d6b0-97bda123f145",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-134\">Fireplace or candles</a>",
+        "text": "Fireplace or candles"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__FIREPLAC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b8b8088f-2356-28f1-a23f-6dbb594ff5a1",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-135\">Hot drink before bed</a>",
+        "text": "Hot drink before bed"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__HOT_CHOC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "d898c763-c07a-4fdf-35f9-be77f8936d92",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-136\">Bubble bath</a>",
+        "text": "Bubble bath"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__BUBBLE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "92d4ba01-fa57-6d02-73d3-f1b4a58a2113",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-137\">Other (open answer)</a>",
+        "text": "Other (open answer)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-04-02T07:50:28.573Z"
+}

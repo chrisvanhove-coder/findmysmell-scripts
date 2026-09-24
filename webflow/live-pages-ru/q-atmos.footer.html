@@ -1,0 +1,130 @@
+<script>
+(function() {
+  const imageMap = {
+    'Q_ATMOS__WINTER':   'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152be0d1668b1a5d762eb_atm-winter.png',
+    'Q_ATMOS__FOGGY':    'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152bb7f3c9223a18ee5fb_atm-fog.png',
+    'Q_ATMOS__VILLAGE':  'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152be93b3329a2683ce4e_atm-smalltown.png',
+    'Q_ATMOS__PARKRAIN': 'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152bee646262e3edbeb46_atm-rain.png',
+    'Q_ATMOS__SOUTHFR':  'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152be95a664a54cceea63_atm-mediterranean.png',
+    'Q_ATMOS__TROPICS':  'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152bea17ed09a8c733c02_atm-tropical.png',
+    'Q_ATMOS__SEA_AIR':  'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152bd7317a9cd64fcf7a7_atm-sea.png',
+    'Q_ATMOS__MOUNT_AIR':'https://cdn.prod.website-files.com/69773aa3fded0e0107b28cbd/69b152beaca47622d5595175_atm-mountains.png'
+  };
+
+  const bg = document.createElement('div');
+  bg.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    pointer-events: none;
+  `;
+  document.body.appendChild(bg);
+
+  const section = document.querySelector('[data-question-id="Q_ATMOS"]');
+  if (section) {
+    section.style.position = 'relative';
+    section.style.zIndex = '1';
+  }
+
+  Object.values(imageMap).forEach(url => {
+    const img = new Image();
+    img.src = url;
+  });
+
+  let currentKey = null;
+  let fadeOutTimer = null;
+  let activeTouchKey = null;
+  let touchStartY = 0;
+  let didScroll = false;
+
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+  const buttons = document.querySelectorAll('[data-answer-key^="Q_ATMOS"]');
+
+  function showImage(key) {
+    if (!imageMap[key]) return;
+    clearTimeout(fadeOutTimer);
+    bg.style.backgroundImage = `url('${imageMap[key]}')`;
+    bg.style.opacity = '1';
+    currentKey = key;
+  }
+
+  function hideImage() {
+    fadeOutTimer = setTimeout(() => {
+      bg.style.opacity = '0';
+      currentKey = null;
+    }, 200);
+  }
+
+  function dimOthers(activeBtn) {
+    buttons.forEach(b => {
+      b.style.opacity = b === activeBtn ? '1' : '0.4';
+      b.style.transition = 'opacity 0.3s ease';
+    });
+  }
+
+  function resetAll() {
+    buttons.forEach(b => { b.style.opacity = '1'; });
+  }
+
+  buttons.forEach(btn => {
+    const key = btn.getAttribute('data-answer-key');
+
+    // Desktop hover
+    btn.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      showImage(key);
+      dimOthers(btn);
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      resetAll();
+      hideImage();
+    });
+
+    // Track scroll intent
+    btn.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      touchStartY = e.touches[0].clientY;
+      didScroll = false;
+    }, { passive: true });
+
+    btn.addEventListener('touchmove', () => {
+      didScroll = true;
+    }, { passive: true });
+
+    // Intercept click — block on first tap, allow on second
+    btn.addEventListener('click', (e) => {
+      if (!isMobile()) return;
+      if (didScroll) return; // was a scroll, ignore
+
+      if (activeTouchKey !== key) {
+        // First tap — show image, block navigation
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        activeTouchKey = key;
+        showImage(key);
+        dimOthers(btn);
+      }
+      // Second tap on same key — do nothing, let click through naturally
+    });
+  });
+
+  // Tap outside resets
+  document.addEventListener('touchstart', (e) => {
+    if (!isMobile()) return;
+    const tappedButton = e.target.closest('[data-answer-key^="Q_ATMOS"]');
+    if (!tappedButton) {
+      activeTouchKey = null;
+      resetAll();
+      hideImage();
+    }
+  }, { passive: true });
+
+})();
+</script>

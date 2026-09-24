@@ -1,0 +1,104 @@
+{
+  "pageId": "6a3b94d2965f6c15f31dd813",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "84bac21d-04f6-7ac7-3f00-b792686e4f04",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "b08d381c-5443-271b-4aa8-34a091612cec",
+      "text": {
+        "html": "<h1 class=\"heading-19\">À quoi ressemble l'odeur de la légèreté pour vous ?</h1>",
+        "text": "À quoi ressemble l'odeur de la légèreté pour vous ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "d4695577-1706-2355-5f03-fdc2075be3ed",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-104\">Fruits</a>",
+        "text": "Fruits"
+      },
+      "attributes": {
+        "data-answer-key": "Q_PLAY__FRUIT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4675696b-eb61-a377-8bd3-04d30c489301",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-105\">Bulles ou effervescence</a>",
+        "text": "Bulles ou effervescence"
+      },
+      "attributes": {
+        "data-answer-key": "Q_PLAY__BUBBLE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "053536d2-451c-ea6a-9fb0-537faace4134",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-106\">Aventure (nouveaux endroits, mouvement)</a>",
+        "text": "Aventure (nouveaux endroits, mouvement)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_PLAY__ADVENT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "34ae1691-bfe4-da75-164f-f5cdb7840d88",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-107\">Agrumes vifs</a>",
+        "text": "Agrumes vifs"
+      },
+      "attributes": {
+        "data-answer-key": "Q_PLAY__BRIGHT_CITR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4fd0a8e6-0060-9502-e595-604c6adc1f49",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-108\">Flirt (taquin)</a>",
+        "text": "Flirt (taquin)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_PLAY__FLIRT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "204b408a-0453-9d0e-5929-8294769a4f04",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-109\">Verts lumineux (herbe fraîche, tiges coupées)</a>",
+        "text": "Verts lumineux (herbe fraîche, tiges coupées)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_PLAY__GREEN_FRESH"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4b3be9b7-b121-f62e-687f-3a3902e496e5",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-110\">Autre (réponse libre)</a>",
+        "text": "Autre (réponse libre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_PLAY__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-06-24T08:28:29.849Z"
+}

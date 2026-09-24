@@ -1,0 +1,104 @@
+{
+  "pageId": "6a3b959684da7649832a1b12",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "f9972fd4-8e1c-8d1f-c99c-cd944a8220d0",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "58fbae58-2313-da11-3d5c-c8821153b77f",
+      "text": {
+        "html": "<h1 class=\"heading-21\">À quelle odeur associez vous l'énergie ?</h1>",
+        "text": "À quelle odeur associez vous l'énergie ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "17967876-a5bc-4465-268f-6b3d554defab",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-118\">Agrumes</a>",
+        "text": "Agrumes"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__CITRUS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "bb8b8496-680c-dad8-bfc4-9b68e40531a7",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-119\">Musique (rythme, tempo, mouvement)</a>",
+        "text": "Musique (rythme, tempo, mouvement)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__MUSIC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "763a7c73-37ef-c782-01ab-d1eb4808d464",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-120\">Air froid ou douche froide</a>",
+        "text": "Air froid ou douche froide"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__COLD_SHOW"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3fa5a0f2-c76c-755b-f79f-aba1edfd1f0a",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-121\">Menthe, basilic ou autres herbes vertes</a>",
+        "text": "Menthe, basilic ou autres herbes vertes"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__HERBS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c2110abb-21fe-9c02-7866-eea1d605e786",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-122\">Épices chaudes</a>",
+        "text": "Épices chaudes"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__HOT_SPICE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "dfbf6104-5621-5a5f-6d40-130ec8c631a1",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-123\">Soleil ou chaleur</a>",
+        "text": "Soleil ou chaleur"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__SUN_HEAT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b38bd264-1e44-6aab-8b72-ec8ed82ddcf3",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-124\">Autre (réponse libre)</a>",
+        "text": "Autre (réponse libre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-06-25T10:12:25.545Z"
+}

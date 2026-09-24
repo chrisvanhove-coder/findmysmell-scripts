@@ -1,0 +1,81 @@
+{
+  "pageId": "697a0199e505e8e557fba3c4",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "2050ce14-6f73-1e90-8aac-48115f10f8a8",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "f8826a6f-f46a-24fc-400e-f5aff1f1ea32",
+      "text": {
+        "html": "<h1><strong class=\"bold-text-16\" data-w-id=\"8bb9e218-1301-efb6-3684-5aa517652154\">how does perfume behave on your skin?</strong></h1>",
+        "text": "how does perfume behave on your skin?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "991e4651-39e5-352e-9602-3b5b518de271",
+      "text": {
+        "html": "<a class=\"button-87\" href=\"#\">It disappears quickly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </a>",
+        "text": "It disappears quickly              "
+      },
+      "attributes": {
+        "data-answer-key": "Q_SKIN_BEHAVIOR__DISAPEAR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "f1de220d-25bb-1677-6726-a537b26ecae0",
+      "text": {
+        "html": "<a class=\"button-88\" href=\"#\">It lasts normally&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
+        "text": "It lasts normally             "
+      },
+      "attributes": {
+        "data-answer-key": "Q_SKIN_BEHAVIOR__NORMAL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "31420e3f-1058-56b5-8027-3e0cded12ba2",
+      "text": {
+        "html": "<a class=\"button-89\" href=\"#\">It becomes sweeter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
+        "text": "It becomes sweeter             "
+      },
+      "attributes": {
+        "data-answer-key": "Q_SKIN_BEHAVIOR__SWEETER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "bc3b8775-49cb-f287-58ac-66d3bb87a254",
+      "text": {
+        "html": "<a class=\"button-90\" href=\"#\">It becomes more bitter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
+        "text": "It becomes more bitter             "
+      },
+      "attributes": {
+        "data-answer-key": "Q_SKIN_BEHAVIOR__SHARPER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "ed5ff761-1096-3b33-4d93-a32c160fee68",
+      "text": {
+        "html": "<a class=\"button-91\" href=\"#\">Not sure&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>",
+        "text": "Not sure                                        "
+      },
+      "attributes": {
+        "data-answer-key": "Q_SKIN_BEHAVIOR__NOT_SURE"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 7
+  },
+  "lastUpdated": "2026-04-13T13:18:27.275Z"
+}

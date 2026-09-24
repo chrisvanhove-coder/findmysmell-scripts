@@ -1,0 +1,115 @@
+{
+  "pageId": "6a3b9686c822f6f0f49cba90",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "dfd5985b-86bf-c26a-7b9b-5fe84be2a193",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "0bc11614-c102-2190-1383-159720584078",
+      "text": {
+        "html": "<h1 class=\"heading-24\">À quelle odeur associez vous le mystère ?</h1>",
+        "text": "À quelle odeur associez vous le mystère ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "06a765c8-395a-407f-209d-5e11509125de",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-138\">Fumée ou encens</a>",
+        "text": "Fumée ou encens"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__SMOKE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "06128b59-ab97-0708-0255-312e869568f9",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-139\">La nuit (étoiles, nuit sombre, espace)</a>",
+        "text": "La nuit (étoiles, nuit sombre, espace)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__STARS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "10a58fca-4ed8-5d58-803e-991732e8f282",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-140\">Vieux meubles en bois</a>",
+        "text": "Vieux meubles en bois"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__ANTIQU"
+      }
+    },
+    {
+      "type": "text",
+      "id": "cc307357-efcb-b042-5eb6-b8941eb47bd1",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-141\">Quelque chose d'inconnu</a>",
+        "text": "Quelque chose d'inconnu"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__UNFAMIL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1c6ea3fa-c44c-852f-b053-1fe87610869e",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-142\">Vieux livres</a>",
+        "text": "Vieux livres"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__OLD_BOOK"
+      }
+    },
+    {
+      "type": "text",
+      "id": "5f6f0673-92d1-506c-f884-e5e70452bda7",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-143\">Épices</a>",
+        "text": "Épices"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__MYST_SPICE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "adc116a5-9be9-653d-7cbb-a1079b5f4547",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-144\">Endroits abandonnés (vieilles maisons, espaces oubliés)</a>",
+        "text": "Endroits abandonnés (vieilles maisons, espaces oubliés)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__OLD_PLACES"
+      }
+    },
+    {
+      "type": "text",
+      "id": "f96bcc04-7f88-321a-8800-59ff1d1300c7",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-145\">Autre (réponse libre)</a>",
+        "text": "Autre (réponse libre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_MYST__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 10
+  },
+  "lastUpdated": "2026-06-25T10:15:16.299Z"
+}

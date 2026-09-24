@@ -1,0 +1,125 @@
+{
+  "pageId": "6a3be600fdc1dc0f5800529b",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "2ccda193-224d-7978-79f0-18a721f17a4c",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "e3066613-ca9e-37a5-c1e3-ea4143edc9b7",
+      "text": {
+        "html": "<h1 class=\"heading-15\"><strong class=\"bold-text-9\" data-w-id=\"b7a91b88-8c6f-ab92-68d1-b5fbd3148467\">КАКОЙ КЛИМАТ ОЩУЩАЕТСЯ КАК САМЫЙ ЕСТЕСТВЕННЫЙ И КОМФОРТНЫЙ ДЛЯ ТВОЕГО ТЕЛА?</strong></h1>",
+        "text": "КАКОЙ КЛИМАТ ОЩУЩАЕТСЯ КАК САМЫЙ ЕСТЕСТВЕННЫЙ И КОМФОРТНЫЙ ДЛЯ ТВОЕГО ТЕЛА?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "f9231dd3-3176-180c-aab3-4f08e02fb750",
+      "text": {
+        "html": "<a class=\"button-41\" href=\"#\">Зимний воздух<br data-w-id=\"01b7488e-df6b-411d-fe57-58e943c76465\">свежий, сухой, быстрый</a>",
+        "text": "Зимний воздух\nсвежий, сухой, быстрый"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__WINTER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b4c8d9fd-ddee-9224-51a5-3f21c19d7ad0",
+      "text": {
+        "html": "<a class=\"button-42\" href=\"#\">Туман<br data-w-id=\"b62e1b46-547f-ec5b-b5b0-4e0db0707d4e\">прохладный, влажный воздух</a>",
+        "text": "Туман\nпрохладный, влажный воздух"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__FOGGY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c235cc67-1eff-0978-6ac7-a5498bb38ca8",
+      "text": {
+        "html": "<a class=\"button-43\" href=\"#\">Деревня<br data-w-id=\"d75153bd-46f5-fe3f-5f3b-8b25a71ec77d\">сухой, спокойный, нейтральный воздух</a>",
+        "text": "Деревня\nсухой, спокойный, нейтральный воздух"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__VILLAGE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c2b20b88-aab1-18f3-f7fb-532d31a97d0d",
+      "text": {
+        "html": "<a class=\"button-44\" href=\"#\">Парк после дождя<br data-w-id=\"9ce8ba77-f339-72bd-b41e-efc4ad1c1567\">мягкий, зелёный, слегка влажный</a>",
+        "text": "Парк после дождя\nмягкий, зелёный, слегка влажный"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__PARKRAIN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "a1325466-839c-c484-98ee-623bfd21f29e",
+      "text": {
+        "html": "<a class=\"button-45\" href=\"#\">Средиземноморские города<br data-w-id=\"ff6a951a-9815-0ddd-128e-31790055de5b\">тёплый, сухой воздух</a>",
+        "text": "Средиземноморские города\nтёплый, сухой воздух"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__SOUTHFR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "fdb6cbf8-69f1-aaa8-bb97-f584c326dc28",
+      "text": {
+        "html": "<a class=\"button-46\" href=\"#\">Тропики<br data-w-id=\"e36ea8d4-d651-ec01-4e71-876b5f7503bb\">горячий, плотный, влажный воздух</a>",
+        "text": "Тропики\nгорячий, плотный, влажный воздух"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__TROPICS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "701e601a-7e2b-939c-63f1-ffd6658d9c6a",
+      "text": {
+        "html": "<a class=\"button-47\" href=\"#\">У моря <br data-w-id=\"9ba7ff86-49ef-8f2a-10b1-5affd89f0a3b\">солёный воздух, минеральная яркость, постоянный бриз</a>",
+        "text": "У моря \nсолёный воздух, минеральная яркость, постоянный бриз"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__SEA_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1fc9b3a1-1f7a-7be3-5a01-f78bc632e1b9",
+      "text": {
+        "html": "<a class=\"button-48\" href=\"#\">В горах<br data-w-id=\"37ab4996-f79a-bdb2-e9cd-f47bb23dbd15\">чистый, пронизывающий, слегка холодный воздух<br data-w-id=\"599ca2bb-551b-ee72-4e36-50b538527569\"></a>",
+        "text": "В горах\nчистый, пронизывающий, слегка холодный воздух\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__MOUNT_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "6c75359d-4e20-a61b-8b28-30c1358fe4ba",
+      "text": {
+        "html": "<a class=\"button-49\" href=\"#\">Не знаю / нет предпочтений</a>",
+        "text": "Не знаю / нет предпочтений"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__NO_PREFER"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 11
+  },
+  "lastUpdated": "2026-06-24T15:12:37.626Z"
+}

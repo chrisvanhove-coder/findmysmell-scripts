@@ -1,0 +1,70 @@
+{
+  "pageId": "6a3b96e6965f6c15f31f7aa4",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "93509960-0932-05a6-93fd-fd49a7da1e35",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "67d36d1a-4da4-d865-c487-f051fdee98d6",
+      "text": {
+        "html": "<h1><strong class=\"bold-text-12\" data-w-id=\"23afa498-123e-39e8-e479-948586cfd66d\">What geneRal eNvironment Did yoU grOw uP in?</strong></h1>",
+        "text": "What geneRal eNvironment Did yoU grOw uP in?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "a2412730-9609-dee4-270b-8591d22f1d2f",
+      "text": {
+        "html": "<a class=\"button-67\" href=\"#\">Small town/Suburb</a>",
+        "text": "Small town/Suburb"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENV_CHILD__SMALL_TOWN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "da4ebc31-eaba-6fc4-9c99-f06385ac9da5",
+      "text": {
+        "html": "<a class=\"button-66\" href=\"#\">By the sea</a>",
+        "text": "By the sea"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENV_CHILD__SEA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "350614c9-3d4a-c33f-deb9-14d290a266bb",
+      "text": {
+        "html": "<a class=\"button-64\" href=\"#\">Near forests or mountains</a>",
+        "text": "Near forests or mountains"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENV_CHILD__FOREST_MOUNT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "f40d1230-32e9-e4a5-d21a-896e39e5619d",
+      "text": {
+        "html": "<a class=\"button-65\" href=\"#\">Big city</a>",
+        "text": "Big city"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENV_CHILD__CITY"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 6
+  },
+  "lastUpdated": "2026-06-24T08:35:50.797Z"
+}

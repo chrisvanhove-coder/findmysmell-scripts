@@ -1,0 +1,70 @@
+{
+  "pageId": "697a02806d03694f9734ff64",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "9251afc4-8323-17e7-60d3-8eb824da9ece",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "0667ca91-b7ec-edf2-f708-7608b9a6cb7d",
+      "text": {
+        "html": "<h1 class=\"heading-25\"><strong class=\"bold-text-17\" data-w-id=\"ff9db758-9377-7be3-22eb-d5d482effcd6\">Do you prefer your scent to <br data-w-id=\"f9f091b4-2d0d-4ffc-5681-557acc1171bb\">stay close to the skin or project around you?</strong></h1>",
+        "text": "Do you prefer your scent to \nstay close to the skin or project around you?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "9bfb9fa5-8442-b778-cf85-7c4771d9f4e6",
+      "text": {
+        "html": "<a class=\"button-95\" href=\"#\">Close to skin: only me</a>",
+        "text": "Close to skin: only me"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__CLOSE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "d715cbc5-c3be-267d-02ee-5d7948fe6426",
+      "text": {
+        "html": "<a class=\"button-94\" href=\"#\">Soft aura: only me and closest to me</a>",
+        "text": "Soft aura: only me and closest to me"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__SOFT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "499a7121-326a-eeef-a2b2-5920b7b6013f",
+      "text": {
+        "html": "<a class=\"button-93\" href=\"#\">Noticeable: people start looking at you</a>",
+        "text": "Noticeable: people start looking at you"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__NOTICEABLE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "696f94f2-fd8c-79b1-e048-7bd4661d9219",
+      "text": {
+        "html": "<a class=\"button-92\" href=\"#\">Bold: everyone must know</a>",
+        "text": "Bold: everyone must know"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__BOLD"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 6
+  },
+  "lastUpdated": "2026-04-13T13:08:45.722Z"
+}

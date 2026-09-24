@@ -1,0 +1,315 @@
+
+<style>
+#staywell-layout {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #953d27;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 100px 8vw 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+#staywell-question {
+  font-family: 'HIGHCRUISER', 'Arial Black', Arial;
+  font-size: clamp(20px, 3vw, 36px);
+  color: #e6e5dd;
+  letter-spacing: 0.08em;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+  pointer-events: none;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.staywell-option {
+  font-family: 'Inconsolata', Arial;
+  font-size: clamp(14px, 2.2vw, 26px);
+  color: #272727;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  cursor: pointer;
+  opacity: 0;
+  padding: 6px 0;
+  /* No white-space:nowrap — allows wrapping on mobile */
+  will-change: transform;
+  text-transform: none;
+}
+
+.staywell-option.visible {
+  opacity: 1;
+}
+
+.staywell-option.dimmed {
+  opacity: 0.2 !important;
+  color: #fff !important;
+}
+
+.staywell-option.active {
+  color: #f1e09b !important;
+}
+
+@media (max-width: 600px) {
+  #staywell-layout {
+    padding: 90px 6vw 30px;
+  }
+  #staywell-question {
+    font-size: clamp(14px, 5vw, 20px);
+    margin-bottom: 20px;
+    white-space: normal;
+    max-width: 88vw;
+    line-height: 1.2;
+  }
+  .staywell-option {
+    font-size: clamp(11px, 3.8vw, 16px);
+    max-width: 88vw;
+    line-height: 1.3;
+    padding: 4px 0;
+    /* Disable transform on mobile so wave doesn't cause jitter */
+    will-change: auto;
+  }
+}
+</style>
+
+<script>
+(function() {
+
+  const options = [
+    { key: 'Q_STAYWELL__KNOWNEX',   text: 'Знать, что будет дальше' },
+    { key: 'Q_STAYWELL__FLEXIB',    text: 'Оставаться гибким когда всё меняется'},
+    { key: 'Q_STAYWELL__NOCHANG',   text: 'Следовать привычным ритуалам' },
+    { key: 'Q_STAYWELL__SUPPEAPLE', text: 'Быть рядом со своими людьми' },
+    { key: 'Q_STAYWELL__GROUND',    text: 'Чувствовать себя комфортно в своём пространстве' },
+    { key: 'Q_STAYWELL__MENTCLR',   text: 'Иметь ясный и спокойный ум'},
+    { key: 'Q_STAYWELL__STIMULT',   text: 'Быть в предвкушении от того, что впереди' },
+  ];
+
+  const layout = document.createElement('div');
+  layout.id = 'staywell-layout';
+
+  const questionEl = document.createElement('div');
+  questionEl.id = 'staywell-question';
+  questionEl.textContent = 'ЧТО ПОМОГАЕТ ТЕБЕ ЧУВСТВОВАТЬ СЕБЯ В СВОЕЙ ТАРЕЛКЕ?';
+  layout.appendChild(questionEl);
+
+  const optionEls = {};
+  const isMobile = () => window.matchMedia('(hover: none)').matches;
+  let activeTouchKey = null;
+  let isAnimating = false;
+  let waveRunning = true;
+
+  options.forEach(opt => {
+    const el = document.createElement('div');
+    el.className = 'staywell-option';
+    el.textContent = opt.text;
+    layout.appendChild(el);
+    optionEls[opt.key] = el;
+  });
+
+  document.body.appendChild(layout);
+
+  function startEntrance() {
+    setTimeout(() => {
+      questionEl.style.opacity = '1';
+      questionEl.style.transform = 'translateX(0)';
+    }, 100);
+
+    options.forEach((opt, i) => {
+      setTimeout(() => {
+        optionEls[opt.key].classList.add('visible');
+      }, 400 + i * 110);
+    });
+
+    // Only start wave on desktop — skip entirely on mobile
+    if (!isMobile()) {
+      setTimeout(() => startWave(), 400 + options.length * 110 + 200);
+    }
+  }
+
+  function startWave() {
+    const optArr = options.map(opt => optionEls[opt.key]);
+    const phases = options.map((_, i) => i * 0.55);
+    let t = 0;
+
+    function loop() {
+      if (!waveRunning) return;
+      // Skip wave if user switched to mobile mid-session
+      if (isMobile()) return;
+
+      optArr.forEach((el, i) => {
+        if (!el.classList.contains('visible')) return;
+        // Reduced amplitude — calmer movement, less jitter
+        const yOffset = Math.sin(t + phases[i]) * 2.5;
+        const xOffset = Math.sin(t * 0.6 + phases[i]) * 1.5;
+        const spacing = 0.05 + Math.sin(t * 0.4 + phases[i]) * 0.01;
+        el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+        el.style.letterSpacing = `${spacing}em`;
+      });
+      t += 0.018; // Slower — more gentle
+      requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  function triggerExit(selectedKey, callback) {
+    waveRunning = false;
+
+    // Reset all transforms before exit animation
+    Object.values(optionEls).forEach(el => {
+      el.style.transform = '';
+      el.style.letterSpacing = '';
+    });
+
+    options.forEach((opt, i) => {
+      const el = optionEls[opt.key];
+      setTimeout(() => {
+        el.style.transition = 'transform 0.55s cubic-bezier(0.4, 0, 1, 1), opacity 0.3s ease';
+        el.style.transform = 'translateX(120vw)';
+        el.style.opacity = '0';
+      }, i * 55);
+    });
+
+    setTimeout(() => {
+      questionEl.style.transition = 'transform 0.5s ease, opacity 0.3s ease';
+      questionEl.style.transform = 'translateX(120vw)';
+      questionEl.style.opacity = '0';
+    }, 80);
+
+    setTimeout(callback, 800);
+  }
+
+  function dimOthers(activeKey) {
+    Object.entries(optionEls).forEach(([k, el]) => {
+      if (k === activeKey) {
+        el.classList.remove('dimmed');
+        el.classList.add('active');
+      } else {
+        el.classList.add('dimmed');
+        el.classList.remove('active');
+      }
+    });
+  }
+
+  function resetAll() {
+    Object.values(optionEls).forEach(el => {
+      el.classList.remove('dimmed', 'active');
+    });
+    activeTouchKey = null;
+  }
+
+  // Clicks hidden Webflow button — triggers scoring, sessionStorage,
+  // navigation, and Google Sheets submission on the result page
+  function selectAnswer(key) {
+    if (isAnimating) return;
+    isAnimating = true;
+    triggerExit(key, () => {
+      const btn = document.querySelector('[data-answer-key="' + key + '"]');
+      if (btn) btn.click();
+    });
+  }
+
+  options.forEach(opt => {
+    const el = optionEls[opt.key];
+
+    el.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      dimOthers(opt.key);
+    });
+    el.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      resetAll();
+    });
+    el.addEventListener('click', (e) => {
+      if (isMobile()) return;
+      e.stopImmediatePropagation();
+      selectAnswer(opt.key);
+    });
+
+el.addEventListener('touchstart', (e) => {
+  if (!isMobile()) return;
+  if (activeTouchKey !== opt.key) {
+    e.preventDefault();
+    activeTouchKey = opt.key;
+    dimOthers(opt.key);
+  }
+}, { passive: false });
+
+el.addEventListener('touchend', (e) => {
+  if (!isMobile()) return;
+  if (activeTouchKey === opt.key) {
+    if (!el.classList.contains('dimmed')) {
+      e.preventDefault();
+      selectAnswer(opt.key);
+    }
+  }
+}, { passive: false });
+  });
+
+  document.addEventListener('touchstart', (e) => {
+    if (!isMobile()) return;
+    const tapped = e.target.closest('.staywell-option');
+    if (!tapped) resetAll();
+  });
+
+  startEntrance();
+
+})();
+</script>
+
+<script>
+(function() {
+
+  const lineCvs = document.createElement('canvas');
+  lineCvs.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:10000;';
+  document.body.appendChild(lineCvs);
+  const lctx = lineCvs.getContext('2d');
+  let LW, LH;
+
+  function resizeLine() {
+    LW = lineCvs.width  = window.innerWidth;
+    LH = lineCvs.height = window.innerHeight;
+  }
+  resizeLine();
+  window.addEventListener('resize', resizeLine);
+
+  const lines = Array.from({ length: 12 }, (_, i) => ({
+    baseY:     (i + 0.5) / 12,
+    amplitude: 8 + Math.random() * 20,
+    freq:      0.003 + Math.random() * 0.004,
+    speed:     0.0004 + Math.random() * 0.0006,
+    phase:     Math.random() * Math.PI * 2,
+    opacity:   0.18 + Math.random() * 0.22,
+    thickness: 0.4 + Math.random() * 0.8,
+  }));
+
+  let lt = 0;
+
+  function lineLoop() {
+    lctx.clearRect(0, 0, LW, LH);
+    lines.forEach(line => {
+      lctx.beginPath();
+      lctx.strokeStyle = `rgba(255, 235, 190, ${line.opacity})`;
+      lctx.lineWidth = line.thickness;
+      for (let x = 0; x <= LW; x += 3) {
+        const y = line.baseY * LH
+          + Math.sin(x * line.freq + lt * line.speed * LW + line.phase) * line.amplitude
+          + Math.sin(x * line.freq * 1.7 + lt * line.speed * 0.6 * LW + line.phase * 1.3) * line.amplitude * 0.4;
+        if (x === 0) lctx.moveTo(x, y);
+        else lctx.lineTo(x, y);
+      }
+      lctx.stroke();
+    });
+    lt += 0.09;
+    requestAnimationFrame(lineLoop);
+  }
+
+  lineLoop();
+
+})();
+</script>

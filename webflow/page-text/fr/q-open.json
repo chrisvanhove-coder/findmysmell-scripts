@@ -1,0 +1,57 @@
+{
+  "pageId": "6a3b9fa952eb77df8c8da4eb",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "f8c1cbf1-53d9-655b-179c-1620af5880db",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "89262ae2-0327-dbb4-4f2b-f68c192a8b13",
+      "text": {
+        "html": "<h1><strong class=\"bold-text-3\" data-w-id=\"fbc08397-8f6c-c63a-5b24-b9e18213e3e1\">Dernière question, et elle est pour vous.<br data-w-id=\"30e3b154-0dc5-1393-8667-afdf487e9667\"><br data-w-id=\"d528e1f6-32c9-e896-36b7-d7d2fa6a6a49\">Un souvenir olfactif, un parfum que vous aimez, un endroit dont l'odeur a du sens pour vous ?<br data-w-id=\"e0bc6bf7-27d5-9dc0-f4bc-55fee83717f0\">‍<br data-w-id=\"31c39333-9914-677c-299d-41e1008428be\">Partagez ce qui vous vient à l'esprit en ce moment :</strong></h1>",
+        "text": "Dernière question, et elle est pour vous.\n\nUn souvenir olfactif, un parfum que vous aimez, un endroit dont l'odeur a du sens pour vous ?\n‍\nPartagez ce qui vous vient à l'esprit en ce moment :"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text-input",
+      "id": "406f63e0-e372-50bc-8847-2815872842ee",
+      "placeholder": "share here",
+      "attributes": {}
+    },
+    {
+      "type": "submit-button",
+      "id": "943020d1-aae9-27eb-37e6-1e326874678e",
+      "waitingText": "Veuillez patienter...",
+      "value": "Envoyer",
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "943020d1-aae9-27eb-37e6-1e3268746790",
+      "text": {
+        "html": "<div>Thank you! Your submission has been received!</div>",
+        "text": "Thank you! Your submission has been received!"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "943020d1-aae9-27eb-37e6-1e3268746793",
+      "text": {
+        "html": "<div>Oops! Something went wrong while submitting the form.</div>",
+        "text": "Oops! Something went wrong while submitting the form."
+      },
+      "attributes": {}
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 6
+  },
+  "lastUpdated": "2026-06-24T09:24:02.125Z"
+}

@@ -1,0 +1,70 @@
+{
+  "pageId": "6a3b9f57485a4fd2ae8c219c",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "9251afc4-8323-17e7-60d3-8eb824da9ece",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "0667ca91-b7ec-edf2-f708-7608b9a6cb7d",
+      "text": {
+        "html": "<h1 class=\"heading-25\"><strong class=\"bold-text-17\" data-w-id=\"ff9db758-9377-7be3-22eb-d5d482effcd6\">Préférez-vous que votre parfum reste proche de la peau ou qu'il se projette autour de vous ?</strong></h1>",
+        "text": "Préférez-vous que votre parfum reste proche de la peau ou qu'il se projette autour de vous ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "9bfb9fa5-8442-b778-cf85-7c4771d9f4e6",
+      "text": {
+        "html": "<a class=\"button-95\" href=\"#\">Proche de la peau : pour moi seul(e)</a>",
+        "text": "Proche de la peau : pour moi seul(e)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__CLOSE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "d715cbc5-c3be-267d-02ee-5d7948fe6426",
+      "text": {
+        "html": "<a class=\"button-94\" href=\"#\">Aura douce : pour moi et ceux qui me sont proches</a>",
+        "text": "Aura douce : pour moi et ceux qui me sont proches"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__SOFT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "499a7121-326a-eeef-a2b2-5920b7b6013f",
+      "text": {
+        "html": "<a class=\"button-93\" href=\"#\">Perceptible : les gens commencent à vous remarquer</a>",
+        "text": "Perceptible : les gens commencent à vous remarquer"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__NOTICEABLE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "696f94f2-fd8c-79b1-e048-7bd4661d9219",
+      "text": {
+        "html": "<a class=\"button-92\" href=\"#\">Affirmé : tout le monde doit le sentir</a>",
+        "text": "Affirmé : tout le monde doit le sentir"
+      },
+      "attributes": {
+        "data-answer-key": "Q_RADIUS__BOLD"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 6
+  },
+  "lastUpdated": "2026-06-24T09:13:07.609Z"
+}

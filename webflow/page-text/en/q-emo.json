@@ -1,0 +1,112 @@
+{
+  "pageId": "6978fa97a3ee641864373c06",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "79a1ae8f-d738-7c0c-8dee-772fbc9be237",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "ffd2eb08-77c6-fc6c-4a07-6f13e5d6e573",
+      "text": {
+        "html": "<h1 class=\"heading-17\"><strong class=\"bold-text-11\" data-w-id=\"2e01e4b3-9dc6-f117-6bc3-b59262267844\">How do You Want This pErfume tO Make yOu Feel?</strong></h1>",
+        "text": "How do You Want This pErfume tO Make yOu Feel?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "5ddd5aca-ff74-52c9-9349-6e0cfa1139af",
+      "text": {
+        "html": "<div><em class=\"italic-text\" data-w-id=\"f85de7e2-39fe-4a44-1363-a4c415db4fb1\">For this fragrance, I want to feel…</em></div>",
+        "text": "For this fragrance, I want to feel…"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "7c5f8641-eeca-491b-3115-93133cc630c0",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-56\">Mysterious</a>",
+        "text": "Mysterious"
+      },
+      "attributes": {
+        "data-answer-key": "Q_EMO__MYST"
+      }
+    },
+    {
+      "type": "text",
+      "id": "81604c52-2533-50d0-ef04-cc913f7ca8e2",
+      "text": {
+        "html": "<a class=\"button-57\" href=\"#\">Energetic</a>",
+        "text": "Energetic"
+      },
+      "attributes": {
+        "data-answer-key": "Q_EMO__ENERGY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "87f364a6-4804-75ab-9b91-79c4b87ecca2",
+      "text": {
+        "html": "<a class=\"button-58\" href=\"#\">Cozy</a>",
+        "text": "Cozy"
+      },
+      "attributes": {
+        "data-answer-key": "Q_EMO__COZY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "be9bcd6b-c792-231d-1dec-0c117f5cb316",
+      "text": {
+        "html": "<a class=\"button-59\" href=\"#\">Playful</a>",
+        "text": "Playful"
+      },
+      "attributes": {
+        "data-answer-key": "Q_EMO__PLAY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "19763c7c-bca7-c13f-ced9-daff37d84285",
+      "text": {
+        "html": "<a class=\"button-60\" href=\"#\">Calm</a>",
+        "text": "Calm"
+      },
+      "attributes": {
+        "data-answer-key": "Q_EMO__CALM"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1fe24412-d789-c452-cb23-db67350d4556",
+      "text": {
+        "html": "<a class=\"button-61\" href=\"#\">Sexy</a>",
+        "text": "Sexy"
+      },
+      "attributes": {
+        "data-answer-key": "Q_EMO__SEXY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c6f9618f-fcd7-2e01-9cea-4653737602f3",
+      "text": {
+        "html": "<a class=\"button-62\" href=\"#\">Focused</a>",
+        "text": "Focused"
+      },
+      "attributes": {
+        "data-answer-key": "Q_EMO__FOCUS"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 10
+  },
+  "lastUpdated": "2026-03-24T14:59:40.352Z"
+}

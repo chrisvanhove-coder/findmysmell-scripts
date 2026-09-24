@@ -1,0 +1,125 @@
+{
+  "pageId": "6a3b9167c6f80f520fa6b72a",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "2ccda193-224d-7978-79f0-18a721f17a4c",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "e3066613-ca9e-37a5-c1e3-ea4143edc9b7",
+      "text": {
+        "html": "<h1 class=\"heading-15\"><strong class=\"bold-text-9\" data-w-id=\"b7a91b88-8c6f-ab92-68d1-b5fbd3148467\">Quelle atmosphère vous semble la plus <br data-w-id=\"e5c1b6a3-e428-f6c3-2faa-cb9a6c5634e2\">naturelle et confortable pour votre corps ?</strong></h1>",
+        "text": "Quelle atmosphère vous semble la plus \nnaturelle et confortable pour votre corps ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "f9231dd3-3176-180c-aab3-4f08e02fb750",
+      "text": {
+        "html": "<a class=\"button-41\" href=\"#\">L'air d'hiver <br data-w-id=\"b3f9efbf-ab71-33bd-bc32-cad535c9e133\">vif, sec, en mouvement<br data-w-id=\"c4f092b5-5e93-4020-3217-1705536a21aa\"></a>",
+        "text": "L'air d'hiver \nvif, sec, en mouvement\n"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__WINTER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b4c8d9fd-ddee-9224-51a5-3f21c19d7ad0",
+      "text": {
+        "html": "<a class=\"button-42\" href=\"#\">Les endroits brumeux ou embrumés <br data-w-id=\"53b0442f-9e65-09eb-1359-6994783fc1d0\">air frais et humide</a>",
+        "text": "Les endroits brumeux ou embrumés \nair frais et humide"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__FOGGY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c235cc67-1eff-0978-6ac7-a5498bb38ca8",
+      "text": {
+        "html": "<a class=\"button-43\" href=\"#\">Petite ville, village<br data-w-id=\"ca2f909d-bc33-48b9-a6e3-9ce824d5fff6\">air sec, calme, neutre</a>",
+        "text": "Petite ville, village\nair sec, calme, neutre"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__VILLAGE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c2b20b88-aab1-18f3-f7fb-532d31a97d0d",
+      "text": {
+        "html": "<a class=\"button-44\" href=\"#\">Un parc après la pluie <br data-w-id=\"9459a75f-2194-65d1-96f4-e914d6c68740\">air doux, vert, légèrement humide</a>",
+        "text": "Un parc après la pluie \nair doux, vert, légèrement humide"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__PARKRAIN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "a1325466-839c-c484-98ee-623bfd21f29e",
+      "text": {
+        "html": "<a class=\"button-45\" href=\"#\">Les villes méditerranéennes<br data-w-id=\"5757a0eb-219b-13ba-d15c-346671b5f3a6\">air chaud et sec</a>",
+        "text": "Les villes méditerranéennes\nair chaud et sec"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__SOUTHFR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "fdb6cbf8-69f1-aaa8-bb97-f584c326dc28",
+      "text": {
+        "html": "<a class=\"button-46\" href=\"#\">Les régions tropicales<br data-w-id=\"8d9eb1c5-d6af-a7f4-d54e-7460f06666c1\">air chaud, dense et humide</a>",
+        "text": "Les régions tropicales\nair chaud, dense et humide"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__TROPICS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "701e601a-7e2b-939c-63f1-ffd6658d9c6a",
+      "text": {
+        "html": "<a class=\"button-47\" href=\"#\">Près de la mer<br data-w-id=\"d9402463-eecf-aa19-bd72-1440a1c35a80\">air salin, luminosité minérale, brise constante</a>",
+        "text": "Près de la mer\nair salin, luminosité minérale, brise constante"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__SEA_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1fc9b3a1-1f7a-7be3-5a01-f78bc632e1b9",
+      "text": {
+        "html": "<a class=\"button-48\" href=\"#\">Près des montagnes<br data-w-id=\"8867e339-aa33-c622-4370-b46e0e3a6a12\">air fin, clair, légèrement froid</a>",
+        "text": "Près des montagnes\nair fin, clair, légèrement froid"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__MOUNT_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "6c75359d-4e20-a61b-8b28-30c1358fe4ba",
+      "text": {
+        "html": "<a class=\"button-49\" href=\"#\">Pas sûr(e) / pas de préférence</a>",
+        "text": "Pas sûr(e) / pas de préférence"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__NO_PREFER"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 11
+  },
+  "lastUpdated": "2026-06-24T08:18:27.487Z"
+}

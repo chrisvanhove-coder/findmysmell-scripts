@@ -1,0 +1,13 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const languageButtons = document.querySelectorAll('.w-dropdown-list a');
+  
+  languageButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetUrl = this.getAttribute('href');
+      window.location.href = targetUrl;
+    });
+  });
+});
+</script>

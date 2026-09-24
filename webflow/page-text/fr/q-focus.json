@@ -1,0 +1,115 @@
+{
+  "pageId": "6a3b946582c415efabc3f19b",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "4eb06fa7-71b3-57f0-24a9-a6310aefbf3a",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "b0ad277f-0b89-93f6-d5ca-762b6b325ae5",
+      "text": {
+        "html": "<h1 class=\"heading-18\">Qu'est-ce qui vous aide à vous concentrer ?</h1>",
+        "text": "Qu'est-ce qui vous aide à vous concentrer ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "333346be-8fa8-4497-9015-726633ea836e",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-96\">air frais et frais</a>",
+        "text": "air frais et frais"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__CLEAN_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7744ecfe-3237-3afc-1bbb-8d97843d2296",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-97\">espace calme / bibliothèque</a>",
+        "text": "espace calme / bibliothèque"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__LIBRARY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2308412b-aecf-ad42-835e-9b13fac44ea3",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-98\">café</a>",
+        "text": "café"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__COFFEE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "111fe065-5681-c9bf-1a03-ab2aec89c117",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-99\">eau glacée</a>",
+        "text": "eau glacée"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__ICE_WATER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "885c6282-1e62-5f58-386e-021f10fd53d6",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-100\">thé chaud</a>",
+        "text": "thé chaud"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__TEA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "01839990-0442-8f04-50db-93de7454a131",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-101\">aucune odeur du tout</a>",
+        "text": "aucune odeur du tout"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__NO_SMELL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b77ef772-cf78-b601-4265-cd068e0700cc",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-102\">zeste de citron</a>",
+        "text": "zeste de citron"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__LEMON_PEEL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "65480539-15d5-09ba-f2fa-c11c5ac40233",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-103\">autre (réponse libre)</a>",
+        "text": "autre (réponse libre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 10
+  },
+  "lastUpdated": "2026-06-24T08:26:49.130Z"
+}

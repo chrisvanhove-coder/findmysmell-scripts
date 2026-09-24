@@ -1,0 +1,93 @@
+{
+  "pageId": "6a3b95d922ca1d46c0fc2aba",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "9b0638a5-403c-f0e1-a62b-e406aaa03d80",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "04266dd8-8ed6-d6d0-de20-06376821e69d",
+      "text": {
+        "html": "<h1 class=\"heading-22\"><br data-w-id=\"ade5c7f6-5d25-4165-a7ab-587b6c6a2e0d\">À quelle odeur associez vous la séduction?</h1>",
+        "text": "\nÀ quelle odeur associez vous la séduction?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "dd46e3d7-32bb-3792-cd29-285a47b594c3",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-125\">Peau chaude, peau salée et minérale, juste après la danse</a>",
+        "text": "Peau chaude, peau salée et minérale, juste après la danse"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__SALT_SEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "f7546049-6c0e-7466-beb3-7a7af4f45e01",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-126\">Chocolat noir ou expresso fort</a>",
+        "text": "Chocolat noir ou expresso fort"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__ESPRESSO"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4c5dcc37-17c0-b5ad-6104-04ce1e6838b9",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-127\">Jazz ou musique grave et profonde</a>",
+        "text": "Jazz ou musique grave et profonde"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__JAZZ"
+      }
+    },
+    {
+      "type": "text",
+      "id": "e588064e-cfb6-dd08-5adb-5c9231055b55",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-128\">Fumée</a>",
+        "text": "Fumée"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__SMOK_SEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b6f64c21-b305-3fff-f375-d80d78c3fd77",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-129\">Vêtements&nbsp;&nbsp;en cuir</a>",
+        "text": "Vêtements  en cuir"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__LEATH_SEX"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3b2c92ee-ebe7-a5db-6cd6-eaca397b21c8",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-130\">Autre (réponse libre)</a>",
+        "text": "Autre (réponse libre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_SEXY__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 8
+  },
+  "lastUpdated": "2026-07-15T07:27:56.189Z"
+}

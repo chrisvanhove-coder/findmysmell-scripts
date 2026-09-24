@@ -1,0 +1,115 @@
+{
+  "pageId": "6a3bf923fa28362202261d94",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "4eb06fa7-71b3-57f0-24a9-a6310aefbf3a",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "b0ad277f-0b89-93f6-d5ca-762b6b325ae5",
+      "text": {
+        "html": "<h1 class=\"heading-18\">ЧТО&nbsp;ПОМОГАЕТ&nbsp;ТЕБЕ&nbsp;СФОКУСИРОВАТЬСЯ?</h1>",
+        "text": "ЧТО ПОМОГАЕТ ТЕБЕ СФОКУСИРОВАТЬСЯ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "333346be-8fa8-4497-9015-726633ea836e",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-96\">чистый, холодный воздух</a>",
+        "text": "чистый, холодный воздух"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__CLEAN_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7744ecfe-3237-3afc-1bbb-8d97843d2296",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-97\">тихое место / библиотека</a>",
+        "text": "тихое место / библиотека"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__LIBRARY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2308412b-aecf-ad42-835e-9b13fac44ea3",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-98\">кофе</a>",
+        "text": "кофе"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__COFFEE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "111fe065-5681-c9bf-1a03-ab2aec89c117",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-99\">вода со льдом</a>",
+        "text": "вода со льдом"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__ICE_WATER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "885c6282-1e62-5f58-386e-021f10fd53d6",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-100\"> горячий чай</a>",
+        "text": " горячий чай"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__TEA"
+      }
+    },
+    {
+      "type": "text",
+      "id": "01839990-0442-8f04-50db-93de7454a131",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-101\">абсолютно никакого запаха</a>",
+        "text": "абсолютно никакого запаха"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__NO_SMELL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b77ef772-cf78-b601-4265-cd068e0700cc",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-102\">лимонная кожура</a>",
+        "text": "лимонная кожура"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__LEMON_PEEL"
+      }
+    },
+    {
+      "type": "text",
+      "id": "65480539-15d5-09ba-f2fa-c11c5ac40233",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-103\">другое (напиши свое)</a>",
+        "text": "другое (напиши свое)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_FOCUS__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 10
+  },
+  "lastUpdated": "2026-06-24T15:36:44.755Z"
+}

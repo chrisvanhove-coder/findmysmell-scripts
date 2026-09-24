@@ -1,0 +1,125 @@
+{
+  "pageId": "6978f7497b99528a45d541df",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "2ccda193-224d-7978-79f0-18a721f17a4c",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "e3066613-ca9e-37a5-c1e3-ea4143edc9b7",
+      "text": {
+        "html": "<h1 class=\"heading-15\"><strong class=\"bold-text-9\" data-w-id=\"b7a91b88-8c6f-ab92-68d1-b5fbd3148467\">Which atmosphere feels Most <br data-w-id=\"38a73e6f-8e2b-fc33-6a7a-85ec47fcc51d\">natural and comfortable for you?</strong></h1>",
+        "text": "Which atmosphere feels Most \nnatural and comfortable for you?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "f9231dd3-3176-180c-aab3-4f08e02fb750",
+      "text": {
+        "html": "<a class=\"button-41\" href=\"#\">Winter air <br data-w-id=\"c4f092b5-5e93-4020-3217-1705536a21aa\">crisp, dry, fast-moving</a>",
+        "text": "Winter air \ncrisp, dry, fast-moving"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__WINTER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b4c8d9fd-ddee-9224-51a5-3f21c19d7ad0",
+      "text": {
+        "html": "<a class=\"button-42\" href=\"#\">Foggy or misty places <br data-w-id=\"7e3bf94a-05ec-8555-77c0-bbb324b10ffe\">cool, moist air</a>",
+        "text": "Foggy or misty places \ncool, moist air"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__FOGGY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c235cc67-1eff-0978-6ac7-a5498bb38ca8",
+      "text": {
+        "html": "<a class=\"button-43\" href=\"#\">Small town, village <br data-w-id=\"463b86dc-cbf9-c48c-3d56-15ad95c73aac\">dry, calm, neutral air</a>",
+        "text": "Small town, village \ndry, calm, neutral air"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__VILLAGE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c2b20b88-aab1-18f3-f7fb-532d31a97d0d",
+      "text": {
+        "html": "<a class=\"button-44\" href=\"#\">A park after rain <br data-w-id=\"a593a638-3ba8-a328-37e3-3bbfc06f2cf2\">mild, green, slightly humid</a>",
+        "text": "A park after rain \nmild, green, slightly humid"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__PARKRAIN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "a1325466-839c-c484-98ee-623bfd21f29e",
+      "text": {
+        "html": "<a class=\"button-45\" href=\"#\">Mediterranean towns<br data-w-id=\"f0cc75ca-9b60-73da-4703-46ab5014ba63\">warm, dry air</a>",
+        "text": "Mediterranean towns\nwarm, dry air"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__SOUTHFR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "fdb6cbf8-69f1-aaa8-bb97-f584c326dc28",
+      "text": {
+        "html": "<a class=\"button-46\" href=\"#\">Tropical regions<br data-w-id=\"d2203899-7018-be81-20cb-e3cce8350f7b\">warm, dense, humid air</a>",
+        "text": "Tropical regions\nwarm, dense, humid air"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__TROPICS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "701e601a-7e2b-939c-63f1-ffd6658d9c6a",
+      "text": {
+        "html": "<a class=\"button-47\" href=\"#\">Near the sea<br data-w-id=\"bcf3313d-0528-7453-e388-1ef524a3b461\">salty air, mineral, constant breeze</a>",
+        "text": "Near the sea\nsalty air, mineral, constant breeze"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__SEA_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1fc9b3a1-1f7a-7be3-5a01-f78bc632e1b9",
+      "text": {
+        "html": "<a class=\"button-48\" href=\"#\">Near the mountains<br data-w-id=\"599ca2bb-551b-ee72-4e36-50b538527569\">thin, clear, slightly cold air</a>",
+        "text": "Near the mountains\nthin, clear, slightly cold air"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__MOUNT_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "6c75359d-4e20-a61b-8b28-30c1358fe4ba",
+      "text": {
+        "html": "<a class=\"button-49\" href=\"#\">Not sure / no preference</a>",
+        "text": "Not sure / no preference"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ATMOS__NO_PREFER"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 11
+  },
+  "lastUpdated": "2026-04-13T10:20:42.007Z"
+}

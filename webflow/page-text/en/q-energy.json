@@ -1,0 +1,104 @@
+{
+  "pageId": "6979dea3b3904b8d22babe2e",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "f9972fd4-8e1c-8d1f-c99c-cd944a8220d0",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "58fbae58-2313-da11-3d5c-c8821153b77f",
+      "text": {
+        "html": "<h1 class=\"heading-21\">What does energy smell like to you?</h1>",
+        "text": "What does energy smell like to you?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "17967876-a5bc-4465-268f-6b3d554defab",
+      "text": {
+        "html": "<a class=\"button-118\" href=\"#\">Citrus</a>",
+        "text": "Citrus"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__CITRUS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "bb8b8496-680c-dad8-bfc4-9b68e40531a7",
+      "text": {
+        "html": "<a class=\"button-119\" href=\"#\">Music <em class=\"italic-text-5\" data-w-id=\"bb8b8496-680c-dad8-bfc4-9b68e40531a9\">(rhythm, tempo, movement)</em></a>",
+        "text": "Music (rhythm, tempo, movement)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__MUSIC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "763a7c73-37ef-c782-01ab-d1eb4808d464",
+      "text": {
+        "html": "<a class=\"button-120\" href=\"#\">Cold air or a cold shower</a>",
+        "text": "Cold air or a cold shower"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__COLD_SHOW"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3fa5a0f2-c76c-755b-f79f-aba1edfd1f0a",
+      "text": {
+        "html": "<a class=\"button-121\" href=\"#\">Mint, basil or other green herbs</a>",
+        "text": "Mint, basil or other green herbs"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__HERBS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "c2110abb-21fe-9c02-7866-eea1d605e786",
+      "text": {
+        "html": "<a class=\"button-122\" href=\"#\">Hot spices</a>",
+        "text": "Hot spices"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__HOT_SPICE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "dfbf6104-5621-5a5f-6d40-130ec8c631a1",
+      "text": {
+        "html": "<a class=\"button-123\" href=\"#\">Sun or heat</a>",
+        "text": "Sun or heat"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__SUN_HEAT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b38bd264-1e44-6aab-8b72-ec8ed82ddcf3",
+      "text": {
+        "html": "<a class=\"button-124\" href=\"#\">Other (open answer)</a>",
+        "text": "Other (open answer)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_ENERGY__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-04-10T12:57:17.773Z"
+}

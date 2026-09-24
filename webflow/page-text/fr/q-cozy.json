@@ -1,0 +1,104 @@
+{
+  "pageId": "6a3b9631926d49f9605b8790",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "5f4c0753-995f-c5c4-993f-389f06f906ee",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "63305748-c7c1-d6aa-0190-b8cf479a7e91",
+      "text": {
+        "html": "<h1 class=\"heading-23\">À quelle odeur associez vous le cocooning ?</h1>",
+        "text": "À quelle odeur associez vous le cocooning ?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "222a6f8b-e571-f171-c4aa-75a8eb0fdb49",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-131\">Peau chaude ou une étreinte</a>",
+        "text": "Peau chaude ou une étreinte"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__WARM_SKIN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4544488f-45db-efdb-da69-b2300dff7983",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-132\">Tissu doux (plaid)</a>",
+        "text": "Tissu doux (plaid)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__BLANKET"
+      }
+    },
+    {
+      "type": "text",
+      "id": "15c0c7cd-6da9-04a2-f33f-868cd8f8d6b6",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-133\">Pâtisserie ou plat chaud</a>",
+        "text": "Pâtisserie ou plat chaud"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__BAKING"
+      }
+    },
+    {
+      "type": "text",
+      "id": "6861ec39-4edd-01dc-d6b0-97bda123f145",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-134\">Feu de cheminée ou bougies</a>",
+        "text": "Feu de cheminée ou bougies"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__FIREPLAC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "b8b8088f-2356-28f1-a23f-6dbb594ff5a1",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-135\">Boisson chaude avant de dormir</a>",
+        "text": "Boisson chaude avant de dormir"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__HOT_CHOC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "d898c763-c07a-4fdf-35f9-be77f8936d92",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-136\">Bain moussant</a>",
+        "text": "Bain moussant"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__BUBBLE"
+      }
+    },
+    {
+      "type": "text",
+      "id": "92d4ba01-fa57-6d02-73d3-f1b4a58a2113",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-137\">Autre (réponse libre)</a>",
+        "text": "Autre (réponse libre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_COZY__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-06-25T10:13:56.132Z"
+}

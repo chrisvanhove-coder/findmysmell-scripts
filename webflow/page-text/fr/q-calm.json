@@ -1,0 +1,104 @@
+{
+  "pageId": "6a3b9534c7607a5271f25e6f",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "07715ebb-41ca-8719-39e4-3fce856eaab1",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "7dc14bae-233e-664d-39b2-63192cf7c1d1",
+      "text": {
+        "html": "<h1 class=\"heading-20\">À quelle odeur associez vous le calme?</h1>",
+        "text": "À quelle odeur associez vous le calme?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "d79b24be-de86-bd87-5326-606e038140db",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-111\">Thé chaud ou herbes douces</a>",
+        "text": "Thé chaud ou herbes douces"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__TEA_HERBS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "1c1ae6eb-0cd0-9397-467f-5b9b37bc3d68",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-112\">Linge frais ou savon</a>",
+        "text": "Linge frais ou savon"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__LINENS"
+      }
+    },
+    {
+      "type": "text",
+      "id": "66c79219-c8e4-fba1-745c-e8c01eacb983",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-113\">Feu de cheminée</a>",
+        "text": "Feu de cheminée"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__FIREPLAC"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7c94463e-5598-b3d0-31ce-b292f3375786",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-114\">Douceur laiteuse et suave</a>",
+        "text": "Douceur laiteuse et suave"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__MILK_SOFT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "ce49c857-096b-11b7-d191-b3f0b98bdbec",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-115\">Air frais ou brise marine</a>",
+        "text": "Air frais ou brise marine"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__COOL_AIR"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4094ed9d-4eb8-dc8f-4ddf-57309a35d2cc",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-116\">Vapeur de douche chaude</a>",
+        "text": "Vapeur de douche chaude"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__HOT_SHOW"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3d0b7475-b8a8-3397-51f9-ec00dd5f0bf7",
+      "text": {
+        "html": "<a href=\"#\" class=\"button-117\">Autre (réponse libre)</a>",
+        "text": "Autre (réponse libre)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_CALM__OTHER",
+        "data-open-answer": "true"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-06-25T10:12:05.229Z"
+}

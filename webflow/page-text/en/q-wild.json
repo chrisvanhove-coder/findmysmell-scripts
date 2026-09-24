@@ -1,0 +1,70 @@
+{
+  "pageId": "6979ff1ae505e8e557faf749",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "9ea0b48e-52ab-a623-12bd-afe31827dcfc",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "8dc1723a-e9d9-e693-dc6f-7d7d4a8b0cfe",
+      "text": {
+        "html": "<h1 class=\"heading-12\"><strong class=\"bold-text-20\" data-w-id=\"1454e980-c818-b986-8935-5a1673dca44e\">How do you feeL aboUt perfuMes thAt havE a <br data-w-id=\"a494d5ac-3b94-1e97-bae0-5ec9ea94661e\">moRe raw or nAtural edGe?<br data-w-id=\"1454e980-c818-b986-8935-5a1673dca451\"></strong><em class=\"italic-text-7\" data-w-id=\"2e612063-f5a7-637f-e27d-ba0e7c10d9e8\">(for example: smoke, leather, earth, not polished smells)</em></h1>",
+        "text": "How do you feeL aboUt perfuMes thAt havE a \nmoRe raw or nAtural edGe?\n(for example: smoke, leather, earth, not polished smells)"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "b55fc344-d00f-a75f-e56a-e1d9f5868660",
+      "text": {
+        "html": "<a class=\"button-79\" href=\"#\">I don’t enjoy those kinds of scents</a>",
+        "text": "I don’t enjoy those kinds of scents"
+      },
+      "attributes": {
+        "data-answer-key": "Q_WILD__NO_WILD"
+      }
+    },
+    {
+      "type": "text",
+      "id": "4bda67b5-a870-3653-3113-3d1b326ed4e8",
+      "text": {
+        "html": "<a class=\"button-80\" href=\"#\">I’m okay with a little</a>",
+        "text": "I’m okay with a little"
+      },
+      "attributes": {
+        "data-answer-key": "Q_WILD__LITTLE_WILD"
+      }
+    },
+    {
+      "type": "text",
+      "id": "d1f5aec1-f5ed-165c-0a6a-e0b8be805a9f",
+      "text": {
+        "html": "<a class=\"button-81\" href=\"#\">I like some raw notes</a>",
+        "text": "I like some raw notes"
+      },
+      "attributes": {
+        "data-answer-key": "Q_WILD__SOME_WILD"
+      }
+    },
+    {
+      "type": "text",
+      "id": "2f3fc372-7a29-924c-8e82-77ed7e346fa1",
+      "text": {
+        "html": "<a class=\"button-82\" href=\"#\">I really enjoy that kind of character</a>",
+        "text": "I really enjoy that kind of character"
+      },
+      "attributes": {
+        "data-answer-key": "Q_WILD__LOVE_WILD"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 6
+  },
+  "lastUpdated": "2026-03-25T15:17:51.497Z"
+}

@@ -1,0 +1,81 @@
+{
+  "pageId": "6978d142cd88ceac9515f4ce",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "b85f5be3-3d87-b791-6cb9-a144b1075d22",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "9ea8b70a-2f9e-889e-4be4-e67dd35cde9a",
+      "text": {
+        "html": "<h1 class=\"heading-8\"><strong class=\"bold-text-6\" data-w-id=\"7928dbe6-36bd-d5d1-bbd4-938e163328cf\">WhicH gEneraTion dO you BeloNg to? <br data-w-id=\"ff83e3e6-2454-9f2f-07fb-61b4f6599793\"></strong></h1>",
+        "text": "WhicH gEneraTion dO you BeloNg to? \n"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "18b6e7db-06fc-e405-0128-5bb23444db3b",
+      "text": {
+        "html": "<a class=\"button-22\" href=\"#\">Gen Z (1997–2012)</a>",
+        "text": "Gen Z (1997–2012)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENERATION__GEN_Z"
+      }
+    },
+    {
+      "type": "text",
+      "id": "94e09db8-3781-26af-2d9c-82dc4e13ff71",
+      "text": {
+        "html": "<a class=\"button-25\" href=\"#\">Boomer (1946–1964)</a>",
+        "text": "Boomer (1946–1964)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENERATION__BOOMER"
+      }
+    },
+    {
+      "type": "text",
+      "id": "3e5ba781-f48d-3f0f-0a18-5b9b7368ddea",
+      "text": {
+        "html": "<a class=\"button-23\" href=\"#\">Millennial (1981–1996)</a>",
+        "text": "Millennial (1981–1996)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENERATION__MILLEN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "7e460c6d-b740-9220-7583-2912f1429503",
+      "text": {
+        "html": "<a class=\"button-24\" href=\"#\">Gen X (1965–1980)</a>",
+        "text": "Gen X (1965–1980)"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENERATION__GEN_X"
+      }
+    },
+    {
+      "type": "text",
+      "id": "a619a5c1-4920-86f7-7e5f-ef6e16924dd0",
+      "text": {
+        "html": "<a class=\"button-26\" href=\"#\">Other</a>",
+        "text": "Other"
+      },
+      "attributes": {
+        "data-answer-key": "Q_GENERATION__PREF_NOT"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 7
+  },
+  "lastUpdated": "2026-03-24T14:57:48.976Z"
+}

@@ -1,0 +1,103 @@
+{
+  "pageId": "6978e898a66153f5ce7009e3",
+  "nodes": [
+    {
+      "type": "component-instance",
+      "id": "d409a04b-a601-0706-9a6d-40a288ba52da",
+      "componentId": "da86f1a1-b30f-15a1-10fb-e92175477e62",
+      "propertyOverrides": []
+    },
+    {
+      "type": "text",
+      "id": "eb59d8f8-969a-52f7-0137-fb1d8d36387f",
+      "text": {
+        "html": "<h1 class=\"heading-9\"><strong class=\"bold-text-18\" data-w-id=\"cd244a43-7ef7-db78-54fb-23ca4469db0f\">How do yOu live day to day?</strong></h1>",
+        "text": "How do yOu live day to day?"
+      },
+      "attributes": {}
+    },
+    {
+      "type": "text",
+      "id": "743c1ece-1bb5-0b17-25f8-6f462ac77c61",
+      "text": {
+        "html": "<a class=\"button-27\" href=\"#\">I go with the flow of the day</a>",
+        "text": "I go with the flow of the day"
+      },
+      "attributes": {
+        "data-answer-key": "Q_DAYTDAY__FLOW"
+      }
+    },
+    {
+      "type": "text",
+      "id": "aa6aed86-42f5-d034-12a1-892c1f4cbf1c",
+      "text": {
+        "html": "<a class=\"button-28\" href=\"#\">I like to have a plan and follow it</a>",
+        "text": "I like to have a plan and follow it"
+      },
+      "attributes": {
+        "data-answer-key": "Q_DAYTDAY__PLANDAY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "77f87905-1a99-8922-3b03-2bc98cea5f91",
+      "text": {
+        "html": "<a class=\"button-29\" href=\"#\">I spend most of my day interacting with people</a>",
+        "text": "I spend most of my day interacting with people"
+      },
+      "attributes": {
+        "data-answer-key": "Q_DAYTDAY__INTERACT"
+      }
+    },
+    {
+      "type": "text",
+      "id": "0758ddb0-3714-c16a-db0b-f0974391567e",
+      "text": {
+        "html": "<a class=\"button-30\" href=\"#\">My days change a lot : different places, roles, or situations</a>",
+        "text": "My days change a lot : different places, roles, or situations"
+      },
+      "attributes": {
+        "data-answer-key": "Q_DAYTDAY__CHANGDAY"
+      }
+    },
+    {
+      "type": "text",
+      "id": "e220e72a-45c7-5b51-dd3f-90a66395fec6",
+      "text": {
+        "html": "<a class=\"button-31\" href=\"#\">I’m okay when things aren’t fully figured out right away</a>",
+        "text": "I’m okay when things aren’t fully figured out right away"
+      },
+      "attributes": {
+        "data-answer-key": "Q_DAYTDAY__NOTKNOWN"
+      }
+    },
+    {
+      "type": "text",
+      "id": "0a8eed0f-e2af-94fa-654e-c069d2233aa7",
+      "text": {
+        "html": "<a class=\"button-32\" href=\"#\">I don’t like to stay still for too long</a>",
+        "text": "I don’t like to stay still for too long"
+      },
+      "attributes": {
+        "data-answer-key": "Q_DAYTDAY__ACTIVED"
+      }
+    },
+    {
+      "type": "text",
+      "id": "6ffc086d-5e11-53ef-84d3-793281343237",
+      "text": {
+        "html": "<a class=\"button-33\" href=\"#\">I prefer calm, stable days that don’t change much</a>",
+        "text": "I prefer calm, stable days that don’t change much"
+      },
+      "attributes": {
+        "data-answer-key": "Q_DAYTDAY__CONSIST"
+      }
+    }
+  ],
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "total": 9
+  },
+  "lastUpdated": "2026-04-03T10:03:45.058Z"
+}
