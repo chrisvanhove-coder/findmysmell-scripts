@@ -1,0 +1,847 @@
+{
+  "_": "ЧЕРНОВИК перевода описаний каталога. НА САЙТ НЕ ПОДКЛЮЧЁН — лежит здесь, пока заказчица вычитывает. Английский дублируется нарочно: в нём тоже бывают правки (см. Aromatics Elixir), и сверять перевод с оригиналом удобнее, когда они рядом. Ключ — id позиции из web/src/data/perfumes.json. Markdown для вычитки собирается из этого файла: npm run perfumes:review.",
+  "_round": "круг 1 вычитан 24.09.2026; правки заказчицы внесены",
+  "items": {
+    "69a98e7730c62b0c58ca95cb": {
+      "name": "Concrete",
+      "archetype": "CEO",
+      "en": "The feeling of buttoning your coat before stepping outside. Fresh, structured, decided.",
+      "fr": "La sensation de boutonner son manteau avant de sortir. Frais, structuré, décidé.",
+      "ru": "Ощущение, когда смотришься в зеркало и проверяешь всё перед выходом. Свежий, собранный, решённый.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859949601f64e06746d47b": {
+      "name": "Bois Impérial by Essential Parfums",
+      "archetype": "CEO",
+      "en": "Smells grounding and calm, like the person who never raises their voice. You'd follow them out of any room.",
+      "fr": "Une odeur qui ancre et qui apaise, comme la personne qui n'élève jamais la voix. Vous la suivriez hors de n'importe quelle pièce.",
+      "ru": "Пахнет устойчиво и спокойно — как человек, который уверен в себе, но никогда не повышает голос. За таким пойдёшь куда угодно.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a85987cd2a2092d08d17fdb": {
+      "name": "Cedrus by Chloé",
+      "archetype": "CEO",
+      "en": "The person who doesn't check their phone during dinner, laying back on a warm leather chair. Grounded, calm, deliberate. People across the room notice this scent.",
+      "fr": "La personne qui ne regarde pas son téléphone pendant le dîner, adossée à un fauteuil de cuir tiède. Ancré, calme, délibéré. On remarque ce parfum d'un bout à l'autre de la pièce.",
+      "ru": "Человек, который не смотрит в телефон за ужином, откинувшись в тёплом кожаном кресле. Устойчивый, спокойный, выбранный. Этот аромат замечают через всю комнату."
+    },
+    "6a8598f528188e6a9825fbd3": {
+      "name": "Cuir 1976 by Jean Paul Gaultier",
+      "archetype": "CEO",
+      "en": "Like a moment when you drink a warm espresso and looking for something inside a well-worn leather bag. Dark, rich, slightly sweet.",
+      "fr": "Comme le moment où vous buvez un espresso chaud en cherchant quelque chose au fond d'un sac en cuir usé. Sombre, riche, légèrement sucré.",
+      "ru": "Как момент, когда пьёшь горячий эспрессо и ищешь что-то в потёртой кожаной сумке. Тёмный, насыщенный, слегка сладкий."
+    },
+    "6a85996dc716c6f9043ffa1b": {
+      "name": "Cuir Intense by Guerlain",
+      "archetype": "CEO",
+      "en": "The last person to sit down at the table. Like the weight of a good leather bag set on the chair next to yours — heavy, warm, expensive.",
+      "fr": "La dernière personne à s'asseoir à table. Comme le poids d'un beau sac en cuir posé sur la chaise d'à côté — lourd, chaud, cher.",
+      "ru": "Тот, кто садится за стол последним. Как вес хорошей кожаной сумки, поставленной на соседний стул, — тяжёлый, тёплый, дорогой."
+    },
+    "6a85983628188e6a98258a18": {
+      "name": "Dreams and Nightmares by L'Epoque Parfums",
+      "archetype": "CEO",
+      "en": "The pause before you say something that changes the conversation. Like the air right before a thunderstorm — wet earth, cold wind, something electric. Only the people closest to you sense it.",
+      "fr": "La pause avant de dire ce qui va changer la conversation. Comme l'air juste avant l'orage — terre mouillée, vent froid, quelque chose d'électrique. Seuls vos proches le perçoivent.",
+      "ru": "Пауза перед фразой, которая изменит разговор. Как воздух перед грозой — мокрая земля, холодный ветер, что-то наэлектризованное. Этот запах услышат только самые близкие к тебе.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbd99ea921e7c754deb605": {
+      "name": "Escentric 05",
+      "archetype": "CEO",
+      "en": "Fresh and focused like your new business venture.",
+      "fr": "Frais et concentré comme votre nouvelle aventure professionnelle.",
+      "ru": "Свежий и сосредоточенный, как твой новый бизнес-проект.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbd9c91ab04761b8d334cd": {
+      "name": "Legend",
+      "archetype": "CEO",
+      "en": "Doesn't surprise you. Doesn't need to. Shows up, delivers, leaves.",
+      "fr": "Ne vous surprend pas. N'en a pas besoin. Se présente, livre, repart.",
+      "ru": "Не удивляет тебя. И не должен. Приходит, делает своё дело, уходит."
+    },
+    "6a8598c9c78e396f742dbd68": {
+      "name": "Megamare by Orto Parisi",
+      "archetype": "CEO",
+      "en": "Saying no when you need to. Bold, relentless, zero apology. This scent walks into the room before you do.",
+      "fr": "Dire non quand il le faut. Franc, implacable, sans un mot d'excuse. Ce parfum entre dans la pièce avant vous.",
+      "ru": "Сказать «нет», когда надо. Прямой, неуступчивый, без единого извинения. Этот аромат входит в комнату раньше тебя."
+    },
+    "6a8598a8d43d1534b199a535": {
+      "name": "Mistpouffer by Stora Skuggan",
+      "archetype": "CEO",
+      "en": "Deleting the email instead of replying. Like blowing out a match — brief smoke, dry wood, then nothing. Clean, deliberate, final.",
+      "fr": "Supprimer le mail au lieu d'y répondre. Comme une allumette qu'on souffle — un peu de fumée, du bois sec, puis plus rien. Net, délibéré, définitif.",
+      "ru": "Как задутая спичка — короткий дым, сухое дерево, и всё. Чистый, намеренный, окончательный.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbd9f4ee78ba018d3e9599": {
+      "name": "Musky Oakmoss",
+      "archetype": "CEO",
+      "en": "Not there yet, but knows exactly what they want and is going for it.",
+      "fr": "Pas encore là, mais sait exactement ce qu'il veut et y va.",
+      "ru": "Ещё не на вершине, но точно знает, чего хочет, и идёт к этому."
+    },
+    "6a8597c5f36b82414a28447f": {
+      "name": "Penguin by Zoologist",
+      "archetype": "CEO",
+      "en": "The cold focus of a 6am workout when no one else is up yet. Like the first breath of freezing air that hits your lungs. Clear, sharp, wide awake. Fills the space around you.",
+      "fr": "La concentration froide d'une séance à six heures du matin, quand personne n'est encore levé. Comme la première inspiration d'air glacé. Clair, net, parfaitement réveillé. Il occupe l'espace autour de vous.",
+      "ru": "Холодная собранность тренировки в шесть утра, когда никто ещё не встал. Как первый вдох морозного воздуха. Ясный, резкий, совершенно проснувшийся. Занимает пространство вокруг тебя."
+    },
+    "6a85980e601f64e06745d0a1": {
+      "name": "Sailing Day by Maison Margiela",
+      "archetype": "CEO",
+      "en": "Hanging up the phone after closing a big deal. Walking out into the rain and smelling wet streets and charged air. The city smells different when you've won.",
+      "fr": "Raccrocher après avoir conclu une grosse affaire. Sortir sous la pluie et sentir les rues mouillées et l'air chargé. La ville ne sent pas pareil quand on a gagné.",
+      "ru": "Ты положил(а) трубку, закрыв крупную сделку, выходишь под дождь и чувствуешь мокрые улицы и наэлектризованный воздух. Делаешь глубокий вдох — город пахнет иначе, когда ты выиграл(а).",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859768e00cd82c08e5588e": {
+      "name": "Sel d'Argent by BDK Parfums",
+      "archetype": "CEO",
+      "en": "Cold water splashed on your face before a big day. Clean, sharp, mineral. This scent stays close to your skin.",
+      "fr": "De l'eau froide sur le visage avant un jour important. Net, vif, minéral. Ce parfum reste tout près de la peau.",
+      "ru": "Холодная вода на лицо перед важным днём. Чистый, резкий, минеральный. Этот аромат держится вплотную к коже."
+    },
+    "6a859924ef80e89ae33148fb": {
+      "name": "This is Not A Blue Bottle 1.5 by Histoires de Parfums",
+      "archetype": "CEO",
+      "en": "Your desk at the end of a productive day — everything cleared, screen off, cool air. Mineral, clean, a touch of sweetness. Nothing left to decide.",
+      "fr": "Votre bureau à la fin d'une journée efficace — tout est rangé, l'écran éteint, l'air frais. Minéral, net, une pointe de douceur. Plus rien à décider.",
+      "ru": "Твой стол в конце продуктивного дня — всё убрано, экран выключен, воздух прохладный. Минеральный, чистый, с оттенком сладости. Решать больше нечего."
+    },
+    "6a859a120f5f3561acf8d49e": {
+      "name": "Dirty Rice by BORNTOSTANDOUT",
+      "archetype": "HUG",
+      "en": "Remember you as a kid drinking warm milk with cookies. Soft, creamy, a little earthy underneath. Very intimate and nostalgic.",
+      "fr": "Vous vous souvenez, enfant, du lait chaud avec des biscuits ? C'est cette odeur. Douce, crémeuse, un peu terreuse en dessous. Très intime, très nostalgique.",
+      "ru": "Помнишь, как в детстве пил(а) тёплое молоко с печеньем? Вот это оно. Не сладкий — именно мягкий: сливочный, с землистой ноткой внизу. Очень личный и ностальгический.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859acab27ed6e1752b9eed": {
+      "name": "Ani by Nishane",
+      "archetype": "HUG",
+      "en": "A warm kitchen full of people on a holiday morning. Sweet, spicy, generous. The kind of scent that makes a whole room feel like home. Everyone gravitates toward it.",
+      "fr": "Une cuisine chaude pleine de monde un matin de fête. Sucré, épicé, généreux. Le genre de parfum qui donne à toute une pièce un air de maison. Tout le monde s'en approche.",
+      "ru": "Тёплая кухня, полная людей, праздничным утром. Сладкий, пряный, щедрый. Аромат, от которого вся комната становится домом. К нему тянутся все."
+    },
+    "69cbdaf76b66a6aa4f00308c": {
+      "name": "Baby Powder",
+      "archetype": "HUG",
+      "en": "Unfamiliar at first. Then suddenly the only thing that feels right.",
+      "fr": "Inconnu au début. Puis soudain la seule chose qui semble juste.",
+      "ru": "Сначала незнакомый. Потом вдруг единственно подходящий.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859a8449d6729f91a085f6": {
+      "name": "Beige by Chanel",
+      "archetype": "HUG",
+      "en": "Soft, floral, slightly sweet — like getting dressed up for brunch with your favourite people and sharing a croissant with honey. Scent stays very close to skin.",
+      "fr": "Doux, floral, légèrement sucré — comme s'habiller pour un brunch avec vos préférés et partager un croissant au miel. Il reste tout près de la peau.",
+      "ru": "Мягкий, цветочный, слегка сладкий — как собраться на бранч с любимыми людьми и разделить круассан с мёдом. Держится вплотную к коже."
+    },
+    "6a859aa5ef80e89ae332341d": {
+      "name": "Blanc Sada by L'Entropiste",
+      "archetype": "HUG",
+      "en": "Remember the moments when you look put together without trying? Thats how it smells, relaxed and elegant. People near you will feel comforted by this scent.",
+      "fr": "Vous connaissez ces moments où vous avez l'air impeccable sans avoir essayé ? Il sent exactement ça : détendu et élégant. Les gens près de vous s'y sentiront bien.",
+      "ru": "Знаешь моменты, когда выглядишь собранно, не стараясь? Он пахнет именно так — расслабленно и элегантно. Его слышат только те, кто совсем рядом, и им с ним спокойно.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbdb644ad683dccb572754": {
+      "name": "By the Fireplace",
+      "archetype": "HUG",
+      "en": "Nowhere to be. No one to perform for. Just be.",
+      "fr": "Nulle part où être. Personne pour qui jouer un rôle. Juste être.",
+      "ru": "Некуда спешить. Не перед кем играть роль. Просто быть."
+    },
+    "69cbc4570f55ed71e6b7e37b": {
+      "name": "Eau Duelle",
+      "archetype": "HUG",
+      "en": "It smells like being welcomed.",
+      "fr": "Ça sent l'invitation à entrer prendre le thé.",
+      "ru": "Пахнет как приглашение зайти на чай.",
+      "edited": [
+        "fr",
+        "ru"
+      ]
+    },
+    "6a859a43c716c6f90440d7d7": {
+      "name": "En Passant by Frederic Malle",
+      "archetype": "HUG",
+      "en": "When you are walking past a blooming bush on a May morning and stopping to smell something fresh, powdery, a little green like spring landed on your skin.",
+      "fr": "Quand vous passez devant un buisson en fleurs un matin de mai et que vous vous arrêtez : quelque chose de frais, de poudré, d'un peu vert, comme si le printemps s'était posé sur votre peau.",
+      "ru": "Когда проходишь мимо цветущего куста майским утром и останавливаешься: что-то свежее, пудровое, слегка зелёное — будто весна села тебе на кожу."
+    },
+    "6a859b3adc5cf4b298c23335": {
+      "name": "Gentle Fluidity Gold by Francis Kurkdjian",
+      "archetype": "HUG",
+      "en": "A long hug from someone wearing a cashmere sweater. Warm, soft, slightly spicy, enveloping. The scent equivalent of being wrapped up and not wanting to go anywhere.",
+      "fr": "Une longue étreinte de quelqu'un en pull de cachemire. Chaud, doux, légèrement épicé, enveloppant. L'équivalent olfactif d'être emmitouflé et de ne plus vouloir bouger.",
+      "ru": "Долгое объятие человека в кашемировом свитере. Тёплый, мягкий, слегка пряный, обволакивающий. Обонятельный эквивалент того, чтобы закутаться и никуда не идти."
+    },
+    "6a859ae66cd95d8077eeac62": {
+      "name": "Green Vanille by Régime des Fleur",
+      "archetype": "HUG",
+      "en": "Vanilla ice cream with fresh herbs on top — sounds strange, tastes perfect. Creamy, green, a little nutty. Sweet but interesting. Not what you'd expect.",
+      "fr": "Une glace vanille avec des herbes fraîches par-dessus — ça paraît étrange, c'est parfait. Crémeux, vert, un peu noisetté. Sucré mais intéressant. Pas ce à quoi vous vous attendiez.",
+      "ru": "Ванильное мороженое со свежими травами сверху — звучит странно, на вкус идеально. Сливочный, зелёный, чуть ореховый. Сладкий, но не скучный. Не то, чего ждёшь."
+    },
+    "6a8599cdd43d1534b19a7748": {
+      "name": "Gris Charnel by BDK",
+      "archetype": "HUG",
+      "en": "A warm cardigan that still smells like someone you love. Soft, slightly sweet, a little spicy. Only those close to you will notice.",
+      "fr": "Un cardigan chaud qui sent encore quelqu'un que vous aimez. Doux, légèrement sucré, un peu épicé. Seuls vos proches le remarqueront.",
+      "ru": "Тёплый кардиган, который ещё пахнет любимым человеком. Мягкий, слегка сладкий, чуть пряный. Заметят только близкие."
+    },
+    "6a8599abb0d55215c9be483a": {
+      "name": "Musc Outreblanc by Guerlain",
+      "archetype": "HUG",
+      "en": "Smells like your skin after a long warm bath. Soft, powdery, barely there. So close it's almost invisible — only someone hugging you would catch it.",
+      "fr": "L'odeur de votre peau après un long bain chaud. Douce, poudrée, à peine là. Si proche qu'elle en est presque invisible — seul quelqu'un qui vous serre dans ses bras la sentira.",
+      "ru": "Запах твоей кожи после долгой тёплой ванны. Мягкий, пудровый, едва уловимый. Так близко, что почти невидим, — поймает только тот, кто тебя обнимет."
+    },
+    "6a859a5f8506e44164f15d86": {
+      "name": "Rain Tea by Chasing Scents",
+      "archetype": "HUG",
+      "en": "A rainy afternoon with the windows cracked open, like a cup of camomile tea. The kind of calm you can actually smell. Gentle enough that only people near you will notice.",
+      "fr": "Un après-midi de pluie, fenêtres entrouvertes, comme une tasse de camomille. Le genre de calme qui se sent vraiment. Assez discret pour que seuls vos voisins immédiats le remarquent.",
+      "ru": "Дождливый день с приоткрытыми окнами и чашкой ромашкового чая в руках. Спокойствие, которое действительно можно почувствовать носом. Тихий настолько, что заметят только те, кто рядом.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a8599f2d1e332f841e864cf": {
+      "name": "Totally White 126 by Parle Moi de Parfum",
+      "archetype": "HUG",
+      "en": "The first warm day in spring after cold winter when all the flowers open at once. Bright, soft, sweet but not heavy. Like walking through a park and breathing deeper with a smile on face.",
+      "fr": "Le premier jour chaud du printemps après un hiver froid, quand toutes les fleurs s'ouvrent d'un coup. Lumineux, doux, sucré sans être lourd. Comme traverser un parc en respirant plus profondément, le sourire aux lèvres.",
+      "ru": "Первый тёплый день весны после холодной зимы, когда все цветы раскрываются разом. Светлый, мягкий, сладкий, но не тяжёлый. Как идти через парк, дышать глубже и улыбаться."
+    },
+    "6a859b0488c891d8d88162c0": {
+      "name": "Un Bois Vanille by Serge Lutens",
+      "archetype": "HUG",
+      "en": "A warm chocolate shop in winter. Rich, dark vanilla with something woody underneath. Not candy, but more like the expensive kind you unwrap slowly. Very close to skin.",
+      "fr": "Une chocolaterie chaude en hiver. Vanille dense et sombre, avec du bois en dessous. Pas un bonbon — plutôt le chocolat cher qu'on déballe lentement. Tout près de la peau.",
+      "ru": "Тёплая шоколадная лавка зимой. Густая тёмная ваниль с деревом внизу. Не конфета, а дорогой шоколад, который разворачиваешь медленно. Вплотную к коже."
+    },
+    "69cbdb39349f470f494aed4c": {
+      "name": "You Doux",
+      "archetype": "HUG",
+      "en": "Smells like someone who remembered how you take your coffee.",
+      "fr": "Sent comme quelqu'un qui se souvient comment vous prenez votre café.",
+      "ru": "Пахнет как кто-то, кто помнит, какой твой любимый напиток."
+    },
+    "69cbc69e487663dc721518e3": {
+      "name": "Dirty Hinoki",
+      "archetype": "JAPAN",
+      "en": "A wooden cabin you just arrived at for vacation. Everything smells new and clean — fresh wood, cool air, a little citrus from the kitchen. Grounding.",
+      "fr": "Un chalet en bois où vous venez d'arriver en vacances. Tout sent le neuf et le propre — bois frais, air froid, un peu d'agrumes venu de la cuisine. Ancrant.",
+      "ru": "Деревянный дом, куда ты только что приехал(а) в отпуск. Всё пахнет новым и чистым — свежее дерево, прохладный воздух, немного цитруса с кухни. Заземляет."
+    },
+    "6a859e00ef80e89ae3345d4d": {
+      "name": "Ambre Chromatique by Maison Crivelli",
+      "archetype": "JAPAN",
+      "en": "A meditation retreat on a cold morning. Still air, smoke from something burning far away, wood underneath. Like the air itself is asking you to slow down. Private, intentional, yours alone.",
+      "fr": "Une retraite de méditation par un matin froid. Air immobile, fumée de quelque chose qui brûle au loin, du bois en dessous. Comme si l'air lui-même vous demandait de ralentir. Intime, voulu, rien qu'à vous.",
+      "ru": "Медитационный ретрит холодным утром. Неподвижный воздух, дым от чего-то горящего вдалеке, дерево под ногами. Как будто сам воздух просит тебя сбавить темп. Личный, осознанный, только твой.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859d5ec716c6f904439b33": {
+      "name": "Eau Parfumée au Thé Vert by Bulgari",
+      "archetype": "JAPAN",
+      "en": "The first five minutes inside a luxury hotel. Cool marble, fresh flowers at reception, everything spotless. You can't name what smells so good — it just does.",
+      "fr": "Les cinq premières minutes dans un hôtel de luxe. Marbre froid, fleurs fraîches à la réception, tout est impeccable. Impossible de nommer ce qui sent si bon — ça sent bon, c'est tout.",
+      "ru": "Первые пять минут в хорошем отеле. Дорогой интерьер, свежие цветы на ресепшене, всё безупречно. Не назовёшь, что именно так пахнет, — просто приятно пахнет.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859d354a61019facf1e9e5": {
+      "name": "Heliodose by Marlou",
+      "archetype": "JAPAN",
+      "en": "Stepping out of a hot bath into cool air. Clean skin, a little steam, nothing else. Barely there, stays close to skin.",
+      "fr": "Sortir d'un bain chaud dans l'air frais. Peau propre, un peu de vapeur, rien d'autre. À peine là, reste tout près de la peau.",
+      "ru": "Выйти из горячей ванны в прохладный воздух. Чистая кожа, немного пара, больше ничего. Едва заметный, держится вплотную к коже."
+    },
+    "6a859dd15f2354d37658b3f8": {
+      "name": "Hinoki & Cedarwood by Jo Malone London",
+      "archetype": "JAPAN",
+      "en": "A brand new wooden house that still smells like the forest it came from. Clean, dry, aromatic. The scent that actually fills the room.",
+      "fr": "Une maison en bois toute neuve qui sent encore la forêt d'où elle vient. Net, sec, aromatique. Le parfum qui remplit vraiment la pièce.",
+      "ru": "Совсем новый деревянный дом, который ещё пахнет лесом, из которого он построен. Чистый, сухой, обещающий — здесь всё ещё впереди. Аромат, который действительно наполняет комнату.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859ed2e00cd82c08eb393f": {
+      "name": "L'Eau Papier by Diptyque",
+      "archetype": "JAPAN",
+      "en": "Like opening a brand new notebook. The feeling of the morning before you've made any plans. This scent is very close to skin.",
+      "fr": "Comme ouvrir un carnet neuf. La sensation du matin avant d'avoir prévu quoi que ce soit. Ce parfum reste très près de la peau.",
+      "ru": "Как открыть новый блокнот. Ощущение утра, когда ты ещё ничего не запланировал(а). Этот аромат держится очень близко к коже."
+    },
+    "6a859ee8b2704901e4e519d5": {
+      "name": "L'Ombre Des Merveilles by Hermès",
+      "archetype": "JAPAN",
+      "en": "Coming home to an apartment where someone burned a nice candle earlier. Warm, sweet, smoky — the smell is still there, hanging in the air like a welcome.",
+      "fr": "Rentrer dans un appartement où quelqu'un a brûlé une belle bougie plus tôt. Chaud, sucré, fumé — l'odeur est encore là, suspendue comme un accueil.",
+      "ru": "Вернуться в квартиру, где кто-то раньше жёг хорошую свечу. Тёплый, сладкий, дымный — запах ещё висит в воздухе, как приветствие."
+    },
+    "6a859e57b905410236eaef16": {
+      "name": "Naked Dance by .Oddity",
+      "archetype": "JAPAN",
+      "en": "Walking past a flower market and catching something like fresh flowers, earth, warm stone. You smell it from across the street.",
+      "fr": "Passer devant un marché aux fleurs et attraper quelque chose comme des fleurs fraîches, de la terre, de la pierre chaude. On le sent de l'autre côté de la rue.",
+      "ru": "Пройти мимо цветочного рынка и услышать что-то вроде свежих цветов, земли, тёплого камня. Его слышно с другой стороны улицы.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbdbcb9793d22609b174c1": {
+      "name": "New Zealand",
+      "archetype": "JAPAN",
+      "en": "Far enough from everything to finally hear yourself.",
+      "fr": "Assez loin de tout pour enfin s'entendre.",
+      "ru": "Достаточно далеко от всего, чтобы наконец услышать себя."
+    },
+    "6a859eb4db28a88a22316d9c": {
+      "name": "Osmanthe Yunnan by Hermès",
+      "archetype": "JAPAN",
+      "en": "Biting into a perfectly ripe peach over the kitchen sink. Juicy, sweet but not sugary, a little floral. Simple in the best way.",
+      "fr": "Mordre dans une pêche parfaitement mûre au-dessus de l'évier. Juteux, sucré sans être sirupeux, un peu floral. Simple, au meilleur sens du mot.",
+      "ru": "Надкусить идеально спелый персик над раковиной. Сочный, сладкий, но не приторный, слегка цветочный. Простой в лучшем смысле."
+    },
+    "6a859e255f2354d37658eb4f": {
+      "name": "Series 3 Incense: Kyoto by Comme des Garcons",
+      "archetype": "JAPAN",
+      "en": "The quiet after you blow out a candle. Warm smoke hanging in the air, dry wood, stillness. Not a perfume but a pause. People nearby will sense it.",
+      "fr": "Le silence après avoir soufflé une bougie. Fumée tiède suspendue dans l'air, bois sec, immobilité. Pas un parfum, une pause. Les gens autour le percevront.",
+      "ru": "Тишина после того, как задул(а) свечу. Тёплый дым в воздухе, сухое дерево, неподвижность. Не аромат, а пауза. Те, кто рядом, этот аромат почувствуют.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbdbf2e92ec551b2511b87": {
+      "name": "Shiso",
+      "archetype": "JAPAN",
+      "en": "Clean like rain on stone.",
+      "fr": "Propre comme la pluie sur la pierre.",
+      "ru": "Чистый как дождь на камне."
+    },
+    "6a859d7daad1dfd3be66c4ce": {
+      "name": "Tam Dao by Diptyque",
+      "archetype": "JAPAN",
+      "en": "Smooth, creamy, a hint of spice. You put it on and feel more put-together instantly. Like coming out of a yoga studio with real wood floors. Everything feels considered.",
+      "fr": "Doux, crémeux, une pointe d'épice. Vous le mettez et vous vous sentez aussitôt plus en ordre. Comme sortir d'un studio de yoga au vrai parquet de bois. Tout paraît réfléchi.",
+      "ru": "Мягкий, сливочный, с намёком на специи. Наносишь — и сразу чувствуешь себя собраннее. Как выйти из йога-студии с прямой осанкой. Всё кажется продуманным.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbdc443181fc8b13c02ef0": {
+      "name": "Tokyo",
+      "archetype": "JAPAN",
+      "en": "Every note in its place. Nothing added. Nothing missing.",
+      "fr": "Chaque note à sa place. Rien d'ajouté. Rien qui manque.",
+      "ru": "Каждая нота на своём месте. Ничего лишнего. Ничего не упущено."
+    },
+    "6a859e856349d716d07b80dd": {
+      "name": "Yawahada (Soft Skin) by J-Scent",
+      "archetype": "JAPAN",
+      "en": "Freshly ironed pillowcases. Warm, smooth, a hint of something powdery and sweet. Nobody else smells it — it's just for you.",
+      "fr": "Des taies d'oreiller fraîchement repassées. Chaud, lisse, une note poudrée et sucrée. Personne d'autre ne le sent — il est pour vous seul.",
+      "ru": "Свежевыглаженные наволочки. Тёплый, гладкий, с пудровой сладковатой ноткой. Больше никто его не слышит — он только для тебя."
+    },
+    "69cbc50c02f7879393a9125a": {
+      "name": "Coven",
+      "archetype": "OFFGRID",
+      "en": "Hiking through a forest after a storm. Wet bark, moss, fallen branches, earth kicked up by your boots. Raw, real, and everyone around you knows you've been outside.",
+      "fr": "Une randonnée en forêt après l'orage. Écorce mouillée, mousse, branches tombées, terre soulevée par vos chaussures. Brut, vrai — et tout le monde autour sait que vous étiez dehors.",
+      "ru": "Поход по лесу после грозы. Мокрая кора, мох, упавшие ветки, земля, поднятая ботинками. Сырой, настоящий — и всем вокруг понятно, что ты был(а) на улице."
+    },
+    "6a859bb6dc5cf4b298c28990": {
+      "name": "Accord No. 10 by RAER Scents",
+      "archetype": "OFFGRID",
+      "en": "A tropical garden right after heavy rain. Green, alive, electric. Like someone opened all the windows in a house surrounded by plants. Fresh but warm.",
+      "fr": "Un jardin tropical juste après une grosse pluie. Vert, vivant, électrique. Comme si on avait ouvert toutes les fenêtres d'une maison entourée de plantes. Frais mais chaud.",
+      "ru": "Тропический сад сразу после ливня. Зелёный, живой, наэлектризованный. Как будто в доме, окружённом растениями, открыли все окна. Свежий, но тёплый."
+    },
+    "6a859c31601f64e06748c6c9": {
+      "name": "Anima Mineralis by DeGrhaal",
+      "archetype": "OFFGRID",
+      "en": "A thunderstorm in the mountains. Wet rock, lightning in the air, something animal. Wild, unapologetic, fills every room you walk into.",
+      "fr": "Un orage en montagne. Roche mouillée, éclair dans l'air, quelque chose d'animal. Sauvage, sans excuses, remplit chaque pièce où vous entrez.",
+      "ru": "Гроза в горах. Мокрый камень, молния в воздухе, что-то звериное. Дикий, без извинений, заполняет любую комнату, в которую ты входишь."
+    },
+    "69cbdd10ba2d12a6c7f6245a": {
+      "name": "Baikal Leather",
+      "archetype": "OFFGRID",
+      "en": "Cold enough to feel alive. Remote enough to feel free.",
+      "fr": "Assez froid pour se sentir vivant. Assez éloigné pour se sentir libre.",
+      "ru": "Собранный и отрезанный от всего — как удалёнка, только из домика в горах.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859cceef80e89ae3338281": {
+      "name": "Coyoacán by Fantôme",
+      "archetype": "OFFGRID",
+      "en": "An evening walk through dry hills as the sun goes down. Warm sage, dried wildflowers, dusty trail. Something sweet blooming somewhere you can't see. Warm, smoky, a little mysterious.",
+      "fr": "Une marche du soir dans des collines sèches au coucher du soleil. Sauge chaude, fleurs séchées, sentier poussiéreux. Quelque chose de sucré qui fleurit hors de vue. Chaud, fumé, un peu mystérieux.",
+      "ru": "Вечерняя прогулка по сухим холмам на закате. Тёплый шалфей, засушенные полевые цветы, пыльная тропа. Что-то сладкое цветёт там, где не видно. Тёплый, дымный, слегка загадочный."
+    },
+    "6a859c100f5f3561acfa774b": {
+      "name": "Falling Trees by Régime des Fleurs",
+      "archetype": "OFFGRID",
+      "en": "Sitting by a campfire in a pine forest. Resin, smoke, cracked branches. The smell that stays on your jacket the next morning. Close to skin.",
+      "fr": "Assis près d'un feu de camp dans une pinède. Résine, fumée, branches qui craquent. L'odeur qui reste sur la veste le lendemain matin. Près de la peau.",
+      "ru": "Сидеть у костра в сосновом лесу. Смола, дым, трещащие ветки. Запах, который остаётся на куртке к утру. Близко к коже."
+    },
+    "69cbdce9844979bbb75331b1": {
+      "name": "From the Garden",
+      "archetype": "OFFGRID",
+      "en": "Dirt under the nails. Sun on the neck. Nowhere else to be.",
+      "fr": "De la terre sous les ongles. Le soleil dans le cou. Nulle part ailleurs à être.",
+      "ru": "Земля под ногтями. Солнце на шее. Больше некуда идти. Ты на даче.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859c850948d7db7390f4dd": {
+      "name": "Gothic by Brera6 Perfumes",
+      "archetype": "OFFGRID",
+      "en": "A cave entrance on a cold morning. Damp stone, old resin dripping from the trees above, air that hasn't moved in a long time. Deep, dark, stays close to skin.",
+      "fr": "L'entrée d'une grotte par un matin froid. Pierre humide, vieille résine qui goutte des arbres au-dessus, un air qui n'a pas bougé depuis longtemps. Profond, sombre, reste près de la peau.",
+      "ru": "Вход в пещеру Дракулы холодным утром. Влажный камень, старая смола, капающая с деревьев сверху, воздух, который давно не двигался. Глубокий, тёмный, держится близко к коже.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a859c6a88c891d8d8826ace": {
+      "name": "Montecristo by Masque Milano",
+      "archetype": "OFFGRID",
+      "en": "Deep in the forest where the light barely reaches. Dark wood, damp leaves, something smoky like a distant fire. Thick, intense, private scent.",
+      "fr": "Au fond de la forêt, là où la lumière arrive à peine. Bois sombre, feuilles humides, quelque chose de fumé comme un feu lointain. Dense, intense, un parfum pour soi.",
+      "ru": "В глубине леса, куда почти не доходит свет. Тёмное дерево, влажная листва, что-то дымное, как далёкий костёр. Плотный, интенсивный, аромат для себя."
+    },
+    "6a859bf249d6729f91a1870e": {
+      "name": "Morel Map by Clue Perfumery",
+      "archetype": "OFFGRID",
+      "en": "Kneeling in the forest picking mushrooms after rain. Wet soil between your fingers, crushed leaves, the smell of something alive under the ground. Nobody smells it but you.",
+      "fr": "À genoux dans la forêt à ramasser des champignons après la pluie. Terre mouillée entre les doigts, feuilles écrasées, l'odeur de quelque chose de vivant sous le sol. Personne ne le sent à part vous.",
+      "ru": "Стоять на коленях в лесу и собирать грибы после дождя. Мокрая земля между пальцами, примятая листва, запах чего-то живого под ней. Кроме тебя его никто не слышит."
+    },
+    "6a859cf72a13804254c80c0a": {
+      "name": "Polish Potatoes by Bohoboco",
+      "archetype": "OFFGRID",
+      "en": "A countryside you've never been to but somehow recognize. Lying in tall grass on a warm day — wildflowers, dry earth, the sun baking everything around you. Sweet and raw, like you rolled in a meadow.",
+      "fr": "Une campagne où vous n'êtes jamais allé et que vous reconnaissez quand même. Allongé dans les hautes herbes par temps chaud — fleurs sauvages, terre sèche, le soleil qui cuit tout autour. Sucré et brut, comme si vous vous étiez roulé dans un pré.",
+      "ru": "Деревня, где ты никогда не был(а), но почему-то её узнаёшь. Лежать в высокой траве в тёплый день — полевые цветы, сухая земля, солнце, которое печёт всё вокруг. Сладкий и сырой, будто ты вывалялся(ась) в лугу."
+    },
+    "6a859b8fdc5cf4b298c2744d": {
+      "name": "Salt by Scent Trunk",
+      "archetype": "OFFGRID",
+      "en": "Sea air on a rocky beach when nobody else is around. Salt on your skin, a little smoke, cold wind. Scent is close to skin.",
+      "fr": "L'air marin sur une plage de galets quand il n'y a personne. Le sel sur la peau, un peu de fumée, le vent froid. Il reste près de la peau.",
+      "ru": "Морской воздух на каменистом берегу, когда вокруг никого. Соль на коже, немного дыма, холодный ветер. Держится близко к коже."
+    },
+    "6a859ca2675d23032fa454cd": {
+      "name": "Sándalo by Tanaïs",
+      "archetype": "OFFGRID",
+      "en": "Walking across a volcanic field — hot black rock, dry mineral air, cracked earth. Nothing grows here but it smells alive. Powerful, raw, impossible to miss.",
+      "fr": "Traverser un champ de lave — roche noire brûlante, air minéral et sec, terre craquelée. Rien n'y pousse et pourtant ça sent le vivant. Puissant, brut, impossible à manquer.",
+      "ru": "Идти через вулканическое поле — раскалённый чёрный камень, сухой минеральный воздух, потрескавшаяся земля. Здесь ничего не растёт, но пахнет живым. Мощный, сырой, мимо не пройдёшь."
+    },
+    "69cbdc9087a1f2fd470bca49": {
+      "name": "Sandflowers",
+      "archetype": "OFFGRID",
+      "en": "Wind, salt, nothing on the calendar. Finally.",
+      "fr": "Vent, sel, rien au calendrier. Enfin.",
+      "ru": "Ветер, соль, ничего в календаре. Наконец-то."
+    },
+    "6a859bd788c891d8d881ea84": {
+      "name": "The Lobster by Moth and Rabbit",
+      "archetype": "OFFGRID",
+      "en": "A cold river in the woods. Wet stones, green leaves, cold water on your hands. Wild but clean — like nature without any filter. People around you will notice.",
+      "fr": "Une rivière froide en forêt. Pierres mouillées, feuilles vertes, l'eau froide sur les mains. Sauvage mais net — la nature sans filtre. Les gens autour le remarqueront.",
+      "ru": "Холодная река в лесу. Мокрые камни, зелёная листва, холодная вода на руках. Дикий, но чистый — природа без фильтра. Те, кто рядом, заметят."
+    },
+    "6a85a46b60c7940ab82b9e32": {
+      "name": "I Am Verdant by Vyrao",
+      "archetype": "OUTOFTIME",
+      "en": "You walking into a plant shop on a sunny morning. Not sharp, not heavy, just energizing. Like the outdoors came inside.",
+      "fr": "Vous entrez dans une boutique de plantes un matin ensoleillé. Ni piquant, ni lourd — juste tonifiant. Comme si le dehors était entré.",
+      "ru": "Ты заходишь в цветочный магазин солнечным утром. Не резкий, не тяжёлый — просто бодрящий. Как будто улица зашла внутрь."
+    },
+    "69cbddf3e48551e8a0c226a6": {
+      "name": "Aromatics Elixir",
+      "archetype": "OUTOFTIME",
+      "en": "From an era when excess was a philosophy of life. Distant and nostalgic. You understand why.",
+      "fr": "D'une époque où l'excès était une philosophie de vie. Lointain, nostalgique. Vous comprenez pourquoi.",
+      "ru": "Из эпохи, когда избыток был философией жизни. Далёкий и ностальгический — ты понимаешь, почему.",
+      "enWas": "From an era when excess was a philosophy. You understand why.",
+      "edited": [
+        "en",
+        "fr",
+        "ru"
+      ]
+    },
+    "69cbddbe523c558fa4f6dd29": {
+      "name": "Encre Noire",
+      "archetype": "OUTOFTIME",
+      "en": "Dark, deliberate, and completely unbothered by your reaction to it.",
+      "fr": "Sombre, délibéré, et complètement indifférent à votre réaction.",
+      "ru": "Тёмный, намеренный, и совершенно безразличный к твоей реакции."
+    },
+    "6a85a53c47fec412e62b29d2": {
+      "name": "Feminité du Bois by Serge Lutens",
+      "archetype": "OUTOFTIME",
+      "en": "The kind of perfume that feels grown-up in a good way. Warm, slightly spicy, a little sweet. A scent that stays in the air after you walk through.",
+      "fr": "Le genre de parfum qui fait adulte, au bon sens du terme. Chaud, légèrement épicé, un peu sucré. Un sillage qui reste dans l'air après votre passage.",
+      "ru": "Аромат, от которого чувствуешь себя взрослым в хорошем смысле. Тёплый, слегка пряный, чуть сладкий. Остаётся в воздухе после того, как ты прошёл(ла)."
+    },
+    "6a85a4a8be450c8423c79cfd": {
+      "name": "Fireside Story by For Strange Women",
+      "archetype": "OUTOFTIME",
+      "en": "The smell that stays on your sweater after sitting by a bonfire. Woodsmoke, dry branches, something slightly sweet underneath. Only you know it's there.",
+      "fr": "L'odeur qui reste sur le pull après une soirée près du feu. Fumée de bois, branches sèches, quelque chose de légèrement sucré en dessous. Vous seul savez qu'elle est là.",
+      "ru": "Запах, который остаётся на свитере после вечера у костра. Древесный дым, сухие ветки, что-то слегка сладкое внизу. Только ты знаешь, что он там."
+    },
+    "69cbdd61c8dbd9d901d6c27f": {
+      "name": "Grey Flannel",
+      "archetype": "OUTOFTIME",
+      "en": "Smells like staying in when everyone else went out.",
+      "fr": "Sent comme rester chez soi quand tout le monde est sorti.",
+      "ru": "Пахнет как остаться дома, когда все ушли."
+    },
+    "69cbc6247958c525f4e75671": {
+      "name": "Gris Clair",
+      "archetype": "OUTOFTIME",
+      "en": "Introverted. Mysterious. Entirely your own.",
+      "fr": "Introverti. Mystérieux. Entièrement le vôtre.",
+      "ru": "Закрытый. Загадочный. Полностью твой."
+    },
+    "6a85a3da9f67507e3f6ebcf1": {
+      "name": "L'Etoile Mourante by Sylhouette Parfums",
+      "archetype": "OUTOFTIME",
+      "en": "A lit match that just went out, the smell of a leather journal, a hint of pepper. Like the last hour of a dinner party when the candles are low. Very intimate.",
+      "fr": "Une allumette qu'on vient de souffler, l'odeur d'un carnet en cuir, une pointe de poivre. Comme la dernière heure d'un dîner, quand les bougies ont baissé. Très intime.",
+      "ru": "Только что задутая спичка, запах кожаного блокнота, намёк на перец. Как последний час ужина, когда свечи догорают. Очень интимный."
+    },
+    "6a85a521004279d0a2ae916c": {
+      "name": "Lost Alice by Masque Milano",
+      "archetype": "OUTOFTIME",
+      "en": "Like someone just made you a warm drink with milk, honey, and a handful of fresh flowers on the table. Sweet, gentle, personal. You'd have to be close to catch this smell.",
+      "fr": "Comme si on venait de vous préparer une boisson chaude au lait et au miel, avec des fleurs fraîches posées sur la table. Sucré, doux, personnel. Il faut être près de vous pour le sentir.",
+      "ru": "Как будто тебе только что сделали тёплый напиток с молоком и мёдом, а на столе стоят свежие цветы. Сладкий, мягкий, личный. Чтобы его услышать, надо стоять рядом.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a85a4d9dc5cf4b298c9e423": {
+      "name": "Mixed Emotions by Byredo",
+      "archetype": "OUTOFTIME",
+      "en": "A cup of strong black tea with berries, and something woody underneath, a little bitter, a little sweet. Comforting but not simple. People around you will notice this scent.",
+      "fr": "Une tasse de thé noir fort aux baies, avec du bois en dessous, un peu amer, un peu sucré. Réconfortant sans être simple. Les gens autour de vous le remarqueront.",
+      "ru": "Чашка крепкого чёрного чая с ягодами, а под ней — дерево, немного горечи, немного сладости. Те, кто вокруг, его заметят — и спросят, что это.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a85a441675d23032faa161b": {
+      "name": "Notturno by Meo Fusciuni",
+      "archetype": "OUTOFTIME",
+      "en": "Like sitting in a leather armchair reading late at night with a drink in your hand and a stick of incense burning low. Scent stays close to you..",
+      "fr": "Comme lire tard le soir dans un fauteuil en cuir, un verre à la main, un bâton d'encens qui finit de brûler. Il reste tout près de vous.",
+      "ru": "Как читать поздно вечером в кожаном кресле, со стаканом в руке и догорающей палочкой благовония. Держится вплотную к тебе."
+    },
+    "6a85a48f601f64e0674f874b": {
+      "name": "Radio Bombay by DS&Durga",
+      "archetype": "OUTOFTIME",
+      "en": "The kind of scent that makes people lean in and ask what you're wearing. Easy, natural, like sun-warmed skin after a day outside. To try on skin!",
+      "fr": "Le genre de parfum qui fait qu'on se penche vers vous pour demander ce que vous portez. Simple, naturel, comme une peau chauffée par une journée dehors. À essayer sur peau !",
+      "ru": "Аромат, из-за которого к тебе наклоняются и спрашивают, что на тебе. Простой, естественный — как кожа после целого дня на солнце. Нюхать только на коже!",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a85a3a4601f64e0674e37fc": {
+      "name": "Reclaimed by Redwood Alchemy",
+      "archetype": "OUTOFTIME",
+      "en": "Morning walk through a forest after rain. Wet leaves, green moss, the smell of wood drying in the sun. Calm, grounding, like nature taking its time.",
+      "fr": "Une marche matinale en forêt après la pluie. Feuilles mouillées, mousse verte, l'odeur du bois qui sèche au soleil. Calme, ancrant, comme la nature qui prend son temps.",
+      "ru": "Утренняя прогулка по лесу после дождя. Мокрая листва, зелёный мох, запах дерева, сохнущего на солнце. Спокойный, заземляющий — природа, которая никуда не торопится."
+    },
+    "6a85a4207370ce60149174d9": {
+      "name": "Romance Noire by Sylhouette Parfums",
+      "archetype": "OUTOFTIME",
+      "en": "A glass of red wine in a comfy leather chair. Elegant and warm, not harsh. The people closest to you will notice this scent.",
+      "fr": "Un verre de vin rouge dans un fauteuil de cuir confortable. Élégant et chaud, jamais dur. Vos proches le remarqueront.",
+      "ru": "Бокал красного вина в удобном кожаном кресле. Элегантный и тёплый, без резкости. Заметят самые близкие."
+    },
+    "6a85a4c18506e44164fa0a32": {
+      "name": "Sage's Rose by TSU LANGE YOR",
+      "archetype": "OUTOFTIME",
+      "en": "Roses but not from a florist — more like dried petals in a wooden box with incense nearby. Warm, earthy, a little smoky. Not a synthetic rose — a real one.",
+      "fr": "Des roses, mais pas celles du fleuriste — plutôt des pétales séchés dans une boîte en bois, avec de l'encens à côté. Chaud, terreux, un peu fumé. Pas une rose de synthèse : une vraie.",
+      "ru": "Розы, но не из цветочного — скорее засушенные лепестки в деревянной коробке, а рядом благовония. Тёплый, землистый, слегка дымный. Не синтетическая роза, а настоящая."
+    },
+    "6a85a339b27ed6e175323320": {
+      "name": "Vanilla Vellichor Providence Perfume Co.",
+      "archetype": "OUTOFTIME",
+      "en": "A cozy used bookshop on a rainy afternoon. Warm vanilla, old paper, a hint of nutmeg. The kind of smell that makes you want to stay and read for hours. Barely leaves your skin.",
+      "fr": "Une bouquinerie douillette un après-midi de pluie. Vanille chaude, vieux papier, une pointe de muscade. Le genre d'odeur qui donne envie de rester lire des heures. Elle quitte à peine la peau.",
+      "ru": "Уютный книжный магазин дождливым днём. Тёплая ваниль, старая бумага, намёк на мускатный орех. Запах, из-за которого хочется остаться и читать часами. Почти не отходит от кожи.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a85a047d090f612ae1c81d3": {
+      "name": "SALA by TSU LANGE YOR",
+      "archetype": "SUMMER",
+      "en": "Like cracking black pepper over a salad with a lot of greens and berries. Cool, fresh, a bit spicy, with light sweetness to it.",
+      "fr": "Comme du poivre noir moulu sur une salade pleine de verdure et de baies. Frais, vif, un peu poivré, avec une légère douceur.",
+      "ru": "Как чёрный перец, смолотый на салат с зеленью и ягодами. Прохладный, свежий, слегка пряный, с лёгкой сладостью."
+    },
+    "6a85a19ab0d55215c9c4535e": {
+      "name": "Aire Sutileza Elixir by Loewe",
+      "archetype": "SUMMER",
+      "en": "Sweet like ripe fruit, not like candy. Stays close — you smell it on your wrist, not across the room.",
+      "fr": "Sucré comme un fruit mûr, pas comme un bonbon. Il reste près de vous — on le sent sur votre poignet, pas à l'autre bout de la pièce.",
+      "ru": "Сладкий как спелый фрукт, а не как конфета. Держится близко — его слышно на запястье, а не через комнату."
+    },
+    "69cbde9b026be01966ddbb63": {
+      "name": "Avgoustos",
+      "archetype": "SUMMER",
+      "en": "Heat, salt, time slowing down on purpose.",
+      "fr": "Chaleur, sel, le temps qui ralentit exprès.",
+      "ru": "Жара, соль, время, которое нарочно замедляется."
+    },
+    "69cbde6c7a549cdf4fa5f8a6": {
+      "name": "Bois de Yuzu",
+      "archetype": "SUMMER",
+      "en": "Smells like the night is still young.",
+      "fr": "Sent comme une nuit qui ne fait que commencer.",
+      "ru": "Пахнет как ночь, которая только начинается."
+    },
+    "6a859fa0b905410236ebf8be": {
+      "name": "Cedrat Tonic by Les Liquides Imaginaires",
+      "archetype": "SUMMER",
+      "en": "Like standing near a river with wild herbs growing on the bank. Green, fresh, a bit like rosemary but softer. You barely notice it's there — in a good way.",
+      "fr": "Comme se tenir au bord d'une rivière où poussent des herbes sauvages. Vert, frais, un peu romarin mais plus doux. On le remarque à peine — et c'est une qualité.",
+      "ru": "Как стоять у реки, на берегу которой растут дикие травы. Зелёный, свежий, чем-то похож на розмарин, только мягче. Его почти не замечаешь — и это плюс."
+    },
+    "6a85a20bdc08e2606b573562": {
+      "name": "Chloë Sevigny Little Flower by Régime des Fleurs",
+      "archetype": "SUMMER",
+      "en": "Berries and roses, but there's something smoky underneath like a candle was just blown out nearby. Sweet but not innocent.",
+      "fr": "Des baies et des roses, mais avec quelque chose de fumé en dessous, comme une bougie qu'on vient d'éteindre à côté. Sucré, mais pas innocent.",
+      "ru": "Ягоды и розы, но под ними что-то дымное — будто рядом только что задули свечу. Сладкий, но не невинный."
+    },
+    "6a85a28a7370ce6014901103": {
+      "name": "Delulu by .Oddity",
+      "archetype": "SUMMER",
+      "en": "Roses and apricot jam, but not delicate — there's a thickness to it, almost like warm skin. Sweet and weird at the same time.",
+      "fr": "Des roses et de la confiture d'abricot, mais rien de délicat : il y a une épaisseur, presque celle d'une peau chaude. Sucré et étrange à la fois.",
+      "ru": "Розы и абрикосовое варенье, но без деликатности: в нём есть плотность, почти как у тёплой кожи. Сладкий и странный одновременно."
+    },
+    "6a85a1e9d090f612ae1de7b4": {
+      "name": "Inlé by Memo Paris",
+      "archetype": "SUMMER",
+      "en": "A cup of sweet tea with fig and cardamom. Warm and generous. People around you will notice and they'll like it.",
+      "fr": "Une tasse de thé sucré à la figue et à la cardamome. Chaud et généreux. Les gens autour de vous le remarqueront, et il leur plaira.",
+      "ru": "Чашка сладкого чая с инжиром и кардамоном. Тёплый и щедрый. Те, кто вокруг, его заметят — и он им понравится."
+    },
+    "6a85a26eb0d55215c9c4efe9": {
+      "name": "Luster by Alloy Studio",
+      "archetype": "SUMMER",
+      "en": "Warm pie crust cooling on the counter. Brown sugar melting into butter.",
+      "fr": "Une pâte à tarte tiède qui refroidit sur le plan de travail. Du sucre roux qui fond dans le beurre.",
+      "ru": "Тёплый пирог, остывающий на столе. Коричневый сахар, тающий в масле."
+    },
+    "6a859fe19f67507e3f6b7567": {
+      "name": "Nº4 Neon by Thomas Kosmala",
+      "archetype": "SUMMER",
+      "en": "Like someone squeezed grapefruit and melon into the air right after a summer rainstorm. That electric freshness reaches out to everyone in the room.",
+      "fr": "Comme si quelqu'un avait pressé un pamplemousse et un melon dans l'air juste après une averse d'été. Cette fraîcheur électrique atteint tout le monde dans la pièce.",
+      "ru": "Как будто кто-то выжал грейпфрут и дыню прямо в воздух сразу после летнего ливня. Эта наэлектризованная свежесть достаёт до всех в комнате."
+    },
+    "6a85a22bfaceefecb1cb0779": {
+      "name": "One Umbrella for Two by Floraïku",
+      "archetype": "SUMMER",
+      "en": "Like opening a box of berry pastries. Sweet and comforting, like a snack you'd eat curled up at home. More like the smell left on a scarf than a perfume you spray.",
+      "fr": "Comme ouvrir une boîte de viennoiseries aux fruits rouges. Sucré et réconfortant, comme un goûter pris sous un plaid. Plus proche d'une odeur restée sur une écharpe que d'un parfum qu'on vaporise.",
+      "ru": "Как открыть коробку ягодной выпечки. Сладкий и уютный, как перекус под пледом. Больше похож на запах, оставшийся на шарфе, чем на духи из флакона."
+    },
+    "6a85a1c688c891d8d886819b": {
+      "name": "Rose Atlantic by DS&Durga",
+      "archetype": "SUMMER",
+      "en": "Flowers left on a beach towel. Salt air through an open window at dawn.",
+      "fr": "Des fleurs oubliées sur une serviette de plage. L'air salé par une fenêtre ouverte à l'aube.",
+      "ru": "Цветы, забытые на пляжном полотенце. Солёный воздух дует в открытое окно на рассвете.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "69cbc778dbc563d7cc52dabc": {
+      "name": "Solo Vulcan",
+      "archetype": "SUMMER",
+      "en": "Smells like momentum. The kind that doesn't need a plan.",
+      "fr": "Sent l'élan. Le genre qui n'a pas besoin de plan.",
+      "ru": "Пахнет как отдых без плана.",
+      "edited": [
+        "ru"
+      ]
+    },
+    "6a85a250b2704901e4e7db1c": {
+      "name": "Thai Lychee by History Parfums",
+      "archetype": "SUMMER",
+      "en": "Fresh lychee and peach. Tropical, juicy, unapologetically sweet. Like walking through a fruit market somewhere warm.",
+      "fr": "Litchi frais et pêche. Tropical, juteux, franchement sucré. Comme traverser un marché aux fruits quelque part au chaud.",
+      "ru": "Свежий личи и персик. Тропический, сочный, откровенно сладкий. Как пройти через фруктовый рынок где-нибудь в тепле."
+    },
+    "69cbdec580e274a20ae4bc45": {
+      "name": "Un jardin sur le nil",
+      "archetype": "SUMMER",
+      "en": "Moves like you do. Light, unhurried, and somehow everywhere at once.",
+      "fr": "Se déplace comme vous. Léger, sans hâte, et pourtant partout à la fois.",
+      "ru": "Движется как ты. Лёгкий, неторопливый, и каким-то образом везде одновременно."
+    },
+    "6a859fbdbd994f5750baa77f": {
+      "name": "You Or Someone Like You by Etat Libre d'Orange",
+      "archetype": "SUMMER",
+      "en": "Cold lemonade in a sun-warmed garden. Mint leaves crushed between your fingers.",
+      "fr": "Une limonade froide dans un jardin chauffé par le soleil. Des feuilles de menthe écrasées entre les doigts.",
+      "ru": "Холодный лимонад в саду, прогретом солнцем. Листья мяты, растёртые между пальцами."
+    },
+    "69cbc81eff7120ae1a525b2d": {
+      "name": "Black Tea",
+      "archetype": "THERAPIST",
+      "en": "Chinnamon cookies with black tea - like Christmas in a warm kitchen. Nostalgic. Stays close but people nearby will notice this scent.",
+      "fr": "Des biscuits à la cannelle avec du thé noir — comme Noël dans une cuisine chaude. Nostalgique. Il reste près de vous, mais vos voisins le remarqueront.",
+      "ru": "Печенье с корицей и чёрный чай — как Рождество на тёплой кухне. Ностальгический. Держится близко, но те, кто рядом, его заметят."
+    },
+    "69cbdf6f170a435db9ebcf1a": {
+      "name": "1472",
+      "archetype": "THERAPIST",
+      "en": "Knows exactly where to cross the line. That's what makes it safe to be around.",
+      "fr": "Sait exactement où s'arrêter. C'est ce qui le rend rassurant.",
+      "ru": "Точно знает, где остановиться. Именно поэтому рядом с ним спокойно."
+    },
+    "6a85a61f0a32a0be0d346bb4": {
+      "name": "204 Velvet Fig by Bon Parfumeur",
+      "archetype": "THERAPIST",
+      "en": "Lying in the grass at a park on a Saturday with your eyes closed and the sun on your face. Sweet, warm, nowhere to be. People next to you feel the scent.",
+      "fr": "Allongé dans l'herbe d'un parc un samedi, les yeux fermés, le soleil sur le visage. Sucré, chaud, nulle part où aller. Les gens à côté de vous le sentent.",
+      "ru": "Лежать на траве в парке в субботу, с закрытыми глазами и солнцем на лице. Сладкий, тёплый, никуда не надо. Те, кто рядом, его чувствуют."
+    },
+    "69cbdf98bf4e5e7c39e44c01": {
+      "name": "702",
+      "archetype": "THERAPIST",
+      "en": "Smells like someone who already thought of everything so you don't have to.",
+      "fr": "Sent comme quelqu'un qui a déjà pensé à tout pour que vous n'ayez pas à le faire.",
+      "ru": "Пахнет как кто-то, кто уже всё продумал, чтобы тебе не пришлось."
+    },
+    "6a85a6ca7ddd077d6b5d34db": {
+      "name": "Bibliothèque by Byredo",
+      "archetype": "THERAPIST",
+      "en": "A rainy Sunday when you cancel everything and stay on the couch. Warm drink, a candle, a book you've been meaning to start. The whole apartment smells like this.",
+      "fr": "Un dimanche de pluie où vous annulez tout et restez sur le canapé. Une boisson chaude, une bougie, un livre commencé depuis longtemps. Tout l'appartement sent comme ça.",
+      "ru": "Дождливое воскресенье, когда ты всё отменяешь и остаёшься на диване. Горячий напиток, свеча, книга, которую давно собираешься начать. Так пахнет вся квартира."
+    },
+    "6a85a5c49be97e98957b8430": {
+      "name": "Cannabis Patchouli by Dries Van Noten",
+      "archetype": "THERAPIST",
+      "en": "A friend's apartment where they always burn herbs and the windows are open. Warm wood floors, a blanket on the couch, tea already made. People across the room will catch this scent",
+      "fr": "L'appartement d'un ami où l'on brûle toujours des herbes, fenêtres ouvertes. Parquet chaud, plaid sur le canapé, thé déjà prêt. On le sent d'un bout à l'autre de la pièce.",
+      "ru": "Квартира друга, где всегда жгут травы, а окна открыты. Тёплый деревянный пол, плед на диване, чай уже заварен. Его слышно через всю комнату."
+    },
+    "6a85a6b36416d07d3708851d": {
+      "name": "Chocolate Greedy by Montale",
+      "archetype": "THERAPIST",
+      "en": "Hot chocolate with a squeeze of orange and a shot of espresso. Rich, warm, unapologetically sweet. Everyone around you will be able to smell it.",
+      "fr": "Un chocolat chaud avec un trait d'orange et un fond d'espresso. Dense, chaud, franchement sucré. Tout le monde autour de vous le sentira.",
+      "ru": "Горячий шоколад с каплей апельсина и порцией эспрессо. Густой, тёплый, откровенно сладкий. Его почувствуют все вокруг."
+    },
+    "6a85a6399be97e98957bd631": {
+      "name": "Eau Cerise by DSH Perfumes",
+      "archetype": "THERAPIST",
+      "en": "Walking through a farmers market and someone hands you a sample of fresh jam on bread. Natural, slightly earthy, like something picked by hand. Sweet but honest.",
+      "fr": "Vous traversez un marché de producteurs et on vous tend une tartine de confiture fraîche. Naturel, légèrement terreux, comme quelque chose cueilli à la main. Sucré mais honnête.",
+      "ru": "Идёшь по фермерскому рынку, и тебе протягивают хлеб со свежим вареньем. Натуральный, слегка землистый, будто собранный руками. Сладкий, но честный."
+    },
+    "6a85a603b9430758297154c5": {
+      "name": "Eau Duelle by Diptyque",
+      "archetype": "THERAPIST",
+      "en": "A Sunday afternoon nap on the couch. Warm, quiet, slightly sweet. The smell of doing absolutely nothing.",
+      "fr": "Une sieste du dimanche après-midi sur le canapé. Chaud, silencieux, légèrement sucré. L'odeur de ne rien faire du tout.",
+      "ru": "Воскресный дневной сон на диване. Тёплый, тихий, слегка сладкий. Запах полного ничегонеделания."
+    },
+    "6a85a5885f2354d3765e2dc0": {
+      "name": "Fig & Lotus Flower by Jo Malone London",
+      "archetype": "THERAPIST",
+      "en": "Like coming home after a long trip and your sheets are fresh. Clean, soft, familiar. The moment your body finally unclenches.",
+      "fr": "Rentrer d'un long voyage et trouver des draps propres. Net, doux, familier. Le moment où le corps se détend enfin.",
+      "ru": "Вернуться из долгой поездки, а постель свежая. Чистый, мягкий, знакомый. Момент, когда тело наконец отпускает."
+    },
+    "69cbdfc0ab84ca5ead749adc": {
+      "name": "Geranio Imperiale",
+      "archetype": "THERAPIST",
+      "en": "Sharp enough to notice everything. Soft enough not to point it out.",
+      "fr": "Assez net pour tout remarquer. Assez doux pour ne rien souligner.",
+      "ru": "Достаточно точный, чтобы замечать всё. Достаточно мягкий, чтобы не указывать на это."
+    },
+    "6a85a570e7658630e0002a00": {
+      "name": "No Comment by Balenciaga",
+      "archetype": "THERAPIST",
+      "en": "Early morning in the countryside before anyone else is awake. Clean cold air, dew on the grass, nothing to check or answer. Just quiet.",
+      "fr": "Tôt le matin à la campagne, avant que quiconque soit levé. Air froid et net, rosée sur l'herbe, rien à vérifier ni à répondre. Juste le calme.",
+      "ru": "Раннее утро за городом, пока никто не встал. Чистый холодный воздух, роса на траве, ничего не надо проверять и никому отвечать. Просто тишина."
+    },
+    "6a85a6776349d716d081e687": {
+      "name": "Rouge by Comme des Garçons",
+      "archetype": "THERAPIST",
+      "en": "A long dinner that started at eight and now it's midnight and nobody wants to leave. Like a spice drawer opened in a warm kitchen. Fills the space around you gently.",
+      "fr": "Un long dîner commencé à huit heures : il est minuit et personne ne veut partir. Comme un tiroir à épices ouvert dans une cuisine chaude. Il occupe doucement l'espace autour de vous.",
+      "ru": "Долгий ужин, начатый в восемь: уже полночь, и никто не хочет уходить. Как открытый ящик со специями на тёплой кухне. Мягко занимает пространство вокруг тебя."
+    },
+    "6a85a5a7b0d55215c9c77c99": {
+      "name": "Vétiver Écarlate by L'Artisan Parfumeur",
+      "archetype": "THERAPIST",
+      "en": "Watering a balcony full of plants in the morning. That green, earthy smell that rises from the soil. A little sharp, a little fresh, earthy and alive.",
+      "fr": "Arroser un balcon plein de plantes le matin. Cette odeur verte et terreuse qui monte du terreau. Un peu vive, un peu fraîche, terreuse et vivante.",
+      "ru": "Поливать балкон, полный растений, по утрам. Тот зелёный землистый запах, который поднимается от земли. Немного резкий, немного свежий, живой."
+    },
+    "6a85a699c390c36521ea034e": {
+      "name": "Vetiver Tonka by Hermès",
+      "archetype": "THERAPIST",
+      "en": "Feeling of sinking into the back seat of a warm car after a cold walk. Toasted nuts, warm wood, and a touch of sweetness. Soft, enveloping, comforting. People nearby feel at ease around this scent.",
+      "fr": "La sensation de s'enfoncer dans la banquette d'une voiture chaude après une marche dans le froid. Noisettes grillées, bois chaud, une pointe de douceur. Doux, enveloppant, réconfortant. Les gens autour se sentent bien.",
+      "ru": "Ощущение, когда садишься на заднее сиденье тёплой машины после прогулки по холоду. Жареные орехи, тёплое дерево, немного сладости. Мягкий, обволакивающий, успокаивающий. Тем, кто рядом, с ним хорошо."
+    }
+  }
+}

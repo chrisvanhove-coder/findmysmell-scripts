@@ -2,54 +2,42 @@
 
 **Это черновик. На сайт ничего не применено.**
 
-Здесь все **108** описаний каталога — те самые, что человек читает на странице
-результата под флаконом и в письме. Английский взят из `perfumes.json` без правок,
-французский и русский переведены мной.
+Здесь все **108** описаний каталога — те самые, что человек читает на
+странице результата под флаконом и в письме.
 
-Пять позиций пропущены: они помечены как черновик или архив и на сайте не
+Состояние: круг 1 вычитан 24.09.2026; правки заказчицы внесены.
+
+Пять позиций пропущены — они помечены черновиком или архивом и на сайте не
 показываются (Ambroise, Bijan, J Mat, Mat Limited, Thunderstorm).
 
 ## Как читать
 
-Сгруппировано по архетипам, внутри — по алфавиту, как в каталоге.
-Под каждым флаконом три строки: **EN** — то, что сейчас на сайте,
-**FR** и **RU** — что предлагаю.
+Сгруппировано по архетипам, внутри — в порядке каталога. Под каждым флаконом
+**EN** — то, что сейчас на сайте, **FR** и **RU** — что предлагаю.
 
-Отвечать построчно не нужно: напиши только те, где формулировка не та.
-Остальное считаю принятым.
+**✎ рядом с названием** — строка, которую ты уже правила: там стоит твой вариант.
 
-## О чём стоит знать заранее
-
-- **По-французски — на «вы», по-русски — на «ты».** Так уже написаны остальные
-  тексты сайта: французский результат обращается на «vous», русский (из твоего
-  Google-скрипта) — на «ты». Смешивать внутри одной страницы нельзя.
-- **Родовые окончания.** По-русски глаголы прошедшего времени имеют род, и я
-  писал «пил(а)», «прошёл(ла)» — как в твоих текстах архетипов. Где получалось
-  обойти род без потери смысла, обходил.
-- **Длина.** Держал близко к английской: описание стоит под флаконом в узкой
-  колонке, и лишние полторы строки там видно.
-- **Названия нот не переводил дословно там, где по-русски так не говорят.**
-  Например *woodsmoke* — «древесный дым», а не «дым дерева».
+Отвечать построчно не нужно: напиши только те, где формулировка всё ещё не та.
 
 ---
 
 ## CEO — 15 флаконов
 
-### Concrete
+### Concrete  ✎
 
 **EN** The feeling of buttoning your coat before stepping outside. Fresh, structured, decided.
 
 **FR** La sensation de boutonner son manteau avant de sortir. Frais, structuré, décidé.
 
-**RU** Ощущение, когда застёгиваешь пальто перед выходом. Свежий, собранный, решённый.
+**RU** Ощущение, когда смотришься в зеркало и проверяешь всё перед выходом. Свежий, собранный, решённый.
 
-### Bois Impérial by Essential Parfums
+### Bois Impérial by Essential Parfums  ✎
 
 **EN** Smells grounding and calm, like the person who never raises their voice. You'd follow them out of any room.
 
 **FR** Une odeur qui ancre et qui apaise, comme la personne qui n'élève jamais la voix. Vous la suivriez hors de n'importe quelle pièce.
 
-**RU** Пахнет устойчиво и спокойно — как человек, который никогда не повышает голос. За таким выйдешь из любой комнаты.
+**RU** Пахнет устойчиво и спокойно — как человек, который уверен в себе, но никогда не повышает голос. За таким пойдёшь куда угодно.
 
 ### Cedrus by Chloé
 
@@ -75,21 +63,21 @@
 
 **RU** Тот, кто садится за стол последним. Как вес хорошей кожаной сумки, поставленной на соседний стул, — тяжёлый, тёплый, дорогой.
 
-### Dreams and Nightmares by L'Epoque Parfums
+### Dreams and Nightmares by L'Epoque Parfums  ✎
 
 **EN** The pause before you say something that changes the conversation. Like the air right before a thunderstorm — wet earth, cold wind, something electric. Only the people closest to you sense it.
 
 **FR** La pause avant de dire ce qui va changer la conversation. Comme l'air juste avant l'orage — terre mouillée, vent froid, quelque chose d'électrique. Seuls vos proches le perçoivent.
 
-**RU** Пауза перед фразой, которая изменит разговор. Как воздух перед грозой — мокрая земля, холодный ветер, что-то наэлектризованное. Чувствуют только самые близкие.
+**RU** Пауза перед фразой, которая изменит разговор. Как воздух перед грозой — мокрая земля, холодный ветер, что-то наэлектризованное. Этот запах услышат только самые близкие к тебе.
 
-### Escentric 05
+### Escentric 05  ✎
 
 **EN** Fresh and focused like your new business venture.
 
 **FR** Frais et concentré comme votre nouvelle aventure professionnelle.
 
-**RU** Свежий и сосредоточенный, как твой новый проект.
+**RU** Свежий и сосредоточенный, как твой новый бизнес-проект.
 
 ### Legend
 
@@ -107,13 +95,13 @@
 
 **RU** Сказать «нет», когда надо. Прямой, неуступчивый, без единого извинения. Этот аромат входит в комнату раньше тебя.
 
-### Mistpouffer by Stora Skuggan
+### Mistpouffer by Stora Skuggan  ✎
 
 **EN** Deleting the email instead of replying. Like blowing out a match — brief smoke, dry wood, then nothing. Clean, deliberate, final.
 
 **FR** Supprimer le mail au lieu d'y répondre. Comme une allumette qu'on souffle — un peu de fumée, du bois sec, puis plus rien. Net, délibéré, définitif.
 
-**RU** Удалить письмо вместо того, чтобы ответить. Как задутая спичка — короткий дым, сухое дерево, и всё. Чисто, намеренно, окончательно.
+**RU** Как задутая спичка — короткий дым, сухое дерево, и всё. Чистый, намеренный, окончательный.
 
 ### Musky Oakmoss
 
@@ -131,13 +119,13 @@
 
 **RU** Холодная собранность тренировки в шесть утра, когда никто ещё не встал. Как первый вдох морозного воздуха. Ясный, резкий, совершенно проснувшийся. Занимает пространство вокруг тебя.
 
-### Sailing Day by Maison Margiela
+### Sailing Day by Maison Margiela  ✎
 
 **EN** Hanging up the phone after closing a big deal. Walking out into the rain and smelling wet streets and charged air. The city smells different when you've won.
 
 **FR** Raccrocher après avoir conclu une grosse affaire. Sortir sous la pluie et sentir les rues mouillées et l'air chargé. La ville ne sent pas pareil quand on a gagné.
 
-**RU** Положить трубку, закрыв крупную сделку. Выйти под дождь и почувствовать мокрые улицы и наэлектризованный воздух. Город пахнет иначе, когда ты выиграл(а).
+**RU** Ты положил(а) трубку, закрыв крупную сделку, выходишь под дождь и чувствуешь мокрые улицы и наэлектризованный воздух. Делаешь глубокий вдох — город пахнет иначе, когда ты выиграл(а).
 
 ### Sel d'Argent by BDK Parfums
 
@@ -167,21 +155,21 @@
 
 **RU** Деревянный дом, куда ты только что приехал(а) в отпуск. Всё пахнет новым и чистым — свежее дерево, прохладный воздух, немного цитруса с кухни. Заземляет.
 
-### Ambre Chromatique by Maison Crivelli
+### Ambre Chromatique by Maison Crivelli  ✎
 
 **EN** A meditation retreat on a cold morning. Still air, smoke from something burning far away, wood underneath. Like the air itself is asking you to slow down. Private, intentional, yours alone.
 
 **FR** Une retraite de méditation par un matin froid. Air immobile, fumée de quelque chose qui brûle au loin, du bois en dessous. Comme si l'air lui-même vous demandait de ralentir. Intime, voulu, rien qu'à vous.
 
-**RU** Медитационный ретрит холодным утром. Неподвижный воздух, дым от чего-то горящего вдалеке, дерево внизу. Как будто сам воздух просит тебя сбавить темп. Личный, осознанный, только твой.
+**RU** Медитационный ретрит холодным утром. Неподвижный воздух, дым от чего-то горящего вдалеке, дерево под ногами. Как будто сам воздух просит тебя сбавить темп. Личный, осознанный, только твой.
 
-### Eau Parfumée au Thé Vert by Bulgari
+### Eau Parfumée au Thé Vert by Bulgari  ✎
 
 **EN** The first five minutes inside a luxury hotel. Cool marble, fresh flowers at reception, everything spotless. You can't name what smells so good — it just does.
 
 **FR** Les cinq premières minutes dans un hôtel de luxe. Marbre froid, fleurs fraîches à la réception, tout est impeccable. Impossible de nommer ce qui sent si bon — ça sent bon, c'est tout.
 
-**RU** Первые пять минут в хорошем отеле. Холодный мрамор, свежие цветы на ресепшене, всё безупречно. Не назовёшь, что именно так пахнет, — просто пахнет.
+**RU** Первые пять минут в хорошем отеле. Дорогой интерьер, свежие цветы на ресепшене, всё безупречно. Не назовёшь, что именно так пахнет, — просто приятно пахнет.
 
 ### Heliodose by Marlou
 
@@ -191,13 +179,13 @@
 
 **RU** Выйти из горячей ванны в прохладный воздух. Чистая кожа, немного пара, больше ничего. Едва заметный, держится вплотную к коже.
 
-### Hinoki & Cedarwood by Jo Malone London
+### Hinoki & Cedarwood by Jo Malone London  ✎
 
 **EN** A brand new wooden house that still smells like the forest it came from. Clean, dry, aromatic. The scent that actually fills the room.
 
 **FR** Une maison en bois toute neuve qui sent encore la forêt d'où elle vient. Net, sec, aromatique. Le parfum qui remplit vraiment la pièce.
 
-**RU** Совсем новый деревянный дом, который ещё пахнет лесом, из которого он вышел. Чистый, сухой, ароматный. Аромат, который действительно наполняет комнату.
+**RU** Совсем новый деревянный дом, который ещё пахнет лесом, из которого он построен. Чистый, сухой, обещающий — здесь всё ещё впереди. Аромат, который действительно наполняет комнату.
 
 ### L'Eau Papier by Diptyque
 
@@ -215,13 +203,13 @@
 
 **RU** Вернуться в квартиру, где кто-то раньше жёг хорошую свечу. Тёплый, сладкий, дымный — запах ещё висит в воздухе, как приветствие.
 
-### Naked Dance by .Oddity
+### Naked Dance by .Oddity  ✎
 
 **EN** Walking past a flower market and catching something like fresh flowers, earth, warm stone. You smell it from across the street.
 
 **FR** Passer devant un marché aux fleurs et attraper quelque chose comme des fleurs fraîches, de la terre, de la pierre chaude. On le sent de l'autre côté de la rue.
 
-**RU** Пройти мимо цветочного рынка и поймать что-то вроде свежих цветов, земли, тёплого камня. Его слышно с другой стороны улицы.
+**RU** Пройти мимо цветочного рынка и услышать что-то вроде свежих цветов, земли, тёплого камня. Его слышно с другой стороны улицы.
 
 ### New Zealand
 
@@ -239,13 +227,13 @@
 
 **RU** Надкусить идеально спелый персик над раковиной. Сочный, сладкий, но не приторный, слегка цветочный. Простой в лучшем смысле.
 
-### Series 3 Incense: Kyoto by Comme des Garcons
+### Series 3 Incense: Kyoto by Comme des Garcons  ✎
 
 **EN** The quiet after you blow out a candle. Warm smoke hanging in the air, dry wood, stillness. Not a perfume but a pause. People nearby will sense it.
 
 **FR** Le silence après avoir soufflé une bougie. Fumée tiède suspendue dans l'air, bois sec, immobilité. Pas un parfum, une pause. Les gens autour le percevront.
 
-**RU** Тишина после того, как задул(а) свечу. Тёплый дым в воздухе, сухое дерево, неподвижность. Не аромат, а пауза. Те, кто рядом, её почувствуют.
+**RU** Тишина после того, как задул(а) свечу. Тёплый дым в воздухе, сухое дерево, неподвижность. Не аромат, а пауза. Те, кто рядом, этот аромат почувствуют.
 
 ### Shiso
 
@@ -255,13 +243,13 @@
 
 **RU** Чистый как дождь на камне.
 
-### Tam Dao by Diptyque
+### Tam Dao by Diptyque  ✎
 
 **EN** Smooth, creamy, a hint of spice. You put it on and feel more put-together instantly. Like coming out of a yoga studio with real wood floors. Everything feels considered.
 
 **FR** Doux, crémeux, une pointe d'épice. Vous le mettez et vous vous sentez aussitôt plus en ordre. Comme sortir d'un studio de yoga au vrai parquet de bois. Tout paraît réfléchi.
 
-**RU** Мягкий, сливочный, с намёком на специи. Наносишь — и сразу чувствуешь себя собраннее. Как выйти из йога-студии с настоящим деревянным полом. Всё кажется продуманным.
+**RU** Мягкий, сливочный, с намёком на специи. Наносишь — и сразу чувствуешь себя собраннее. Как выйти из йога-студии с прямой осанкой. Всё кажется продуманным.
 
 ### Tokyo
 
@@ -283,13 +271,13 @@
 
 ## HUG — 16 флаконов
 
-### Dirty Rice by BORNTOSTANDOUT
+### Dirty Rice by BORNTOSTANDOUT  ✎
 
 **EN** Remember you as a kid drinking warm milk with cookies. Soft, creamy, a little earthy underneath. Very intimate and nostalgic.
 
 **FR** Vous vous souvenez, enfant, du lait chaud avec des biscuits ? C'est cette odeur. Douce, crémeuse, un peu terreuse en dessous. Très intime, très nostalgique.
 
-**RU** Помнишь, как в детстве пил(а) тёплое молоко с печеньем? Вот это оно. Мягкий, сливочный, с землистой ноткой внизу. Очень личный и ностальгический.
+**RU** Помнишь, как в детстве пил(а) тёплое молоко с печеньем? Вот это оно. Не сладкий — именно мягкий: сливочный, с землистой ноткой внизу. Очень личный и ностальгический.
 
 ### Ani by Nishane
 
@@ -299,13 +287,13 @@
 
 **RU** Тёплая кухня, полная людей, праздничным утром. Сладкий, пряный, щедрый. Аромат, от которого вся комната становится домом. К нему тянутся все.
 
-### Baby Powder
+### Baby Powder  ✎
 
 **EN** Unfamiliar at first. Then suddenly the only thing that feels right.
 
 **FR** Inconnu au début. Puis soudain la seule chose qui semble juste.
 
-**RU** Сначала незнакомый. Потом вдруг единственно правильный.
+**RU** Сначала незнакомый. Потом вдруг единственно подходящий.
 
 ### Beige by Chanel
 
@@ -315,13 +303,13 @@
 
 **RU** Мягкий, цветочный, слегка сладкий — как собраться на бранч с любимыми людьми и разделить круассан с мёдом. Держится вплотную к коже.
 
-### Blanc Sada by L'Entropiste
+### Blanc Sada by L'Entropiste  ✎
 
 **EN** Remember the moments when you look put together without trying? Thats how it smells, relaxed and elegant. People near you will feel comforted by this scent.
 
 **FR** Vous connaissez ces moments où vous avez l'air impeccable sans avoir essayé ? Il sent exactement ça : détendu et élégant. Les gens près de vous s'y sentiront bien.
 
-**RU** Знаешь моменты, когда выглядишь собранно, не стараясь? Он пахнет именно так — расслабленно и элегантно. Тем, кто рядом, с ним спокойно.
+**RU** Знаешь моменты, когда выглядишь собранно, не стараясь? Он пахнет именно так — расслабленно и элегантно. Его слышат только те, кто совсем рядом, и им с ним спокойно.
 
 ### By the Fireplace
 
@@ -331,13 +319,13 @@
 
 **RU** Некуда спешить. Не перед кем играть роль. Просто быть.
 
-### Eau Duelle
+### Eau Duelle  ✎
 
 **EN** It smells like being welcomed.
 
-**FR** Ça sent l'accueil.
+**FR** Ça sent l'invitation à entrer prendre le thé.
 
-**RU** Пахнет как приглашение войти.
+**RU** Пахнет как приглашение зайти на чай.
 
 ### En Passant by Frederic Malle
 
@@ -379,13 +367,13 @@
 
 **RU** Запах твоей кожи после долгой тёплой ванны. Мягкий, пудровый, едва уловимый. Так близко, что почти невидим, — поймает только тот, кто тебя обнимет.
 
-### Rain Tea by Chasing Scents
+### Rain Tea by Chasing Scents  ✎
 
 **EN** A rainy afternoon with the windows cracked open, like a cup of camomile tea. The kind of calm you can actually smell. Gentle enough that only people near you will notice.
 
 **FR** Un après-midi de pluie, fenêtres entrouvertes, comme une tasse de camomille. Le genre de calme qui se sent vraiment. Assez discret pour que seuls vos voisins immédiats le remarquent.
 
-**RU** Дождливый день с приоткрытыми окнами, как чашка ромашки. Спокойствие, которое действительно можно почувствовать носом. Тихий настолько, что заметят только те, кто рядом.
+**RU** Дождливый день с приоткрытыми окнами и чашкой ромашкового чая в руках. Спокойствие, которое действительно можно почувствовать носом. Тихий настолько, что заметят только те, кто рядом.
 
 ### Totally White 126 by Parle Moi de Parfum
 
@@ -439,13 +427,13 @@
 
 **RU** Гроза в горах. Мокрый камень, молния в воздухе, что-то звериное. Дикий, без извинений, заполняет любую комнату, в которую ты входишь.
 
-### Baikal Leather
+### Baikal Leather  ✎
 
 **EN** Cold enough to feel alive. Remote enough to feel free.
 
 **FR** Assez froid pour se sentir vivant. Assez éloigné pour se sentir libre.
 
-**RU** Достаточно суровый, чтобы чувствовать себя живым(ой). Достаточно далёкий, чтобы чувствовать себя свободным(ой).
+**RU** Собранный и отрезанный от всего — как удалёнка, только из домика в горах.
 
 ### Coyoacán by Fantôme
 
@@ -463,21 +451,21 @@
 
 **RU** Сидеть у костра в сосновом лесу. Смола, дым, трещащие ветки. Запах, который остаётся на куртке к утру. Близко к коже.
 
-### From the Garden
+### From the Garden  ✎
 
 **EN** Dirt under the nails. Sun on the neck. Nowhere else to be.
 
 **FR** De la terre sous les ongles. Le soleil dans le cou. Nulle part ailleurs à être.
 
-**RU** Земля под ногтями. Солнце на шее. Больше некуда идти.
+**RU** Земля под ногтями. Солнце на шее. Больше некуда идти. Ты на даче.
 
-### Gothic by Brera6 Perfumes
+### Gothic by Brera6 Perfumes  ✎
 
 **EN** A cave entrance on a cold morning. Damp stone, old resin dripping from the trees above, air that hasn't moved in a long time. Deep, dark, stays close to skin.
 
 **FR** L'entrée d'une grotte par un matin froid. Pierre humide, vieille résine qui goutte des arbres au-dessus, un air qui n'a pas bougé depuis longtemps. Profond, sombre, reste près de la peau.
 
-**RU** Вход в пещеру холодным утром. Влажный камень, старая смола, капающая с деревьев сверху, воздух, который давно не двигался. Глубокий, тёмный, держится близко к коже.
+**RU** Вход в пещеру Дракулы холодным утром. Влажный камень, старая смола, капающая с деревьев сверху, воздух, который давно не двигался. Глубокий, тёмный, держится близко к коже.
 
 ### Montecristo by Masque Milano
 
@@ -547,13 +535,15 @@
 
 **RU** Ты заходишь в цветочный магазин солнечным утром. Не резкий, не тяжёлый — просто бодрящий. Как будто улица зашла внутрь.
 
-### Aromatics Elixir
+### Aromatics Elixir  ✎
 
-**EN** From an era when excess was a philosophy. You understand why.
+**EN** From an era when excess was a philosophy of life. Distant and nostalgic. You understand why.
 
-**FR** D'une époque où l'excès était une philosophie. Vous comprenez pourquoi.
+> было: From an era when excess was a philosophy. You understand why.
 
-**RU** Из эпохи, когда избыток был философией. Ты понимаешь, почему.
+**FR** D'une époque où l'excès était une philosophie de vie. Lointain, nostalgique. Vous comprenez pourquoi.
+
+**RU** Из эпохи, когда избыток был философией жизни. Далёкий и ностальгический — ты понимаешь, почему.
 
 ### Encre Noire
 
@@ -603,21 +593,21 @@
 
 **RU** Только что задутая спичка, запах кожаного блокнота, намёк на перец. Как последний час ужина, когда свечи догорают. Очень интимный.
 
-### Lost Alice by Masque Milano
+### Lost Alice by Masque Milano  ✎
 
 **EN** Like someone just made you a warm drink with milk, honey, and a handful of fresh flowers on the table. Sweet, gentle, personal. You'd have to be close to catch this smell.
 
 **FR** Comme si on venait de vous préparer une boisson chaude au lait et au miel, avec des fleurs fraîches posées sur la table. Sucré, doux, personnel. Il faut être près de vous pour le sentir.
 
-**RU** Как будто тебе только что сделали тёплый напиток с молоком и мёдом, а на столе лежат свежие цветы. Сладкий, мягкий, личный. Чтобы его услышать, надо стоять рядом.
+**RU** Как будто тебе только что сделали тёплый напиток с молоком и мёдом, а на столе стоят свежие цветы. Сладкий, мягкий, личный. Чтобы его услышать, надо стоять рядом.
 
-### Mixed Emotions by Byredo
+### Mixed Emotions by Byredo  ✎
 
 **EN** A cup of strong black tea with berries, and something woody underneath, a little bitter, a little sweet. Comforting but not simple. People around you will notice this scent.
 
 **FR** Une tasse de thé noir fort aux baies, avec du bois en dessous, un peu amer, un peu sucré. Réconfortant sans être simple. Les gens autour de vous le remarqueront.
 
-**RU** Чашка крепкого чёрного чая с ягодами, а под ней — дерево, немного горечи, немного сладости. Утешает, но не прост. Те, кто вокруг, его заметят.
+**RU** Чашка крепкого чёрного чая с ягодами, а под ней — дерево, немного горечи, немного сладости. Те, кто вокруг, его заметят — и спросят, что это.
 
 ### Notturno by Meo Fusciuni
 
@@ -627,13 +617,13 @@
 
 **RU** Как читать поздно вечером в кожаном кресле, со стаканом в руке и догорающей палочкой благовония. Держится вплотную к тебе.
 
-### Radio Bombay by DS&Durga
+### Radio Bombay by DS&Durga  ✎
 
 **EN** The kind of scent that makes people lean in and ask what you're wearing. Easy, natural, like sun-warmed skin after a day outside. To try on skin!
 
 **FR** Le genre de parfum qui fait qu'on se penche vers vous pour demander ce que vous portez. Simple, naturel, comme une peau chauffée par une journée dehors. À essayer sur peau !
 
-**RU** Аромат, из-за которого к тебе наклоняются и спрашивают, что на тебе. Простой, естественный, как кожа, нагретая днём на улице. Пробовать только на коже!
+**RU** Аромат, из-за которого к тебе наклоняются и спрашивают, что на тебе. Простой, естественный — как кожа после целого дня на солнце. Нюхать только на коже!
 
 ### Reclaimed by Redwood Alchemy
 
@@ -659,13 +649,13 @@
 
 **RU** Розы, но не из цветочного — скорее засушенные лепестки в деревянной коробке, а рядом благовония. Тёплый, землистый, слегка дымный. Не синтетическая роза, а настоящая.
 
-### Vanilla Vellichor Providence Perfume Co.
+### Vanilla Vellichor Providence Perfume Co.  ✎
 
 **EN** A cozy used bookshop on a rainy afternoon. Warm vanilla, old paper, a hint of nutmeg. The kind of smell that makes you want to stay and read for hours. Barely leaves your skin.
 
 **FR** Une bouquinerie douillette un après-midi de pluie. Vanille chaude, vieux papier, une pointe de muscade. Le genre d'odeur qui donne envie de rester lire des heures. Elle quitte à peine la peau.
 
-**RU** Уютный букинистический магазин дождливым днём. Тёплая ваниль, старая бумага, намёк на мускатный орех. Запах, из-за которого хочется остаться и читать часами. Почти не отходит от кожи.
+**RU** Уютный книжный магазин дождливым днём. Тёплая ваниль, старая бумага, намёк на мускатный орех. Запах, из-за которого хочется остаться и читать часами. Почти не отходит от кожи.
 
 ---
 
@@ -759,21 +749,21 @@
 
 **RU** Как открыть коробку ягодной выпечки. Сладкий и уютный, как перекус под пледом. Больше похож на запах, оставшийся на шарфе, чем на духи из флакона.
 
-### Rose Atlantic by DS&Durga
+### Rose Atlantic by DS&Durga  ✎
 
 **EN** Flowers left on a beach towel. Salt air through an open window at dawn.
 
 **FR** Des fleurs oubliées sur une serviette de plage. L'air salé par une fenêtre ouverte à l'aube.
 
-**RU** Цветы, забытые на пляжном полотенце. Солёный воздух в открытое окно на рассвете.
+**RU** Цветы, забытые на пляжном полотенце. Солёный воздух дует в открытое окно на рассвете.
 
-### Solo Vulcan
+### Solo Vulcan  ✎
 
 **EN** Smells like momentum. The kind that doesn't need a plan.
 
 **FR** Sent l'élan. Le genre qui n'a pas besoin de plan.
 
-**RU** Пахнет как тот самый момент.
+**RU** Пахнет как отдых без плана.
 
 ### Thai Lychee by History Parfums
 

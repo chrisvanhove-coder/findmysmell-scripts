@@ -60,6 +60,7 @@
     "e2e:revisions": "node e2e/quiz-revisions.mjs",
     "check:revisions:integration": "tsx scripts/check-revisions-integration.mts",
     "check:locale": "tsx scripts/check-locale.mts",
+    "perfumes:review": "tsx scripts/perfumes-review.mts",
     "e2e:locale": "node e2e/locale.mjs",
     "subscribers:report": "node scripts/subscribers-report.mjs",
     "fixture:run": "tsx scripts/write-run-fixture.mts",
