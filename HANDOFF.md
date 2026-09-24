@@ -1253,7 +1253,9 @@ Railway виден красным. Поэтому SUCCESS у этого серв
 `delete-service`. Сработал `railway-agent`: у него `commitStagedChanges`
 проходит там, где инструмент MCP висит. Проверено не на слово агенту —
 `get-staged-changes` вернул `staged: null`, а `get-service-config` показал
-живой `multiRegionConfig` без `sfo`.
+живой `multiRegionConfig` без `sfo`. И проверено делом: деплой
+`706aa84d-32a1-4e49-92f2-ba4a163fc5c2` в 11:52 отработал полную ночную
+команду уже в `europe-west4-drams3a` и вернул ноль.
 
 #### Еженедельный отчёт: не заведён, и вот почему
 
