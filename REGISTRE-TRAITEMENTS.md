@@ -175,7 +175,7 @@ Corporation.
 
 | Sous-traitant | Rôle | Localisation des données | Contrat |
 |---|---|---|---|
-| Railway Corporation | hébergement de l'application et de la base | Amsterdam, Pays-Bas | DPA à signer — voir `GDPR-2026-09-24.md` |
+| Railway Corporation | hébergement de l'application et de la base | Amsterdam, Pays-Bas | DPA signé le 24 septembre 2026 (DocuSign) |
 | Brevo (Sendinblue SAS) | acheminement de l'e-mail de résultat | Union européenne | DPA intégré aux conditions d'utilisation |
 | Cloudinary Ltd. | diffusion des images du site | hors EEE | DPA intégré aux conditions, clauses contractuelles types incorporées |
 
