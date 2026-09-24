@@ -56,9 +56,17 @@ const s3 = new AwsClient({
   service: 's3',
   region: process.env.BUCKET_REGION ?? 'auto',
 });
-const endpoint = need('BUCKET_ENDPOINT').replace(/\/+$/, '');
+
+/**
+ * Адрес бакета. Railway отдаёт ENDPOINT без имени бакета
+ * (`https://t3.storageapi.dev`) и ждёт virtual-hosted-стиль: имя бакета
+ * поддоменом, а не первым сегментом пути. Путевой стиль там остался
+ * только у бакетов, созданных до перехода, — новый ответит 404, и
+ * копия молча уедет в никуда. Поэтому адрес собирается явно.
+ */
+const endpoint = new URL(need('BUCKET_ENDPOINT'));
 const bucket = need('BUCKET_NAME');
-const base = `${endpoint}/${bucket}`;
+const base = `${endpoint.protocol}//${bucket}.${endpoint.host}`;
 
 const stamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
 const key = `db/${stamp}.ndjson.gz`;
