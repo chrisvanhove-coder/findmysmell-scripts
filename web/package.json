@@ -21,6 +21,8 @@
     "check:images": "tsx scripts/check-images.mts",
     "check:funnel": "tsx scripts/check-funnel.mts",
     "purge:retention": "tsx scripts/purge-retention.mts",
+    "backup:db": "tsx scripts/backup-db.mts",
+    "watch:growth": "tsx scripts/growth-watch.mts",
     "funnel:report": "tsx scripts/funnel-report.mts",
     "e2e:repeat": "node e2e/repeat-runs.mjs",
     "check:admin": "tsx scripts/check-admin.mts",
@@ -68,6 +70,7 @@
     "e2e:mobile": "node e2e/mobile.mjs"
   },
   "dependencies": {
+    "aws4fetch": "^1.0.20",
     "drizzle-orm": "^0.44.6",
     "next": "16.3.5",
     "pg": "^8.16.3",
