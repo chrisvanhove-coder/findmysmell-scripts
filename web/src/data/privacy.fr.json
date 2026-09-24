@@ -23,7 +23,7 @@
         {
           "list": [
             "Vos réponses au quiz (vos préférences, modes de vie, préférences émotionnelles) — y compris les réponses d'un quiz que vous commencez sans le terminer,",
-            "Vos propres mots, chaque fois que vous choisissez de les écrire \u2014 dans toute question proposant un champ « Other », ainsi que dans la question ouverte à la fin,",
+            "Vos propres mots, chaque fois que vous choisissez de les écrire — dans toute question proposant un champ « Other », ainsi que dans la question ouverte à la fin,",
             "Votre adresse e-mail, uniquement si vous nous demandez de vous envoyer votre résultat."
           ]
         },
@@ -220,7 +220,16 @@
           ]
         },
         {
-          "p": "Pour les réponses au quiz soumises sans informations de contact : elles sont stockées sans aucun identifiant désignant une personne, et nous ne pouvons ni identifier, ni consulter, ni supprimer les réponses d'une personne précise, car rien en elles ne renvoie à vous. Elles portent en revanche le nombre aléatoire de navigateur décrit à la section 4.4, qui nous permet de voir que deux passages viennent du même navigateur. Elles sont donc pseudonymisées plutôt que totalement anonymes : les passages peuvent être reliés entre eux, mais pas à vous. Si vous souhaitez la suppression d'un passage et pouvez nous indiquer l'adresse e-mail utilisée, écrivez à contact@findmysmell.com."
+          "p": "Notre capacité à supprimer ce que nous détenons sur vous tient à une seule chose : nous avez-vous donné une adresse e-mail."
+        },
+        {
+          "list": [
+            "Vous l'avez fait — écrivez à contact@findmysmell.com et nous supprimerons tout ce qui est enregistré sous cette adresse, et vous préviendrons une fois fait.",
+            "Vous ne l'avez pas fait — alors rien de ce que nous détenons ne renvoie à vous. Vos réponses sont stockées sans nom et sans adresse ; la seule chose qu'elles portent est le nombre aléatoire de navigateur décrit à la section 4.4, qui relie un passage à un autre, jamais à une personne. Nous ne pouvons pas les retrouver, et personne d'autre non plus. Elles sont effacées selon un calendrier : trois ans au maximum, voir la section 7."
+          ]
+        },
+        {
+          "p": "Votre adresse e-mail est conservée séparément de vos réponses au quiz et n'y est pas liée (section 7.1). Cette séparation est ce qui garde les réponses anonymes, et c'est aussi son prix : supprimer votre adresse ne supprime pas un passage précis, car nous ne pouvons pas savoir lequel était le vôtre."
         },
         {
           "p": "Pour exercer l'un de ces droits (si vous avez fourni des informations de contact), veuillez nous contacter à contact@findmysmell.com."

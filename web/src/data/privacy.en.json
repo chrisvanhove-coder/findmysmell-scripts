@@ -22,8 +22,8 @@
         },
         {
           "list": [
-            "Quiz responses (your preferences, lifestyle patterns, emotional preferences) \u2014 including the answers of a quiz you start and do not finish,",
-            "Your own words, whenever you choose to write them \u2014 in any question that offers an \u201cOther\u201d field, and in the open question at the end,",
+            "Quiz responses (your preferences, lifestyle patterns, emotional preferences) — including the answers of a quiz you start and do not finish,",
+            "Your own words, whenever you choose to write them — in any question that offers an “Other” field, and in the open question at the end,",
             "Email address, only if you ask us to send you your result."
           ]
         },
@@ -220,7 +220,16 @@
           ]
         },
         {
-          "p": "For quiz responses submitted without contact information: they are stored without any identifier that points to a person, and we cannot identify, access, or delete a specific person's responses, because nothing in them points to you. They do carry the random browser number described in section 4.4, which lets us see that two runs came from the same browser. That makes them pseudonymous rather than fully anonymous: runs can be related to each other, but not to you. If you want a run removed and can tell us the email address you used, write to contact@findmysmell.com."
+          "p": "Whether we can delete what we hold about you comes down to one thing: whether you gave us an email address."
+        },
+        {
+          "list": [
+            "You did — write to contact@findmysmell.com and we will delete everything stored under that address, and tell you when it is done.",
+            "You did not — then nothing we hold points to you. Your answers are stored without a name and without an address; the only thing they carry is the random browser number from section 4.4, which relates one run to another but never to a person. We cannot find them, and neither can anyone else. They are erased on a schedule instead: three years at the most, see section 7."
+          ]
+        },
+        {
+          "p": "Your email address is kept separately from your quiz answers and is not linked to them (section 7.1). That separation is what keeps the answers anonymous, and it is also its cost: deleting your address does not delete a particular quiz run, because we cannot tell which run was yours."
         },
         {
           "p": "To exercise any of these rights (if you have provided contact information), please contact us at contact@findmysmell.com."
