@@ -7,6 +7,7 @@ import { pickFromBrowser } from '@/lib/picked-client';
 import Scales from './Scales';
 import styles from './result.module.css';
 import { type Locale } from '@/lib/i18n';
+import { perfumeDescription } from '@/lib/perfume-copy';
 import { cld } from '@/lib/cloudinary';
 
 /**
@@ -65,7 +66,7 @@ export default function ResultMatch({
             называет другой парфюм, чем поле name, у четырёх — чужой дом.
             Показывать его значило дезинформировать. Подробности в 9.7. */}
         <h2 className={styles.matchName}>{main.name}</h2>
-        <p className={styles.matchDesc}>{main.description}</p>
+        <p className={styles.matchDesc}>{perfumeDescription(locale, main)}</p>
         <Scales locale={locale} perfume={main} />
         <a className={styles.cta} href={main.shopUrl} target="_blank" rel="noopener noreferrer">
           {labels.discover}
@@ -95,7 +96,7 @@ export default function ResultMatch({
               {/* Флакон слева, всё про него — справа. */}
               <span className={styles.altBody}>
                 <span className={styles.altName}>{alt.name}</span>
-                <span className={styles.altDesc}>{alt.description}</span>
+                <span className={styles.altDesc}>{perfumeDescription(locale, alt)}</span>
                 <Scales locale={locale} perfume={alt} compact />
               </span>
             </a>

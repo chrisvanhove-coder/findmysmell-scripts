@@ -37,6 +37,9 @@ import punchRu from '../src/data/punch-lines.ru.json';
 import tagsEn from '../src/data/tag-lines.en.json';
 import tagsFr from '../src/data/tag-lines.fr.json';
 import tagsRu from '../src/data/tag-lines.ru.json';
+import perfumes from '../src/data/perfumes.json';
+import descFr from '../src/data/perfume-descriptions.fr.json';
+import descRu from '../src/data/perfume-descriptions.ru.json';
 import { QUESTIONS } from '../src/lib/quiz';
 import quizEn from '../src/data/quiz.en.json';
 import { QUESTION_COPY } from '../src/data/question-titles';
@@ -248,6 +251,26 @@ console.log('\n=== СОДЕРЖАТЕЛЬНЫЕ ФАЙЛЫ ===');
     const noTag = KEYS_CARD.filter((k) => !String(tags[k] ?? '').trim());
     check(`карточка: ${lang} — строка @tag у всех семи`, noTag.length === 0, noTag.join(', '));
   }
+  /* Описания флаконов. Это тот текст, который человек читает под
+     флаконом и в письме, и его в каталоге 108 живых позиций. Пропуск
+     здесь ничего не ломает — перевода нет, показывается английский, —
+     поэтому заметить его можно только проверкой. */
+  type Cat = { id: string; name: string; isDraft?: boolean; isArchived?: boolean };
+  const live = (perfumes as unknown as Cat[]).filter((p) => !p.isDraft && !p.isArchived);
+  const liveIds = new Set(live.map((p) => p.id));
+  for (const [lang, desc] of [
+    ['французские', descFr], ['русские', descRu],
+  ] as Array<[string, Record<string, string>]>) {
+    const missing = live.filter((p) => !String(desc[p.id] ?? '').trim());
+    check(`описания флаконов: ${lang} есть у всех ${live.length}`,
+      missing.length === 0, missing.map((p) => p.name).join(', '));
+    /* Ключ на позицию, которой в каталоге больше нет, — не безобидный
+       мусор: при следующей правке его прочтут как «перевод уже есть». */
+    const dead = Object.keys(desc).filter((k) => !k.startsWith('_') && !liveIds.has(k));
+    check(`описания флаконов: ${lang} без мёртвых ключей`,
+      dead.length === 0, dead.join(', '));
+  }
+
   const enPunchLines = Object.fromEntries(
     KEYS_CARD.map((k) => [k, (punchEn as Record<string, unknown[]>)[k].length]),
   );

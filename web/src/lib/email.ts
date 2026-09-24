@@ -3,6 +3,7 @@ import type { ArchetypeKey } from './archetype-colors';
 import { ARCHETYPE_PALETTES } from './archetype-colors';
 import { getArchetype } from './content';
 import type { Match } from './matching';
+import { perfumeDescription } from './perfume-copy';
 import { cld } from '@/lib/cloudinary';
 
 /**
@@ -212,7 +213,7 @@ export function buildResultEmail(input: ResultEmail): {
     <div style="font-family:Georgia,serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;">${escapeHtml(copy.yourScent)}</div>
     ${main.imageUrl ? `<img src="${escapeHtml(cld(main.imageUrl, 'bottleEmail'))}" alt="${escapeHtml(main.name)}" width="180" style="display:block;margin:20px auto;max-width:180px;height:auto;">` : ''}
     <div style="font-family:Georgia,serif;font-size:24px;line-height:1.2;">${escapeHtml(main.name)}</div>
-    <div style="font-family:Georgia,serif;font-size:15px;line-height:1.6;margin-top:12px;opacity:.75;">${escapeHtml(main.description)}</div>
+    <div style="font-family:Georgia,serif;font-size:15px;line-height:1.6;margin-top:12px;opacity:.75;">${escapeHtml(perfumeDescription(input.locale, main))}</div>
     ${main.shopUrl ? `<a href="${escapeHtml(main.shopUrl)}" style="display:inline-block;margin-top:22px;padding:14px 28px;border:1px solid ${palette.stageInk};color:${palette.stageInk};font-family:Georgia,serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;">${escapeHtml(copy.discover)}</a>` : ''}
   </td></tr>` : ''}
 
@@ -247,7 +248,7 @@ export function buildResultEmail(input: ResultEmail): {
     ...rest.slice(0, 3),
     '',
     ...(main
-      ? [`${copy.yourScent}: ${main.name}`, main.description, main.shopUrl ? `${copy.discover}: ${main.shopUrl}` : '', '']
+      ? [`${copy.yourScent}: ${main.name}`, perfumeDescription(input.locale, main), main.shopUrl ? `${copy.discover}: ${main.shopUrl}` : '', '']
       : []),
     `${copy.ingredients}:`,
     ...ingredientLines,

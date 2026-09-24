@@ -160,6 +160,18 @@ async function audit(locale) {
     await page.goto(`${BASE}/${locale}/result/ceo`, { waitUntil: 'networkidle' });
     await page.waitForTimeout(800);
     const text = flat(await page.locator('body').innerText());
+
+    /* Описание флакона. Оно приходит не из словаря, а из отдельного
+       файла по id позиции, и подставляется уже на экране — если локаль
+       туда не дошла, страница соберётся и покажет английский. */
+    const desc = JSON.parse(
+      await readFile(`src/data/perfume-descriptions.${locale}.json`, 'utf8'),
+    );
+    const shown = Object.entries(desc)
+      .filter(([k]) => !k.startsWith('_'))
+      .filter(([, v]) => text.includes(flat(v)));
+    check('описание флакона переведено', shown.length > 0,
+      'на экране нет ни одного переведённого описания из каталога');
     const pairs = [
       ['dna.title', 'your scent dna'],
       ['result.alternatives', 'Also consider'],
@@ -209,7 +221,22 @@ async function auditBand() {
   }
 }
 
+/* Переключатель языка: язык, который заказчица открыла людям, должен
+   в нём быть. Страницы `/ru` работали и раньше — на них просто не вела
+   ссылка, и заметить это можно было только глазами. */
+async function auditSwitch() {
+  console.log('\n=== ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ===');
+  await page.goto(`${BASE}/en`, { waitUntil: 'networkidle' });
+  await page.locator('[aria-haspopup="menu"]').click();
+  const items = await page.locator('[role="menuitem"]').allTextContents();
+  for (const [locale, name] of [['en', 'English'], ['fr', 'Français'], ['ru', 'Русский']]) {
+    check(`${locale} есть в списке (${name})`, items.some((t) => t.trim() === name),
+      `в списке: ${items.map((t) => t.trim()).join(', ')}`);
+  }
+}
+
 for (const locale of LOCALES) await audit(locale);
+await auditSwitch();
 await auditBand();
 
 check('ошибок в консоли нет', errors.length === 0, errors.join('\n        '));
