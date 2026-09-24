@@ -7,6 +7,7 @@ import data from '@/data/country-picker.json';
 import styles from './country-picker.module.css';
 import type { MechanicProps } from './mechanics';
 import { t } from '@/lib/copy';
+import { countryLabel, countryMatches } from '@/lib/country-copy';
 
 /**
  * Поиск по странам: Q_REGION_NOW («где живёшь сейчас») и
@@ -64,14 +65,16 @@ export default function CountryPicker({ questionId, locale, onChoose }: Mechanic
   const [active, setActive] = useState(0);
   const box = useRef<HTMLDivElement>(null);
 
-  const matches = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return COUNTRIES;
-    return COUNTRIES.filter((c) => c.toLowerCase().includes(q));
-  }, [query]);
+  const matches = useMemo(
+    () => COUNTRIES.filter((c) => countryMatches(locale, c, query)),
+    [query, locale],
+  );
 
+  /* В поле показываем переведённое название, а наружу отдаём английское:
+     под ним лежат уже собранные ответы, и подменять его нельзя
+     (см. lib/country-copy.ts). */
   function pick(country: string) {
-    setQuery(country);
+    setQuery(countryLabel(locale, country));
     setOpen(false);
     onChoose(country);
   }
@@ -167,7 +170,7 @@ export default function CountryPicker({ questionId, locale, onChoose }: Mechanic
                     onMouseEnter={() => setActive(i)}
                     onClick={() => pick(c)}
                   >
-                    {c}
+                    {countryLabel(locale, c)}
                   </button>
                 </li>
               ))}

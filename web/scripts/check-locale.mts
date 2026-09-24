@@ -40,6 +40,9 @@ import tagsRu from '../src/data/tag-lines.ru.json';
 import perfumes from '../src/data/perfumes.json';
 import descFr from '../src/data/perfume-descriptions.fr.json';
 import descRu from '../src/data/perfume-descriptions.ru.json';
+import { COUNTRIES } from '../src/data/countries';
+import countriesFr from '../src/data/country-names.fr.json';
+import countriesRu from '../src/data/country-names.ru.json';
 import { QUESTIONS } from '../src/lib/quiz';
 import quizEn from '../src/data/quiz.en.json';
 import { QUESTION_COPY } from '../src/data/question-titles';
@@ -269,6 +272,21 @@ console.log('\n=== СОДЕРЖАТЕЛЬНЫЕ ФАЙЛЫ ===');
     const dead = Object.keys(desc).filter((k) => !k.startsWith('_') && !liveIds.has(k));
     check(`описания флаконов: ${lang} без мёртвых ключей`,
       dead.length === 0, dead.join(', '));
+  }
+
+  /* Страны. Их 195, и человек ищет свою набором с клавиатуры: пропуск
+     здесь не «одна английская строка в списке», а страна, которую
+     кто-то не найдёт и уйдёт с вопроса. */
+  for (const [lang, names] of [
+    ['французские', countriesFr], ['русские', countriesRu],
+  ] as Array<[string, Record<string, string>]>) {
+    const missing = COUNTRIES.filter((c) => !String(names[c] ?? '').trim());
+    check(`страны: ${lang} названия есть у всех ${COUNTRIES.length}`,
+      missing.length === 0, missing.slice(0, 8).join(', '));
+    const dead = Object.keys(names)
+      .filter((k) => !k.startsWith('_'))
+      .filter((k) => !(COUNTRIES as readonly string[]).includes(k));
+    check(`страны: ${lang} без мёртвых ключей`, dead.length === 0, dead.join(', '));
   }
 
   const enPunchLines = Object.fromEntries(

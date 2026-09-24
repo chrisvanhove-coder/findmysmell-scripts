@@ -61,6 +61,7 @@
     "check:revisions:integration": "tsx scripts/check-revisions-integration.mts",
     "check:locale": "tsx scripts/check-locale.mts",
     "perfumes:review": "tsx scripts/perfumes-review.mts",
+    "countries:build": "tsx scripts/build-country-names.mts",
     "e2e:locale": "node e2e/locale.mjs",
     "subscribers:report": "node scripts/subscribers-report.mjs",
     "fixture:run": "tsx scripts/write-run-fixture.mts",

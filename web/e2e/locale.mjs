@@ -137,6 +137,44 @@ async function audit(locale) {
       leftEnglish.length === 0, leftEnglish.map((a) => a.label).join(' | '));
   }
 
+  console.log('  Список стран');
+  {
+    const names = JSON.parse(
+      await readFile(`src/data/country-names.${locale}.json`, 'utf8'),
+    );
+    await openQuestion(locale, 'Q_REGION_NOW');
+    await page.locator('#country-search').click();
+    await page.waitForSelector('#country-list', { timeout: 5000 });
+    const shown = (await page.locator('#country-list button').allTextContents())
+      .map((x) => x.trim());
+    check('список открывается', shown.length > 50, `пунктов: ${shown.length}`);
+    /* Проверяем несколько стран, которые по-английски и на своём языке
+       называются по-разному: совпадающие («France», «Kazakhstan») ничего
+       не доказали бы. */
+    for (const en of ['Germany', 'Russia', 'China', 'Netherlands']) {
+      const want = names[en];
+      check(`${en} → «${want}»`, shown.includes(want),
+        `в списке такого нет; рядом: ${shown.slice(0, 3).join(', ')}`);
+      check(`${en}: английского названия в списке нет`, !shown.includes(en));
+    }
+
+    /* Поиск: на своём языке и по-английски — второе на случай чужой
+       раскладки. */
+    await page.locator('#country-search').fill(names.Germany.slice(0, 4));
+    await page.waitForTimeout(200);
+    const byLocal = (await page.locator('#country-list button').allTextContents())
+      .map((x) => x.trim());
+    check('поиск на своём языке находит', byLocal.includes(names.Germany),
+      `нашлось: ${byLocal.slice(0, 4).join(', ')}`);
+
+    await page.locator('#country-search').fill('German');
+    await page.waitForTimeout(200);
+    const byEnglish = (await page.locator('#country-list button').allTextContents())
+      .map((x) => x.trim());
+    check('и по-английски тоже', byEnglish.includes(names.Germany),
+      `нашлось: ${byEnglish.slice(0, 4).join(', ')}`);
+  }
+
   console.log('  Обвязка экрана');
   {
     const text = await openQuestion(locale, 'Q_ATMOS');
