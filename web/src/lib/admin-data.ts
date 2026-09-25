@@ -106,8 +106,28 @@ export type QuestionOpens = {
   }>;
 };
 
+/**
+ * Срезы, которыми сужается выборка. Пустое поле — «не сужать».
+ *
+ * `consent`: true — только те, кто отметил согласие на исследование,
+ * false — только те, кто не отметил. ВАЖНО про false: у брошенного
+ * прохождения согласия нет не потому, что человек отказался, а потому
+ * что галочку показывают на последнем экране и он до неё не дошёл
+ * (см. комментарий к колонке в db/schema.ts). В блоках, которые считают
+ * по завершённым, это не мешает; в списке прохождений — попадётся и то
+ * и другое, и различать надо по отметке «брошено».
+ */
+export type AdminFilters = {
+  locale?: string;
+  winner?: string;
+  consent?: boolean;
+};
+
 export type AdminData = {
   days: number;
+  filters: AdminFilters;
+  /** Сужена ли воронка теми же фильтрами. См. loadAdminData. */
+  funnelNarrowed: boolean;
   since: Date;
   totals: Totals;
   archetypes: Slice[];
@@ -147,12 +167,36 @@ function toSlices(rows: Array<{ label: string | null; n: number }>): Slice[] {
     .sort((a, b) => b.n - a.n);
 }
 
-export async function loadAdminData(days: number): Promise<AdminData> {
+export async function loadAdminData(
+  days: number,
+  filters: AdminFilters = {},
+): Promise<AdminData> {
   const db = getDb();
   const since = new Date();
   since.setUTCDate(since.getUTCDate() - days);
 
-  const inPeriod = gte(submissions.createdAt, since);
+  /* Фильтры навешиваются на ОДНО условие `inPeriod`, через которое идут все
+     запросы по прохождениям. Так новый срез не нужно вписывать в каждый
+     запрос по отдельности — и нельзя забыть вписать в один из них, отчего
+     блоки на странице разъехались бы между собой. */
+  const scope = [gte(submissions.createdAt, since)];
+  if (filters.locale) scope.push(eq(submissions.locale, filters.locale));
+  if (filters.winner) scope.push(eq(submissions.winner, filters.winner));
+  if (filters.consent !== undefined) {
+    scope.push(eq(submissions.consentResearch, filters.consent));
+  }
+  const inPeriod = and(...scope)!;
+
+  /* Воронка и распределение ответов считаются по `funnel_events`, а там
+     нет ни архетипа, ни согласия: событие пишется в момент показа экрана,
+     когда ни того ни другого ещё не существует. Язык там есть, поэтому по
+     языку воронка сужается честно, а по двум другим — не может. Врать и
+     показывать несужённую воронку рядом с сужёнными числами нельзя, так
+     что страница про это прямо говорит. */
+  const funnelNarrowed = filters.winner === undefined && filters.consent === undefined;
+  const funnelScope = [gte(funnelEvents.createdAt, since)];
+  if (filters.locale) funnelScope.push(eq(funnelEvents.locale, filters.locale));
+  const funnelIn = and(...funnelScope)!;
   // Завершённые: всё, что описывает прохождения и ответы, считается по ним.
   const done = and(inPeriod, eq(submissions.completed, true));
   const firstRunsOnly = and(done, eq(submissions.runIndex, 1));
@@ -206,7 +250,11 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         emailsSent: sql<number>`count(*) filter (where ${subscribers.sentAt} is not null)::int`,
       })
       .from(subscribers)
-      .where(gte(subscribers.createdAt, since)),
+      .where(and(
+        gte(subscribers.createdAt, since),
+        ...(filters.locale ? [eq(subscribers.locale, filters.locale)] : []),
+        ...(filters.winner ? [eq(subscribers.archetype, filters.winner)] : []),
+      )),
 
     // Воронка считается по прохождениям, не по событиям: один человек,
     // перезагрузивший вопрос трижды, это один дошедший, а не три.
@@ -217,7 +265,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         runs: sql<number>`count(distinct ${funnelEvents.runToken})::int`,
       })
       .from(funnelEvents)
-      .where(gte(funnelEvents.createdAt, since))
+      .where(funnelIn)
       .groupBy(funnelEvents.step, funnelEvents.event),
 
     db
@@ -227,7 +275,7 @@ export async function loadAdminData(days: number): Promise<AdminData> {
         runs: sql<number>`count(distinct ${funnelEvents.runToken})::int`,
       })
       .from(funnelEvents)
-      .where(and(gte(funnelEvents.createdAt, since), eq(funnelEvents.event, 'answer')))
+      .where(and(funnelIn, eq(funnelEvents.event, 'answer')))
       .groupBy(funnelEvents.step, funnelEvents.answerCode),
 
     db
@@ -385,6 +433,8 @@ export async function loadAdminData(days: number): Promise<AdminData> {
 
   return {
     days,
+    filters,
+    funnelNarrowed,
     since,
     totals: {
       runs: c.runs,
@@ -423,14 +473,26 @@ export async function loadAdminData(days: number): Promise<AdminData> {
  * Колонки фиксированы порядком вопросов, а не тем, что попалось в первой
  * строке: иначе файлы за разные периоды не складываются друг с другом.
  */
-export async function submissionsCsv(days: number, firstRunsOnly: boolean): Promise<string> {
+export async function submissionsCsv(
+  days: number,
+  firstRunsOnly: boolean,
+  filters: AdminFilters = {},
+): Promise<string> {
   const db = getDb();
   const since = new Date();
   since.setUTCDate(since.getUTCDate() - days);
 
-  const where = firstRunsOnly
-    ? and(gte(submissions.createdAt, since), eq(submissions.runIndex, 1))
-    : gte(submissions.createdAt, since);
+  /* Те же срезы, что и на странице: выгрузка обязана содержать ровно то,
+     что человек видел, когда нажимал «скачать». Иначе цифры в таблице не
+     сойдутся с цифрами на экране, и доверять не будешь ни тем ни другим. */
+  const where = and(
+    gte(submissions.createdAt, since),
+    ...(firstRunsOnly ? [eq(submissions.runIndex, 1)] : []),
+    ...(filters.locale ? [eq(submissions.locale, filters.locale)] : []),
+    ...(filters.winner ? [eq(submissions.winner, filters.winner)] : []),
+    ...(filters.consent !== undefined
+      ? [eq(submissions.consentResearch, filters.consent)] : []),
+  )!;
 
   const [rows, openRows] = await Promise.all([
     db

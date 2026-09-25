@@ -1,8 +1,10 @@
 import Link from 'next/link';
-import { loadAdminData } from '@/lib/admin-data';
+import { loadAdminData, type AdminFilters } from '@/lib/admin-data';
 import { missingQuestions } from '@/lib/quiz-state';
 import { QUESTIONS } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
+import { LOCALES } from '@/lib/i18n';
+import archetypesEn from '@/data/archetypes.en.json';
 import styles from './admin.module.css';
 
 // Смысл страницы в том, чтобы показывать сегодняшнее состояние базы,
@@ -11,6 +13,42 @@ export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Find My Smell — данные', robots: 'noindex, nofollow' };
 
 const PERIODS = [7, 30, 90, 365, 3650];
+
+/* Список архетипов берётся из данных, а не из того, что нашлось в базе:
+   иначе архетип, который ещё никому не выпал, пропал бы из фильтра — и
+   именно его нельзя было бы проверить. */
+const ARCHETYPES = Object.keys(archetypesEn);
+
+const CONSENT_CHOICES = [
+  { value: '', label: 'все' },
+  { value: '1', label: 'дали согласие' },
+  { value: '0', label: 'без согласия' },
+] as const;
+
+/** Адрес страницы с тем же набором срезов, но одним изменённым. */
+function href(
+  base: { days: number; locale?: string; winner?: string; consent?: string },
+  patch: Partial<{ days: number; locale: string; winner: string; consent: string }>,
+): string {
+  const next = { ...base, ...patch };
+  const p = new URLSearchParams();
+  if (next.days !== 30) p.set('days', String(next.days));
+  if (next.locale) p.set('locale', next.locale);
+  if (next.winner) p.set('winner', next.winner);
+  if (next.consent) p.set('consent', next.consent);
+  const q = p.toString();
+  return q ? `/admin?${q}` : '/admin';
+}
+
+function Choice({
+  to, on, children,
+}: { to: string; on: boolean; children: React.ReactNode }) {
+  return (
+    <Link href={to} className={on ? `${styles.period} ${styles.periodOn}` : styles.period}>
+      {children}
+    </Link>
+  );
+}
 
 function periodLabel(days: number) {
   if (days >= 3650) return 'всё время';
@@ -31,14 +69,31 @@ function Bar({ share }: { share: number }) {
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ days?: string; q?: string }>;
+  searchParams: Promise<{
+    days?: string; locale?: string; winner?: string; consent?: string;
+  }>;
 }) {
   const sp = await searchParams;
   const days = PERIODS.includes(Number(sp.days)) ? Number(sp.days) : 30;
 
+  /* Значения из адреса сверяются со списками, а не подставляются в запрос
+     как есть: чужая строка в параметре не должна ни падать, ни что-то
+     значить. Не узнали — считаем, что фильтра нет. */
+  const locale = (LOCALES as readonly string[]).includes(sp.locale ?? '')
+    ? sp.locale : undefined;
+  const winner = ARCHETYPES.includes(sp.winner ?? '') ? sp.winner : undefined;
+  const consent = sp.consent === '1' ? true : sp.consent === '0' ? false : undefined;
+  const filters: AdminFilters = { locale, winner, consent };
+  const chosen = {
+    days,
+    locale,
+    winner,
+    consent: consent === undefined ? '' : consent ? '1' : '0',
+  };
+
   let data: Awaited<ReturnType<typeof loadAdminData>>;
   try {
-    data = await loadAdminData(days);
+    data = await loadAdminData(days, filters);
   } catch (error) {
     // База может быть недоступна — страница обязана сказать об этом словами,
     // а не отдать 500 без объяснения.
@@ -60,21 +115,59 @@ export default async function AdminPage({
         <h1 className={styles.h1}>Find My Smell — данные</h1>
         <nav className={styles.periods}>
           {PERIODS.map((d) => (
-            <Link
-              key={d}
-              href={`/admin?days=${d}`}
-              className={d === days ? `${styles.period} ${styles.periodOn}` : styles.period}
-            >
+            <Choice key={d} to={href(chosen, { days: d })} on={d === days}>
               {periodLabel(d)}
-            </Link>
+            </Choice>
           ))}
         </nav>
       </header>
+
+      {/* ── срезы ─────────────────────────────────────────────────────────
+          Каждый ряд меняет только свой параметр и сохраняет остальные:
+          выбрав французский, не теряешь выбранный период. */}
+      <div className={styles.filters}>
+        <div className={styles.filterRow}>
+          <span className={styles.filterLabel}>язык</span>
+          <Choice to={href(chosen, { locale: '' })} on={!locale}>все</Choice>
+          {LOCALES.map((l) => (
+            <Choice key={l} to={href(chosen, { locale: l })} on={locale === l}>{l}</Choice>
+          ))}
+        </div>
+
+        <div className={styles.filterRow}>
+          <span className={styles.filterLabel}>архетип</span>
+          <Choice to={href(chosen, { winner: '' })} on={!winner}>все</Choice>
+          {ARCHETYPES.map((a) => (
+            <Choice key={a} to={href(chosen, { winner: a })} on={winner === a}>{a}</Choice>
+          ))}
+        </div>
+
+        <div className={styles.filterRow}>
+          <span className={styles.filterLabel}>исследование</span>
+          {CONSENT_CHOICES.map((c) => (
+            <Choice
+              key={c.value}
+              to={href(chosen, { consent: c.value })}
+              on={chosen.consent === c.value}
+            >
+              {c.label}
+            </Choice>
+          ))}
+        </div>
+      </div>
 
       <p className={styles.note}>
         Период: с {data.since.toISOString().slice(0, 10)}. Распределения архетипов и ответов
         считаются по <b>первым</b> прохождениям — один браузер даёт в выборку одну строку.
         Повторы показаны отдельно, ниже.
+        {consent === false && (
+          <>
+            {' '}
+            <b>«Без согласия» — это не только отказ:</b> галочку показывают на последнем
+            экране, поэтому сюда попадают и те, кто до неё не дошёл. Различать по отметке
+            «брошено» в списке прохождений.
+          </>
+        )}
       </p>
 
       {/* ── итоги ─────────────────────────────────────────────────────── */}
@@ -145,8 +238,11 @@ export default async function AdminPage({
 
       <section className={styles.exports}>
         <span>Скачать прохождения таблицей:</span>
-        <a href={`/admin/submissions.csv?days=${days}&first=1`}>только первые (выборка)</a>
-        <a href={`/admin/submissions.csv?days=${days}`}>все, с повторами</a>
+        <a href={`/admin/submissions.csv${href(chosen, {}).replace('/admin', '')}${
+          href(chosen, {}).includes('?') ? '&' : '?'}first=1`}>только первые (выборка)</a>
+        <a href={`/admin/submissions.csv${href(chosen, {}).replace('/admin', '')}`}>
+          все, с повторами
+        </a>
       </section>
 
       {/* ── открытые ответы ───────────────────────────────────────────── */}
@@ -276,6 +372,14 @@ export default async function AdminPage({
 
       {/* ── воронка ───────────────────────────────────────────────────── */}
       <section className={styles.block} id="funnel">
+        {!data.funnelNarrowed && (
+          <p className={styles.note}>
+            ⚠ Воронка и распределение ответов <b>НЕ сужены</b> выбранными срезами:
+            они считаются по событиям экранов, а там нет ни архетипа, ни согласия —
+            в момент показа вопроса ни того ни другого ещё не существует. Язык там
+            есть, по нему сужается. Ниже — все прохождения за период.
+          </p>
+        )}
         <h2 className={styles.h2}>
           Воронка <small>по прохождениям, не по событиям</small>
         </h2>
