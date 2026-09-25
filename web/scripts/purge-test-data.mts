@@ -4,92 +4,147 @@
  * ЗАЧЕМ. Пока сайт обкатывали, база набрала прохождения, которых в
  * статистике быть не должно: свои проходы, проверки после каждой правки,
  * друзья «посмотреть». Они портят ровно то, ради чего база и заведена —
- * распределение архетипов, воронку, долю брошенных. Хранить их незачем:
- * это не чьи-то ответы, это следы отладки.
+ * распределение архетипов, воронку, долю брошенных.
  *
  * ПО УМОЛЧАНИЮ НЕ УДАЛЯЕТ. Сначала показывает, что нашёл; удаление
  * включается явным `--apply`, потому что оно необратимо, а копия снимается
  * раз в сутки — значит между копиями откатывать нечем.
  *
- *   npm run purge:test                                  # посмотреть
- *   npm run purge:test -- --before 2026-09-26           # посмотреть срез
- *   npm run purge:test -- --before 2026-09-26 --apply   # удалить
- *   npm run purge:test -- --all --apply                 # удалить всё
- *   npm run purge:test -- --all --emails --apply        # и адреса тоже
+ *   npm run purge:test -- --text test            # найти по тексту
+ *   npm run purge:test -- --text test --apply    # и удалить найденное
+ *   npm run purge:test -- --before 2026-09-25    # по дате
+ *   npm run purge:test -- --all                  # всё
+ *   добавить --emails, чтобы под тот же срез попали адреса подписчиков
  *
- * ЧТО УДАЛЯЕТСЯ. Прохождения и вместе с ними каскадом тексты «Other».
- * События воронки за тот же срез — иначе воронка продолжит считать шаги
- * людей, которых в базе уже нет. Адреса подписчиков НЕ трогаются без
- * отдельного `--emails`: адрес это личные данные, и удалять их заодно,
- * мимоходом, неправильно — это должно быть отдельным решением.
+ * ЧЕСТНО ПРО `--text`. Он находит прохождения, где искомое слово написано
+ * либо в финальном открытом ответе, либо в любом «Other» внутри вопросов.
+ * Прохождение, в котором человек НИЧЕГО не писал, под него не попадает —
+ * а таких среди тестовых обычно большинство: кликаешь варианты и уходишь.
+ * Поэтому показ печатает, сколько прохождений осталось нетронутыми: если
+ * их сотня, критерий выбран не тот, и это видно сразу.
+ *
+ * ПОЧЕМУ ВОРОНКА УДАЛЯЕТСЯ ПО ТОКЕНУ. `funnel_events.run_token` и
+ * `submissions.client_token` — одно и то же значение: обе записи делает
+ * один и тот же runToken() из answers-store. Значит при точечном удалении
+ * можно убрать ровно события тех прохождений, которые удалили, а не
+ * рубить воронку по дате вместе с чужими шагами.
  */
-import { lt, sql } from 'drizzle-orm';
+import { and, eq, ilike, inArray, lt, or, sql } from 'drizzle-orm';
 import { getDb, schema } from '../src/db/index.ts';
 
 const argv = process.argv.slice(2);
 const APPLY = argv.includes('--apply');
 const ALL = argv.includes('--all');
 const EMAILS = argv.includes('--emails');
-const beforeArg = argv.includes('--before') ? argv[argv.indexOf('--before') + 1] : null;
+const arg = (name: string) => (argv.includes(name) ? argv[argv.indexOf(name) + 1] ?? null : null);
+const beforeArg = arg('--before');
+const textArg = arg('--text');
 
-if (!ALL && !beforeArg) {
-  console.error('Нужен срез: --before ГГГГ-ММ-ДД или --all. Без него ничего не делаю.');
+if (!ALL && !beforeArg && !textArg) {
+  console.error('Нужен срез: --text СЛОВО, --before ГГГГ-ММ-ДД или --all.');
   process.exit(2);
 }
-const before = ALL ? null : new Date(`${beforeArg}T00:00:00Z`);
+const before = beforeArg ? new Date(`${beforeArg}T00:00:00Z`) : null;
 if (before && Number.isNaN(before.getTime())) {
   console.error(`Не разобрал дату «${beforeArg}». Нужен вид ГГГГ-ММ-ДД.`);
   process.exit(2);
 }
 
 const db = getDb();
+const like = textArg ? `%${textArg}%` : null;
 
-const runs = before
-  ? await db.select({ n: sql<number>`count(*)::int` }).from(schema.submissions)
-      .where(lt(schema.submissions.createdAt, before))
-  : await db.select({ n: sql<number>`count(*)::int` }).from(schema.submissions);
-const events = before
-  ? await db.select({ n: sql<number>`count(*)::int` }).from(schema.funnelEvents)
-      .where(lt(schema.funnelEvents.createdAt, before))
-  : await db.select({ n: sql<number>`count(*)::int` }).from(schema.funnelEvents);
-const emails = before
-  ? await db.select({ n: sql<number>`count(*)::int` }).from(schema.subscribers)
-      .where(lt(schema.subscribers.createdAt, before))
-  : await db.select({ n: sql<number>`count(*)::int` }).from(schema.subscribers);
-const opens = await db.select({ n: sql<number>`count(*)::int` })
-  .from(schema.questionOpenAnswers);
+/** Прохождения, попадающие под срез. */
+async function matched() {
+  if (ALL) {
+    return db.select({
+      id: schema.submissions.id,
+      clientToken: schema.submissions.clientToken,
+      createdAt: schema.submissions.createdAt,
+      locale: schema.submissions.locale,
+      winner: schema.submissions.winner,
+    }).from(schema.submissions);
+  }
+  if (before) {
+    return db.select({
+      id: schema.submissions.id,
+      clientToken: schema.submissions.clientToken,
+      createdAt: schema.submissions.createdAt,
+      locale: schema.submissions.locale,
+      winner: schema.submissions.winner,
+    }).from(schema.submissions).where(lt(schema.submissions.createdAt, before));
+  }
+  /* По тексту: слово могло оказаться и в финальном ответе, и в любом
+     «Other». Подзапрос по второй таблице, а не join — join размножил бы
+     строки по числу текстов у одного прохождения. */
+  const inOpens = db.select({ id: schema.questionOpenAnswers.submissionId })
+    .from(schema.questionOpenAnswers)
+    .where(ilike(schema.questionOpenAnswers.text, like!));
+  return db.select({
+    id: schema.submissions.id,
+    clientToken: schema.submissions.clientToken,
+    createdAt: schema.submissions.createdAt,
+    locale: schema.submissions.locale,
+    winner: schema.submissions.winner,
+  }).from(schema.submissions).where(or(
+    ilike(schema.submissions.openAnswer, like!),
+    inArray(schema.submissions.id, inOpens),
+  ));
+}
 
-console.log(`\nСрез: ${before ? `до ${before.toISOString().slice(0, 10)}` : 'всё'}\n`);
-console.log(`  прохождений             ${runs[0]?.n ?? 0}`);
-console.log(`  событий воронки         ${events[0]?.n ?? 0}`);
-console.log(`  текстов «Other» всего   ${opens[0]?.n ?? 0}  — уйдут каскадом`);
-console.log(`  адресов подписчиков     ${emails[0]?.n ?? 0}  — ${
-  EMAILS ? 'БУДУТ УДАЛЕНЫ' : 'не трогаю, нужен --emails'}`);
+const rows = await matched();
+const total = (await db.select({ n: sql<number>`count(*)::int` })
+  .from(schema.submissions))[0]?.n ?? 0;
+
+console.log(`\nСрез: ${ALL ? 'всё' : before ? `до ${beforeArg}` : `текст содержит «${textArg}»`}\n`);
+console.log(`  найдено прохождений      ${rows.length} из ${total}`);
+console.log(`  останется нетронутыми    ${total - rows.length}`);
+
+if (rows.length > 0) {
+  console.log('\n  что именно:');
+  for (const r of rows.slice(0, 40)) {
+    console.log(`    ${r.createdAt.toISOString().slice(0, 16).replace('T', ' ')}  ${
+      r.locale}  ${r.winner}`);
+  }
+  if (rows.length > 40) console.log(`    … и ещё ${rows.length - 40}`);
+}
 
 if (!APPLY) {
   console.log('\nЭто показ, а не удаление. Добавь --apply, если всё верно.\n');
   process.exit(0);
 }
+if (rows.length === 0) {
+  console.log('\nУдалять нечего.\n');
+  process.exit(0);
+}
 
-/* Тексты «Other» держат на прохождения внешний ключ с каскадом, так что
-   база уберёт их сама. Воронка ни на что не ссылается. */
-const delRuns = before
-  ? await db.delete(schema.submissions).where(lt(schema.submissions.createdAt, before))
-      .returning({ id: schema.submissions.id })
-  : await db.delete(schema.submissions).returning({ id: schema.submissions.id });
+const ids = rows.map((r) => r.id);
+const tokens = rows.map((r) => r.clientToken);
+
+/* Тексты «Other» держат внешний ключ с каскадом — база уберёт их сама. */
+const delRuns = await db.delete(schema.submissions)
+  .where(inArray(schema.submissions.id, ids))
+  .returning({ id: schema.submissions.id });
 console.log(`\nудалено прохождений: ${delRuns.length} (с их текстами «Other»)`);
 
-const delEvents = before
-  ? await db.delete(schema.funnelEvents).where(lt(schema.funnelEvents.createdAt, before))
-      .returning({ id: schema.funnelEvents.id })
-  : await db.delete(schema.funnelEvents).returning({ id: schema.funnelEvents.id });
+const delEvents = ALL
+  ? await db.delete(schema.funnelEvents).returning({ id: schema.funnelEvents.id })
+  : before
+    ? await db.delete(schema.funnelEvents)
+        .where(lt(schema.funnelEvents.createdAt, before))
+        .returning({ id: schema.funnelEvents.id })
+    : await db.delete(schema.funnelEvents)
+        .where(inArray(schema.funnelEvents.runToken, tokens))
+        .returning({ id: schema.funnelEvents.id });
 console.log(`удалено событий воронки: ${delEvents.length}`);
 
 if (EMAILS) {
-  const delEmails = before
-    ? await db.delete(schema.subscribers).where(lt(schema.subscribers.createdAt, before))
-        .returning({ id: schema.subscribers.id })
-    : await db.delete(schema.subscribers).returning({ id: schema.subscribers.id });
+  const delEmails = ALL
+    ? await db.delete(schema.subscribers).returning({ id: schema.subscribers.id })
+    : before
+      ? await db.delete(schema.subscribers)
+          .where(lt(schema.subscribers.createdAt, before))
+          .returning({ id: schema.subscribers.id })
+      : [];
   console.log(`удалено адресов: ${delEmails.length}`);
 }
 
