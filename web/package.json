@@ -68,7 +68,8 @@
     "subscribers:report": "node scripts/subscribers-report.mjs",
     "fixture:run": "tsx scripts/write-run-fixture.mts",
     "e2e:mobile": "node e2e/mobile.mjs",
-    "gdpr": "tsx scripts/gdpr-request.mts"
+    "gdpr": "tsx scripts/gdpr-request.mts",
+    "check:watch": "tsx scripts/check-watch-sql.mts"
   },
   "dependencies": {
     "aws4fetch": "^1.0.20",

@@ -73,12 +73,18 @@ async function main() {
 
   console.log('\nПисьма');
   {
-    const { rows } = await db.query<{ day: string; week: string }>(`
-      select count(*) filter (where consent_at > now() - interval '1 day') day,
-             count(*) filter (where consent_at > now() - interval '7 days') week
+    /* Псевдонимы НЕ называть `day` и `week`. Postgres принимает форму
+       `interval '1' day`, поэтому голое слово сразу после интервального
+       литерала он разбирает как часть интервала, а не как имя колонки, и
+       падает: syntax error at or near "day". Это стоило одного ночного
+       запуска 25.09.2026 — до письма сторож не доходил вовсе. Имена с
+       суффиксом безопасны и не столкнутся со следующим ключевым словом. */
+    const { rows } = await db.query<{ last_day: string; last_week: string }>(`
+      select count(*) filter (where consent_at > now() - interval '1 day') as last_day,
+             count(*) filter (where consent_at > now() - interval '7 days') as last_week
       from subscribers`);
-    line('подписок за сутки', rows[0].day);
-    line('подписок за неделю', rows[0].week);
+    line('подписок за сутки', rows[0].last_day);
+    line('подписок за неделю', rows[0].last_week);
 
     /* Остаток по тарифу спрашиваем у самого Brevo: считать его по своей
        таблице нельзя — она не знает ни про тариф, ни про рассылки,
