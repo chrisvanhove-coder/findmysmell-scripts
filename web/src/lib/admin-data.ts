@@ -11,10 +11,16 @@
  * прохождений с пометкой.
  *
  * Одно правило проходит через весь файл: ВЫБОРКА ДЛЯ ИССЛЕДОВАНИЯ — ЭТО
- * run_index = 1. Распределения архетипов и ответов считаются по первым
- * прохождениям, иначе один человек, прошедший тест сто раз, перевесит сто
+ * run_index = 1, иначе один человек, прошедший тест сто раз, перевесит сто
  * разных людей. Повторы не выбрасываются — они показаны отдельно, и это
  * свой материал: изменился ли архетип, когда тот же браузер вернулся.
+ *
+ * Но СВОДКА ПО АРХЕТИПАМ СЧИТАЕТСЯ ПО ВСЕМ ЗАВЕРШЁННЫМ, а выборка для
+ * исследования стоит в ней отдельной колонкой. Раньше вся сводка была
+ * сужена до run_index = 1 и у заказчицы выходила пустой: прохождения,
+ * перенесённые из старой таблицы, ключа браузера не имеют, run_index у них
+ * null, и под `= 1` не попадало ни одно. Считать живых людей нулём хуже,
+ * чем показать рядом два числа и подписать, чем они отличаются.
  */
 import { and, desc, eq, gte, isNotNull, ne, sql } from 'drizzle-orm';
 import { getDb, schema } from '@/db';
@@ -22,6 +28,7 @@ import { missingQuestions } from './quiz-state';
 import { QUESTIONS, EMOTION_BRANCHES } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
 import openPrompts from '@/data/question-open-prompts.json';
+import ARCHETYPE_KEYS from '@/data/archetypes.en.json';
 
 const OPEN_PROMPTS = openPrompts.prompts as Record<string, string>;
 
@@ -49,7 +56,47 @@ export type Totals = {
   emailsSent: number;
 };
 
+/** Периоды, которые можно выбрать на странице. */
+export const PERIODS = [7, 30, 90, 365, 3650] as const;
+
+/**
+ * По умолчанию — ВСЁ ВРЕМЯ, а не последние 30 дней.
+ *
+ * Раньше стояло 30, и это скрывало от заказчицы почти все её данные:
+ * прохождения, перенесённые со старого сайта, старше месяца, а свежих
+ * единицы. Страница отвечала «за последние 30 дней» на вопрос «сколько у
+ * меня людей» и выглядела так, будто людей нет. Сужать период — осознанное
+ * действие, кнопки для него рядом; показывать урезанное молча — нет.
+ *
+ * Значение живёт здесь, потому что его читают и страница, и обе выгрузки:
+ * разойдись они, и файл не совпадёт с экраном.
+ */
+export const DEFAULT_DAYS = 3650;
+
 export type Slice = { label: string; n: number; share: number };
+
+/**
+ * Строка сводки по архетипу. Чисел здесь четыре, а не одно, потому что
+ * «сколько кому выпало» и «сколько кому выпало в выборке для исследования» —
+ * разные вопросы, и до сих пор на странице отвечался только второй.
+ *
+ * `all` — все завершённые. `first` — первые прохождения, run_index = 1, та
+ * самая выборка для исследования. `historic` — прохождения, перенесённые из
+ * старой таблицы: ключа браузера тогда не существовало, поэтому номера
+ * прохождения у них нет и в `first` они не попадают, хотя это живые люди, а
+ * не повторы. `repeat` — возвраты того же браузера.
+ *
+ * all = first + historic + repeat. Если сумма разошлась — врёт запрос.
+ */
+export type ArchetypeRow = {
+  label: string;
+  all: number;
+  first: number;
+  historic: number;
+  repeat: number;
+  /** Доля от всех завершённых: ей же соответствует полоска на странице. */
+  share: number;
+};
 
 export type FunnelStep = {
   step: string;
@@ -130,7 +177,7 @@ export type AdminData = {
   funnelNarrowed: boolean;
   since: Date;
   totals: Totals;
-  archetypes: Slice[];
+  archetypes: ArchetypeRow[];
   locales: Slice[];
   funnel: FunnelStep[];
   answers: Array<{ step: string; title: string; total: number; options: Slice[] }>;
@@ -167,6 +214,102 @@ function toSlices(rows: Array<{ label: string | null; n: number }>): Slice[] {
     .sort((a, b) => b.n - a.n);
 }
 
+/**
+ * Раскладывает ответ запроса по архетипам в строки страницы.
+ *
+ * Показываются ВСЕ архетипы, включая те, которым не выпало ни одного
+ * прохождения: нулевая строка — это тоже ответ, а пропуск такой строки
+ * читается как «данных нет», хотя данные есть. Берём список из тех же
+ * данных, что и квиз, и добавляем к нему всё незнакомое, что нашлось в
+ * базе, — у перенесённых прохождений архетип мог называться иначе, и
+ * молча потерять его нельзя.
+ */
+/**
+ * Период плюс выбранные срезы — ОДНО условие, через которое идут все запросы
+ * по прохождениям. Так новый срез не нужно вписывать в каждый запрос по
+ * отдельности — и нельзя забыть вписать в один из них, отчего блоки на
+ * странице разъехались бы между собой. Выгрузки берут его же, иначе числа в
+ * файле не сойдутся с числами на экране, и доверять не будешь ни тем ни
+ * другим.
+ */
+function periodScope(since: Date, filters: AdminFilters) {
+  const scope = [gte(submissions.createdAt, since)];
+  if (filters.locale) scope.push(eq(submissions.locale, filters.locale));
+  if (filters.winner) scope.push(eq(submissions.winner, filters.winner));
+  if (filters.consent !== undefined) {
+    scope.push(eq(submissions.consentResearch, filters.consent));
+  }
+  return and(...scope)!;
+}
+
+function toArchetypeRows(
+  rows: Array<{ label: string | null; all: number; first: number; historic: number; repeat: number }>,
+): ArchetypeRow[] {
+  const found = new Map(rows.map((r) => [r.label ?? '—', r]));
+  const labels = [...new Set([...Object.keys(ARCHETYPE_KEYS), ...found.keys()])];
+  const total = rows.reduce((sum, r) => sum + r.all, 0);
+  return labels
+    .map((label) => {
+      const r = found.get(label);
+      return {
+        label,
+        all: r?.all ?? 0,
+        first: r?.first ?? 0,
+        historic: r?.historic ?? 0,
+        repeat: r?.repeat ?? 0,
+        share: total && r ? r.all / total : 0,
+      };
+    })
+    .sort((a, b) => b.all - a.all || a.label.localeCompare(b.label));
+}
+
+/**
+ * Сводка по архетипам отдельно от страницы: тем же запросом, что и на ней,
+ * но без остальных двадцати. Нужна выгрузке — заказчице удобнее открыть
+ * сводку в Excel, чем переписывать числа с экрана.
+ */
+export async function archetypeSummary(
+  days: number,
+  filters: AdminFilters = {},
+): Promise<ArchetypeRow[]> {
+  const db = getDb();
+  const since = new Date();
+  since.setUTCDate(since.getUTCDate() - days);
+  const rows = await db
+    .select({
+      label: submissions.winner,
+      all: sql<number>`count(*)::int`,
+      first: sql<number>`count(*) filter (where ${submissions.runIndex} = 1)::int`,
+      historic: sql<number>`count(*) filter (where ${submissions.runIndex} is null)::int`,
+      repeat: sql<number>`count(*) filter (where ${submissions.runIndex} > 1)::int`,
+    })
+    .from(submissions)
+    .where(and(periodScope(since, filters), eq(submissions.completed, true))!)
+    .groupBy(submissions.winner);
+  return toArchetypeRows(rows);
+}
+
+/** Сводка по архетипам таблицей. Колонки — те же, что на странице. */
+export async function archetypesCsv(
+  days: number,
+  filters: AdminFilters = {},
+): Promise<string> {
+  const rows = await archetypeSummary(days, filters);
+  const lines = [['archetype', 'all', 'first_runs', 'historic', 'repeats', 'share'].join(',')];
+  for (const r of rows) {
+    lines.push([
+      r.label, r.all, r.first, r.historic, r.repeat, (r.share * 100).toFixed(1),
+    ].join(','));
+  }
+  /* Итог строкой: без него первый вопрос к файлу — «а сходится ли», и на
+     него приходится отвечать сложением в голове. */
+  const sum = (pick: (r: ArchetypeRow) => number) => rows.reduce((n, r) => n + pick(r), 0);
+  lines.push(['ВСЕГО', sum((r) => r.all), sum((r) => r.first),
+    sum((r) => r.historic), sum((r) => r.repeat), '100.0'].join(','));
+  // BOM: иначе Excel читает UTF-8 как cp1251.
+  return `\ufeff${lines.join('\r\n')}\r\n`;
+}
+
 export async function loadAdminData(
   days: number,
   filters: AdminFilters = {},
@@ -175,17 +318,8 @@ export async function loadAdminData(
   const since = new Date();
   since.setUTCDate(since.getUTCDate() - days);
 
-  /* Фильтры навешиваются на ОДНО условие `inPeriod`, через которое идут все
-     запросы по прохождениям. Так новый срез не нужно вписывать в каждый
-     запрос по отдельности — и нельзя забыть вписать в один из них, отчего
-     блоки на странице разъехались бы между собой. */
-  const scope = [gte(submissions.createdAt, since)];
-  if (filters.locale) scope.push(eq(submissions.locale, filters.locale));
-  if (filters.winner) scope.push(eq(submissions.winner, filters.winner));
-  if (filters.consent !== undefined) {
-    scope.push(eq(submissions.consentResearch, filters.consent));
-  }
-  const inPeriod = and(...scope)!;
+  // Одно условие на все запросы по прохождениям, см. periodScope.
+  const inPeriod = periodScope(since, filters);
 
   /* Воронка и распределение ответов считаются по `funnel_events`, а там
      нет ни архетипа, ни согласия: событие пишется в момент показа экрана,
@@ -199,7 +333,6 @@ export async function loadAdminData(
   const funnelIn = and(...funnelScope)!;
   // Завершённые: всё, что описывает прохождения и ответы, считается по ним.
   const done = and(inPeriod, eq(submissions.completed, true));
-  const firstRunsOnly = and(done, eq(submissions.runIndex, 1));
 
   const [
     countRows,
@@ -231,11 +364,23 @@ export async function loadAdminData(
       .from(submissions)
       .where(and(inPeriod, eq(submissions.completed, false))),
 
-    // Архетипы — по первым прохождениям. См. правило в заголовке файла.
+    /* Архетипы: все четыре числа одним запросом по завершённым, а не
+       выборкой run_index = 1, как было раньше. Прежний запрос отвечал на
+       вопрос исследования, но у заказчицы сводка выходила пустой: почти все
+       её прохождения перенесены из старой таблицы, ключа браузера у них нет,
+       run_index = null — и под `= 1` не попадало ни одно. Правило «выборка
+       для исследования — это run_index = 1» никуда не делось, оно теперь
+       отдельной колонкой рядом. */
     db
-      .select({ label: submissions.winner, n: sql<number>`count(*)::int` })
+      .select({
+        label: submissions.winner,
+        all: sql<number>`count(*)::int`,
+        first: sql<number>`count(*) filter (where ${submissions.runIndex} = 1)::int`,
+        historic: sql<number>`count(*) filter (where ${submissions.runIndex} is null)::int`,
+        repeat: sql<number>`count(*) filter (where ${submissions.runIndex} > 1)::int`,
+      })
       .from(submissions)
-      .where(firstRunsOnly)
+      .where(done)
       .groupBy(submissions.winner),
 
     db
@@ -447,7 +592,7 @@ export async function loadAdminData(
       emails: s.emails,
       emailsSent: s.emailsSent,
     },
-    archetypes: toSlices(archetypeRows),
+    archetypes: toArchetypeRows(archetypeRows),
     locales: toSlices(localeRows),
     funnel,
     answers,
