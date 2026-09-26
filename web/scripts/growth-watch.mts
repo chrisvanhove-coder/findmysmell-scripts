@@ -25,6 +25,15 @@ const VOLUME_MB = Number(process.env.WATCH_VOLUME_MB ?? 500);
 /** Доля тома, после которой пора шевелиться. */
 const WARN_AT = 0.7;
 const FAIL_AT = 0.85;
+/* Порог писем НЕ МОЖЕТ БЫТЬ ВЫШЕ ВСЕГО ТАРИФА. У Brevo free потолок 300,
+   а порог стоял 500 — то есть тревога объявлялась при полном остатке,
+   каждую ночь. Первый же полностью отработавший запуск 26.09.2026 вышел
+   красным на ровном месте; ещё пара таких, и красный перестанут открывать
+   вовсе — ровно то, ради чего ненулевой код и заведён. Считаем от нужды,
+   а не от круглого числа: письмо уходит одно на прохождение с согласием,
+   это единицы в сутки. Меняется тариф — меняются эти два числа. */
+const MAIL_WARN = Number(process.env.WATCH_MAIL_WARN ?? 100);
+const MAIL_FAIL = Number(process.env.WATCH_MAIL_FAIL ?? 30);
 
 let alarms = 0;
 function line(name: string, value: string, level: 'ok' | 'warn' | 'fail' = 'ok') {
@@ -109,7 +118,7 @@ async function main() {
           for (const p of sending) {
             const left = Number(p.credits ?? 0);
             line(`остаток писем (${p.type ?? 'план'})`, String(left),
-              left < 100 ? 'fail' : left < 500 ? 'warn' : 'ok');
+              left < MAIL_FAIL ? 'fail' : left < MAIL_WARN ? 'warn' : 'ok');
           }
         }
       } catch (e) {
