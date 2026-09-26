@@ -237,6 +237,13 @@ export default async function AdminPage({
       </section>
 
       <section className={styles.exports}>
+        <span>Скачать сводку по архетипам:</span>
+        <a href={`/admin/archetypes.csv${href(chosen, {}).replace('/admin', '')}`}>
+          сколько кому выпало
+        </a>
+      </section>
+
+      <section className={styles.exports}>
         <span>Скачать прохождения таблицей:</span>
         <a href={`/admin/submissions.csv${href(chosen, {}).replace('/admin', '')}${
           href(chosen, {}).includes('?') ? '&' : '?'}first=1`}>только первые (выборка)</a>
@@ -324,23 +331,48 @@ export default async function AdminPage({
       {/* ── архетипы ──────────────────────────────────────────────────── */}
       <section className={styles.block} id="archetypes">
         <h2 className={styles.h2}>
-          Архетипы <small>по первым прохождениям, {t.firstRuns}</small>
+          Архетипы <small>по всем завершённым, {t.runs}</small>
         </h2>
-        {data.archetypes.length === 0 ? (
-          <p className={styles.empty}>Пока ни одного прохождения с ключом браузера.</p>
+        {t.runs === 0 ? (
+          <p className={styles.empty}>Пока ни одного завершённого прохождения.</p>
         ) : (
-          <table className={styles.table}>
-            <tbody>
-              {data.archetypes.map((a) => (
-                <tr key={a.label}>
-                  <th scope="row">{a.label}</th>
-                  <td className={styles.num}>{a.n}</td>
-                  <td className={styles.num}>{pct(a.share)}</td>
-                  <td className={styles.barCell}><Bar share={a.share} /></td>
+          <>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th scope="col">архетип</th>
+                  <th scope="col" className={styles.num}>всего</th>
+                  <th scope="col" className={styles.num}>первые</th>
+                  <th scope="col" className={styles.num}>старые</th>
+                  <th scope="col" className={styles.num}>повторы</th>
+                  <th scope="col" className={styles.num}>доля</th>
+                  <th scope="col" />
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.archetypes.map((a) => (
+                  <tr key={a.label}>
+                    <th scope="row">{a.label}</th>
+                    <td className={styles.num}>{a.all}</td>
+                    <td className={styles.num}>{a.first}</td>
+                    <td className={styles.num}>{a.historic}</td>
+                    <td className={styles.num}>{a.repeat}</td>
+                    <td className={styles.num}>{pct(a.share)}</td>
+                    <td className={styles.barCell}><Bar share={a.share} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {/* Четыре колонки без подписи — это четыре повода для неверного
+                вывода. «Всего» складывается из трёх следующих. */}
+            <p className={styles.note}>
+              «Всего» — все завершённые прохождения, доля и полоска считаются от
+              него. «Первые» — выборка для исследования: один человек, один
+              голос. «Старые» — перенесённые со старого сайта: ключа браузера
+              тогда не было, поэтому в «первые» они не попадают, хотя это живые
+              люди, а не повторы. «Повторы» — тот же браузер вернулся ещё раз.
+            </p>
+          </>
         )}
       </section>
 
