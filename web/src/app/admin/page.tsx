@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { loadAdminData, type AdminFilters } from '@/lib/admin-data';
+import {
+  loadAdminData, PERIODS, DEFAULT_DAYS, type AdminFilters,
+} from '@/lib/admin-data';
 import { missingQuestions } from '@/lib/quiz-state';
 import { QUESTIONS } from '@/lib/quiz';
 import { QUESTION_COPY } from '@/data/question-titles';
@@ -12,7 +14,6 @@ import styles from './admin.module.css';
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Find My Smell — данные', robots: 'noindex, nofollow' };
 
-const PERIODS = [7, 30, 90, 365, 3650];
 
 /* Список архетипов берётся из данных, а не из того, что нашлось в базе:
    иначе архетип, который ещё никому не выпал, пропал бы из фильтра — и
@@ -32,7 +33,7 @@ function href(
 ): string {
   const next = { ...base, ...patch };
   const p = new URLSearchParams();
-  if (next.days !== 30) p.set('days', String(next.days));
+  if (next.days !== DEFAULT_DAYS) p.set('days', String(next.days));
   if (next.locale) p.set('locale', next.locale);
   if (next.winner) p.set('winner', next.winner);
   if (next.consent) p.set('consent', next.consent);
@@ -74,7 +75,8 @@ export default async function AdminPage({
   }>;
 }) {
   const sp = await searchParams;
-  const days = PERIODS.includes(Number(sp.days)) ? Number(sp.days) : 30;
+  const days = (PERIODS as readonly number[]).includes(Number(sp.days))
+    ? Number(sp.days) : DEFAULT_DAYS;
 
   /* Значения из адреса сверяются со списками, а не подставляются в запрос
      как есть: чужая строка в параметре не должна ни падать, ни что-то
@@ -201,7 +203,11 @@ export default async function AdminPage({
         </div>
         <div className={styles.card}>
           <span className={styles.cardN}>{t.noKey}</span>
-          <span className={styles.cardL}>без ключа (приватный режим)</span>
+          {/* Раньше подпись говорила только про приватный режим, и на базе
+              заказчицы это была почти чистая ложь: 90 из 93 — прохождения,
+              перенесённые со старого сайта, где ключей браузера не было
+              вовсе. Обе причины названы, чтобы число не читалось как одна. */}
+          <span className={styles.cardL}>без ключа (перенесённые и приватный режим)</span>
         </div>
         <div className={styles.card}>
           <span className={styles.cardN}>{t.consented}</span>
@@ -331,7 +337,7 @@ export default async function AdminPage({
       {/* ── архетипы ──────────────────────────────────────────────────── */}
       <section className={styles.block} id="archetypes">
         <h2 className={styles.h2}>
-          Архетипы <small>по всем завершённым, {t.runs}</small>
+          Архетипы <small>по всем завершённым, {periodLabel(days)}: {t.runs}</small>
         </h2>
         {t.runs === 0 ? (
           <p className={styles.empty}>Пока ни одного завершённого прохождения.</p>

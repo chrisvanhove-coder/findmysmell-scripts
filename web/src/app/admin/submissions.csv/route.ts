@@ -1,17 +1,18 @@
-import { submissionsCsv, type AdminFilters } from '@/lib/admin-data';
+import {
+  submissionsCsv, PERIODS, DEFAULT_DAYS, type AdminFilters,
+} from '@/lib/admin-data';
 import { LOCALES } from '@/lib/i18n';
 import archetypesEn from '@/data/archetypes.en.json';
 
 // Пароль спрашивает middleware для всего /admin, включая этот адрес.
 export const dynamic = 'force-dynamic';
 
-const PERIODS = [7, 30, 90, 365, 3650];
 const ARCHETYPES = Object.keys(archetypesEn);
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const raw = Number(url.searchParams.get('days'));
-  const days = PERIODS.includes(raw) ? raw : 30;
+  const days = (PERIODS as readonly number[]).includes(raw) ? raw : DEFAULT_DAYS;
   const firstOnly = url.searchParams.get('first') === '1';
 
   /* Срезы сверяются со списками так же, как на странице: неизвестное
